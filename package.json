@@ -1,0 +1,48 @@
+{
+  "name": "bubleup",
+  "version": "0.0.0",
+  "description": "Transpile ESnext with Rollup and Buble.",
+  "license": "MIT",
+  "repository": "egoist/bubleup",
+  "author": {
+    "name": "EGOIST",
+    "email": "0x142857@gmail.com",
+    "url": "github.com/egoist"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "xo index.js"
+  },
+  "main": "index.js",
+  "bin": "cli.js",
+  "files": [
+    "index.js",
+    "cli.js"
+  ],
+  "keywords": [
+    "rollup",
+    "esnext",
+    "compile",
+    "babel",
+    "buble",
+    "es6"
+  ],
+  "devDependencies": {
+    "xo": "latest"
+  },
+  "xo": {
+    "semicolon": false,
+    "space": 2
+  },
+  "dependencies": {
+    "meow": "^3.7.0",
+    "rollup": "^0.34.3",
+    "rollup-plugin-alias": "^1.2.0",
+    "rollup-plugin-buble": "^0.12.1"
+  },
+  "bubleup": {
+    "output": "output.js"
+  }
+}
