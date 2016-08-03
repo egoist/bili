@@ -7,7 +7,7 @@ const main = require('./')
 
 const cli = meow(`
   Usage:
-    bubleup [entry]
+    bubleup [entry] [options]
 
   Options:
     --output, -o        Dest file path
