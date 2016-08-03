@@ -1,5 +1,5 @@
 <div align="center">
-  <br><strong>bubleup</strong> transpile ESnext code<br> with the power of <a href="https://github.com/rollup/rollup">Rollup</a> and <a href="https://gitlab.com/Rich-Harris/buble">Buble</a>.
+  <br><strong>bubleup</strong> transpiles ESnext code<br> with the power of <a href="https://github.com/rollup/rollup">Rollup</a> and <a href="https://gitlab.com/Rich-Harris/buble">Buble</a>.
 </div>
 
 ## tl;dr
