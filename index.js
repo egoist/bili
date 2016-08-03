@@ -2,15 +2,23 @@
 const rollup = require('rollup').rollup
 const buble = require('rollup-plugin-buble')
 const alias = require('rollup-plugin-alias')
+const nodeResolve = require('rollup-plugin-node-resolve')
 
 module.exports = function (options) {
+  const plugins = [
+    buble(),
+    alias(options.alias)
+  ]
+  if (options.nodeResolve) {
+    plugins.push(nodeResolve({
+      skip: options.skip,
+      jsnext: options.jsnext
+    }))
+  }
   return rollup({
     entry: options.entry || './src/index.js',
     paths: options.paths,
-    plugins: [
-      buble(),
-      alias(options.alias)
-    ]
+    plugins
   }).then(bundle => {
     return bundle.write({
       format: options.format || 'cjs',
