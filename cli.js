@@ -2,6 +2,7 @@
 'use strict'
 const path = require('path')
 const meow = require('meow')
+const update = require('update-notifier')
 const main = require('./')
 
 const cli = meow(`
@@ -11,7 +12,8 @@ const cli = meow(`
   Options:
     --output, -o        Dest file path
     --format            Bundle format, cjs/umd/iife
-    --module-name       UMD module name, required in --format umd
+    --module-name       UMD module name, required in \`--format\` umd
+    --source-map        Source map value, can be a boolean or \`inline\`
     --version, -v       Output version
     --help, -h          Output help (You are here!)
 
@@ -24,6 +26,8 @@ const cli = meow(`
     o: 'output'
   }
 })
+
+update({pkg: cli.pkg}).notify()
 
 let pkg = {}
 try {

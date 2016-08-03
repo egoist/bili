@@ -15,7 +15,8 @@ module.exports = function (options) {
     return bundle.write({
       format: options.format || 'cjs',
       moduleName: options.moduleName,
-      dest: options.dest || options.output || './index.js'
+      dest: options.dest || options.output || './index.js',
+      sourceMap: options.sourceMap
     })
   })
 }
