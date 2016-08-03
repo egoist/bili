@@ -9,8 +9,13 @@ const cli = meow(`
     bubleup [entry]
 
   Options:
+    --output, -o        Dest file path
+    --format            Bundle format, cjs/umd/iife
+    --module-name       UMD module name, required in --format umd
     --version, -v       Output version
     --help, -h          Output help (You are here!)
+
+  For more complex configuration please head to https://github.com/egoist/bubleup#usage
 `, {
   alias: {
     h: 'help',
