@@ -3,6 +3,7 @@ const rollup = require('rollup').rollup
 const buble = require('rollup-plugin-buble')
 const alias = require('rollup-plugin-alias')
 const nodeResolve = require('rollup-plugin-node-resolve')
+const commonjs = require('rollup-plugin-commonjs')
 
 module.exports = function (options) {
   const plugins = [
@@ -10,10 +11,13 @@ module.exports = function (options) {
     alias(options.alias)
   ]
   if (options.nodeResolve) {
-    plugins.push(nodeResolve({
-      skip: options.skip,
-      jsnext: options.jsnext
-    }))
+    plugins.push(
+      nodeResolve({
+        skip: options.skip,
+        jsnext: options.jsnext
+      }),
+      commonjs()
+    )
   }
   return rollup({
     entry: options.entry || './src/index.js',
