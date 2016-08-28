@@ -82,7 +82,7 @@ Compile targets, eg:
 ```bash
 {
   "bubleup": {
-    "target": {"chrome": 48, "firefox": 44, "node": "4"}
+    "target": {"chrome": 48, "firefox": 44, "node": 4}
   }
 }
 ```
