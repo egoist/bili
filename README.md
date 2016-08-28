@@ -24,7 +24,15 @@ $ npm install -g bubleup
 
 ## Usage
 
-For full CLI usage please run `bubleup -h`, It's hard to describe some options in command line, so you can also configure them in package.json, eg:
+The buble guide: https://buble.surge.sh/guide
+
+You can specific options in command-line:
+
+```bash
+$ bubleup src/index.js -o index.js --transforms.dangerousForOf
+```
+
+For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.json, eg:
 
 ```json
 {
@@ -34,7 +42,7 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some options i
 }
 ```
 
-### Alias
+### alias
 
 This is some feature which is similar to Webpack's `alias`, eg:
 
@@ -48,9 +56,60 @@ This is some feature which is similar to Webpack's `alias`, eg:
 }
 ```
 
-### Paths
+### paths
 
 This helps you import some file from the CDN (as using AMD), or set an alias to an external file, see [more details in Rollup's WIKI](https://github.com/rollup/rollup/wiki/JavaScript-API#paths).
+
+### transforms
+
+Apply custom transform rules to `buble` options:
+
+```json
+{
+  "bubleup": {
+    "transforms": {
+      "dangerousForOf": true
+    }
+  }
+}
+
+```
+
+### target
+
+Compile targets, eg:
+
+```bash
+{
+  "bubleup": {
+    "target": {"chrome": 48, "firefox": 44, "node": "4"}
+  }
+}
+```
+
+### jsx
+
+Buble supports JSX, and you can specfic a custom JSX pragma:
+
+```json
+{
+  "bubleup": {
+    "jsx": "createElement"
+  }
+}
+```
+
+### sourcemaps
+
+Generate soucemaps:
+
+```json
+{
+  "bubleup": {
+    "map": true
+  }
+}
+```
 
 ## API
 

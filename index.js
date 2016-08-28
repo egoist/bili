@@ -4,10 +4,17 @@ const buble = require('rollup-plugin-buble')
 const alias = require('rollup-plugin-alias')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
+const pick = require('object-picker')
 
 module.exports = function (options) {
+  console.log(options)
+
   const plugins = [
-    buble(),
+    buble(pick(options, [
+      'transforms',
+      'target',
+      'jsx'
+    ])),
     alias(options.alias)
   ]
   if (options.nodeResolve) {
@@ -28,7 +35,7 @@ module.exports = function (options) {
       format: options.format || 'cjs',
       moduleName: options.moduleName,
       dest: options.dest || options.output || './index.js',
-      sourceMap: options.sourceMap
+      sourceMap: options.map
     })
   })
 }

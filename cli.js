@@ -3,6 +3,7 @@
 const path = require('path')
 const meow = require('meow')
 const update = require('update-notifier')
+const merge = require('lodash.merge')
 const main = require('./')
 
 const cli = meow(`
@@ -37,7 +38,7 @@ try {
   pkg = require(path.join(process.cwd(), 'package.json'))
 } catch (_) {}
 
-const options = Object.assign({
+const options = merge({
   entry: cli.input[0]
-}, cli.flags, pkg && pkg.bubleup)
+}, (pkg && pkg.bubleup) || {}, cli.flags)
 main(options).catch(e => console.log(e.stack))
