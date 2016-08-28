@@ -7,8 +7,6 @@ const commonjs = require('rollup-plugin-commonjs')
 const pick = require('object-picker')
 
 module.exports = function (options) {
-  console.log(options)
-
   const plugins = [
     buble(pick(options, [
       'transforms',
