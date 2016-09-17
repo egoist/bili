@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest --env node && xo index.js"
+    "test": "jest --env node --coverage && xo index.js"
   },
   "main": "index.js",
   "bin": "cli.js",
@@ -30,6 +30,7 @@
     "es6"
   ],
   "devDependencies": {
+    "coveralls": "^2.11.13",
     "jest-cli": "^15.1.1",
     "xo": "latest"
   },
