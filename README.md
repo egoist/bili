@@ -44,9 +44,17 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 
 ### format
 
-Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`. Default value is `['cjs']`.
+Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
 
 You must specfic a `moduleName` if you target `umd`.
+
+```json
+{
+  "bubleup": {
+    "format": ["cjs", "umd"]
+  }
+}
+```
 
 ### alias
 
