@@ -1,4 +1,5 @@
 <p align="center">
+  <img src="./media/logo.png" width="60" /><br>
   <br><strong>bubleup</strong> transpiles ESnext code<br> with the power of <a href="https://github.com/rollup/rollup">Rollup</a> and <a href="https://gitlab.com/Rich-Harris/buble">Buble</a>.
 </p>
 
