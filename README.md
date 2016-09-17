@@ -14,7 +14,7 @@
 ```bash
 $ bubleup
 # is the same as
-$ bubleup src/index.js -o index.js
+$ bubleup src/index.js --out-dir dist
 ```
 
 ## Install
@@ -30,7 +30,7 @@ The buble guide: https://buble.surge.sh/guide
 You can specific options in command-line:
 
 ```bash
-$ bubleup src/index.js -o index.js --transforms.dangerousForOf
+$ bubleup src/index.js -d dist --transforms.dangerousForOf
 ```
 
 For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.json, eg:
@@ -43,11 +43,20 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 }
 ```
 
+### name
+
+The filename of bundled files, the default value is package name in `package.json`.
+
+```bash
+$ bubleup --name redux --format umd --format cjs
+# generate ./dist/redux.js ./dist/redux.common.js
+```
+
 ### format
 
 Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
 
-You must specfic a `moduleName` if you target `umd`.
+You should specfic a `moduleName` if you target `umd`, otherwise fallback to `name`.
 
 ```json
 {

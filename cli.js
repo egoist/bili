@@ -11,8 +11,9 @@ const cli = meow(`
     bubleup [entry] [options]
 
   Options:
-    --output, -o        Dest file path
-    --format            Bundle format, cjs/umd/iife
+    --name, -n          Filename of bundled file, no extenstion and format suffix
+    --out-dir, -d       The directory to dest files
+    --format            Bundle format, cjs/umd
     --module-name       UMD module name, required in \`--format\` umd
     --map               Source map value, can be a boolean or \`inline\`
     --node-resolve      Include required modules from node_modules dir
@@ -26,8 +27,8 @@ const cli = meow(`
   alias: {
     h: 'help',
     v: 'version',
-    d: 'dest',
-    o: 'output'
+    d: 'out-dir',
+    n: 'name'
   }
 })
 
@@ -41,4 +42,8 @@ try {
 const options = merge({
   entry: cli.input[0]
 }, (pkg && pkg.bubleup) || {}, cli.flags)
+
+// apply pkg name to usa as filename pf bundled file
+options.name = pkg.name
+
 main(options).catch(e => console.log(e.stack))

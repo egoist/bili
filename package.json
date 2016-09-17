@@ -37,6 +37,7 @@
     "space": 2
   },
   "dependencies": {
+    "camelcase": "^3.0.0",
     "lodash.merge": "^4.6.0",
     "meow": "^3.7.0",
     "object-picker": "^0.2.0",

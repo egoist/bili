@@ -1,10 +1,20 @@
 'use strict'
+const path = require('path')
 const rollup = require('rollup').rollup
 const buble = require('rollup-plugin-buble')
 const alias = require('rollup-plugin-alias')
 const nodeResolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 const pick = require('object-picker')
+const camelcase = require('camelcase')
+
+function getDest(options, format) {
+  const name = options.name || 'index'
+  const dir = options.outDir || './dist'
+  const suffix = format === 'umd' ? '' : '.common'
+  const output = path.join(dir, name + suffix + '.js')
+  return output
+}
 
 module.exports = function (options) {
   let formats = options.format || ['cjs']
@@ -34,9 +44,9 @@ module.exports = function (options) {
       plugins
     }).then(bundle => {
       return bundle.write({
-        format: format,
-        moduleName: options.moduleName,
-        dest: options.dest || options.output || './index.js',
+        format,
+        dest: getDest(options, format),
+        moduleName: camelcase(options.moduleName || options.name),
         sourceMap: options.map
       })
     })
