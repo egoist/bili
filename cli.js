@@ -16,7 +16,6 @@ const cli = meow(`
     --format            Bundle format, cjs/umd
     --module-name       UMD module name, required in \`--format\` umd
     --map               Source map value, can be a boolean or \`inline\`
-    --node-resolve      Include required modules from node_modules dir
     --skip              Exclude specfic modules in node_modules dir from bundled file
     --jsnext            Respect jsnext field in package.json as resolving node_modules
     --version, -v       Output version

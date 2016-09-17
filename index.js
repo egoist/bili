@@ -29,7 +29,7 @@ module.exports = function (options) {
       ])),
       alias(options.alias)
     ]
-    if (options.nodeResolve) {
+    if (format === 'umd') {
       plugins.push(
         nodeResolve({
           skip: options.skip,
