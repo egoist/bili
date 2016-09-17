@@ -38,12 +38,12 @@ try {
   pkg = require(path.join(process.cwd(), 'package.json'))
 } catch (_) {}
 
-const options = merge({
-  entry: cli.input[0]
-}, (pkg && pkg.bubleup) || {}, cli.flags)
+const config = (pkg && pkg.bubleup) || {}
 
-// apply pkg name to usa as filename pf bundled file
-options.name = pkg.name
+const options = merge({
+  entry: cli.input[0],
+  name: pkg.name,
+}, config, cli.flags)
 
 main(options).catch(e => {
   console.log(e.stack)
