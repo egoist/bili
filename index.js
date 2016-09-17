@@ -17,6 +17,7 @@ function getDest(options, format) {
 }
 
 module.exports = function (options) {
+  options = options || {}
   let formats = options.format || ['cjs']
   formats = Array.isArray(formats) ? formats : [formats]
 
@@ -46,7 +47,7 @@ module.exports = function (options) {
       return bundle.write({
         format,
         dest: getDest(options, format),
-        moduleName: camelcase(options.moduleName || options.name),
+        moduleName: camelcase(options.moduleName || options.name || 'index'),
         sourceMap: options.map
       })
     })

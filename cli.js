@@ -45,4 +45,7 @@ const options = merge({
 // apply pkg name to usa as filename pf bundled file
 options.name = pkg.name
 
-main(options).catch(e => console.log(e.stack))
+main(options).catch(e => {
+  console.log(e.stack)
+  process.exit(1)
+})
