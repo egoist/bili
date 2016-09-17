@@ -13,7 +13,8 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest --env node --coverage && xo index.js"
+    "test": "jest --env node --coverage && xo index.js",
+    "toc": "markdown-toc -i README.md"
   },
   "main": "index.js",
   "bin": "cli.js",

@@ -18,6 +18,28 @@ $ bubleup
 $ bubleup src/index.js --out-dir dist
 ```
 
+<details><summary>Table of Contents</summary>
+
+<!-- toc -->
+
+- [Install](#install)
+- [Usage](#usage)
+  * [name](#name)
+  * [format](#format)
+  * [compress](#compress)
+  * [alias](#alias)
+  * [paths](#paths)
+  * [transforms](#transforms)
+  * [target](#target)
+  * [jsx](#jsx)
+  * [map](#map)
+- [API](#api)
+- [License](#license)
+
+<!-- tocstop -->
+
+</details>
+
 ## Install
 
 ```bash
