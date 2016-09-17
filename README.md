@@ -46,7 +46,7 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 
 ### name
 
-The filename of bundled files, the default value is package name in `package.json`.
+The filename of bundled files, the default value is package name in `package.json`. If no package.json was found, fallback to `index`.
 
 ```bash
 $ bubleup --name redux --format umd --format cjs
