@@ -1,6 +1,6 @@
 {
   "name": "bubleup",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Transpile ESnext code with Rollup and Buble.",
   "license": "MIT",
   "repository": "egoist/bubleup",
