@@ -114,7 +114,7 @@ Buble supports JSX, and you can specfic a custom JSX pragma:
 }
 ```
 
-### sourcemaps
+### map
 
 Generate soucemaps:
 
