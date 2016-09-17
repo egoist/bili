@@ -6,7 +6,7 @@
 <p align="center">
   <a href="https://npmjs.com/package/bubleup"><img src="https://img.shields.io/npm/v/bubleup.svg?style=flat-square" alt="NPM version"></a>
   <a href="https://npmjs.com/package/bubleup"><img src="https://img.shields.io/npm/dm/bubleup.svg?style=flat-square" alt="NPM downloads"></a>
-  <a href="https://github.com/egoist/bubleup"><img src="https://img.shields.io/maintenance/yes/2016.svg?style=flat-square"></a>
+  <a href="https://circleci.com/gh/egoist/bubleup/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bubleup/master.svg?style=flat-square"></a>
 </p>
 
 ## tl;dr
