@@ -42,6 +42,12 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 }
 ```
 
+### format
+
+Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`. Default value is `['cjs']`.
+
+You must specfic a `moduleName` if you target `umd`.
+
 ### alias
 
 This is some feature which is similar to Webpack's `alias`, eg:
