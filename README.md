@@ -34,9 +34,9 @@ You can specific options in command-line:
 $ bubleup src/index.js -d dist --transforms.dangerousForOf
 ```
 
-For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.json, eg:
+For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.js, eg:
 
-```json
+```js
 {
   "bubleup": {
     "entry": "./path/to/my-entry.js"
@@ -46,7 +46,7 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 
 ### name
 
-The filename of bundled files, the default value is package name in `package.json`. If no package.json was found, fallback to `index`.
+The filename of bundled files, the default value is package name in `package.js`. If no package.js was found, fallback to `index`.
 
 ```bash
 $ bubleup --name redux --format umd --format cjs
@@ -59,7 +59,7 @@ Specific the bundle format, it could be a string like `'umd'` or multiple target
 
 You should specfic a `moduleName` if you target `umd`, otherwise fallback to `name`.
 
-```json
+```js
 {
   "bubleup": {
     "format": ["cjs", "umd"]
@@ -67,11 +67,25 @@ You should specfic a `moduleName` if you target `umd`, otherwise fallback to `na
 }
 ```
 
+### compress
+
+Enable this option to generate an extra compressed file for the UMD bundle, and sourcemap.
+
+```js
+{
+  "bubleup": {
+    "format": "umd",
+    "compress": true
+  }
+}
+// generates: [name].js [name].min.js [name].min.js.map
+```
+
 ### alias
 
 This is some feature which is similar to Webpack's `alias`, eg:
 
-```json
+```js
 {
   "bubleup": {
     "alias": {
@@ -89,7 +103,7 @@ This helps you import some file from the CDN (as using AMD), or set an alias to 
 
 Apply custom transform rules to `buble` options:
 
-```json
+```js
 {
   "bubleup": {
     "transforms": {
@@ -116,7 +130,7 @@ Compile targets, eg:
 
 Buble supports JSX, and you can specfic a custom JSX pragma:
 
-```json
+```js
 {
   "bubleup": {
     "jsx": "createElement"
@@ -128,7 +142,7 @@ Buble supports JSX, and you can specfic a custom JSX pragma:
 
 Generate soucemaps:
 
-```json
+```js
 {
   "bubleup": {
     "map": true

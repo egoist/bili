@@ -16,6 +16,7 @@ const cli = meow(`
     --format            Bundle format, cjs/umd
     --module-name       UMD module name, required in \`--format\` umd
     --map               Source map value, can be a boolean or \`inline\`
+    --compress          Generate an extra compressed file suffixed with \`.min\` and sourcemap
     --skip              Exclude specfic modules in node_modules dir from bundled file
     --jsnext            Respect jsnext field in package.json as resolving node_modules
     --version, -v       Output version
