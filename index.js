@@ -65,10 +65,16 @@ module.exports = function (options) {
       paths: options.paths,
       plugins
     }).then(bundle => {
+      let moduleName = 'index'
+      if (options.moduleName) {
+        moduleName = options.moduleName
+      } else if (options.name) {
+        moduleName = camelcase(options.name)
+      }
       return bundle.write({
         format,
+        moduleName,
         dest: getDest(options, format, compress),
-        moduleName: camelcase(options.moduleName || options.name || 'index'),
         sourceMap: getMap(options, compress)
       })
     })
