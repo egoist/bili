@@ -49,8 +49,8 @@ const options = merge({
 
 main(options).catch(err => {
   if (err.snippet) {
-    console.log(chalk.red(`---\n${err.snippet}\n---`))
+    console.error(chalk.red(`---\n${err.snippet}\n---`))
   }
-  console.log(err.stack)
+  console.error(err.stack)
   process.exit(1)
 })

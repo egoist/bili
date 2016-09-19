@@ -177,7 +177,13 @@ Generate soucemaps:
 ```js
 import bubleup from 'bubleup'
 
-bubleup(options).catch(e => console.log(e.stack))
+bubleup(options).catch(err => {
+  if (err.snippet) {
+    // display the actual error snippet
+    console.error(err.snippet)
+  }
+  console.error(err.stack)
+})
 ```
 
 ## License
