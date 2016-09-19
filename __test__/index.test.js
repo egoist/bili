@@ -1,5 +1,5 @@
 const path = require('path')
-const bubleup = require('../')
+const bubleup = require('../lib/bubleup')
 
 test('it throws because entry not found', () => {
   return bubleup().catch(err => {

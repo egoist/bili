@@ -16,10 +16,10 @@
     "test": "jest --env node --coverage && xo index.js",
     "toc": "markdown-toc -i README.md"
   },
-  "main": "index.js",
+  "main": "lib/bubleup.js",
   "bin": "cli.js",
   "files": [
-    "index.js",
+    "lib",
     "cli.js"
   ],
   "keywords": [
