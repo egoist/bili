@@ -22,6 +22,7 @@ $ bubleup src/index.js --out-dir dist
 
 <!-- toc -->
 
+- [Why is this useful?](#why-is-this-useful)
 - [Install](#install)
 - [Usage](#usage)
   * [name](#name)
@@ -39,6 +40,10 @@ $ bubleup src/index.js --out-dir dist
 <!-- tocstop -->
 
 </details>
+
+## Why is this useful?
+
+I always repeat configuring the same thing for my front-end libraries which need to support `commonjs` and `umd` at the same time. With Bubleup you can simply run `bubleup --format umd --format cjs` to build for both, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
 
 ## Install
 
