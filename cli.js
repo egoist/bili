@@ -2,6 +2,7 @@
 'use strict'
 const path = require('path')
 const meow = require('meow')
+const chalk = require('chalk')
 const update = require('update-notifier')
 const merge = require('lodash.merge')
 const main = require('./')
@@ -46,7 +47,10 @@ const options = merge({
   name: pkg.name,
 }, config, cli.flags)
 
-main(options).catch(e => {
-  console.log(e.stack)
+main(options).catch(err => {
+  if (err.snippet) {
+    console.log(chalk.red(`---\n${err.snippet}\n---`))
+  }
+  console.log(err.stack)
   process.exit(1)
 })
