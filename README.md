@@ -167,7 +167,7 @@ Buble supports JSX, and you can specfic a custom JSX pragma:
 
 ### map
 
-Generate soucemaps:
+Generate soucemaps for `cjs` and `umd` builds, note that `--compress` will always generate sourcemaps for `.min.js` file:
 
 ```js
 {
