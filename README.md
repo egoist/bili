@@ -177,6 +177,10 @@ Generate soucemaps for `cjs` and `umd` builds, note that `--compress` will alway
 }
 ```
 
+### watch
+
+Run Rollup in watch mode, which means you will have faster incremental builds.
+
 ## API
 
 ```js
