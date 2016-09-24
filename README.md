@@ -112,6 +112,10 @@ Enable this option to generate an extra compressed file for the UMD bundle, and 
 // generates: [name].js [name].min.js [name].min.js.map
 ```
 
+### async
+
+Transform `async/await` to generator function, defaults to `true`.
+
 ### alias
 
 This is some feature which is similar to Webpack's `alias`, eg:
