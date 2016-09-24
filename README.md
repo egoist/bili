@@ -16,6 +16,9 @@
 $ bubleup
 # is the same as
 $ bubleup src/index.js --out-dir dist
+
+# watch mode
+$ bubleup --watch
 ```
 
 <details><summary>Table of Contents</summary>
@@ -34,6 +37,7 @@ $ bubleup src/index.js --out-dir dist
   * [target](#target)
   * [jsx](#jsx)
   * [map](#map)
+  * [watch](#watch)
 - [API](#api)
 - [License](#license)
 
