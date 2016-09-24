@@ -47,7 +47,7 @@ $ bubleup --watch
 
 ## Why is this useful?
 
-I always repeat configuring the same thing for my front-end libraries which need to support `commonjs` and `umd` at the same time. With Bubleup you can simply run `bubleup --format umd --format cjs` to build for both, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
+I always repeat the same configurations for bundling my front-end libraries. With Bubleup you can simply run `bubleup` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
 
 ## Install
 
