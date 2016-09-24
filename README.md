@@ -62,7 +62,7 @@ The buble guide: https://buble.surge.sh/guide
 You can specific options in command-line:
 
 ```bash
-$ bubleup src/index.js -d dist --transforms.dangerousForOf
+$ bubleup src/index.js -d output
 ```
 
 For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.js, eg:
@@ -142,7 +142,7 @@ Apply custom transform rules to `buble` options:
 {
   "bubleup": {
     "transforms": {
-      "dangerousForOf": true
+      "dangerousForOf": false
     }
   }
 }
