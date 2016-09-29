@@ -2,5 +2,5 @@ node_modules
 *.log
 .DS_Store
 /example
-/dist
+/dist*
 /coverage

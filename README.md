@@ -130,6 +130,20 @@ This is some feature which is similar to Webpack's `alias`, eg:
 }
 ```
 
+### replace
+
+Add options to [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace):
+
+```js
+{
+  "bubleup": {
+    "replace": {
+      "VERSION": "0.0.1"
+    }
+  }
+}
+```
+
 ### paths
 
 This helps you import some file from the CDN (as using AMD), or set an alias to an external file, see [more details in Rollup's WIKI](https://github.com/rollup/rollup/wiki/JavaScript-API#paths).
