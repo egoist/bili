@@ -197,9 +197,9 @@ Buble supports JSX, and you can specfic a custom JSX pragma:
 
 Transform `async/await` to generator function, defaults to `true`. This is indenpently using `async-to-gen`.
 
-### target
+### buble.target
 
-Compile targets for buble, eg:
+Set compile targets for buble, eg:
 
 ```bash
 {
