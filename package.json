@@ -48,6 +48,7 @@
     "lodash.merge": "^4.6.0",
     "meow": "^3.7.0",
     "read-fallback": "^0.2.2",
+    "requireg": "^0.1.6",
     "rollup": "^0.36.0",
     "rollup-plugin-alias": "^1.2.0",
     "rollup-plugin-async": "^1.1.0",
