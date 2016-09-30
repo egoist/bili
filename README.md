@@ -65,15 +65,15 @@ You can specific options in command-line:
 $ bubleup src/index.js -d output
 ```
 
-For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in package.js, eg:
+For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in `.bubleuprc`, eg:
 
 ```js
 {
-  "bubleup": {
-    "entry": "./path/to/my-entry.js"
-  }
+  "entry": "./path/to/my-entry.js"
 }
 ```
+
+And you can also put the configs in `package.json` under key `bubleup`. To go even further, if you need the power of javascript, use `bubleup.config.js`.
 
 ### name
 
@@ -92,9 +92,7 @@ You should specfic a `moduleName` if you target `umd`, otherwise fallback to `na
 
 ```js
 {
-  "bubleup": {
-    "format": ["cjs", "umd"]
-  }
+  "format": ["cjs", "umd"]
 }
 ```
 
@@ -104,17 +102,15 @@ Enable this option to generate an extra compressed file for the UMD bundle, and 
 
 ```js
 {
-  "bubleup": {
-    "format": "umd",
-    "compress": true
-  }
+  "format": "umd",
+  "compress": true
 }
 // generates: [name].js [name].min.js [name].min.js.map
 ```
 
 ### async
 
-Transform `async/await` to generator function, defaults to `true`.
+Transform `async/await` to generator function, defaults to `true`. This is using `async-to-gen`, so it has nothing to do with `buble`.
 
 ### alias
 
@@ -122,11 +118,26 @@ This is some feature which is similar to Webpack's `alias`, eg:
 
 ```js
 {
-  "bubleup": {
-    "alias": {
-      "controllers": "./src/controllers"
-    }
+  "alias": {
+    "controllers": "./src/controllers"
   }
+}
+```
+
+### jsCompiler
+
+Use a custom js compiler instead of `buble`, it should a rollup plugin, like `rollup-plugin-babel`:
+
+```js
+// bubleup.config.js
+const babel = require('rollup-plugin-babel')
+
+module.exports = {
+  jsCompiler: babel({
+    preset: [
+      ['es2015', {modules: false}]
+    ]
+  })
 }
 ```
 
@@ -136,10 +147,8 @@ Add options to [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-r
 
 ```js
 {
-  "bubleup": {
-    "replace": {
-      "VERSION": "0.0.1"
-    }
+  "replace": {
+    "VERSION": "0.0.1"
   }
 }
 ```
@@ -148,13 +157,27 @@ Add options to [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-r
 
 This helps you import some file from the CDN (as using AMD), or set an alias to an external file, see [more details in Rollup's WIKI](https://github.com/rollup/rollup/wiki/JavaScript-API#paths).
 
-### transforms
+### map
+
+Generate soucemaps for `cjs` and `umd` builds, note that `--compress` will always generate sourcemaps for `.min.js` file:
+
+```js
+{
+  "map": true
+}
+```
+
+### watch
+
+Run Rollup in watch mode, which means you will have faster incremental builds.
+
+### buble.transforms
 
 Apply custom transform rules to `buble` options:
 
 ```js
 {
-  "bubleup": {
+  "buble": {
     "transforms": {
       "dangerousForOf": false
     }
@@ -163,45 +186,29 @@ Apply custom transform rules to `buble` options:
 
 ```
 
-### target
-
-Compile targets, eg:
-
-```bash
-{
-  "bubleup": {
-    "target": {"chrome": 48, "firefox": 44, "node": 4}
-  }
-}
-```
-
-### jsx
+### buble.jsx
 
 Buble supports JSX, and you can specfic a custom JSX pragma:
 
 ```js
 {
-  "bubleup": {
+  "buble": {
     "jsx": "createElement"
   }
 }
 ```
 
-### map
+### target
 
-Generate soucemaps for `cjs` and `umd` builds, note that `--compress` will always generate sourcemaps for `.min.js` file:
+Compile targets for buble, eg:
 
-```js
+```bash
 {
-  "bubleup": {
-    "map": true
+  "buble": {
+    "target": {"chrome": 48, "firefox": 44, "node": 4}
   }
 }
 ```
-
-### watch
-
-Run Rollup in watch mode, which means you will have faster incremental builds.
 
 ## API
 

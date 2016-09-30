@@ -12,4 +12,4 @@ deployment:
   staging:
     branch: master
     commands:
-      - 'cat ./coverage/lcov.info | ./node_modules/.bin/coveralls'
+      - 'cat ./__test__/coverage/lcov.info | ./node_modules/.bin/coveralls'

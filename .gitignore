@@ -1,6 +1,5 @@
 node_modules
 *.log
 .DS_Store
-/example
-/dist*
-/coverage
+__test__/coverage/
+dist*
