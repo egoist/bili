@@ -107,10 +107,6 @@ Enable this option to generate an extra compressed file for the UMD bundle, and 
 // generates: [name].js [name].min.js [name].min.js.map
 ```
 
-### async
-
-Transform `async/await` to generator function, defaults to `true`. This is indenpently using `async-to-gen`, so it has nothing to do with the js compiler you use.
-
 ### alias
 
 This is some feature which is similar to Webpack's `alias`, eg:
@@ -196,6 +192,10 @@ Buble supports JSX, and you can specfic a custom JSX pragma:
   }
 }
 ```
+
+### buble.async
+
+Transform `async/await` to generator function, defaults to `true`. This is indenpently using `async-to-gen`.
 
 ### target
 
