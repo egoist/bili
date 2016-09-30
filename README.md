@@ -137,7 +137,7 @@ const babel = require('rollup-plugin-babel')
 
 module.exports = {
   jsCompiler: babel({
-    preset: [
+    presets: [
       ['es2015', {modules: false}]
     ]
   })
