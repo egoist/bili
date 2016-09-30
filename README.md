@@ -27,7 +27,6 @@ $ bili --watch
   * [name](#name)
   * [format](#format)
   * [compress](#compress)
-  * [async](#async)
   * [alias](#alias)
   * [jsCompiler](#jscompiler)
   * [replace](#replace)
@@ -36,7 +35,8 @@ $ bili --watch
   * [watch](#watch)
   * [buble.transforms](#bubletransforms)
   * [buble.jsx](#bublejsx)
-  * [target](#target)
+  * [buble.async](#bubleasync)
+  * [buble.target](#bubletarget)
 - [API](#api)
 - [License](#license)
 
