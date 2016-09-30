@@ -1,5 +1,5 @@
 node_modules
 *.log
 .DS_Store
-__test__/coverage/
+coverage/
 dist*

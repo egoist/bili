@@ -59,5 +59,8 @@
     "rollup-watch": "^2.5.0",
     "switchy": "^0.1.0",
     "update-notifier": "^1.0.2"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/"
   }
 }
