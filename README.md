@@ -31,13 +31,16 @@ $ bili --watch
   * [name](#name)
   * [format](#format)
   * [compress](#compress)
+  * [async](#async)
   * [alias](#alias)
+  * [jsCompiler](#jscompiler)
+  * [replace](#replace)
   * [paths](#paths)
-  * [transforms](#transforms)
-  * [target](#target)
-  * [jsx](#jsx)
   * [map](#map)
   * [watch](#watch)
+  * [buble.transforms](#bubletransforms)
+  * [buble.jsx](#bublejsx)
+  * [target](#target)
 - [API](#api)
 - [License](#license)
 
@@ -57,7 +60,7 @@ $ npm install -g bili
 
 ## Usage
 
-The buble guide: https://buble.surge.sh/guide
+The buble guide: https://buble.surge.sh/guide, this is built upon buble, but you can use any [javascript compiler](#jscompiler) you like:
 
 You can specific options in command-line:
 
