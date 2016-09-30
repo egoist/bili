@@ -1,4 +1,4 @@
-<img src="./media/logo.png" alt="logo"/><br><br>
+<img src="./media/logo.png" alt="logo"/><br>
 
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat-square" alt="NPM downloads"></a>
@@ -121,7 +121,15 @@ This is some feature which is similar to Webpack's `alias`, eg:
 
 ### jsCompiler
 
-Use a custom js compiler instead of `buble`, it should a rollup plugin, like `rollup-plugin-babel`:
+Use a custom js compiler instead of `buble`, available values are [`typescript`](https://github.com/egoist/bili-typescript) or [`babel`](https://github.com/egoist/bili-babel):
+
+```js
+{
+  "jsCompiler": "babel"
+}
+```
+
+Or use rollup plugin directly, like `rollup-plugin-babel`:
 
 ```js
 // bili.config.js
