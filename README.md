@@ -1,24 +1,25 @@
 <p align="center">
   <img src="./media/logo.png" width="60" /><br>
-  <br><strong>bubleup</strong> transpiles ESnext code<br> with the power of <a href="https://github.com/rollup/rollup">Rollup</a> and <a href="https://gitlab.com/Rich-Harris/buble">Buble</a>.
+  <br><strong>bili</strong> transpiles ESnext code<br> with the power of <a href="https://github.com/rollup/rollup">Rollup</a> and <a href="https://gitlab.com/Rich-Harris/buble">Buble</a>.
 </p>
 
 <p align="center">
-  <a href="https://npmjs.com/package/bubleup"><img src="https://img.shields.io/npm/v/bubleup.svg?style=flat-square" alt="NPM version"></a>
-  <a href="https://npmjs.com/package/bubleup"><img src="https://img.shields.io/npm/dm/bubleup.svg?style=flat-square" alt="NPM downloads"></a>
-  <a href="https://circleci.com/gh/egoist/bubleup/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bubleup/master.svg?style=flat-square"></a>
-  <a href="https://circleci.com/gh/egoist/bubleup/tree/master"><img src="https://img.shields.io/coveralls/egoist/bubleup/master.svg?style=flat-square"></a>
+  <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat-square" alt="NPM version"></a>
+  <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat-square" alt="NPM downloads"></a>
+  <a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bili/master.svg?style=flat-square"></a>
+  <a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/coveralls/egoist/bili/master.svg?style=flat-square"></a>
 </p>
 
 ## tl;dr
 
 ```bash
-$ bubleup
+# previously named `bubleup`
+$ bili
 # is the same as
-$ bubleup src/index.js --out-dir dist
+$ bili src/index.js --out-dir dist
 
 # watch mode
-$ bubleup --watch
+$ bili --watch
 ```
 
 <details><summary>Table of Contents</summary>
@@ -47,12 +48,12 @@ $ bubleup --watch
 
 ## Why is this useful?
 
-I always repeat the same configurations for bundling my front-end libraries. With Bubleup you can simply run `bubleup` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
+I always repeat the same configurations for bundling my front-end libraries. With bili you can simply run `bili` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
 
 ## Install
 
 ```bash
-$ npm install -g bubleup
+$ npm install -g bili
 ```
 
 ## Usage
@@ -62,10 +63,10 @@ The buble guide: https://buble.surge.sh/guide
 You can specific options in command-line:
 
 ```bash
-$ bubleup src/index.js -d output
+$ bili src/index.js -d output
 ```
 
-For full CLI usage please run `bubleup -h`, It's hard to describe some nested options in command line, so you can also configure them in `.bubleuprc`, eg:
+For full CLI usage please run `bili -h`, It's hard to describe some nested options in command line, so you can also configure them in `.bilirc`, eg:
 
 ```js
 {
@@ -73,14 +74,14 @@ For full CLI usage please run `bubleup -h`, It's hard to describe some nested op
 }
 ```
 
-And you can also put the configs in `package.json` under key `bubleup`. To go even further, if you need the power of javascript, use `bubleup.config.js`.
+And you can also put the configs in `package.json` under key `bili`. To go even further, if you need the power of javascript, use `bili.config.js`.
 
 ### name
 
 The filename of bundled files, the default value is package name in `package.json`. If no package.json was found, fallback to `index`.
 
 ```bash
-$ bubleup --name redux --format umd --format cjs
+$ bili --name redux --format umd --format cjs
 # generate ./dist/redux.js ./dist/redux.common.js
 ```
 
@@ -129,7 +130,7 @@ This is some feature which is similar to Webpack's `alias`, eg:
 Use a custom js compiler instead of `buble`, it should a rollup plugin, like `rollup-plugin-babel`:
 
 ```js
-// bubleup.config.js
+// bili.config.js
 const babel = require('rollup-plugin-babel')
 
 module.exports = {
@@ -213,9 +214,9 @@ Compile targets for buble, eg:
 ## API
 
 ```js
-import bubleup from 'bubleup'
+import bili from 'bili'
 
-bubleup(options).catch(err => {
+bili(options).catch(err => {
   if (err.snippet) {
     // display the actual error snippet
     console.error(err.snippet)

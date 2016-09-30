@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const rm = require('rimraf')
-const bubleup = require('../lib/bubleup')
+const bili = require('../lib/bili')
 
 process.chdir(__dirname)
 
@@ -14,13 +14,13 @@ beforeEach(() => {
 })
 
 test('it throws because entry not found', () => {
-  return bubleup().catch(err => {
+  return bili().catch(err => {
     expect(err.message).toEqual('Could not resolve entry (./src/index.js)')
   })
 })
 
 test('it builds successfully', () => {
-  return bubleup({
+  return bili({
     entry: cwd('fixtures/entry.js'),
     format: ['umd', 'cjs']
   }).then(() => {
@@ -32,7 +32,7 @@ test('it builds successfully', () => {
 })
 
 test('it replaces string using rollup-plugin-replace', () => {
-  return bubleup({
+  return bili({
     entry: cwd('fixtures/entry.js'),
     outDir: 'dist2',
     replace: {

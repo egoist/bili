@@ -1,9 +1,9 @@
 {
-  "name": "bubleup",
+  "name": "bili",
   "version": "0.5.2",
   "description": "Transpile ESnext code with Rollup and Buble.",
   "license": "MIT",
-  "repository": "egoist/bubleup",
+  "repository": "egoist/bili",
   "author": {
     "name": "EGOIST",
     "email": "0x142857@gmail.com",
@@ -16,7 +16,7 @@
     "test": "jest --env node --coverage && xo lib/*.js",
     "toc": "markdown-toc -i README.md"
   },
-  "main": "lib/bubleup.js",
+  "main": "lib/bili.js",
   "bin": "cli.js",
   "files": [
     "lib",
@@ -59,8 +59,5 @@
     "rollup-watch": "^2.5.0",
     "switchy": "^0.1.0",
     "update-notifier": "^1.0.2"
-  },
-  "bubleup": {
-    "output": "output.js"
   }
 }
