@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="./media/logo.png" /><br><br>
-</p>
+<img src="./media/logo.png" alt="logo"/><br><br>
 
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat-square" alt="NPM downloads"></a>
