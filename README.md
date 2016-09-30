@@ -60,12 +60,12 @@ $ npm install -g bili
 
 ## Usage
 
-The buble guide: https://buble.surge.sh/guide, this is built upon buble, but you can use any [javascript compiler](#jscompiler) you like:
+The buble guide: https://buble.surge.sh/guide, this is built upon buble, but you can use any [javascript compiler](#jscompiler) you like.
 
 You can specific options in command-line:
 
 ```bash
-$ bili src/index.js -d output
+$ bili src/index.js -d dir
 ```
 
 For full CLI usage please run `bili -h`, It's hard to describe some nested options in command line, so you can also configure them in `.bilirc`, eg:
