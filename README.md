@@ -109,7 +109,7 @@ Enable this option to generate an extra compressed file for the UMD bundle, and 
 
 ### async
 
-Transform `async/await` to generator function, defaults to `true`. This is using `async-to-gen`, so it has nothing to do with `buble`.
+Transform `async/await` to generator function, defaults to `true`. This is indenpently using `async-to-gen`, so it has nothing to do with the js compiler you use.
 
 ### alias
 
