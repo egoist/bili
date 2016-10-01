@@ -13,8 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest --env node --coverage && xo lib/*.js",
-    "toc": "markdown-toc -i README.md"
+    "test": "jest --env node --coverage && xo lib/*.js"
   },
   "main": "lib/bili.js",
   "bin": "cli.js",

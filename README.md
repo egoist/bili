@@ -17,33 +17,6 @@ $ bili src/index.js --out-dir dist
 $ bili --watch
 ```
 
-<details><summary>Table of Contents</summary>
-
-<!-- toc -->
-
-- [Why is this useful?](#why-is-this-useful)
-- [Install](#install)
-- [Usage](#usage)
-  * [name](#name)
-  * [format](#format)
-  * [compress](#compress)
-  * [alias](#alias)
-  * [jsCompiler](#jscompiler)
-  * [replace](#replace)
-  * [paths](#paths)
-  * [map](#map)
-  * [watch](#watch)
-  * [buble.transforms](#bubletransforms)
-  * [buble.jsx](#bublejsx)
-  * [buble.async](#bubleasync)
-  * [buble.target](#bubletarget)
-- [API](#api)
-- [License](#license)
-
-<!-- tocstop -->
-
-</details>
-
 ## Why is this useful?
 
 I always repeat the same configurations for bundling my front-end libraries. With bili you can simply run `bili` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
