@@ -22,7 +22,8 @@ test('it throws because entry not found', () => {
 test('it builds successfully', () => {
   return bili({
     entry: cwd('fixtures/entry.js'),
-    format: ['umd', 'cjs']
+    format: ['umd', 'cjs'],
+    exports: 'named'
   }).then(() => {
       const foo = require('./dist/index.common.js')
       expect(foo.default).toEqual(1)
@@ -35,6 +36,7 @@ test('it replaces string using rollup-plugin-replace', () => {
   return bili({
     entry: cwd('fixtures/entry.js'),
     outDir: 'dist2',
+    exports: 'named',
     replace: {
       __VERSION__: '0.0.0'
     }
