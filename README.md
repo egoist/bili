@@ -19,7 +19,7 @@ $ bili --watch
 
 ## Why is this useful?
 
-I always repeat the same configurations for bundling my front-end libraries. With bili you can simply run `bili` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
+I always repeat the same configurations for bundling my javascript libraries. With bili you can simply run `bili` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
 
 ## Install
 
