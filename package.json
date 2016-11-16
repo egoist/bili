@@ -13,7 +13,7 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "jest --env node --coverage && xo lib/*.js"
+    "test": "jest --env node --coverage && eslint lib/*.js"
   },
   "main": "lib/bili.js",
   "bin": "cli.js",
@@ -31,13 +31,13 @@
   ],
   "devDependencies": {
     "coveralls": "^2.11.13",
+    "eslint": "^3.10.2",
+    "eslint-config-rem": "^2.0.0",
     "jest-cli": "^15.1.1",
-    "rimraf": "^2.5.4",
-    "xo": "latest"
+    "rimraf": "^2.5.4"
   },
-  "xo": {
-    "semicolon": false,
-    "space": 2
+  "eslintConfig": {
+    "extends": "rem/esnext"
   },
   "dependencies": {
     "camelcase": "^3.0.0",
