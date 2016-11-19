@@ -312,6 +312,10 @@ babylon@^6.11.0, babylon@^6.11.4, babylon@^6.13.0:
   version "6.13.1"
   resolved "http://registry.npm.taobao.org/babylon/download/babylon-6.13.1.tgz#adca350e088f0467647157652bafead6ddb8dfdb"
 
+babylon@^6.8.4:
+  version "6.14.1"
+  resolved "http://registry.npm.taobao.org/babylon/download/babylon-6.14.1.tgz#956275fab72753ad9b3435d7afe58f8bf0a29815"
+
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "http://registry.npm.taobao.org/balanced-match/download/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
@@ -983,6 +987,12 @@ flat-cache@^1.2.1:
     del "^2.0.2"
     graceful-fs "^4.1.2"
     write "^0.2.1"
+
+flow-remove-types@^1.0.0:
+  version "1.0.5"
+  resolved "http://registry.npm.taobao.org/flow-remove-types/download/flow-remove-types-1.0.5.tgz#c1c948d96a23f3f4012f1af0e6eb937898fcc968"
+  dependencies:
+    babylon "^6.8.4"
 
 for-in@^0.1.5:
   version "0.1.6"
@@ -2532,6 +2542,13 @@ rollup-plugin-commonjs@^5.0.0:
     estree-walker "^0.2.1"
     magic-string "^0.16.0"
     resolve "^1.1.7"
+    rollup-pluginutils "^1.5.1"
+
+rollup-plugin-flow:
+  version "1.0.1"
+  resolved "http://registry.npm.taobao.org/rollup-plugin-flow/download/rollup-plugin-flow-1.0.1.tgz#a63a27a3cec2ced9e20604f507f8edd9a1b93e01"
+  dependencies:
+    flow-remove-types "^1.0.0"
     rollup-pluginutils "^1.5.1"
 
 rollup-plugin-node-resolve@^2.0.0:
