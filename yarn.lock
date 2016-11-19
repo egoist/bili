@@ -2200,7 +2200,7 @@ parse5@^1.5.1:
   version "1.5.1"
   resolved "http://registry.npm.taobao.org/parse5/download/parse5-1.5.1.tgz#9b7f3b0de32be78dc2401b17573ccaf0f6f59d94"
 
-path-exists, path-exists@^3.0.0:
+path-exists:
   version "3.0.0"
   resolved "http://registry.npm.taobao.org/path-exists/download/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
 
@@ -2314,12 +2314,6 @@ read-all-stream@^3.0.0:
   dependencies:
     pinkie-promise "^2.0.0"
     readable-stream "^2.0.0"
-
-read-fallback@^0.2.2:
-  version "0.2.2"
-  resolved "http://registry.npm.taobao.org/read-fallback/download/read-fallback-0.2.2.tgz#3b88d2fc08a54c9f74623cd9dad6eccbb7495559"
-  dependencies:
-    path-exists "^3.0.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
