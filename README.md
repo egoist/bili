@@ -27,7 +27,7 @@ I always repeat the same configurations for bundling my javascript libraries. Wi
 $ npm install -g bili
 ```
 
-[Dive into the wiki](https://github.com/universe-denpa/bili/wiki) if you are ready to bundle!
+[Dive into the documentation](https://unipahq.github.io/bili/) if you are ready to bundle!
 
 ## License
 
