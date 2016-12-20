@@ -1,6 +1,5 @@
-'use strict'
-const pathExists = require('path-exists')
-const _ = require('./utils')
+import fs from 'fs'
+import {cwd} from './utils'
 
 function readInPkg(file) {
   try {
@@ -17,14 +16,11 @@ function readInPkg(file) {
 }
 
 // read => bili.config.js & package.json
-module.exports = function (options) {
-  const config = _.cwd(options.config || 'bili.config.js')
-  const pkgConfig = readInPkg(_.cwd('package.json'))
-  return pathExists(config)
-    .then(exists => {
-      if (exists) {
-        return Object.assign(require(config), pkgConfig)
-      }
-      return pkgConfig
-    })
+export default function (options) {
+  const config = cwd(options.config || 'bili.config.js')
+  const pkgConfig = readInPkg(cwd('package.json'))
+  if (fs.existsSync(config)) {
+    return Object.assign(require(config), pkgConfig)
+  }
+  return pkgConfig
 }

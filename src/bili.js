@@ -1,13 +1,11 @@
-'use strict'
-const rollup = require('rollup')
-const watch = require('rollup-watch')
-const switchy = require('switchy')
-const co = require('co')
-const chalk = require('chalk')
-const fancyLog = require('fancy-log')
-const merge = require('lodash.merge')
-const getRollupOptions = require('./get-rollup-options')
-const getCustomOptions = require('./get-custom-options')
+import * as rollup from 'rollup'
+import watch from 'rollup-watch'
+import switchy from 'switchy'
+import chalk from 'chalk'
+import fancyLog from 'fancy-log'
+import merge from 'lodash.merge'
+import getRollupOptions from './get-rollup-options'
+import getCustomOptions from './get-custom-options'
 
 function log(type, msg, color) {
   if (!color) {
@@ -17,9 +15,9 @@ function log(type, msg, color) {
   fancyLog(`${color(type)} ${msg}`)
 }
 
-module.exports = co.wrap(function * (options) {
+export default function (options) {
   options = options || {}
-  const customOptions = yield getCustomOptions(options)
+  const customOptions = getCustomOptions(options)
 
   options = merge({
     entry: './src/index.js',
@@ -35,7 +33,7 @@ module.exports = co.wrap(function * (options) {
     formats.push('umd-compress')
   }
 
-  return yield Promise.all(formats.map(format => {
+  return Promise.all(formats.map(format => {
     const rollupOptions = getRollupOptions(options, format)
     if (options.watch) {
       let init
@@ -73,4 +71,4 @@ module.exports = co.wrap(function * (options) {
       return bundle.write(rollupOptions)
     })
   }))
-})
+}

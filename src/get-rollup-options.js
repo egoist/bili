@@ -1,7 +1,6 @@
-'use strict'
-const path = require('path')
-const camelcase = require('camelcase')
-const _ = require('./utils')
+import path from 'path'
+import camelcase from 'camelcase'
+import req from 'req-cwd'
 
 function getDest(options, format, compress) {
   const name = options.name || 'index'
@@ -20,7 +19,7 @@ function getMap(options, compress) {
   return compress ? true : options.map
 }
 
-module.exports = function (options, format) {
+export default function (options, format) {
   let compress = false
   if (format === 'umd-compress') {
     format = 'umd'
@@ -30,7 +29,7 @@ module.exports = function (options, format) {
   const plugins = []
 
   const js = options.js || 'buble'
-  const jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : require(_.cwd(`rollup-plugin-${js}`))
+  const jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
   let jsOptions = options[js] || {}
 
   // add default options for buble plugin

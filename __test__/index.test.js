@@ -9,7 +9,7 @@ function cwd(filePath) {
   return path.join(__dirname, filePath || '')
 }
 
-beforeEach(() => {
+afterEach(() => {
   rm.sync(cwd('dist*'))
 })
 
@@ -43,5 +43,16 @@ test('it replaces string using rollup-plugin-replace', () => {
   }).then(() => {
     const foo = require('./dist2/index.common.js')
     expect(foo.version).toBe('0.0.0')
+  })
+})
+
+test('use typescript', () => {
+  return bili({
+    entry: cwd('fixtures/index.ts'),
+    outDir: 'dist3',
+    js: 'typescript',
+  }).then(() => {
+    const foo = require('./dist3/index.common.js')
+    expect(foo()).toBe(123)
   })
 })

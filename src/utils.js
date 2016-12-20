@@ -1,8 +1,5 @@
-'use strict'
-const path = require('path')
+import path from 'path'
 
-module.exports = {
-  cwd(filePath) {
-    return path.resolve(process.cwd(), filePath || '')
-  }
+export function cwd(...args) {
+  return path.resolve(process.cwd(), ...args)
 }

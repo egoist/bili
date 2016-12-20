@@ -1,8 +1,7 @@
-'use strict'
-const meow = require('meow')
-const chalk = require('chalk')
-const update = require('update-notifier')
-const bili = require('./bili')
+import meow from 'meow'
+import chalk from 'chalk'
+import update from 'update-notifier'
+import bili from './bili'
 
 const cli = meow(`
   Usage:
