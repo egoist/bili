@@ -1,7 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const rm = require('rimraf')
-const bili = require('../lib/bili')
+import fs from 'fs'
+import path from 'path'
+import rm from 'rimraf'
+import bili from '../src/bili'
 
 process.chdir(__dirname)
 

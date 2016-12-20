@@ -10,10 +10,11 @@
     "url": "github.com/egoist"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
-    "test": "jest --env node --coverage && eslint lib/*.js"
+    "test": "jest --env node --coverage && eslint src/*.js",
+    "build": "babel src --out-dir lib"
   },
   "main": "lib/bili.js",
   "bin": "cli.js",
@@ -30,6 +31,9 @@
     "es6"
   ],
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.18.0",
     "coveralls": "^2.11.13",
     "eslint": "^3.10.2",
     "eslint-config-rem": "^2.0.0",
