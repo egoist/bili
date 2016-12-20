@@ -13,7 +13,7 @@
     "node": ">=6"
   },
   "scripts": {
-    "test": "jest --env node && eslint src/*.js",
+    "test": "jest --env node && eslint src/*.js && npm run build",
     "test:ci": "jest --env node --coverage && eslint src/*.js",
     "build": "babel src --out-dir lib"
   },
