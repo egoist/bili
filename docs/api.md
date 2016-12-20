@@ -46,7 +46,7 @@ This is some feature which is similar to Webpack's `resolve.alias`.
 
 Type: `string`
 
-And string that can be load via `require(\`rollup-plugin-${js}\`)`, used for transpiling ESnext code.
+And string that can be load via `require('rollup-plugin-'+js)`, used for transpiling ESnext code.
 
 ### replace
 
