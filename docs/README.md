@@ -84,13 +84,13 @@ module.exports = {
 
 For details please checkout https://github.com/rollup/rollup/wiki/JavaScript-API#exports
 
-### Formats
+### Format
 
 Only two formats are supported:
 
 ```js
 module.exports = {
-  formats: ['cjs', 'umd']
+  format: ['cjs', 'umd']
 }
 ```
 
@@ -103,5 +103,15 @@ When you add a `umd` format, the `moduleName` would be required too, since we ne
 ```js
 module.exports = {
   moduleName: 'React'
+}
+```
+
+#### compress
+
+Use `compress` option to generate compressed file and its sourcemaps.
+
+```js
+module.exports = {
+  compress: true
 }
 ```
