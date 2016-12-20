@@ -40,7 +40,7 @@ Enable this option to generate an extra compressed file for the UMD bundle, and 
 
 Type: `object`
 
-This is some feature which is similar to Webpack's `alias`.
+This is some feature which is similar to Webpack's `resolve.alias`.
 
 ### js
 
