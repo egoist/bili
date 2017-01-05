@@ -22,6 +22,7 @@ const cli = meow(`
     --compress          Generate an extra compressed file suffixed with \`.min\` and sourcemap
     --skip              Exclude specfic modules in node_modules dir from bundled file
     --jsnext            Respect jsnext field in package.json as resolving node_modules
+    --browser           Respect browser field in package.json as resolving node_modules
     --alias             Add alias option
     --replace           Add replace option
     --flow              Remove flow type annotations

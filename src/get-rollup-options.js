@@ -70,7 +70,8 @@ export default function (options, format) {
     plugins.push(
       require('rollup-plugin-node-resolve')({
         skip: options.skip,
-        jsnext: options.jsnext
+        jsnext: options.jsnext,
+        browser: options.browser
       }),
       require('rollup-plugin-commonjs')()
     )
