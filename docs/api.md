@@ -113,6 +113,7 @@ Default:
 
 ```js
 {
+  objectAssign: 'Object.assign',
   generator: false,
   dangerousForOf: true
 }
