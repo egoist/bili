@@ -16,8 +16,8 @@ function readInPkg(file) {
 }
 
 // read => bili.config.js & package.json
-export default function (options) {
-  const config = cwd(options.config || 'bili.config.js')
+export default function (file) {
+  const config = cwd(file || 'bili.config.js')
   const pkgConfig = readInPkg(cwd('package.json'))
   if (fs.existsSync(config)) {
     return Object.assign(require(config), pkgConfig)

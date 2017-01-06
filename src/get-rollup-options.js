@@ -37,6 +37,7 @@ export default function (options, format) {
     const transforms = jsOptions.transforms
     delete jsOptions.transforms
     jsOptions = {
+      objectAssign: 'Object.assign',
       transforms: {
         generator: false,
         dangerousForOf: true,
@@ -70,7 +71,8 @@ export default function (options, format) {
     plugins.push(
       require('rollup-plugin-node-resolve')({
         skip: options.skip,
-        jsnext: options.jsnext,
+        jsnext: options.esModule,
+        module: options.esModule,
         browser: options.browser
       }),
       require('rollup-plugin-commonjs')()

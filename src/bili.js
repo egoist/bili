@@ -5,7 +5,7 @@ import chalk from 'chalk'
 import fancyLog from 'fancy-log'
 import merge from 'lodash.merge'
 import getRollupOptions from './get-rollup-options'
-import getCustomOptions from './get-custom-options'
+import getConfig from './get-config'
 
 function log(type, msg, color) {
   if (!color) {
@@ -15,15 +15,14 @@ function log(type, msg, color) {
   fancyLog(`${color(type)} ${msg}`)
 }
 
-export default function (options) {
-  options = options || {}
-  const customOptions = getCustomOptions(options)
+export default function (options = {}) {
+  const userConfig = getConfig(options.config)
 
   options = merge({
     entry: './src/index.js',
-    exports: options.exports || 'default',
+    exports: options.exports,
     format: ['cjs']
-  }, customOptions, options)
+  }, userConfig, options)
 
   let formats = options.format
   if (!Array.isArray(formats)) {

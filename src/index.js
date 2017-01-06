@@ -1,58 +1,40 @@
-import meow from 'meow'
-import chalk from 'chalk'
+import cac from 'cac'
 import update from 'update-notifier'
 import bili from './bili'
 
-const cli = meow(`
-  Usage:
-    bili [entry] [options]
-
-  Examples:
-    bili -d lib --replace.VERSION "0.0.1"
-    bili --format umd --format umd --compress
-
-  Options:
-    --config, -c         Path to config file
-    --watch, -w         Enable file watcher for incremental builds
-    --name, -n          Filename of bundled file, no extenstion and format suffix
-    --out-dir, -d       The directory to dest files
-    --format            Bundle format, cjs/umd
-    --module-name       UMD module name, required in \`--format\` umd
-    --map               Source map value, can be a boolean or \`inline\`
-    --compress          Generate an extra compressed file suffixed with \`.min\` and sourcemap
-    --skip              Exclude specfic modules in node_modules dir from bundled file
-    --jsnext            Respect jsnext field in package.json as resolving node_modules
-    --browser           Respect browser field in package.json as resolving node_modules
-    --alias             Add alias option
-    --replace           Add replace option
-    --flow              Remove flow type annotations
-    --exports           Specific what export mode to use
-    --version, -v       Output version
-    --help, -h          Output help (You are here!)
-
-  For more complex configuration please head to https://github.com/egoist/bili#usage
-`, {
-  alias: {
-    h: 'help',
-    v: 'version',
-    d: 'out-dir',
-    n: 'name',
-    w: 'watch',
-    c: 'config'
-  }
-})
+const cli = cac()
 
 update({pkg: cli.pkg}).notify()
 
-const options = Object.assign({
-  entry: cli.input[0]
-}, cli.flags)
+cli
+  .option('config, c', 'Path to config file', 'bili.config.js')
+  .option('watch, w', 'Run in watch mode')
+  .option('name, n', 'The filename of output file, no extension')
+  .option('out-dir, d', 'The output directory', 'dist')
+  .option('format', 'Bundle format, array of string', 'cjs')
+  .option('module-name', 'The module name for UMD builds')
+  .option('map', 'Generate sourcemap, boolean or `inline`', false)
+  .option('compress', 'Generate a UMD bundle and compress it with sourcemaps')
+  .option('skip', 'Exclude specfic modules in node_modules dir from bundled file')
+  .option('es-module', 'Respect `jsnext:main` and `module` field in package.json', true)
+  .option('browser', 'Respect `browser` field in package.json', false)
+  .option('alias', 'Set option for rollup-plugin-alias')
+  .option('replace', 'Set option for rollup-plugin-replace')
+  .option('flow', 'Remove flow type annotations', false)
+  .option('exports', 'Specific what export mode to use, `default` or `named`')
 
-bili(options).catch(err => {
-  if (err.snippet) {
-    console.error(chalk.red(`---\n${err.snippet}\n---`))
-  }
-  console.error(err.stack)
-  process.exit(1) // eslint-disable-line xo/no-process-exit
+cli.command('*', 'Bundle with bili', (input, flags) => {
+  const options = Object.assign({
+    entry: input[0]
+  }, flags)
+
+  return bili(options).catch(err => {
+    if (err.snippet) {
+      console.error(chalk.red(`---\n${err.snippet}\n---`))
+    }
+    console.error(err.stack)
+    process.exit(1) // eslint-disable-line xo/no-process-exit
+  })
 })
 
+cli.parse()

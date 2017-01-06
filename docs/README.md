@@ -74,7 +74,7 @@ module.exports = {
 
 ### Named Exports
 
-ES6 modules support named exports, when you only have a `default` export, it's fine, but once you have multiple exports, please set `exports` to `named`:
+Default to `auto`, but you can set it to `default` `named` or `none`.
 
 ```js
 module.exports = {
