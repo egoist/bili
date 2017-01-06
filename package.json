@@ -53,7 +53,7 @@
     "fancy-log": "^1.2.0",
     "lodash.merge": "^4.6.0",
     "req-cwd": "^1.0.1",
-    "rollup": "^0.37.0",
+    "rollup": "0.39.2",
     "rollup-plugin-alias": "^1.2.0",
     "rollup-plugin-async": "^1.2.0",
     "rollup-plugin-buble": "^0.15.0",

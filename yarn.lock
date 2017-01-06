@@ -3259,9 +3259,9 @@ rollup-watch@^2.5.0:
   dependencies:
     semver "^5.1.0"
 
-rollup@^0.37.0:
-  version "0.37.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.37.2.tgz#cc159d20a2f3615ccc2248a4385aacbb3d6d6042"
+rollup@0.39.2:
+  version "0.39.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.39.2.tgz#858cf3020027cf74e0c5d7faa1c18275faf00df4"
   dependencies:
     source-map-support "^0.4.0"
 

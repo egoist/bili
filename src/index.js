@@ -30,6 +30,7 @@ cli.command('*', 'Bundle with bili', (input, flags) => {
   }, flags)
 
   return bili(options).catch(err => {
+    console.log(err)
     if (err.snippet) {
       console.error(chalk.red(`---\n${err.snippet}\n---`))
     }
