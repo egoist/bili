@@ -1,4 +1,5 @@
 import cac from 'cac'
+import chalk from 'chalk'
 import update from 'update-notifier'
 import bili from './bili'
 
@@ -32,7 +33,7 @@ cli.command('*', 'Bundle with bili', (input, flags) => {
     if (err.snippet) {
       console.error(chalk.red(`---\n${err.snippet}\n---`))
     }
-    console.error(err.stack)
+    console.error(err.message)
     process.exit(1) // eslint-disable-line xo/no-process-exit
   })
 })
