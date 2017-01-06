@@ -7,7 +7,9 @@ function getDest(options, format, compress) {
   const dir = options.outDir || './dist'
   let suffix = '.js'
   if (format === 'cjs') {
-    suffix = '.common.js'
+    suffix = '.cjs.js'
+  } else if (format === 'es') {
+    suffix = '.es.js'
   } else if (compress) {
     suffix = '.min.js'
   }
