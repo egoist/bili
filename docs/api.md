@@ -77,9 +77,23 @@ Remove flow type annotations.
 ### exports
 
 Type: `string`<br>
-Default: `default`
+Default: `auto`
 
 [Specific what export mode to use](https://github.com/rollup/rollup/wiki/JavaScript-API#exports).
+
+### browser
+
+Type: `boolean`<br>
+Default: `false`
+
+Respect `browser` field in `package.json`
+
+### esModule
+
+Type: `boolean`<br>
+Default: `true`
+
+Respect `jsnext:main` and `module` field in `package.json`
 
 ### watch
 

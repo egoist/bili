@@ -86,7 +86,7 @@ For details please checkout https://github.com/rollup/rollup/wiki/JavaScript-API
 
 ### Format
 
-Only two formats are supported:
+Available formats: `cjs` `es` `umd`
 
 ```js
 module.exports = {
