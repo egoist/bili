@@ -25,7 +25,7 @@ test('it builds successfully', () => {
     format: ['umd', 'cjs'],
     exports: 'named'
   }).then(() => {
-      const foo = require('./dist/index.cjs.js')
+      const foo = require('./dist/index.common.js')
       expect(foo.default).toEqual(1)
       const bar = require('./dist/index.js')
       expect(bar.default).toEqual(1)
@@ -41,7 +41,7 @@ test('it replaces string using rollup-plugin-replace', () => {
       __VERSION__: '0.0.0'
     }
   }).then(() => {
-    const foo = require('./dist2/index.cjs.js')
+    const foo = require('./dist2/index.common.js')
     expect(foo.version).toBe('0.0.0')
   })
 })
@@ -52,7 +52,7 @@ test('use typescript', () => {
     outDir: 'dist3',
     js: 'typescript',
   }).then(() => {
-    const foo = require('./dist3/index.cjs.js')
+    const foo = require('./dist3/index.common.js')
     expect(foo()).toBe(123)
   })
 })
