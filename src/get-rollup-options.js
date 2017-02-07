@@ -28,7 +28,7 @@ export default function (options, format) {
     compress = true
   }
 
-  const plugins = []
+  let plugins = []
 
   const js = options.js || 'buble'
   const jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
@@ -60,6 +60,10 @@ export default function (options, format) {
   }
 
   plugins.push(jsPlugin(jsOptions))
+
+  if (options.plugins) {
+    plugins = [...plugins, ...options.plugins]
+  }
 
   if (options.alias) {
     plugins.push(require('rollup-plugin-alias')(options.alias))

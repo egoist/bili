@@ -95,6 +95,20 @@ Default: `true`
 
 Respect `jsnext:main` and `module` field in `package.json`
 
+### plugins
+
+Type: `Array`
+
+Add custom Rollup plugins, for example, to support `.vue` files:
+
+```js
+module.exports = {
+  plugins: [
+    require('rollup-plugin-vue')()
+  ]
+}
+```
+
 ### watch
 
 Type: `boolean`<br>
