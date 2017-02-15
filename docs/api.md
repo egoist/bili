@@ -120,6 +120,13 @@ Run Rollup in watch mode, which means you will have faster incremental builds.
 
 Options for `rollup-plugin-buble`.
 
+#### buble.objectAssign
+
+Type: `string`<br>
+Default: `Object.assign`
+
+The `Object.assign` that used in object spreading.
+
 #### buble.transforms
 
 Type: `object`<br>
@@ -127,7 +134,6 @@ Default:
 
 ```js
 {
-  objectAssign: 'Object.assign',
   generator: false,
   dangerousForOf: true
 }
