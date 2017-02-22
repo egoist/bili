@@ -54,6 +54,12 @@ Type: `object`
 
 Add options to [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace).
 
+### external
+
+Type: `Array` `Function`
+
+[Exclude files or modules.](https://github.com/rollup/rollup/wiki/JavaScript-API#external)
+
 ### paths
 
 Type: `object`
