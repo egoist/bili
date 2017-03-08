@@ -41,7 +41,8 @@
     "eslint-config-rem": "^2.0.0",
     "jest-cli": "^15.1.1",
     "rimraf": "^2.5.4",
-    "rollup-plugin-typescript": "^0.8.1"
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-vue": "^2.2.21"
   },
   "eslintConfig": {
     "extends": "rem/esnext"

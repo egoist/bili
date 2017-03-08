@@ -45,6 +45,7 @@ export default function (options, format) {
         dangerousForOf: true,
         ...transforms
       },
+      include: ['**/*.{js,jsx,es6}'],
       ...jsOptions
     }
   }
@@ -62,7 +63,14 @@ export default function (options, format) {
   plugins.push(jsPlugin(jsOptions))
 
   if (options.plugins) {
-    plugins = [...plugins, ...options.plugins]
+    const _plugins = Array.isArray(options.plugins) ? options.plugins : [options.plugins]
+    const extraPlugins = _plugins.map(p => {
+      if (typeof p === 'string') {
+        return req(`rollup-plugin-${p}`)(options[p])
+      }
+      return p
+    })
+    plugins = [...plugins, ...extraPlugins]
   }
 
   if (options.alias) {

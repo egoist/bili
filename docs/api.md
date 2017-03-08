@@ -103,7 +103,7 @@ Respect `jsnext:main` and `module` field in `package.json`
 
 ### plugins
 
-Type: `Array`
+Type: `Array<string>` `Array<plugin>`
 
 Add custom Rollup plugins, for example, to support `.vue` files:
 
@@ -114,6 +114,17 @@ module.exports = {
   ]
 }
 ```
+
+Or use string:
+
+```js
+module.exports = {
+  plugins: ['vue'],
+  vue: {} // options for `rollup-plugin-vue`
+}
+```
+
+Using `string` is handy since you can directly do `bili --plugins vue --vue.css style.css` in CLI without a config file.
 
 ### watch
 
