@@ -25,7 +25,7 @@ dist/[name].min.js
 dist/[name].min.js.map
 ```
 
-Not enough? You can have them all in one command `bili --format cjs --formar es --format umd --compress`:
+Not enough? You can have them all in one command `bili --format cjs --format es --format umd --compress`:
 
 ```bash
 dist/[name].js
