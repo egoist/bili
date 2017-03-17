@@ -7,26 +7,40 @@
 <a href="https://codecov.io/gh/egoist/bili"><img src="https://img.shields.io/codecov/c/github/egoist/bili.svg?style=flat"></a>
 </p>
 
-## tl;dr
+## Introduction
+
+Running command `bili` it will compile `src/index.js` to:
 
 ```bash
-# previously named `bubleup`
-$ bili
-# is the same as
-$ bili src/index.js --out-dir dist
-
-# watch mode
-$ bili --watch
+dist/[name].common.js
 ```
 
-## Why is this useful?
+The `[name]` is `name` in `package.json` or `index.js` as fallback.
 
-I always repeat the same configurations for bundling my javascript libraries. With bili you can simply run `bili` to generate `commonjs`-format code and or append `--format umd` to generate `umd`-format code, and it's fast! You can even pass `--compress` to generate compressed file and sourcemap.
+You can also generate UMD bundle and compress it with: `bili --format umd --compress`, then you get:
+
+```bash
+dist/[name].js
+dist/[name].min.js
+dist/[name].min.js.map
+```
+
+Not enough? You can have them all in one command `bili --format cjs --formar es --format umd --compress`:
+
+```bash
+dist/[name].js
+dist/[name].min.js
+dist/[name].min.js.map
+dist/[name].common.js
+dist/[name].es.js
+```
+
+**Note:** In `UMD` format all third-party libraries will be bundled in dist files, while in other formats they are excluded.
 
 ## Install
 
 ```bash
-$ npm install -g bili
+npm install -g bili
 ```
 
 [Dive into the documentation](https://unipahq.github.io/bili/) if you are ready to bundle!
