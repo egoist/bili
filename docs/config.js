@@ -1,4 +1,4 @@
-self.$config = {
+docute.init({
   title: 'Bili',
   repo: 'unipahq/bili',
   twitter: 'rem_rin_rin',
@@ -9,4 +9,4 @@ self.$config = {
       {title: 'API', path: '/api'}
     ]
   }
-}
+})
