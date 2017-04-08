@@ -65,7 +65,7 @@ test('extra plugins', () => {
     vue: {css: 'dist4/style.css'}
   }).then(() => {
     const foo = require('./dist4/index.common.js')
-    expect(foo.template).toBe('<div id=\"app\">hello</div>')
+    expect(typeof foo.render).toBe('function')
     expect(fs.existsSync('./dist4/style.css')).toBe(true)
   })
 })

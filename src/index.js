@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-process-exit */
 import cac from 'cac'
 import chalk from 'chalk'
 import update from 'update-notifier'
@@ -5,7 +6,7 @@ import bili from './bili'
 
 const cli = cac()
 
-update({pkg: cli.pkg}).notify()
+update({ pkg: cli.pkg }).notify()
 
 cli
   .option('config, c', 'Path to config file', 'bili.config.js')

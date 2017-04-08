@@ -1,5 +1,5 @@
 import fs from 'fs'
-import {cwd} from './utils'
+import { cwd } from './utils'
 
 function readInPkg(file) {
   try {
@@ -15,7 +15,7 @@ function readInPkg(file) {
   }
 }
 
-// read => bili.config.js & package.json
+// Read => bili.config.js & package.json
 export default function (file) {
   const config = cwd(file || 'bili.config.js')
   const pkgConfig = readInPkg(cwd('package.json'))

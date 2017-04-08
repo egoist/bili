@@ -34,7 +34,7 @@ export default function (options, format) {
   const jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
   let jsOptions = options[js] || {}
 
-  // add default options for buble plugin
+  // Add default options for buble plugin
   if (js === 'buble') {
     const transforms = jsOptions.transforms
     delete jsOptions.transforms
@@ -50,7 +50,7 @@ export default function (options, format) {
     }
   }
 
-  // for buble
+  // For buble
   // optionally compile async/await to generator function
   if (js === 'buble' && jsOptions.async !== false) {
     plugins.push(require('rollup-plugin-async')())
@@ -106,7 +106,7 @@ export default function (options, format) {
 
   let external
   if (format === 'cjs') {
-    // exclude .json files in commonjs bundle
+    // Exclude .json files in commonjs bundle
     external = id => /\.json$/.test(id)
   }
   external = options.external || external
