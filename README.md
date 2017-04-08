@@ -15,7 +15,7 @@ Running command `bili` it will compile `src/index.js` to:
 dist/[name].common.js # commonjs format
 ```
 
-The `[name]` is `name` in `package.json` or `index.js` as fallback.
+The `[name]` is `name` in `package.json` or `index` as fallback.
 
 You can also generate UMD bundle and compress it with: `bili --format umd --compress`, then you get:
 
