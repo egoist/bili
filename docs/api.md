@@ -29,6 +29,13 @@ Specific the bundle format, it could be a string like `'umd'` or multiple target
 
 You should specfic a `moduleName` if you target `umd`, otherwise fallback to `name`.
 
+### outDir
+
+Type: `string`<br>
+Default: `dist`
+
+Output directory.
+
 ### compress
 
 Type: `boolean`<br>
@@ -46,7 +53,7 @@ This is some feature which is similar to Webpack's `resolve.alias`.
 
 Type: `string`
 
-And string that can be load via `require('rollup-plugin-'+js)`, used for transpiling ESnext code.
+Load a custom plugin to transpile javascript, eg: `js: 'typescript'` then we load `rollup-plugin-typescript`, and you can configure it via `options.typescript`.
 
 ### replace
 

@@ -25,7 +25,9 @@ Then you can use it via `yarn bili` in your project or configure it in your npm 
 
 For some CLI usages please run `yarn bili -- -h` to check out.
 
-CLI options can be kept at `./bili.config.js` too.
+<p class="tip">
+CLI options can be kept at `./bili.config.js` too. But since the design purpose of bili is to reduce config file, it's recommended to use CLI options with npm scripts directly or configure property `bili` in `package.json`.
+</p>
 
 ## How does it work?
 
