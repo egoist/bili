@@ -31,7 +31,16 @@ export default function (options, format) {
   let plugins = []
 
   const js = options.js || 'buble'
-  const jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
+  let jsPlugin
+  try {
+    jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
+  } catch (err) {
+    if (/missing path/.test(err.message)) {
+      throw new Error(`rollup-plugin-${js} was not found in current working directory!`)
+    } else {
+      throw err
+    }
+  }
   let jsOptions = options[js] || {}
 
   // Add default options for buble plugin
