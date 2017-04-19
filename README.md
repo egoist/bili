@@ -65,7 +65,7 @@ export default {
 }
 ```
 
-You can use an array as `targets` to generate bundles in multiple format, which is really neat and helpful.
+You can use an array as `targets` to generate bundles in multiple formats, which is really neat and helpful.
 
 However, you can't apply different plugins to different target, which means you still need more config files. For example, add `rollup-plugin-node-resolve` and `rollup-plugin-commonjs` in `umd` build, and what about minification? It's yet another config file.
 
@@ -82,7 +82,7 @@ Everything can be done via CLI options, if it's too long to read, you can keep t
   "bili": {
     "entry": "src/main.js",
     "format": ["cjs", "umd", "es"],
-    "compress": true // note: it only compresses umd bundle and will generates sourcemaps
+    "compress": true // note: it only compresses umd bundle and will generate sourcemaps
   }
 }
 ```
