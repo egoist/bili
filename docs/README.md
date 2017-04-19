@@ -43,20 +43,22 @@ If multiple formats are detected it just runs multiple rollup instances.
 const bubleOptions = {
   transforms: {
     generator: false,
-    dangerousForOf: false
+    dangerousForOf: true
   }
 }
 ```
 
-buble does not support compiling generator to ES5, for `dangerousForOf` please checkout buble's [guide](https://buble.surge.sh/guide/#dangerous-transforms).
+buble does not support compiling generator to ES5, so we set it to `false` to ignore it, otherwise it will throw syntax error.
 
-You can override this option by updating config file:
+For `dangerousForOf` we enabled it by default, please checkout buble's [guide](https://buble.surge.sh/guide/#dangerous-transforms) for more info.
+
+You can override this option by updating config file or using CLI options:
 
 ```js
 // bili.config.js
 module.exports = {
   buble: {
-    // ..your options
+    // ..buble options
   }
 }
 ```
@@ -73,6 +75,8 @@ module.exports = {
   typescript: {}
 }
 ```
+
+In CLI it would be similar to: `bili --js typescript --typescript.someOption someValue`
 
 ### Named Exports
 
