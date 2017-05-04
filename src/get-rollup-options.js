@@ -28,7 +28,9 @@ export default function (options, format) {
     compress = true
   }
 
-  let plugins = []
+  let plugins = [
+    require('rollup-plugin-json')(options.json)
+  ]
 
   const js = options.js || 'buble'
   let jsPlugin
