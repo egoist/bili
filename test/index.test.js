@@ -56,16 +56,3 @@ test('use typescript', () => {
     expect(foo()).toBe(123)
   })
 })
-
-test('extra plugins', () => {
-  return bili({
-    entry: cwd('fixtures/foo.vue'),
-    outDir: 'dist4',
-    plugins: 'vue',
-    vue: {css: 'dist4/style.css'}
-  }).then(() => {
-    const foo = require('./dist4/index.common.js')
-    expect(typeof foo.render).toBe('function')
-    expect(fs.existsSync('./dist4/style.css')).toBe(true)
-  })
-})
