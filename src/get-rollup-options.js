@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import path from 'path'
 import camelcase from 'camelcase'
 import req from 'req-cwd'
@@ -32,18 +33,9 @@ export default function (options, format) {
     require('rollup-plugin-json')(options.json)
   ]
 
-  const js = options.js || 'buble'
-  let jsPlugin
-  try {
-    jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
-  } catch (err) {
-    if (/missing path/.test(err.message)) {
-      throw new Error(`rollup-plugin-${js} was not found in current working directory!`)
-    } else {
-      throw err
-    }
-  }
-  let jsOptions = options[js] || {}
+  const js = options.js === false ? null : (options.js || 'buble')
+
+  let jsOptions = (js && options[js]) || {}
 
   // Add default options for buble plugin
   if (js === 'buble') {
@@ -59,19 +51,30 @@ export default function (options, format) {
       include: ['**/*.{js,jsx,es6}'],
       ...jsOptions
     }
-  }
 
-  // For buble
-  // optionally compile async/await to generator function
-  if (js === 'buble' && jsOptions.async !== false) {
-    plugins.push(require('rollup-plugin-async')())
+    // optionally compile async/await to generator function
+    if (js === 'buble' && jsOptions.async !== false) {
+      plugins.push(require('rollup-plugin-async')())
+    }
   }
 
   if (options.flow) {
     plugins.push(require('rollup-plugin-flow')())
   }
 
-  plugins.push(jsPlugin(jsOptions))
+  if (js) {
+    let jsPlugin
+    try {
+      jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
+      plugins.push(jsPlugin(jsOptions))
+    } catch (err) {
+      if (/missing path/.test(err.message)) {
+        throw new Error(`rollup-plugin-${js} was not found in current working directory!`)
+      } else {
+        throw err
+      }
+    }
+  }
 
   if (options.plugins) {
     const _plugins = Array.isArray(options.plugins) ? options.plugins : [options.plugins]
