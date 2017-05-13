@@ -56,7 +56,7 @@ Default: `buble`
 
 Load a custom plugin to transpile javascript, eg: `js: 'typescript'` then we load `rollup-plugin-typescript`, and you can configure it via `options.typescript`.
 
-To disable default Buble transformation, you cans set it to `false`.
+To disable default Buble transformation, you can set it to `false`.
 
 ### replace
 
