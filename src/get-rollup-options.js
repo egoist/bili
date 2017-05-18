@@ -95,7 +95,7 @@ export default function (options, format) {
     plugins.push(require('rollup-plugin-replace')(options.replace))
   }
 
-  if (format === 'umd') {
+  if (format === 'umd' || options.resolve) {
     plugins.push(
       require('rollup-plugin-node-resolve')({
         skip: options.skip,

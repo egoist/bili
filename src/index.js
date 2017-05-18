@@ -24,6 +24,7 @@ cli
   .option('replace', 'Set option for rollup-plugin-replace')
   .option('flow', 'Remove flow type annotations', false)
   .option('exports', 'Specific what export mode to use, `default` or `named`')
+  .option('resolve', 'Resolve externals on all format', false)
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign({
