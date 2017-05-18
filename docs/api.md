@@ -58,6 +58,13 @@ Load a custom plugin to transpile javascript, eg: `js: 'typescript'` then we loa
 
 To disable default Buble transformation, you can set it to `false`.
 
+### resolve
+
+Type: `boolean`<br>
+Default: `undefined`
+
+Resolve external dependencies, it's always `true` in `umd` format.
+
 ### replace
 
 Type: `object`
