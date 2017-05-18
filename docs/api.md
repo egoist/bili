@@ -111,7 +111,7 @@ Default: `false`
 
 Respect `browser` field in `package.json`
 
-### esModule
+### esModules
 
 Type: `boolean`<br>
 Default: `true`

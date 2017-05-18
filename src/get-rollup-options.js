@@ -96,11 +96,12 @@ export default function (options, format) {
   }
 
   if (format === 'umd' || options.resolve) {
+    const esModules = options.esModules === undefined ? true : options.esModules
     plugins.push(
       require('rollup-plugin-node-resolve')({
         skip: options.skip,
-        jsnext: options.esModule,
-        module: options.esModule,
+        jsnext: esModules,
+        module: esModules,
         browser: options.browser
       }),
       require('rollup-plugin-commonjs')()
