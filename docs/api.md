@@ -70,7 +70,7 @@ Resolve external dependencies, it's always `true` in `umd` format.
 Type: `object`<br>
 Default: `{ include: 'node_modules/**' }`
 
-Options for [rollup-plugin-commonjs](https://github.com/rollup/rollup-plugin-commonjs), this plugin is only available in `umd` format or option `resolve` is `true`. Since it's used to resolve CommonJS dependencies in node_modules.
+Options for [rollup-plugin-commonjs](https://github.com/rollup/rollup-plugin-commonjs), this plugin is only available in `umd` format or when option `resolve` is `true`. Since it's used to resolve CommonJS dependencies in `node_modules`.
 
 ### replace
 
