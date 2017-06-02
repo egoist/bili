@@ -1,6 +1,6 @@
 {
   "name": "bili",
-  "version": "0.15.4",
+  "version": "0.15.5",
   "description": "Transpile ESnext code with Rollup and Buble.",
   "license": "MIT",
   "repository": "egoist/bili",
