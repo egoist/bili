@@ -88,6 +88,6 @@ test('custom buble transforms', async () => {
   const foo = require('./dist5/index.common.js')
   expect(foo).toEqual(['a=', 'b='])
 
-  const bar = require('./dist5/index.es.js')
+  const bar = require('./dist5/index.es.js').default
   expect(bar).toEqual(['a=', 'b='])
 })
