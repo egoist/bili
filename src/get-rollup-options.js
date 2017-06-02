@@ -40,16 +40,15 @@ export default function (options, format) {
   // Add default options for buble plugin
   if (js === 'buble') {
     const transforms = jsOptions.transforms
-    delete jsOptions.transforms
     jsOptions = {
       objectAssign: 'Object.assign',
+      include: ['**/*.{js,jsx,es6}'],
+      ...jsOptions,
       transforms: {
         generator: false,
         dangerousForOf: true,
         ...transforms
-      },
-      include: ['**/*.{js,jsx,es6}'],
-      ...jsOptions
+      }
     }
 
     // optionally compile async/await to generator function
