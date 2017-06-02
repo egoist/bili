@@ -72,3 +72,22 @@ test('ignore js plugin', async () => {
   const content = await fs.readFile('./dist4/index.common.js', 'utf8')
   expect(content).toMatch(`const foo = () => 'foo'`)
 })
+
+test('custom buble transforms', async () => {
+  await bili({
+    format: ['cjs', 'es'],
+    entry: cwd('fixtures/tagged-template-string.js'),
+    outDir: 'dist5',
+    buble: {
+      transforms: {
+        dangerousTaggedTemplateString: true
+      }
+    }
+  })
+
+  const foo = require('./dist5/index.common.js')
+  expect(foo).toEqual(['a=', 'b='])
+
+  const bar = require('./dist5/index.es.js')
+  expect(bar).toEqual(['a=', 'b='])
+})
