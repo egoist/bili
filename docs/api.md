@@ -122,8 +122,7 @@ Respect `browser` field in `package.json`
 Type: `boolean` `string` `object`<br>
 Default: `undefined`
 
-To insert content at top of bundle,
-the simplest use is to set it to `true`,
+To insert banner, the simplest use is to set it to `true`,
 then we will auto inject fields including
 `name`, `version`, `author`, `license`
 from `package.json` into banner:
@@ -143,18 +142,10 @@ module.exports = {
   }
 }
 ```
-Of course, you can use string:
+Of course, you can directly use string:
 ```js
 module.exports = {
   banner: '/* bilibili */'
-}
-```
-Note that when option `compress` is set to `true`,
-the string should contain `@preserve`:
-```js
-module.exports = {
-  compress: true,
-  banner: '/* bilibili | @preserve */'
 }
 ```
 

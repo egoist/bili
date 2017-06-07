@@ -109,13 +109,33 @@ export default function (options, format) {
     )
   }
 
+  let banner
+  if (options.banner) {
+    if (typeof options.banner === 'string') {
+      banner = options.banner
+    } else {
+      const pkg = typeof options.banner === 'object' ? options.banner : options.pkg
+      if (pkg) {
+        const name = pkg.name
+        const version = pkg.version ? 'v' + pkg.version : ''
+        const year = pkg.year || new Date().getFullYear()
+        const author = pkg.author ? (pkg.author.name || pkg.author) : ''
+        const license = pkg.license || ''
+        banner =
+          '/*!\n' +
+          ` * ${name} ${version}\n` +
+          ` * (c) ${year} ${author}\n` +
+          (license && ` * Released under the ${license} License.\n`) +
+          ' */'
+      }
+    }
+  }
+
   if (compress) {
     plugins.push(require('rollup-plugin-uglify')({
       output: {
         // Preserve banner
-        comments(node, comment) {
-          return comment.type === 'comment2' && /@preserve/.test(comment.value)
-        }
+        preamble: banner
       }
     }))
   }
@@ -133,29 +153,6 @@ export default function (options, format) {
     external = id => /\.json$/.test(id)
   }
   external = options.external || external
-
-  let banner
-  if (options.banner) {
-    if (typeof options.banner === 'string') {
-      banner = options.banner
-    } else {
-      const pkg = typeof options.banner === 'object' ? options.banner : options.pkg
-      if (pkg) {
-        const name = pkg.name
-        const version = pkg.version ? 'v' + pkg.version : ''
-        const year = pkg.year || new Date().getFullYear()
-        const author = pkg.author ? (pkg.author.name || pkg.author) : ''
-        const license = pkg.license || ''
-        banner =
-          '/*!\n' +
-          ` * ${name} ${version}\n` +
-          ` * (c) ${year} ${author}\n` +
-          (license && ` * Released under the ${pkg.license} License.\n`) +
-          (compress ? ' * @preserve\n' : '') +
-          ' */'
-      }
-    }
-  }
 
   return {
     exports: options.exports,

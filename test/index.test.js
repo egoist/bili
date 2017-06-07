@@ -130,8 +130,8 @@ test('it inserts banner', async () => {
     format: ['umd'],
     compress: true,
     exports: 'named',
-    banner: '/*! bilibili | @preserve */'
+    banner: '/*! bilibili */'
   })
   const content3 = await fs.readFile('./dist6/index.min.js', 'utf8')
-  expect(content3).toMatch('/*! bilibili | @preserve */')
+  expect(content3).toMatch('/*! bilibili */')
 })
