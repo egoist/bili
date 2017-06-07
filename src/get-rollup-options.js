@@ -110,7 +110,14 @@ export default function (options, format) {
   }
 
   if (compress) {
-    plugins.push(require('rollup-plugin-uglify')())
+    plugins.push(require('rollup-plugin-uglify')({
+      output: {
+        // Preserve banner
+        comments(node, comment) {
+          return comment.type === 'comment2' && /@preserve/.test(comment.value)
+        }
+      }
+    }))
   }
 
   let moduleName = 'index'
@@ -127,6 +134,29 @@ export default function (options, format) {
   }
   external = options.external || external
 
+  let banner
+  if (options.banner) {
+    if (typeof options.banner === 'string') {
+      banner = options.banner
+    } else {
+      const pkg = typeof options.banner === 'object' ? options.banner : options.pkg
+      if (pkg) {
+        const name = pkg.name
+        const version = pkg.version ? 'v' + pkg.version : ''
+        const year = pkg.year || new Date().getFullYear()
+        const author = pkg.author ? (pkg.author.name || pkg.author) : ''
+        const license = pkg.license || ''
+        banner =
+          '/*!\n' +
+          ` * ${name} ${version}\n` +
+          ` * (c) ${year} ${author}\n` +
+          (license && ` * Released under the ${pkg.license} License.\n`) +
+          (compress ? ' * @preserve\n' : '') +
+          ' */'
+      }
+    }
+  }
+
   return {
     exports: options.exports,
     entry: options.entry,
@@ -136,6 +166,7 @@ export default function (options, format) {
     plugins,
     format,
     moduleName,
-    external
+    external,
+    banner
   }
 }
