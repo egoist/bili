@@ -13,10 +13,8 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "BABEL_ENV=test jest --env node && xo src/*.js && npm run build",
-    "test:cov": "BABEL_ENV=test jest --env node --coverage && xo src/*.js",
-    "wintest": "set BABEL_ENV=test && jest --env node && xo src/*.js && npm run build",
-    "wintest:cov": "set BABEL_ENV=test && jest --env node --coverage && xo src/*.js",
+    "test": "cross-env BABEL_ENV=test jest --env node && xo src/*.js && npm run build",
+    "test:cov": "cross-env BABEL_ENV=test jest --env node --coverage && xo src/*.js",
     "build": "babel src --out-dir lib",
     "dev": "babel src --out-dir lib --watch"
   },
@@ -38,6 +36,7 @@
     "babel-cli": "^6.24.1",
     "babel-preset-env": "^1.4.0",
     "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.0.0",
     "eslint-config-rem": "^3.1.0",
     "fs-extra": "^3.0.1",
     "jest-cli": "^20.0.1",
