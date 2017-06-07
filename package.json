@@ -53,6 +53,7 @@
     "chalk": "^1.1.3",
     "fancy-log": "^1.2.0",
     "lodash.merge": "^4.6.0",
+    "parse-author": "^2.0.0",
     "req-cwd": "^2.0.0",
     "rollup": "0.39.2",
     "rollup-plugin-alias": "^1.3.1",
