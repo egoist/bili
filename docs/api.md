@@ -151,7 +151,7 @@ The output is like:
 ```js
 /*!
  * bili v5.2.0
- * (c) 2011-2017 EGOIST
+ * (c) 2011-present EGOIST
  * Released under the MIT License.
  */
 ```

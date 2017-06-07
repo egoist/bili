@@ -2,6 +2,7 @@
 import path from 'path'
 import camelcase from 'camelcase'
 import req from 'req-cwd'
+import parseAuthor from 'parse-author'
 
 function getDest(options, format, compress) {
   const name = options.name || 'index'
@@ -120,15 +121,21 @@ export default function (options, format) {
 
       const name = pkg.name
       const version = pkg.version ? `v${pkg.version}` : ''
-      const startYear = pkg.year ? parseInt(pkg.year, 10) : ''
-      const currentYear = new Date().getFullYear()
-      const author = pkg.author ? pkg.author.name || pkg.author : ''
+      const year = pkg.year || new Date().getFullYear()
+
+      let author = typeof pkg.author === 'string' ?
+        parseAuthor(pkg.author).name :
+        typeof pkg.author === 'object' ?
+        pkg.author.name :
+        ''
+      author = author ? author : ''
+
       const license = pkg.license || ''
 
       banner =
         '/*!\n' +
         ` * ${name} ${version}\n` +
-        ` * (c) ${startYear && startYear < currentYear && `${startYear}-`}${currentYear} ${author}\n` +
+        ` * (c) ${year}-present ${author}\n` +
         (license && ` * Released under the ${license} License.\n`) +
         ' */'
     }
