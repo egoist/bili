@@ -5,8 +5,8 @@ import req from 'req-cwd'
 import stringifyAuthor from 'stringify-author'
 
 function getDest(options, format, compress) {
-  const name = options.name || 'index'
-  const dir = options.outDir || './dist'
+  const name = options.name
+  const dir = options.outDir
   let suffix = '.js'
   if (format === 'cjs') {
     suffix = '.common.js'
