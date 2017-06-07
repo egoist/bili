@@ -20,7 +20,6 @@ export default function (options = {}) {
 
   options = merge({
     entry: './src/index.js',
-    exports: options.exports,
     format: ['cjs']
   }, userConfig, options)
 
