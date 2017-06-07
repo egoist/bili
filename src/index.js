@@ -25,6 +25,7 @@ cli
   .option('flow', 'Remove flow type annotations')
   .option('exports', 'Specific what export mode to use, `default` or `named`')
   .option('resolve', 'Resolve external dependencies')
+  .option('banner', 'Content to insert at top of bundle, boolean or string or object')
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign({
