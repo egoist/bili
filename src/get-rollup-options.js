@@ -120,7 +120,7 @@ export default function (options, format) {
 
       const name = pkg.name
       const version = pkg.version ? `v${pkg.version}` : ''
-      const startYear = pkg.year || ''
+      const startYear = pkg.year ? parseInt(pkg.year, 10) : ''
       const currentYear = new Date().getFullYear()
       const author = pkg.author ? pkg.author.name || pkg.author : ''
       const license = pkg.license || ''
@@ -128,7 +128,7 @@ export default function (options, format) {
       banner =
         '/*!\n' +
         ` * ${name} ${version}\n` +
-        ` * (c) ${startYear && `${startYear}-`}${currentYear} ${author}\n` +
+        ` * (c) ${startYear && startYear < currentYear && `${startYear}-`}${currentYear} ${author}\n` +
         (license && ` * Released under the ${license} License.\n`) +
         ' */'
     }
