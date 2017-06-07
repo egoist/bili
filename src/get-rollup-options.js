@@ -114,20 +114,23 @@ export default function (options, format) {
     if (typeof options.banner === 'string') {
       banner = options.banner
     } else {
-      const pkg = typeof options.banner === 'object' ? options.banner : options.pkg
-      if (pkg) {
-        const name = pkg.name
-        const version = pkg.version ? 'v' + pkg.version : ''
-        const year = pkg.year || new Date().getFullYear()
-        const author = pkg.author ? (pkg.author.name || pkg.author) : ''
-        const license = pkg.license || ''
-        banner =
-          '/*!\n' +
-          ` * ${name} ${version}\n` +
-          ` * (c) ${year} ${author}\n` +
-          (license && ` * Released under the ${license} License.\n`) +
-          ' */'
-      }
+      const pkg = typeof options.banner === 'object' ?
+        { ...options.pkg, ...options.banner } :
+        options.pkg
+
+      const name = pkg.name
+      const version = pkg.version ? `v${pkg.version}` : ''
+      const startYear = pkg.year ? parseInt(pkg.year, 10) : ''
+      const currentYear = new Date().getFullYear()
+      const author = pkg.author ? pkg.author.name || pkg.author : ''
+      const license = pkg.license || ''
+
+      banner =
+        '/*!\n' +
+        ` * ${name} ${version}\n` +
+        ` * (c) ${startYear && startYear < currentYear && `${startYear}-`}${currentYear} ${author}\n` +
+        (license && ` * Released under the ${license} License.\n`) +
+        ' */'
     }
   }
 
