@@ -2,7 +2,7 @@
 import path from 'path'
 import camelcase from 'camelcase'
 import req from 'req-cwd'
-import parseAuthor from 'parse-author'
+import stringifyAuthor from 'stringify-author'
 
 function getDest(options, format, compress) {
   const name = options.name || 'index'
@@ -124,9 +124,9 @@ export default function (options, format) {
       const year = pkg.year || new Date().getFullYear()
 
       let author = typeof pkg.author === 'string' ?
-        parseAuthor(pkg.author).name :
+        pkg.author :
         typeof pkg.author === 'object' ?
-        pkg.author.name :
+        stringifyAuthor(pkg.author) :
         ''
       author = author ? author : ''
 
