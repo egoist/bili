@@ -6,6 +6,7 @@ function readInPkg(file) {
     const pkg = require(file)
     const bili = pkg.bili || {}
     if (pkg.name) bili.name = pkg.name
+    bili.pkg = pkg
     return bili
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {

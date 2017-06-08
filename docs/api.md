@@ -118,6 +118,52 @@ Default: `false`
 
 Respect `browser` field in `package.json`
 
+### banner
+Type: `boolean` `string` `object`<br>
+Default: `undefined`
+
+To insert banner, the simplest way is to set `banner: true`,
+then we will auto inject fields including
+`name`, `version`, `author`, `license`, `year`
+from `package.json` into banner:
+```js
+module.exports = {
+  banner: true
+}
+```
+
+Or provide an object directly:
+
+```js
+module.exports = {
+  banner: {
+    name: 'bili',
+    version: '5.2.0',
+    author: 'EGOIST',
+    license: 'MIT',
+    year: 2011
+  }
+}
+```
+
+The output is like:
+
+```js
+/*!
+ * bili v5.2.0
+ * (c) 2011-present EGOIST
+ * Released under the MIT License.
+ */
+```
+
+Of course, you can directly use string too:
+
+```js
+module.exports = {
+  banner: '/* Some kind of credit */'
+}
+```
+
 ### esModules
 
 Type: `boolean`<br>

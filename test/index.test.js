@@ -91,3 +91,47 @@ test('custom buble transforms', async () => {
   const bar = require('./dist5/index.es.js').default
   expect(bar).toEqual(['a=', 'b='])
 })
+
+test('it inserts banner', async () => {
+
+  // banner: Boolean
+  process.chdir(cwd('..'))
+  await bili({
+    entry: cwd('fixtures/entry.js'),
+    outDir: cwd('dist6'),
+    format: ['es'],
+    exports: 'named',
+    banner: true // banner info from package.json
+  })
+  process.chdir(cwd('.'))
+  const content = await fs.readFile('./dist6/bili.es.js', 'utf8')
+  expect(content).toMatch('bili')
+
+  // banner: Object
+  await bili({
+    entry: cwd('fixtures/entry.js'),
+    outDir: 'dist6',
+    format: ['cjs'],
+    exports: 'named',
+    banner: {
+      name: 'bili',
+      version: '5.2.0',
+      author: 'egoist',
+      license: 'MIT'
+    }
+  })
+  const content2 = await fs.readFile('./dist6/index.common.js', 'utf8')
+  expect(content2).toMatch('bili v5.2.0')
+
+  // banner: String
+  await bili({
+    entry: cwd('fixtures/entry.js'),
+    outDir: 'dist6',
+    format: ['umd'],
+    compress: true,
+    exports: 'named',
+    banner: '/*! bilibili */'
+  })
+  const content3 = await fs.readFile('./dist6/index.min.js', 'utf8')
+  expect(content3).toMatch('/*! bilibili */')
+})

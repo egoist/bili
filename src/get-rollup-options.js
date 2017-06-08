@@ -2,10 +2,11 @@
 import path from 'path'
 import camelcase from 'camelcase'
 import req from 'req-cwd'
+import stringifyAuthor from 'stringify-author'
 
 function getDest(options, format, compress) {
-  const name = options.name || 'index'
-  const dir = options.outDir || './dist'
+  const name = options.name
+  const dir = options.outDir
   let suffix = '.js'
   if (format === 'cjs') {
     suffix = '.common.js'
@@ -109,8 +110,44 @@ export default function (options, format) {
     )
   }
 
+  let banner
+  if (options.banner) {
+    if (typeof options.banner === 'string') {
+      banner = options.banner
+    } else {
+      const pkg = typeof options.banner === 'object' ?
+        { ...options.pkg, ...options.banner } :
+        options.pkg
+
+      const name = pkg.name
+      const version = pkg.version ? `v${pkg.version}` : ''
+      const year = pkg.year || new Date().getFullYear()
+
+      let author = typeof pkg.author === 'string' ?
+        pkg.author :
+        typeof pkg.author === 'object' ?
+        stringifyAuthor(pkg.author) :
+        ''
+      author = author ? author : ''
+
+      const license = pkg.license || ''
+
+      banner =
+        '/*!\n' +
+        ` * ${name} ${version}\n` +
+        ` * (c) ${year}-present ${author}\n` +
+        (license && ` * Released under the ${license} License.\n`) +
+        ' */'
+    }
+  }
+
   if (compress) {
-    plugins.push(require('rollup-plugin-uglify')())
+    plugins.push(require('rollup-plugin-uglify')({
+      output: {
+        // Preserve banner
+        preamble: banner
+      }
+    }))
   }
 
   let moduleName = 'index'
@@ -136,6 +173,7 @@ export default function (options, format) {
     plugins,
     format,
     moduleName,
-    external
+    external,
+    banner
   }
 }

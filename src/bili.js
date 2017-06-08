@@ -20,8 +20,9 @@ export default function (options = {}) {
 
   options = merge({
     entry: './src/index.js',
-    exports: options.exports,
-    format: ['cjs']
+    format: ['cjs'],
+    outDir: './dist',
+    name: 'index'
   }, userConfig, options)
 
   let formats = options.format
