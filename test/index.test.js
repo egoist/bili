@@ -135,3 +135,16 @@ test('it inserts banner', async () => {
   const content3 = await fs.readFile('./dist6/index.min.js', 'utf8')
   expect(content3).toMatch('/*! bilibili */')
 })
+
+test('generate all bundles', async () => {
+  await bili({
+    entry: cwd('fixtures/entry.js'),
+    outDir: 'dist7',
+    format: 'all',
+    exports: 'named'
+  })
+  expect(await fs.exists('./dist7/index.es.js')).toBe(true)
+  expect(await fs.exists('./dist7/index.common.js')).toBe(true)
+  expect(await fs.exists('./dist7/index.js')).toBe(true)
+  expect(await fs.exists('./dist7/index.min.js')).toBe(true)
+})

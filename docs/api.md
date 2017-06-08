@@ -29,6 +29,20 @@ Specific the bundle format, it could be a string like `'umd'` or multiple target
 
 You should specfic a `moduleName` if you target `umd`, otherwise fallback to `name`.
 
+Here's a syntax sugar, you can set `format: 'all'` to bundle all formats:
+```js
+module.exports = {
+  format: 'all'
+}
+```
+It's equivalent to:
+```js
+module.exports = {
+  format: ['cjs', 'es', 'umd'],
+  compress: true
+}
+```
+
 ### outDir
 
 Type: `string`<br>

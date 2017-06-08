@@ -29,6 +29,13 @@ export default function (options = {}) {
   if (!Array.isArray(formats)) {
     formats = [formats]
   }
+
+  // all = cjs, es, umd, umd-compress
+  if (formats.indexOf('all') !== -1) {
+    formats = ['cjs', 'es', 'umd']
+    options.compress = true
+  }
+
   if (options.compress) {
     formats.push('umd-compress')
   }
