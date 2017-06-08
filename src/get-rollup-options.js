@@ -142,7 +142,6 @@ export default function (options, format) {
           (license && ` * Released under the ${license} License.\n`) +
           ' */'
       }
-
     }
   }
 
