@@ -10,7 +10,10 @@ function readInPkg(file) {
     return bili
   } catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {
-      return {}
+      return {
+        // Ensure pkg in options
+        pkg: {}
+      }
     }
     throw err
   }

@@ -120,24 +120,29 @@ export default function (options, format) {
         options.pkg
 
       const name = pkg.name
-      const version = pkg.version ? `v${pkg.version}` : ''
-      const year = pkg.year || new Date().getFullYear()
 
-      let author = typeof pkg.author === 'string' ?
-        pkg.author :
-        typeof pkg.author === 'object' ?
-        stringifyAuthor(pkg.author) :
-        ''
-      author = author ? author : ''
+      // name is required
+      if (name) {
+        const version = pkg.version ? `v${pkg.version}` : ''
+        const year = pkg.year || new Date().getFullYear()
 
-      const license = pkg.license || ''
+        let author = typeof pkg.author === 'string' ?
+          pkg.author :
+          typeof pkg.author === 'object' ?
+            stringifyAuthor(pkg.author) :
+            ''
+        author = author ? author : ''
 
-      banner =
-        '/*!\n' +
-        ` * ${name} ${version}\n` +
-        ` * (c) ${year}-present ${author}\n` +
-        (license && ` * Released under the ${license} License.\n`) +
-        ' */'
+        const license = pkg.license || ''
+
+        banner =
+          '/*!\n' +
+          ` * ${name} ${version}\n` +
+          ` * (c) ${year}-present ${author}\n` +
+          (license && ` * Released under the ${license} License.\n`) +
+          ' */'
+      }
+
     }
   }
 
