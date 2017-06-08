@@ -33,7 +33,7 @@ export default function (options = {}) {
   // all = cjs, es, umd, umd-compress
   if (formats.indexOf('all') !== -1) {
     formats = ['cjs', 'es', 'umd']
-    options.compress = true
+    options.compress = options.compress === undefined ? true : options.compress
   }
 
   if (options.compress) {
