@@ -27,19 +27,21 @@ Default: `['cjs']`
 
 Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
 
-You should specfic a `moduleName` if you target `umd`, otherwise fallback to `name`.
+You should specify a `moduleName` if your bundle targets `umd` format, otherwise it will fallback to `name`.
 
-Here's a syntax sugar, you can set `format: 'all'` to bundle all formats:
+Here's a shorthand to set `format` to `['cjs', 'es', 'umd']`:
+
 ```js
 module.exports = {
   format: 'all'
 }
 ```
-It's equivalent to:
+
+You can also use comma `,` to separate formats:
+
 ```js
 module.exports = {
-  format: ['cjs', 'es', 'umd'],
-  compress: true
+  format: 'cjs,es,umd,iife'
 }
 ```
 
