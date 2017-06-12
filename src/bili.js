@@ -26,14 +26,17 @@ export default function (options = {}) {
   }, userConfig, options)
 
   let formats = options.format
-  if (!Array.isArray(formats)) {
-    formats = [formats]
-  }
-
-  // all = cjs, es, umd, umd-compress
-  if (formats.indexOf('all') !== -1) {
-    formats = ['cjs', 'es', 'umd']
-    options.compress = options.compress === undefined ? true : options.compress
+  
+  if (typeof formats === 'string') {
+    if (formats === 'all') {
+      formats = ['cjs', 'umd', 'es']
+    } else if (formats.indexOf(',') !== -1) {
+      formats = formats.split(',').map(v => v.trim())
+    } else {
+      formats = [formats]
+    }
+  } else if (!Array.isArray(formats)) {
+    throw new TypeError('Expect "format" to be a string or Array')
   }
 
   if (options.compress) {
