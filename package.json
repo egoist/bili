@@ -13,10 +13,12 @@
     "node": ">=4"
   },
   "scripts": {
-    "test": "cross-env BABEL_ENV=test jest --env node && xo src/*.js && npm run build",
+    "test": "cross-env BABEL_ENV=test jest --env node && npm run lint && npm run build",
     "test:cov": "cross-env BABEL_ENV=test jest --env node --coverage && xo src/*.js",
     "build": "babel src --out-dir lib",
-    "dev": "babel src --out-dir lib --watch"
+    "dev": "babel src --out-dir lib --watch",
+    "lint": "xo",
+    "fix": "npm run lint -- --fix"
   },
   "main": "lib/bili.js",
   "bin": "cli.js",
@@ -45,7 +47,16 @@
     "xo": "^0.18.2"
   },
   "xo": {
-    "extends": "rem"
+    "extends": "rem/prettier",
+    "envs": [
+      "jest"
+    ],
+    "rules": {
+      "import/no-unresolved": 0
+    },
+    "ignores": [
+      "docs/**"
+    ]
   },
   "dependencies": {
     "cac": "^3.0.4",
