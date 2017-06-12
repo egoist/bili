@@ -122,7 +122,7 @@ export default function (options, format) {
       const name = pkg.name
       
       if (typeof name !== 'string') {
-        throw new Error(`Expect "name" in package.json to be a string but got ${typeof name}.`)
+        throw new TypeError(`Expect "name" in package.json to be a string but got ${typeof name}.`)
       }
 
       const version = pkg.version ? `v${pkg.version}` : ''
