@@ -20,7 +20,7 @@ function readInPkg(file) {
 }
 
 // Read => bili.config.js & package.json
-export default function (file) {
+export default function(file) {
   const config = cwd(file || 'bili.config.js')
   const pkgConfig = readInPkg(cwd('package.json'))
   if (fs.existsSync(config)) {

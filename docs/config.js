@@ -5,8 +5,8 @@ docute.init({
   'edit-link': 'https://github.com/unipahq/bili/tree/master/docs',
   nav: {
     default: [
-      {title: 'Home', path: '/'},
-      {title: 'API', path: '/api'}
+      { title: 'Home', path: '/' },
+      { title: 'API', path: '/api' }
     ]
   }
 })

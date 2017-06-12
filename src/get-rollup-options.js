@@ -23,18 +23,16 @@ function getMap(options, compress) {
   return compress ? true : options.map
 }
 
-export default function (options, format) {
+export default function(options, format) {
   let compress = false
   if (format === 'umd-compress') {
     format = 'umd'
     compress = true
   }
 
-  let plugins = [
-    require('rollup-plugin-json')(options.json)
-  ]
+  let plugins = [require('rollup-plugin-json')(options.json)]
 
-  const js = options.js === false ? null : (options.js || 'buble')
+  const js = options.js === false ? null : options.js || 'buble'
 
   let jsOptions = (js && options[js]) || {}
 
@@ -65,11 +63,15 @@ export default function (options, format) {
   if (js) {
     let jsPlugin
     try {
-      jsPlugin = js === 'buble' ? require('rollup-plugin-buble') : req(`rollup-plugin-${js}`)
+      jsPlugin = js === 'buble'
+        ? require('rollup-plugin-buble')
+        : req(`rollup-plugin-${js}`)
       plugins.push(jsPlugin(jsOptions))
     } catch (err) {
       if (/missing path/.test(err.message)) {
-        throw new Error(`rollup-plugin-${js} was not found in current working directory!`)
+        throw new Error(
+          `rollup-plugin-${js} was not found in current working directory!`
+        )
       } else {
         throw err
       }
@@ -77,7 +79,9 @@ export default function (options, format) {
   }
 
   if (options.plugins) {
-    const _plugins = Array.isArray(options.plugins) ? options.plugins : [options.plugins]
+    const _plugins = Array.isArray(options.plugins)
+      ? options.plugins
+      : [options.plugins]
     const extraPlugins = _plugins.map(p => {
       if (typeof p === 'string') {
         return req(`rollup-plugin-${p}`)(options[p])
@@ -104,9 +108,14 @@ export default function (options, format) {
         module: esModules,
         browser: options.browser
       }),
-      require('rollup-plugin-commonjs')(Object.assign({
-        include: 'node_modules/**'
-      }, options.commonjs))
+      require('rollup-plugin-commonjs')(
+        Object.assign(
+          {
+            include: 'node_modules/**'
+          },
+          options.commonjs
+        )
+      )
     )
   }
 
@@ -115,24 +124,24 @@ export default function (options, format) {
     if (typeof options.banner === 'string') {
       banner = options.banner
     } else {
-      const pkg = typeof options.banner === 'object' ?
-        { ...options.pkg, ...options.banner } :
-        options.pkg
+      const pkg = typeof options.banner === 'object'
+        ? { ...options.pkg, ...options.banner }
+        : options.pkg
 
       const name = pkg.name
-      
+
       if (typeof name !== 'string') {
-        throw new TypeError(`Expect "name" in package.json to be a string but got ${typeof name}.`)
+        throw new TypeError(
+          `Expect "name" in package.json to be a string but got ${typeof name}.`
+        )
       }
 
       const version = pkg.version ? `v${pkg.version}` : ''
       const year = pkg.year || new Date().getFullYear()
 
-      let author = typeof pkg.author === 'string' ?
-        pkg.author :
-        typeof pkg.author === 'object' ?
-          stringifyAuthor(pkg.author) :
-          ''
+      let author = typeof pkg.author === 'string'
+        ? pkg.author
+        : typeof pkg.author === 'object' ? stringifyAuthor(pkg.author) : ''
       author = author ? author : ''
 
       const license = pkg.license || ''
@@ -147,12 +156,14 @@ export default function (options, format) {
   }
 
   if (compress) {
-    plugins.push(require('rollup-plugin-uglify')({
-      output: {
-        // Preserve banner
-        preamble: banner
-      }
-    }))
+    plugins.push(
+      require('rollup-plugin-uglify')({
+        output: {
+          // Preserve banner
+          preamble: banner
+        }
+      })
+    )
   }
 
   let moduleName = 'index'

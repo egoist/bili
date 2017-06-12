@@ -1,5 +1,5 @@
-import fs from 'fs-extra'
 import path from 'path'
+import fs from 'fs-extra'
 import rm from 'rimraf'
 import bili from '../src/bili'
 
@@ -14,7 +14,7 @@ beforeAll(() => {
 })
 
 afterAll(() => {
-  // rm.sync(cwd('dist*'))
+  rm.sync(cwd('dist*'))
   process.chdir(prevCwd)
 })
 
@@ -57,7 +57,7 @@ test('use typescript', async () => {
   await bili({
     entry: cwd('fixtures/index.ts'),
     outDir: 'dist3',
-    js: 'typescript',
+    js: 'typescript'
   })
   const foo = require('./dist3/index.common.js')
   expect(foo()).toBe(123)
@@ -93,7 +93,6 @@ test('custom buble transforms', async () => {
 })
 
 test('it inserts banner', async () => {
-
   // banner: Boolean
   process.chdir(cwd('..'))
   await bili({
@@ -143,8 +142,6 @@ test('generate all bundles', async () => {
     format: 'all',
     exports: 'named'
   })
-  expect(await fs.exists('./dist7/index.es.js')).toBe(true)
-  expect(await fs.exists('./dist7/index.common.js')).toBe(true)
-  expect(await fs.exists('./dist7/index.js')).toBe(true)
-  expect(await fs.exists('./dist7/index.min.js')).toBe(true)
+  const files = await fs.readdir('./dist7')
+  expect(files).toEqual(['index.common.js', 'index.es.js', 'index.js'])
 })
