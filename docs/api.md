@@ -94,6 +94,28 @@ Type: `object`
 
 Add options to [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace).
 
+### env
+
+Type: `object`
+
+Like `replace` option but it replaces strings that start with `process.env.` and automatically stringify the value:
+
+```js
+{
+  env: {
+    NODE_ENV: 'development'
+  }
+}
+```
+
+Then in your file:
+
+```js
+const prod = process.env.NODE_ENV === 'production'
+// compiled to
+const prod = "development" === 'production'
+```
+
 ### external
 
 Type: `Array` `Function`
