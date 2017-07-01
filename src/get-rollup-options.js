@@ -105,9 +105,11 @@ export default function(options, format) {
       res[`process.env.${key}`] = JSON.stringify(options.env[key])
       return res
     }, {})
-    plugins.push(require('rollup-plugin-replace')({
-      values: env
-    }))
+    plugins.push(
+      require('rollup-plugin-replace')({
+        values: env
+      })
+    )
   }
 
   if (format === 'umd' || options.resolve) {
