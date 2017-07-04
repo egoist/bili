@@ -16,15 +16,15 @@ dist/[name].common.js # commonjs format
 
 The `[name]` is `name` in `package.json` or `index` as fallback.
 
-You can also generate UMD bundle and compress it with: `bili --format umd --compress`, then you get:
+You can also generate UMD bundle and compress it with: `bili --format umd,umd-compress`, then you get:
 
 ```bash
 dist/[name].js          # umd format
-dist/[name].min.js      # umd format and compressed
+dist/[name].min.js      # compressed umd format
 dist/[name].min.js.map  # sourcemap
 ```
 
-Not enough? You can have them all in one command `bili --format cjs --format es --format umd --compress`:
+Not enough? You can have them all in one command `bili --format cjs,es,umd,umd-compress`:
 
 ```bash
 dist/[name].js          # umd format
