@@ -1,7 +1,6 @@
-<h1 align="center">bili</h1>
+<h1 align="center">bili <sup><img src="https://v.egoist.moe/npm/bili.svg" alt="version"></sup></h1>
 
 <p align="center">
-  <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat" alt="NPM version"></a>
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat" alt="NPM downloads"></a>
 <a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bili/master.svg?style=flat"></a>
 <a href="https://codecov.io/gh/egoist/bili"><img src="https://img.shields.io/codecov/c/github/egoist/bili.svg?style=flat"></a>
