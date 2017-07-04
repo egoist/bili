@@ -1,4 +1,4 @@
-<h1 align="center">bili <sup><img src="https://v.egoist.moe/npm/bili.svg" alt="version"></sup></h1>
+<h1 align="center">bili <sup><a href="https://npm.im/bili"><img src="https://v.egoist.moe/npm/bili.svg" alt="version"></a></sup></h1>
 
 <p align="center">
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat" alt="NPM downloads"></a>
