@@ -4,10 +4,10 @@ Bundling JavaScript library could be easy and interesting.
 
 ## Introduction
 
-With one line of code, you'll have `commonjs` `umd` and `compressed` version of your library:
+With one line of code, you'll have `commonjs` `umd` and `compressed` umd version of your library:
 
 ```bash
-bili --format cjs --format umd --compress
+bili --format cjs --format umd --compress umd
 ```
 
 <p class="tip">
@@ -43,14 +43,15 @@ If multiple formats are detected it just runs multiple rollup instances.
 const bubleOptions = {
   transforms: {
     generator: false,
-    dangerousForOf: true
+    dangerousForOf: true,
+    dangerousTaggedTemplateString: true
   }
 }
 ```
 
-buble does not support compiling generator to ES5, so we set it to `false` to ignore it, otherwise it will throw syntax error.
+Buble does not support compiling `generator` to ES5, so we set it to `false` to ignore it, otherwise it will throw a syntax error. And `async/await` will be compiled to `generator`.
 
-For `dangerousForOf` we enabled it by default, please checkout buble's [guide](https://buble.surge.sh/guide/#dangerous-transforms) for more info.
+Please checkout buble's [guide](https://buble.surge.sh/guide/#dangerous-transforms) for more info.
 
 You can override this option by updating config file or using CLI options:
 
@@ -92,7 +93,7 @@ For details please checkout https://github.com/rollup/rollup/wiki/JavaScript-API
 
 ### Format
 
-Available formats: `cjs` `es` `umd`
+Available formats: `cjs` `es` `umd` `iife`
 
 ```js
 module.exports = {
@@ -118,6 +119,10 @@ Use `compress` option to generate compressed file and its sourcemaps.
 
 ```js
 module.exports = {
-  compress: true
+  format: 'umd,cjs,es',
+  // true means compress for all formats
+  compress: true,
+  // or specific formats only
+  compress: 'umd,cjs'
 }
 ```

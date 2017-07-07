@@ -14,11 +14,11 @@ bili(options).catch(err => {
 })
 ```
 
-### name
+### filename
 
 Type: `string`
 
-The filename of bundled files, the default value is package name in `package.json`. If no package.json was found, fallback to `index`.
+The filename of bundled files, the default value is package name in `package.json`. If no package.json was found, then fallbacks to `index`.
 
 ### format
 
@@ -27,7 +27,7 @@ Default: `['cjs']`
 
 Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
 
-You should specify a `moduleName` if your bundle targets `umd` format, otherwise it will fallback to `name`.
+You should specify a `moduleName` if your bundle targets `umd` format, otherwise it will fallback to `filename`.
 
 Here's a shorthand to set `format` to `['cjs', 'es', 'umd']`:
 
@@ -54,10 +54,12 @@ Output directory.
 
 ### compress
 
-Type: `boolean`<br>
-Default: `false`
+Type: `boolean` `string` `Array`<br>
+Default: `undefined`
 
-Enable this option to generate an extra compressed file for the UMD bundle, and sourcemap.
+Compress specific formats, set it to `true` to compress all formats.
+
+It will automatically generate sourcemaps file when this option is enabled.
 
 ### alias
 
@@ -133,7 +135,7 @@ This helps you import some file from the CDN (as using AMD), or set an alias to 
 Type: `boolean`<br>
 Default: `false`
 
-Generate soucemaps for `cjs` and `umd` builds, note that when option `compress` is set to `true` it will always generate sourcemaps for compressed file:
+Enable sourcemaps, note that when option `compress` is enabled it will always generate sourcemaps for compressed files.
 
 ### flow
 
@@ -260,7 +262,8 @@ Default:
 ```js
 {
   generator: false,
-  dangerousForOf: true
+  dangerousForOf: true,
+  dangerousTaggedTemplateString: true
 }
 ```
 

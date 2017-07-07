@@ -5,7 +5,7 @@ import req from 'req-cwd'
 import stringifyAuthor from 'stringify-author'
 
 function getDest(options, format, compress) {
-  const name = options.name
+  const filename = options.filename
   const dir = options.outDir
   let suffix = '.js'
   if (format === 'cjs') {
@@ -15,7 +15,7 @@ function getDest(options, format, compress) {
   } else if (compress) {
     suffix = '.min.js'
   }
-  const output = path.join(dir, name + suffix)
+  const output = path.join(dir, filename + suffix)
   return output
 }
 
@@ -183,8 +183,8 @@ export default function(options, format) {
   let moduleName = 'index'
   if (options.moduleName) {
     moduleName = options.moduleName
-  } else if (options.name) {
-    moduleName = camelcase(options.name)
+  } else if (options.filename) {
+    moduleName = camelcase(options.filename)
   }
 
   let external

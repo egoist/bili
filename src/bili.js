@@ -23,7 +23,7 @@ export default function(options = {}) {
       entry: './src/index.js',
       format: ['cjs'],
       outDir: './dist',
-      name: 'index'
+      filename: 'index'
     },
     userConfig,
     options
