@@ -10,7 +10,7 @@
     "url": "github.com/egoist"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "scripts": {
     "test": "cross-env BABEL_ENV=test jest --env node && npm run lint && npm run build",
