@@ -57,9 +57,9 @@ Output directory.
 Type: `boolean` `string` `Array`<br>
 Default: `undefined`
 
-Compress specific formats, set it to `true` to compress all formats.
+Compress specific formats, set it to `true` to compress `cjs` `umd` and `es`, it does not include `es` format because uglifyjs can't parse `es modules`.
 
-It will automatically generate sourcemaps file when this option is enabled.
+It will also automatically generate sourcemaps file when this option is enabled.
 
 ### alias
 

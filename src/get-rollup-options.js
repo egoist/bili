@@ -7,14 +7,22 @@ import stringifyAuthor from 'stringify-author'
 function getDest(options, format, compress) {
   const filename = options.filename
   const dir = options.outDir
-  let suffix = '.js'
+  let suffix = ''
+
   if (format === 'cjs') {
-    suffix = '.common.js'
+    suffix += '.common'
   } else if (format === 'es') {
-    suffix = '.es.js'
-  } else if (compress) {
-    suffix = '.min.js'
+    suffix += '.es'
+  } else if (format === 'iife') {
+    suffix += '.iife'
   }
+
+  if (compress) {
+    suffix += '.min.js'
+  } else {
+    suffix += '.js'
+  }
+
   const output = path.join(dir, filename + suffix)
   return output
 }
@@ -24,11 +32,11 @@ function getMap(options, compress) {
 }
 
 export default function(options, format) {
-  const compress = options.compress === true
-    ? true
-    : Array.isArray(options.compress)
-        ? options.compress.indexOf(format) > -1
-        : false
+  let compress = false
+  if (/\Compress$/.test(format)) {
+    format = format.replace(/\Compress$/, '')
+    compress = true
+  }
 
   let plugins = [require('rollup-plugin-json')(options.json)]
 

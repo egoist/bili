@@ -16,16 +16,49 @@ return compress;
 `;
 
 exports[`compress string 2`] = `
+"'use strict';
+
+var compress = function () { return 1; };
+
+module.exports = compress;
+"
+`;
+
+exports[`compress string 3`] = `
 "\\"use strict\\";var compress=function(){return 1};module.exports=compress;
 "
 `;
 
 exports[`compress true 1`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.index=n()}(this,function(){\\"use strict\\";var e=function(){return 1};return e});
+"(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.index = factory());
+}(this, (function () { 'use strict';
+
+var compress = function () { return 1; };
+
+return compress;
+
+})));
 "
 `;
 
 exports[`compress true 2`] = `
+"'use strict';
+
+var compress = function () { return 1; };
+
+module.exports = compress;
+"
+`;
+
+exports[`compress true 3`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.index=n()}(this,function(){\\"use strict\\";return function(){return 1}});
+"
+`;
+
+exports[`compress true 4`] = `
 "\\"use strict\\";var compress=function(){return 1};module.exports=compress;
 "
 `;
@@ -72,7 +105,27 @@ exports.version = version;
 
 exports[`it inserts banner 2`] = `
 "/*! bilibili */
-!function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index=e.index||{})}(this,function(e){\\"use strict\\";var t=1,n=\\"__VERSION__\\";e.default=t,e.version=n,Object.defineProperty(e,\\"__esModule\\",{value:!0})});
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.index = global.index || {})));
+}(this, (function (exports) { 'use strict';
+
+var a = 1;
+var version = '__VERSION__';
+
+exports['default'] = a;
+exports.version = version;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+"
+`;
+
+exports[`it inserts banner 3`] = `
+"/*! bilibili */
+!function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index=e.index||{})}(this,function(e){\\"use strict\\";e.default=1,e.version=\\"__VERSION__\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})});
 "
 `;
 

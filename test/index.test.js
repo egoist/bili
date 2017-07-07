@@ -24,7 +24,7 @@ test('it throws because entry not found', () => {
 })
 
 test('it replaces string using rollup-plugin-replace', async () => {
-  const [result] = await bili({
+  const { cjs } = await bili({
     entry: cwd('fixtures/entry.js'),
     exports: 'named',
     replace: {
@@ -32,29 +32,29 @@ test('it replaces string using rollup-plugin-replace', async () => {
     },
     write: false
   })
-  expect(result.code).toMatchSnapshot()
+  expect(cjs.code).toMatchSnapshot()
 })
 
 test('use typescript', async () => {
-  const [result] = await bili({
+  const { cjs } = await bili({
     entry: cwd('fixtures/index.ts'),
     js: 'typescript',
     write: false
   })
-  expect(result.code).toMatchSnapshot()
+  expect(cjs.code).toMatchSnapshot()
 })
 
 test('ignore js plugin', async () => {
-  const [result] = await bili({
+  const { cjs } = await bili({
     entry: cwd('fixtures/remain.js'),
     js: false,
     write: false
   })
-  expect(result.code).toMatchSnapshot()
+  expect(cjs.code).toMatchSnapshot()
 })
 
 test('custom buble options', async () => {
-  const [result] = await bili({
+  const { cjs } = await bili({
     entry: cwd('fixtures/buble-options.js'),
     buble: {
       objectAssign: 'sign'
@@ -62,7 +62,7 @@ test('custom buble options', async () => {
     write: false
   })
 
-  expect(result.code).toMatchSnapshot()
+  expect(cjs.code).toMatchSnapshot()
 })
 
 test('it inserts banner', async () => {
@@ -78,7 +78,7 @@ test('it inserts banner', async () => {
   // expect(es.code).toMatchSnapshot()
 
   // banner: Object
-  const [cjs] = await bili({
+  const { cjs } = await bili({
     entry: cwd('fixtures/entry.js'),
     format: 'cjs',
     exports: 'named',
@@ -93,7 +93,7 @@ test('it inserts banner', async () => {
   expect(cjs.code).toMatchSnapshot()
 
   // banner: String
-  const [umd] = await bili({
+  const { umd, umdCompress } = await bili({
     entry: cwd('fixtures/entry.js'),
     format: 'umd',
     compress: true,
@@ -102,6 +102,7 @@ test('it inserts banner', async () => {
     banner: '/*! bilibili */'
   })
   expect(umd.code).toMatchSnapshot()
+  expect(umdCompress.code).toMatchSnapshot()
 })
 
 test('generate all bundles', async () => {
@@ -111,12 +112,12 @@ test('generate all bundles', async () => {
     exports: 'named',
     write: false
   })
-  expect(result.length).toBe(3)
+  expect(Object.keys(result)).toHaveLength(3)
 })
 
 describe('compress', () => {
   it('true', async () => {
-    const [umd, cjs] = await bili({
+    const { umd, cjs, umdCompress, cjsCompress } = await bili({
       entry: cwd('fixtures/compress.js'),
       format: 'umd,cjs',
       compress: true,
@@ -124,10 +125,12 @@ describe('compress', () => {
     })
     expect(umd.code).toMatchSnapshot()
     expect(cjs.code).toMatchSnapshot()
+    expect(umdCompress.code).toMatchSnapshot()
+    expect(cjsCompress.code).toMatchSnapshot()
   })
 
   it('string', async () => {
-    const [umd, cjs] = await bili({
+    const { umd, cjs, cjsCompress } = await bili({
       entry: cwd('fixtures/compress.js'),
       format: 'umd,cjs',
       compress: 'cjs',
@@ -135,5 +138,6 @@ describe('compress', () => {
     })
     expect(umd.code).toMatchSnapshot()
     expect(cjs.code).toMatchSnapshot()
+    expect(cjsCompress.code).toMatchSnapshot()
   })
 })

@@ -9,6 +9,7 @@ const cli = cac()
 update({ pkg: cli.pkg }).notify()
 
 cli
+  .option('entry', 'Path to entry file')
   .option('config, c', 'Path to config file')
   .option('watch, w', 'Run in watch mode')
   .option('name, n', 'The filename of output file, no extension')
@@ -35,6 +36,8 @@ cli
     'banner',
     'Content to insert to the top of bundle file, boolean or string or object'
   )
+
+cli.example('bili src/index.js --format umd,cjs --compress umd')
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign(

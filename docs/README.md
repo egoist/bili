@@ -120,7 +120,7 @@ Use `compress` option to generate compressed file and its sourcemaps.
 ```js
 module.exports = {
   format: 'umd,cjs,es',
-  // true means compress for all formats
+  // true means compress for umd, cjs, iife
   compress: true,
   // or specific formats only
   compress: 'umd,cjs'
