@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs-extra'
 import rm from 'rimraf'
 import bili from '../src/bili'
 
@@ -24,124 +23,117 @@ test('it throws because entry not found', () => {
   })
 })
 
-test('it builds successfully', async () => {
-  await bili({
-    entry: cwd('fixtures/entry.js'),
-    format: ['umd', 'cjs'],
-    exports: 'named'
-  })
-  const foo = require('./dist/index.common.js')
-  expect(foo.default).toEqual(1)
-  const bar = require('./dist/index.js')
-  expect(bar.default).toEqual(1)
-
-  // Transformed by Buble
-  const content = await fs.readFile('./dist/index.common.js', 'utf8')
-  expect(content).toMatch('var a = 1')
-})
-
 test('it replaces string using rollup-plugin-replace', async () => {
-  await bili({
+  const [result] = await bili({
     entry: cwd('fixtures/entry.js'),
-    outDir: 'dist2',
     exports: 'named',
     replace: {
       __VERSION__: '0.0.0'
-    }
+    },
+    write: false
   })
-  const foo = require('./dist2/index.common.js')
-  expect(foo.version).toBe('0.0.0')
+  expect(result.code).toMatchSnapshot()
 })
 
 test('use typescript', async () => {
-  await bili({
+  const [result] = await bili({
     entry: cwd('fixtures/index.ts'),
-    outDir: 'dist3',
-    js: 'typescript'
+    js: 'typescript',
+    write: false
   })
-  const foo = require('./dist3/index.common.js')
-  expect(foo()).toBe(123)
+  expect(result.code).toMatchSnapshot()
 })
 
 test('ignore js plugin', async () => {
-  await bili({
+  const [result] = await bili({
     entry: cwd('fixtures/remain.js'),
-    outDir: 'dist4',
-    js: false
+    js: false,
+    write: false
   })
-  const content = await fs.readFile('./dist4/index.common.js', 'utf8')
-  expect(content).toMatch(`const foo = () => 'foo'`)
+  expect(result.code).toMatchSnapshot()
 })
 
-test('custom buble transforms', async () => {
-  await bili({
-    format: ['cjs', 'es'],
-    entry: cwd('fixtures/tagged-template-string.js'),
-    outDir: 'dist5',
+test('custom buble options', async () => {
+  const [result] = await bili({
+    entry: cwd('fixtures/buble-options.js'),
     buble: {
-      transforms: {
-        dangerousTaggedTemplateString: true
-      }
-    }
+      objectAssign: 'sign'
+    },
+    write: false
   })
 
-  const foo = require('./dist5/index.common.js')
-  expect(foo).toEqual(['a=', 'b='])
-
-  const bar = require('./dist5/index.es.js').default
-  expect(bar).toEqual(['a=', 'b='])
+  expect(result.code).toMatchSnapshot()
 })
 
 test('it inserts banner', async () => {
+  // Skip this for now
+  // Maybe add `baseDir` option to allow bili to load package.json from a custom dir
   // banner: Boolean
-  process.chdir(cwd('..'))
-  await bili({
-    entry: cwd('fixtures/entry.js'),
-    outDir: cwd('dist6'),
-    format: ['es'],
-    exports: 'named',
-    banner: true // banner info from package.json
-  })
-  process.chdir(cwd('.'))
-  const content = await fs.readFile('./dist6/bili.es.js', 'utf8')
-  expect(content).toMatch('bili')
+  // const [es] = await bili({
+  //   entry: cwd('fixtures/entry.js'),
+  //   format: 'es',
+  //   exports: 'named',
+  //   banner: true // banner info from package.json
+  // })
+  // expect(es.code).toMatchSnapshot()
 
   // banner: Object
-  await bili({
+  const [cjs] = await bili({
     entry: cwd('fixtures/entry.js'),
-    outDir: 'dist6',
-    format: ['cjs'],
+    format: 'cjs',
     exports: 'named',
     banner: {
       name: 'bili',
       version: '5.2.0',
       author: 'egoist',
       license: 'MIT'
-    }
+    },
+    write: false
   })
-  const content2 = await fs.readFile('./dist6/index.common.js', 'utf8')
-  expect(content2).toMatch('bili v5.2.0')
+  expect(cjs.code).toMatchSnapshot()
 
   // banner: String
-  await bili({
+  const [umd] = await bili({
     entry: cwd('fixtures/entry.js'),
-    outDir: 'dist6',
-    format: ['umd'],
+    format: 'umd',
     compress: true,
     exports: 'named',
+    write: false,
     banner: '/*! bilibili */'
   })
-  const content3 = await fs.readFile('./dist6/index.min.js', 'utf8')
-  expect(content3).toMatch('/*! bilibili */')
+  expect(umd.code).toMatchSnapshot()
 })
 
 test('generate all bundles', async () => {
-  await bili({
+  const result = await bili({
     entry: cwd('fixtures/entry.js'),
-    outDir: 'dist7',
     format: 'all',
-    exports: 'named'
+    exports: 'named',
+    write: false
   })
-  const files = await fs.readdir('./dist7')
-  expect(files).toEqual(['index.common.js', 'index.es.js', 'index.js'])
+  expect(result.length).toBe(3)
+})
+
+describe('compress', () => {
+  it('true', async () => {
+    const [umd, cjs] = await bili({
+      entry: cwd('fixtures/compress.js'),
+      format: 'umd,cjs',
+      compress: true,
+      write: false
+    })
+    expect(umd.code).toMatchSnapshot()
+    expect(cjs.code).toMatchSnapshot()
+  })
+
+  it('string', async () => {
+    const [umd, cjs] = await bili({
+      entry: cwd('fixtures/compress.js'),
+      format: 'umd,cjs',
+      compress: 'cjs',
+      write: false
+    })
+    expect(umd.code).toMatchSnapshot()
+    expect(cjs.code).toMatchSnapshot()
+  })
 })

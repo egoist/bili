@@ -24,11 +24,11 @@ function getMap(options, compress) {
 }
 
 export default function(options, format) {
-  let compress = false
-  if (format === 'umd-compress') {
-    format = 'umd'
-    compress = true
-  }
+  const compress = options.compress === true
+    ? true
+    : Array.isArray(options.compress)
+        ? options.compress.indexOf(format) > -1
+        : false
 
   let plugins = [require('rollup-plugin-json')(options.json)]
 
@@ -46,6 +46,7 @@ export default function(options, format) {
       transforms: {
         generator: false,
         dangerousForOf: true,
+        dangerousTaggedTemplateString: true,
         ...transforms
       }
     }

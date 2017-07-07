@@ -1,0 +1,102 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`compress string 1`] = `
+"(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.index = factory());
+}(this, (function () { 'use strict';
+
+var compress = function () { return 1; };
+
+return compress;
+
+})));
+"
+`;
+
+exports[`compress string 2`] = `
+"\\"use strict\\";var compress=function(){return 1};module.exports=compress;
+"
+`;
+
+exports[`compress true 1`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.index=n()}(this,function(){\\"use strict\\";var e=function(){return 1};return e});
+"
+`;
+
+exports[`compress true 2`] = `
+"\\"use strict\\";var compress=function(){return 1};module.exports=compress;
+"
+`;
+
+exports[`custom buble options 1`] = `
+"'use strict';
+
+var a = {};
+
+var b = sign({}, a);
+
+module.exports = b;
+"
+`;
+
+exports[`ignore js plugin 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const foo = () => 'foo';
+
+exports.foo = foo;
+"
+`;
+
+exports[`it inserts banner 1`] = `
+"/*!
+ * bili v5.2.0
+ * (c) 2017-present egoist
+ * Released under the MIT License.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var a = 1;
+var version = '__VERSION__';
+
+exports['default'] = a;
+exports.version = version;
+"
+`;
+
+exports[`it inserts banner 2`] = `
+"/*! bilibili */
+!function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index=e.index||{})}(this,function(e){\\"use strict\\";var t=1,n=\\"__VERSION__\\";e.default=t,e.version=n,Object.defineProperty(e,\\"__esModule\\",{value:!0})});
+"
+`;
+
+exports[`it replaces string using rollup-plugin-replace 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var a = 1;
+var version = '0.0.0';
+
+exports['default'] = a;
+exports.version = version;
+"
+`;
+
+exports[`use typescript 1`] = `
+"'use strict';
+
+var index = function (_a) {
+    var _b = (_a === void 0 ? {} : _a).a, a = _b === void 0 ? 123 : _b;
+    return a;
+};
+
+module.exports = index;
+"
+`;

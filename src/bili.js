@@ -43,8 +43,8 @@ export default function(options = {}) {
     throw new TypeError('Expect "format" to be a string or Array')
   }
 
-  if (options.compress) {
-    formats.push('umd-compress')
+  if (typeof options.compress === 'string') {
+    options.compress = options.compress.split(',').map(v => v.trim())
   }
 
   return Promise.all(
@@ -83,6 +83,7 @@ export default function(options = {}) {
         })
       }
       return rollup.rollup(rollupOptions).then(bundle => {
+        if (options.write === false) return bundle.generate(rollupOptions)
         return bundle.write(rollupOptions)
       })
     })
