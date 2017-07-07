@@ -71,7 +71,7 @@ However, you can't apply different plugins to different target, which means you 
 While in bili, it's as simple as running:
 
 ```bash
-bili src/main.js --format cjs --format umd --format es --compress
+bili src/main.js --format cjs --format umd --format es --compress umd
 ```
 
 Everything can be done via CLI options, if it's too long to read, you can keep them in `bili` field in `package.json`:
@@ -81,7 +81,7 @@ Everything can be done via CLI options, if it's too long to read, you can keep t
   "bili": {
     "entry": "src/main.js",
     "format": ["cjs", "umd", "es"],
-    "compress": true // note: it only compresses umd bundle and will generate sourcemaps
+    "compress": "umd"
   }
 }
 ```
