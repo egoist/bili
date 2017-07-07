@@ -58,7 +58,7 @@ export default function(options = {}) {
     .filter(v => formats.indexOf(v) > -1)
     .map(v => `${v}Compress`)
 
-  const allFormats = [...formats,...options.compress]
+  const allFormats = [...formats, ...options.compress]
 
   return Promise.all(
     allFormats.map(format => {

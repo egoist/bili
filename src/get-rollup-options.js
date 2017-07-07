@@ -33,8 +33,8 @@ function getMap(options, compress) {
 
 export default function(options, format) {
   let compress = false
-  if (/\Compress$/.test(format)) {
-    format = format.replace(/\Compress$/, '')
+  if (format.endsWith('Compress')) {
+    format = format.replace(/Compress$/, '')
     compress = true
   }
 
