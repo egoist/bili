@@ -1,9 +1,12 @@
-<h1 align="center">bili <sup><a href="https://npm.im/bili"><img src="https://v.egoist.moe/npm/bili.svg" alt="version"></a></sup></h1>
+<p align="center">
+<img width="886" alt="2017-07-08 12 04 59" src="https://user-images.githubusercontent.com/8784712/27982511-c77326d6-63d5-11e7-90fc-5d162d52cd7a.png">
+</p>
 
 <p align="center">
-<a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat" alt="NPM downloads"></a>
-<a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bili/master.svg?style=flat"></a>
-<a href="https://codecov.io/gh/egoist/bili"><img src="https://img.shields.io/codecov/c/github/egoist/bili.svg?style=flat"></a>
+<a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat-square" alt="NPM downloads"></a>
+<a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bili/master.svg?style=flat-square"></a>
+<a href="https://codecov.io/gh/egoist/bili"><img src="https://img.shields.io/codecov/c/github/egoist/bili.svg?style=flat-square"></a>
 </p>
 
 ## Introduction
