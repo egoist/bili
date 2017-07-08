@@ -12,7 +12,7 @@ cli
   .option('entry', 'Path to entry file')
   .option('config, c', 'Path to config file')
   .option('watch, w', 'Run in watch mode')
-  .option('name, n', 'The filename of output file, no extension')
+  .option('filename, n', 'The filename of output file, no extension')
   .option('out-dir, d', 'The output directory')
   .option('format', 'Bundle format, array of string')
   .option('module-name', 'The module name for UMD builds')
