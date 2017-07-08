@@ -7,6 +7,8 @@
 <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://img.shields.io/circleci/project/egoist/bili/master.svg?style=flat-square"></a>
 <a href="https://codecov.io/gh/egoist/bili"><img src="https://img.shields.io/codecov/c/github/egoist/bili.svg?style=flat-square"></a>
+<a href="https://github.com/egoist/donate"><img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat-square" alt="donate"></a>
+
 </p>
 
 ## Introduction
@@ -43,6 +45,8 @@ dist/[name].es.js       # es-modules format
 
 ```bash
 npm install -g bili
+# prefer local install
+npm install bili --save-dev
 ```
 
 [Dive into the documentation](https://egoistian.com/bili/) if you are ready to bundle!
