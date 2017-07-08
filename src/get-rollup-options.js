@@ -130,14 +130,7 @@ export default function(options, format) {
         module: esModules,
         browser: options.browser
       }),
-      require('rollup-plugin-commonjs')(
-        Object.assign(
-          {
-            include: 'node_modules/**'
-          },
-          options.commonjs
-        )
-      )
+      require('rollup-plugin-commonjs')(options.commonjs)
     )
   }
 
