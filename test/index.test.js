@@ -65,6 +65,16 @@ test('custom buble options', async () => {
   expect(cjs.code).toMatchSnapshot()
 })
 
+test('it removes scoped prefix from filename', async () => {
+  const { cjs } = await bili({
+    entry: cwd('fixtures/entry.js'),
+    exports: 'named',
+    filename: '@name/named',
+    write: false
+  })
+  expect(cjs.code).toMatchSnapshot()
+})
+
 test('it inserts banner', async () => {
   // Skip this for now
   // Maybe add `baseDir` option to allow bili to load package.json from a custom dir
