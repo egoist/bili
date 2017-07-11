@@ -129,19 +129,6 @@ exports[`it inserts banner 3`] = `
 "
 `;
 
-exports[`it removes scoped prefix from filename 1`] = `
-"'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var a = 1;
-var version = '__VERSION__';
-
-exports['default'] = a;
-exports.version = version;
-"
-`;
-
 exports[`it replaces string using rollup-plugin-replace 1`] = `
 "'use strict';
 
@@ -149,6 +136,19 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var a = 1;
 var version = '0.0.0';
+
+exports['default'] = a;
+exports.version = version;
+"
+`;
+
+exports[`scoped it should remove the name prefix from a scoped package name 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var a = 1;
+var version = '__VERSION__';
 
 exports['default'] = a;
 exports.version = version;
