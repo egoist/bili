@@ -1,5 +1,7 @@
 import path from 'path'
+import fs from 'fs'
 import rm from 'rimraf'
+
 import bili from '../src/bili'
 
 function cwd(filePath) {
@@ -35,6 +37,27 @@ test('it replaces string using rollup-plugin-replace', async () => {
   expect(cjs.code).toMatchSnapshot()
 })
 
+describe('scoped', () => {
+  beforeAll(() => {
+    process.chdir(path.join(__dirname, 'fixtures'))
+    fs.writeFileSync('package.json', '{ "name": "@name/name"}')
+  })
+
+  test('it should remove the name prefix from a scoped package name', async () => {
+    const { cjs } = await bili({
+      entry: cwd('fixtures/entry.js'),
+      exports: 'named',
+      write: false
+    })
+    expect(cjs.code).toMatchSnapshot()
+  })
+
+  afterAll(() => {
+    rm.sync('package.json')
+    process.chdir(__dirname)
+  })
+})
+
 test('use typescript', async () => {
   const { cjs } = await bili({
     entry: cwd('fixtures/index.ts'),
@@ -62,16 +85,6 @@ test('custom buble options', async () => {
     write: false
   })
 
-  expect(cjs.code).toMatchSnapshot()
-})
-
-test('it removes scoped prefix from filename', async () => {
-  const { cjs } = await bili({
-    entry: cwd('fixtures/entry.js'),
-    exports: 'named',
-    filename: '@name/named',
-    write: false
-  })
   expect(cjs.code).toMatchSnapshot()
 })
 
