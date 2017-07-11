@@ -5,9 +5,13 @@ import req from 'req-cwd'
 import stringifyAuthor from 'stringify-author'
 
 function getDest(options, format, compress) {
-  const filename = options.filename
+  let filename = options.filename
   const dir = options.outDir
   let suffix = ''
+
+  if (filename.startsWith('@')) {
+    filename = filename.slice(filename.lastIndexOf('/'))
+  }
 
   if (format === 'cjs') {
     suffix += '.common'
