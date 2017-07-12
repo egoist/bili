@@ -1,5 +1,5 @@
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 import rm from 'rimraf'
 
 import bili from '../src/bili'
@@ -39,21 +39,21 @@ test('it replaces string using rollup-plugin-replace', async () => {
 
 describe('scoped', () => {
   beforeAll(() => {
-    process.chdir(path.join(__dirname, 'fixtures'))
-    fs.writeFileSync('package.json', '{ "name": "@name/name"}')
+    process.chdir(path.join(__dirname, 'fixtures', 'scoped'))
   })
 
   test('it should remove the name prefix from a scoped package name', async () => {
-    const { cjs } = await bili({
+    await bili({
       entry: cwd('fixtures/entry.js'),
       exports: 'named',
-      write: false
+      outDir: 'dist-scoped'
     })
-    expect(cjs.code).toMatchSnapshot()
+
+    const files = await fs.readdir('./dist-scoped')
+    expect(files).toEqual(['package-name.common.js'])
   })
 
   afterAll(() => {
-    rm.sync('package.json')
     process.chdir(__dirname)
   })
 })
