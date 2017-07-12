@@ -1,5 +1,7 @@
 import path from 'path'
+import fs from 'fs-extra'
 import rm from 'rimraf'
+
 import bili from '../src/bili'
 
 function cwd(filePath) {
@@ -33,6 +35,27 @@ test('it replaces string using rollup-plugin-replace', async () => {
     write: false
   })
   expect(cjs.code).toMatchSnapshot()
+})
+
+describe('scoped', () => {
+  beforeAll(() => {
+    process.chdir(path.join(__dirname, 'fixtures', 'scoped'))
+  })
+
+  test('it should remove the name prefix from a scoped package name', async () => {
+    await bili({
+      entry: cwd('fixtures/entry.js'),
+      exports: 'named',
+      outDir: 'dist-scoped'
+    })
+
+    const files = await fs.readdir('./dist-scoped')
+    expect(files).toEqual(['package-name.common.js'])
+  })
+
+  afterAll(() => {
+    process.chdir(__dirname)
+  })
 })
 
 test('use typescript', async () => {
