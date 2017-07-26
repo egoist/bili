@@ -37,7 +37,6 @@ cli
     'Content to insert to the top of bundle file, boolean or string or object'
   )
 
-cli.example('bili src/index.js --format umd,cjs --compress umd')
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign(
