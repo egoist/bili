@@ -18,7 +18,8 @@
     "build": "babel src --out-dir lib",
     "dev": "babel src --out-dir lib --watch",
     "lint": "xo",
-    "fix": "npm run lint -- --fix"
+    "fix": "npm run lint -- --fix",
+    "prepublish": "npm run build"
   },
   "main": "lib/bili.js",
   "bin": "cli.js",
