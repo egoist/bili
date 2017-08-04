@@ -128,7 +128,8 @@ export default function(options, format) {
         skip: options.skip,
         jsnext: esModules,
         module: esModules,
-        browser: options.browser
+        browser: options.browser,
+        ...options.nodeResolve
       }),
       require('rollup-plugin-commonjs')(options.commonjs)
     )
