@@ -31,6 +31,27 @@ function getMap(options, compress) {
   return compress ? true : options.map
 }
 
+function AddExtraPlugins(plugins, extraPlugins) {
+  if (Array.isArray(plugins)) {
+    plugins = plugins.concat(extraPlugins)
+  }
+
+  if (typeof extraPlugins === 'object') {
+    if (extraPlugins.prepend) {
+      plugins = extraPlugins.prepend.concat(plugins)
+    }
+    if (extraPlugins.append) {
+      plugins = plugins.concat(extraPlugins.append)
+    }
+  }
+
+  if (typeof extraPlugins === 'function') {
+    plugins = extraPlugins(plugins)
+  }
+
+  return plugins
+}
+
 export default function(options, format) {
   let compress = false
   if (format.endsWith('Compress')) {
@@ -69,6 +90,19 @@ export default function(options, format) {
     plugins.push(require('rollup-plugin-flow')())
   }
 
+  if (options.plugins) {
+    const _plugins = Array.isArray(options.plugins)
+      ? options.plugins
+      : [options.plugins]
+    const extraPlugins = _plugins.map(p => {
+      if (typeof p === 'string') {
+        return req(`rollup-plugin-${p}`)(options[p])
+      }
+      return p
+    })
+    plugins = [...plugins, ...extraPlugins]
+  }
+
   if (js) {
     let jsPlugin
     try {
@@ -85,19 +119,6 @@ export default function(options, format) {
         throw err
       }
     }
-  }
-
-  if (options.plugins) {
-    const _plugins = Array.isArray(options.plugins)
-      ? options.plugins
-      : [options.plugins]
-    const extraPlugins = _plugins.map(p => {
-      if (typeof p === 'string') {
-        return req(`rollup-plugin-${p}`)(options[p])
-      }
-      return p
-    })
-    plugins = [...plugins, ...extraPlugins]
   }
 
   if (options.alias) {
