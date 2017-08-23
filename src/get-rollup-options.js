@@ -49,7 +49,7 @@ export default function(options, format) {
     const transforms = jsOptions.transforms
     jsOptions = {
       objectAssign: 'Object.assign',
-      include: ['**/*.{js,jsx,es6}'],
+      include: ['**/*.{js,jsx,es6,vue}'],
       ...jsOptions,
       transforms: {
         generator: false,
@@ -69,6 +69,19 @@ export default function(options, format) {
     plugins.push(require('rollup-plugin-flow')())
   }
 
+  if (options.plugins) {
+    const _plugins = Array.isArray(options.plugins)
+      ? options.plugins
+      : [options.plugins]
+    const extraPlugins = _plugins.map(p => {
+      if (typeof p === 'string') {
+        return req(`rollup-plugin-${p}`)(options[p])
+      }
+      return p
+    })
+    plugins = [...plugins, ...extraPlugins]
+  }
+
   if (js) {
     let jsPlugin
     try {
@@ -85,19 +98,6 @@ export default function(options, format) {
         throw err
       }
     }
-  }
-
-  if (options.plugins) {
-    const _plugins = Array.isArray(options.plugins)
-      ? options.plugins
-      : [options.plugins]
-    const extraPlugins = _plugins.map(p => {
-      if (typeof p === 'string') {
-        return req(`rollup-plugin-${p}`)(options[p])
-      }
-      return p
-    })
-    plugins = [...plugins, ...extraPlugins]
   }
 
   if (options.alias) {
@@ -173,12 +173,7 @@ export default function(options, format) {
 
   if (compress) {
     plugins.push(
-      require('rollup-plugin-uglify')({
-        output: {
-          // Preserve banner
-          preamble: banner
-        }
-      })
+      require('rollup-plugin-uglify')()
     )
   }
 
