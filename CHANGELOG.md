@@ -1,3 +1,16 @@
+## [Version 0.17.6](https://github.com/egoist/bubleup/releases/tag/v0.17.6) (2017-8-23)
+
+### New features
+
+- allow plugins to be a function: [`eb03515`](https://github.com/egoist/bubleup/commit/eb03515)
+
+### Bug fixes
+
+- Revert "reorder plugins": [`5911207`](https://github.com/egoist/bubleup/commit/5911207)
+- include vue file in js plugin: [`04eef5e`](https://github.com/egoist/bubleup/commit/04eef5e)
+
+[...full changes](https://github.com/egoist/bubleup/compare/v0.17.5...v0.17.6)
+
 ## [Version 0.17.5](https://github.com/egoist/bubleup/releases/tag/v0.17.5) (2017-8-23)
 
 ### Bug fixes
