@@ -1,3 +1,11 @@
+## [Version 0.17.7](https://github.com/egoist/bubleup/releases/tag/v0.17.7) (2017-8-23)
+
+### Bug fixes
+
+- fix plugins: [`a434345`](https://github.com/egoist/bubleup/commit/a434345)
+
+[...full changes](https://github.com/egoist/bubleup/compare/v0.17.6...v0.17.7)
+
 ## [Version 0.17.6](https://github.com/egoist/bubleup/releases/tag/v0.17.6) (2017-8-23)
 
 ### New features
