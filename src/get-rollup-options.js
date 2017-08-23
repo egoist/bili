@@ -69,7 +69,7 @@ export default function(options, format) {
     plugins.push(require('rollup-plugin-flow')())
   }
 
-  if (options.plugins) {
+  if (typeof options.plugins === 'object') {
     const _plugins = Array.isArray(options.plugins)
       ? options.plugins
       : [options.plugins]
@@ -190,6 +190,10 @@ export default function(options, format) {
     external = id => /\.json$/.test(id)
   }
   external = options.external || external
+
+  if (typeof options.plugins === 'function') {
+    plugins = options.plugins(plugins)
+  }
 
   return {
     exports: options.exports,
