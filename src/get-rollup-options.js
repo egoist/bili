@@ -69,7 +69,7 @@ export default function(options, format) {
     plugins.push(require('rollup-plugin-flow')())
   }
 
-  if (typeof options.plugins === 'object') {
+  if (typeof options.plugins === 'object' || typeof options.plugins === 'string') {
     const _plugins = Array.isArray(options.plugins)
       ? options.plugins
       : [options.plugins]
