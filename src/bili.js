@@ -92,7 +92,8 @@ export default function(options = {}) {
         })
       }
       return rollup.rollup(rollupOptions).then(bundle => {
-        if (options.write === false) return bundle.generate(rollupOptions.output)
+        if (options.write === false)
+          return bundle.generate(rollupOptions.output)
         return bundle.write(rollupOptions.output)
       })
     })

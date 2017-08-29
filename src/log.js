@@ -1,6 +1,6 @@
 import fancyLog from 'fancy-log'
 
-export default function (type, msg, color) {
+export default function(type, msg, color) {
   if (!color) {
     fancyLog(`${type} ${msg}`)
     return

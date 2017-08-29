@@ -1,6 +1,5 @@
 /* eslint-disable unicorn/no-process-exit */
 import cac from 'cac'
-import chalk from 'chalk'
 import update from 'update-notifier'
 import bili from './bili'
 import { handleRollupError } from './utils'
@@ -36,7 +35,6 @@ cli
     'banner',
     'Content to insert to the top of bundle file, boolean or string or object'
   )
-
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign(
