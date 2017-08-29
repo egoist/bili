@@ -14,6 +14,13 @@ bili(options).catch(err => {
 })
 ```
 
+### input
+
+Type: `string`<br>
+Default: `src/index.js`
+
+Input file.
+
 ### filename
 
 Type: `string`
