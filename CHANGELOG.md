@@ -1,3 +1,11 @@
+## [Version 0.18.1](https://github.com/egoist/bubleup/releases/tag/v0.18.1) (2017-8-29)
+
+### Bug fixes
+
+- fix cli: [`b47415c`](https://github.com/egoist/bubleup/commit/b47415c)
+
+[...full changes](https://github.com/egoist/bubleup/compare/v0.18.0...v0.18.1)
+
 ## [Version 0.18.0](https://github.com/egoist/bubleup/releases/tag/v0.18.0) (2017-8-29)
 
 ### Breaking changes
