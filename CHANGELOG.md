@@ -1,3 +1,12 @@
+## [Version 0.18.0](https://github.com/egoist/bubleup/releases/tag/v0.18.0) (2017-8-29)
+
+### Breaking changes
+
+- update rollup: [`82d9e94`](https://github.com/egoist/bubleup/commit/82d9e94)
+- rename entry to input: [`455b257`](https://github.com/egoist/bubleup/commit/455b257)
+
+[...full changes](https://github.com/egoist/bubleup/compare/v0.17.7...v0.18.0)
+
 ## [Version 0.17.7](https://github.com/egoist/bubleup/releases/tag/v0.17.7) (2017-8-23)
 
 ### Bug fixes
