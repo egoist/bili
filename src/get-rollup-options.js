@@ -173,7 +173,12 @@ export default function(options, format) {
 
   if (compress) {
     plugins.push(
-      require('rollup-plugin-uglify')()
+      require('rollup-plugin-uglify')({
+        output: {
+          // Preserve banner
+          preamble: banner
+        }
+      })
     )
   }
 
@@ -196,15 +201,17 @@ export default function(options, format) {
   }
 
   return {
-    exports: options.exports,
-    entry: options.entry,
-    paths: options.paths,
-    dest: getDest(options, format, compress),
-    sourceMap: getMap(options, compress),
+    input: options.entry,
     plugins,
-    format,
-    moduleName,
     external,
-    banner
+    output: {
+      file: getDest(options, format, compress),
+      exports: options.exports,
+      name: moduleName,
+      paths: options.paths,
+      sourcemap: getMap(options, compress),
+      format,
+      banner
+    }
   }
 }

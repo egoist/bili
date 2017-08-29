@@ -1,5 +1,4 @@
 import * as rollup from 'rollup'
-import watch from 'rollup-watch'
 import switchy from 'switchy'
 import chalk from 'chalk'
 import fancyLog from 'fancy-log'
@@ -66,27 +65,34 @@ export default function(options = {}) {
       if (options.watch) {
         let init
         return new Promise(resolve => {
-          const watcher = watch(rollup, rollupOptions)
+          const watcher = rollup.watch(rollupOptions)
           watcher.on('event', event => {
             switchy({
-              STARTING() {
-                log(format, 'starting', chalk.white.bgBlue)
+              START() {
+                log(format, 'starting', chalk.blue)
                 if (!init) {
                   init = true
                   return resolve()
                 }
               },
-              BUILD_START() {},
-              BUILD_END() {
-                log(format, 'bundled successfully', chalk.black.bgGreen)
+              BUNDLE_START() {},
+              BUNDLE_END() {
+                log(format, 'bundled', chalk.green)
               },
+              END() {},
               ERROR() {
                 const error = event.error
-                log(format, '', chalk.white.bgRed)
+                log(format, '', chalk.red)
                 if (error.snippet) {
                   console.error(chalk.red(`---\n${error.snippet}\n---`))
                 }
                 console.error(error.stack)
+              },
+              FATAL() {
+                log(event.error.plugin, event.error.message, chalk.red)
+                console.log(chalk.dim(`Location: ${event.error.id}`))
+                console.error(event.error.snippet)
+                process.exitCode = 1
               },
               default() {
                 console.error('unknown event', event)
@@ -96,8 +102,8 @@ export default function(options = {}) {
         })
       }
       return rollup.rollup(rollupOptions).then(bundle => {
-        if (options.write === false) return bundle.generate(rollupOptions)
-        return bundle.write(rollupOptions)
+        if (options.write === false) return bundle.generate(rollupOptions.output)
+        return bundle.write(rollupOptions.output)
       })
     })
   ).then(result => {
