@@ -108,7 +108,7 @@ exports[`it inserts banner 2`] = `
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.index = global.index || {})));
+	(factory((global.index = {})));
 }(this, (function (exports) { 'use strict';
 
 var a = 1;
@@ -125,7 +125,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 exports[`it inserts banner 3`] = `
 "/*! bilibili */
-!function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index=e.index||{})}(this,function(e){\\"use strict\\";e.default=1,e.version=\\"__VERSION__\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})});
+!function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index={})}(this,function(e){\\"use strict\\";e.default=1,e.version=\\"__VERSION__\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})});
 "
 `;
 
