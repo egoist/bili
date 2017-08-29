@@ -9,10 +9,22 @@ const cli = cac()
 update({ pkg: cli.pkg }).notify()
 
 cli
-  .option('config, c', 'Path to config file')
-  .option('watch, w', 'Run in watch mode')
-  .option('filename, n', 'The filename of output file, no extension')
-  .option('out-dir, d', 'The output directory')
+  .option('config', {
+    desc: 'Path to config file',
+    alias: 'c'
+  })
+  .option('watch', {
+    desc: 'Run in watch mode',
+    alias: 'w'
+  })
+  .option('filename', {
+    desc: 'The filename of output file, no extension',
+    alias: 'n'
+  })
+  .option('out-dir', {
+    desc: 'The output directory',
+    alias: 'd'
+  })
   .option('format', 'Bundle format, array of string')
   .option('module-name', 'The module name for UMD builds')
   .option('map', 'Generate sourcemap, boolean or `inline`')
