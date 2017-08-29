@@ -1,25 +1,18 @@
 import * as rollup from 'rollup'
 import switchy from 'switchy'
 import chalk from 'chalk'
-import fancyLog from 'fancy-log'
 import merge from 'lodash.merge'
 import getRollupOptions from './get-rollup-options'
 import getConfig from './get-config'
-
-function log(type, msg, color) {
-  if (!color) {
-    fancyLog(`${type} ${msg}`)
-    return
-  }
-  fancyLog(`${color(type)} ${msg}`)
-}
+import { handleRollupError } from './utils'
+import log from './log'
 
 export default function(options = {}) {
   const userConfig = getConfig(options.config)
 
   options = merge(
     {
-      entry: './src/index.js',
+      input: './src/index.js',
       format: ['cjs'],
       outDir: './dist',
       filename: 'index',
@@ -28,6 +21,11 @@ export default function(options = {}) {
     userConfig,
     options
   )
+
+  // for backward-compat
+  if (options.entry) {
+    options.input = options.entry
+  }
 
   let formats = options.format
 
@@ -81,18 +79,10 @@ export default function(options = {}) {
               },
               END() {},
               ERROR() {
-                const error = event.error
-                log(format, '', chalk.red)
-                if (error.snippet) {
-                  console.error(chalk.red(`---\n${error.snippet}\n---`))
-                }
-                console.error(error.stack)
+                handleRollupError(event.error)
               },
               FATAL() {
-                log(event.error.plugin, event.error.message, chalk.red)
-                console.log(chalk.dim(`Location: ${event.error.id}`))
-                console.error(event.error.snippet)
-                process.exitCode = 1
+                handleRollupError(event.error)
               },
               default() {
                 console.error('unknown event', event)

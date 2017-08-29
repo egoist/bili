@@ -3,13 +3,13 @@ import cac from 'cac'
 import chalk from 'chalk'
 import update from 'update-notifier'
 import bili from './bili'
+import { handleRollupError } from './utils'
 
 const cli = cac()
 
 update({ pkg: cli.pkg }).notify()
 
 cli
-  .option('entry', 'Path to entry file')
   .option('config, c', 'Path to config file')
   .option('watch, w', 'Run in watch mode')
   .option('filename, n', 'The filename of output file, no extension')
@@ -41,18 +41,13 @@ cli
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign(
     {
-      entry: input[0]
+      input: input[0]
     },
     flags
   )
 
   return bili(options).catch(err => {
-    console.log(err)
-    if (err.snippet) {
-      console.error(chalk.red(`---\n${err.snippet}\n---`))
-    }
-    console.error(err.message)
-    process.exit(1) // eslint-disable-line xo/no-process-exit
+    handleRollupError(err)
   })
 })
 

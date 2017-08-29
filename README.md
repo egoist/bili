@@ -61,12 +61,12 @@ As per Rollup [wiki](https://github.com/rollup/rollup/wiki/Command-Line-Interfac
 import buble from 'rollup-plugin-buble'
 
 export default {
-  entry: 'src/main.js',
+  input: 'src/main.js',
   plugins: [ buble() ],
-  targets: [
-    { dest: 'dist/bundle.cjs.js', format: 'cjs' },
-    { dest: 'dist/bundle.umd.js', format: 'umd' },
-    { dest: 'dist/bundle.es.js', format: 'es' },
+  output: [
+    { file: 'dist/bundle.cjs.js', format: 'cjs' },
+    { file: 'dist/bundle.umd.js', format: 'umd' },
+    { file: 'dist/bundle.es.js', format: 'es' },
   ]
 }
 ```

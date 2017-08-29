@@ -201,7 +201,7 @@ export default function(options, format) {
   }
 
   return {
-    input: options.entry,
+    input: options.input,
     plugins,
     external,
     output: {
