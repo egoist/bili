@@ -13,5 +13,7 @@ export function handleRollupError(error) {
     console.log(chalk.dim(`Location: ${error.id}`))
   }
   console.error(error.snippet)
+  console.log()
+  console.log(error)
   process.exitCode = 1
 }
