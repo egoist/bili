@@ -1,5 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`bili it replaces string using rollup-plugin-replace 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var a = 1;
+var version = '0.0.0';
+
+exports['default'] = a;
+exports.version = version;
+"
+`;
+
 exports[`compress string 1`] = `
 "(function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -126,19 +139,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 exports[`it inserts banner 3`] = `
 "/*! bilibili */
 !function(e,t){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?t(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],t):t(e.index={})}(this,function(e){\\"use strict\\";e.default=1,e.version=\\"__VERSION__\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})});
-"
-`;
-
-exports[`it replaces string using rollup-plugin-replace 1`] = `
-"'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var a = 1;
-var version = '0.0.0';
-
-exports['default'] = a;
-exports.version = version;
 "
 `;
 

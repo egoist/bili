@@ -1,11 +1,24 @@
 import path from 'path'
+import { EventEmitter } from 'events'
 import fs from 'fs-extra'
 import rm from 'rimraf'
+import chalk from 'chalk'
+import switchy from 'switchy'
 
 import bili from '../src/bili'
+import { handleRollupError } from '../src/utils'
+import log from '../src/log'
 
 function cwd(filePath) {
   return path.join(__dirname, filePath || '')
+}
+
+function safeBox(fn) {
+  const args = arguments
+  return new Promise(resolve => {
+    fn && fn(...[...args].slice(1))
+    resolve()
+  })
 }
 
 const prevCwd = process.cwd()
@@ -19,22 +32,78 @@ afterAll(() => {
   process.chdir(prevCwd)
 })
 
-test('it throws because entry not found', () => {
-  return bili().catch(err => {
-    expect(err.message).toEqual('Could not resolve entry (./src/index.js)')
-  })
+afterEach(() => {
+  process.exitCode = 0
 })
 
-test('it replaces string using rollup-plugin-replace', async () => {
-  const { cjs } = await bili({
-    entry: cwd('fixtures/entry.js'),
-    exports: 'named',
-    replace: {
-      __VERSION__: '0.0.0'
-    },
-    write: false
+describe('bili', () => {
+  test('it throws because entry not found', () => {
+    return bili().catch(err => {
+      expect(err.message).toEqual('Could not resolve entry (./src/index.js)')
+    })
   })
-  expect(cjs.code).toMatchSnapshot()
+
+  test('it replaces string using rollup-plugin-replace', async () => {
+    const { cjs } = await bili({
+      entry: cwd('fixtures/entry.js'),
+      exports: 'named',
+      replace: {
+        __VERSION__: '0.0.0'
+      },
+      write: false
+    })
+    expect(cjs.code).toMatchSnapshot()
+  })
+
+  test('should throw error when "format" is neither string nor array', () => {
+    return safeBox(bili, {
+      format: null
+    }).catch(err => {
+      expect(err.message).toEqual('Expect "format" to be a string or Array')
+    })
+  })
+
+  test('should throw error when "compress" is neither string/true nor array', () => {
+    return safeBox(bili, {
+      compress: null
+    }).catch(err => {
+      expect(err.message).toEqual(
+        'Expect "compress" to be a string/true or Array'
+      )
+    })
+  })
+
+  test('should work on watch mode', async () => {
+    const watchers = await bili({
+      entry: cwd('fixtures/entry.js'),
+      exports: 'named',
+      watch: true
+    })
+    watchers.forEach(watcher => {
+      expect(watcher instanceof EventEmitter).toBeTruthy()
+      watcher.on('event', event => {
+        switchy({
+          ERROR() {
+            expect(process.exitCode).toEqual(1)
+            process.exitCode = 0
+          },
+          FATAL() {
+            expect(process.exitCode).toEqual(1)
+            process.exitCode = 0
+          }
+        })(event.code)
+      })
+      watcher.emit('event', { code: 'START' })
+      watcher.emit('event', { code: 'BUNDLE_END' })
+
+      watcher.emit('event', { code: 'ERROR', error: 'error' })
+      watcher.emit('event', { code: 'FATAL', error: 'error' })
+      watcher.emit('event', { code: 'EGOIST' })
+      setImmediate(() => {
+        watcher.close()
+      })
+    })
+  })
 })
 
 describe('scoped', () => {
@@ -136,6 +205,27 @@ test('generate all bundles', async () => {
     write: false
   })
   expect(Object.keys(result)).toHaveLength(3)
+})
+
+describe('log', () => {
+  test('should log with color', () => {
+    expect(log('info', 'log', chalk.red)).toBeUndefined()
+  })
+
+  test('should log without color', () => {
+    expect(log('info', 'log')).toBeUndefined()
+  })
+})
+
+test('should handle rollup error', () => {
+  handleRollupError({
+    plugin: 'rollup',
+    message: 'error',
+    id: 1,
+    snippet: 'error'
+  })
+  expect(process.exitCode).toBe(1)
+  process.exitCode = 0
 })
 
 describe('compress', () => {
