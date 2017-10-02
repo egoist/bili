@@ -230,7 +230,8 @@ test('should handle rollup error', () => {
 })
 
 test('should get correct package config', () => {
-  const pkgConfig = getConfig('fixtures/bili.config.js')
+  const pkgConfig = getConfig(cwd('fixtures/bili.config.js'))
+  console.log(pkgConfig)
   expect(pkgConfig.name).toBe('EGOIST')
   expect(typeof pkgConfig.pkg).toBe('object')
   expect(JSON.stringify(pkgConfig.pkg)).toBe('{}')
