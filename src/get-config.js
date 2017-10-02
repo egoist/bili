@@ -20,7 +20,6 @@ function readInPkg(file) {
         pkg: {}
       }
     }
-    throw err
   }
 }
 

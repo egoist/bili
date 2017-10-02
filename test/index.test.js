@@ -7,6 +7,8 @@ import switchy from 'switchy'
 
 import bili from '../src/bili'
 import { handleRollupError } from '../src/utils'
+import getConfig from '../src/get-config'
+import getRollupOptions from '../src/get-rollup-options'
 import log from '../src/log'
 
 function cwd(filePath) {
@@ -226,6 +228,13 @@ test('should handle rollup error', () => {
   })
   expect(process.exitCode).toBe(1)
   process.exitCode = 0
+})
+
+test('should get correct package config', () => {
+  const pkgConfig = getConfig('fixtures/bili.config.js')
+  expect(pkgConfig.name).toBe('EGOIST')
+  expect(typeof pkgConfig.pkg).toBe('object')
+  expect(JSON.stringify(pkgConfig.pkg)).toBe('{}')
 })
 
 describe('compress', () => {
