@@ -80,7 +80,8 @@ describe('bili', () => {
       exports: 'named',
       watch: true
     })
-    watchers.forEach(watcher => {
+    Object.keys(watchers).forEach(format => {
+      const watcher = watchers[format]
       expect(watcher instanceof EventEmitter).toBeTruthy()
       watcher.on('event', event => {
         switchy({
