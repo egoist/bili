@@ -95,9 +95,6 @@ export default function(options = {}) {
       })
     })
   ).then(result => {
-    if (options.watch) {
-      return result
-    }
     return result.reduce((res, next, i) => {
       res[allFormats[i]] = next
       return res
