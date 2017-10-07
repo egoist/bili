@@ -198,6 +198,9 @@ export default function(options, format) {
     external = id => /\.json$/.test(id)
   }
   external = options.external || external
+  if (external && !Array.isArray(external)) {
+    external = [external]
+  }
 
   if (typeof options.plugins === 'function') {
     plugins = options.plugins(plugins)
