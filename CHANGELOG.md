@@ -1,3 +1,11 @@
+## [Version 0.18.2](https://github.com/egoist/bubleup/releases/tag/v0.18.2) (2017-10-7)
+
+### Bug fixes
+
+- ensure external is an array: [`c08f587`](https://github.com/egoist/bubleup/commit/c08f587)
+
+[...full changes](https://github.com/egoist/bubleup/compare/v0.18.1...v0.18.2)
+
 ## [Version 0.18.1](https://github.com/egoist/bubleup/releases/tag/v0.18.1) (2017-8-29)
 
 ### Bug fixes
