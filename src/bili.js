@@ -62,33 +62,30 @@ export default function(options = {}) {
       const rollupOptions = getRollupOptions(options, format)
       if (options.watch) {
         let init
-        return new Promise(resolve => {
-          const watcher = rollup.watch(rollupOptions)
-          watcher.on('event', event => {
-            switchy({
-              START() {
-                log(format, 'starting', chalk.blue)
-                if (!init) {
-                  init = true
-                  return resolve()
-                }
-              },
-              BUNDLE_START() {},
-              BUNDLE_END() {
-                log(format, 'bundled', chalk.green)
-              },
-              END() {},
-              ERROR() {
-                handleRollupError(event.error)
-              },
-              FATAL() {
-                handleRollupError(event.error)
-              },
-              default() {
-                console.error('unknown event', event)
+        const watcher = rollup.watch(rollupOptions)
+        return watcher.on('event', event => {
+          switchy({
+            START() {
+              log(format, 'starting', chalk.blue)
+              if (!init) {
+                init = true
               }
-            })(event.code)
-          })
+            },
+            BUNDLE_START() {},
+            BUNDLE_END() {
+              log(format, 'bundled', chalk.green)
+            },
+            END() {},
+            ERROR() {
+              handleRollupError(event.error)
+            },
+            FATAL() {
+              handleRollupError(event.error)
+            },
+            default() {
+              console.error('unknown event', event)
+            }
+          })(event.code)
         })
       }
       return rollup.rollup(rollupOptions).then(bundle => {
