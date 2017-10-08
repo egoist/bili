@@ -15,10 +15,9 @@ function cwd(filePath) {
   return path.join(__dirname, filePath || '')
 }
 
-function Promisify(fn) {
-  const args = arguments
+function Promisify(fn, ...args) {
   return new Promise(resolve => {
-    resolve(fn && fn(...[...args].slice(1)))
+    resolve(fn && fn(...args))
   })
 }
 
