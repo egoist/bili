@@ -139,7 +139,7 @@ test('generate all bundles', async () => {
 })
 
 describe('globals', () => {
-  it('globals', async () => {
+  it('object', async () => {
     const consoleError = jest.spyOn(global.console, 'error')
 
     const { umd } = await bili({
@@ -149,6 +149,20 @@ describe('globals', () => {
       globals: {
         'lodash.merge': 'LODASH_MERGE'
       }
+    })
+
+    expect(consoleError).not.toBeCalled()
+    expect(umd.code).toContain('LODASH_MERGE')
+  })
+
+  it('string', async () => {
+    const consoleError = jest.spyOn(global.console, 'error')
+
+    const { umd } = await bili({
+      entry: cwd('fixtures/globals.js'),
+      format: 'umd',
+      write: false,
+      globals: 'foo: bar, lodash.merge : LODASH_MERGE '
     })
 
     expect(consoleError).not.toBeCalled()
