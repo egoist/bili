@@ -138,6 +138,24 @@ test('generate all bundles', async () => {
   expect(Object.keys(result)).toHaveLength(3)
 })
 
+describe('globals', () => {
+  it('globals', async () => {
+    const consoleError = jest.spyOn(global.console, 'error')
+
+    const { umd } = await bili({
+      entry: cwd('fixtures/globals.js'),
+      format: 'umd',
+      write: false,
+      globals: {
+        'lodash.merge': 'LODASH_MERGE'
+      }
+    })
+
+    expect(consoleError).not.toBeCalled()
+    expect(umd.code).toContain('LODASH_MERGE')
+  })
+})
+
 describe('compress', () => {
   it('true', async () => {
     const { umd, cjs, umdCompress, cjsCompress } = await bili({

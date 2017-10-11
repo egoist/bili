@@ -202,6 +202,21 @@ export default function(options, format) {
     external = [external]
   }
 
+  let globals
+  if (options.globals) {
+    globals = options.globals
+    if (typeof globals === 'string') {
+      globals = {}
+      options.globals.split(',').forEach(g => {
+        const s = g.split(':')
+        globals[s[0].trim()] = s[1].trim()
+      })
+    }
+    if (typeof globals === 'object') {
+      external = [...(external || []), ...Object.keys(globals)]
+    }
+  }
+
   if (typeof options.plugins === 'function') {
     plugins = options.plugins(plugins)
   }
@@ -213,6 +228,7 @@ export default function(options, format) {
     output: {
       file: getDest(options, format, compress),
       exports: options.exports,
+      globals,
       name: moduleName,
       paths: options.paths,
       sourcemap: getMap(options, compress),

@@ -131,6 +131,14 @@ Type: `Array` `Function`
 
 [Exclude files or modules.](https://github.com/rollup/rollup/wiki/JavaScript-API#external)
 
+### globals
+
+Type: `Object` `Function`
+
+[Used for umd/iife](https://rollupjs.org/#big-list-of-options#globals-g-globals-)
+
+Also any module IDs defined in `globals` are added to external.
+
 ### paths
 
 Type: `object`

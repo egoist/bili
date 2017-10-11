@@ -47,6 +47,10 @@ cli
     'banner',
     'Content to insert to the top of bundle file, boolean or string or object'
   )
+  .option(
+    'globals',
+    'Comma-separate list of `module ID:Global` pairs. Any module IDs defined here are added to external'
+  )
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
   const options = Object.assign(
