@@ -5,7 +5,7 @@ function readInPkg(file) {
   try {
     const pkg = require(file)
     const bili = pkg.bili || {}
-    if (pkg.name) {
+    if (pkg.name && !bili.filename) {
       const { name } = pkg
       bili.filename = name.startsWith('@')
         ? name.slice(name.lastIndexOf('/') + 1)

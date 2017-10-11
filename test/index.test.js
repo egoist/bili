@@ -178,7 +178,7 @@ describe('filename', () => {
     })
 
     const files = await fs.readdir('./dist-scoped')
-    expect(files).toEqual(['package-name-ex.common.js'])
+    expect(files).toContain('package-name-ex.common.js')
   })
 
   afterAll(() => {
