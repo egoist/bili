@@ -164,3 +164,24 @@ describe('compress', () => {
     expect(cjsCompress.code).toMatchSnapshot()
   })
 })
+
+describe('filename', () => {
+  beforeAll(() => {
+    process.chdir(path.join(__dirname, 'fixtures', 'filename'))
+  })
+
+  test('it should honor bili.filename', async () => {
+    await bili({
+      entry: cwd('fixtures/entry.js'),
+      exports: 'named',
+      outDir: 'dist-scoped'
+    })
+
+    const files = await fs.readdir('./dist-scoped')
+    expect(files).toContain('package-name-ex.common.js')
+  })
+
+  afterAll(() => {
+    process.chdir(__dirname)
+  })
+})
