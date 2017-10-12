@@ -129,13 +129,13 @@ const prod = "development" === 'production'
 
 Type: `Array` `Function`
 
-[Exclude files or modules.](https://github.com/rollup/rollup/wiki/JavaScript-API#external)
+[Exclude files or modules.](https://rollupjs.org/#external-e-external-)
 
 ### paths
 
 Type: `object`
 
-This helps you import some file from the CDN (as using AMD), or set an alias to an external file, see [more details in Rollup's WIKI](https://github.com/rollup/rollup/wiki/JavaScript-API#paths).
+This helps you import some file from the CDN (as using AMD), or set an alias to an external file, see [more details in Rollup docs](https://rollupjs.org/#paths).
 
 ### map
 
@@ -156,7 +156,7 @@ Remove flow type annotations.
 Type: `string`<br>
 Default: `auto`
 
-[Specific what export mode to use](https://github.com/rollup/rollup/wiki/JavaScript-API#exports).
+[Specific what export mode to use](https://rollupjs.org/#exports).
 
 ### browser
 
