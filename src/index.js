@@ -49,7 +49,7 @@ cli
   )
   .option(
     'globals',
-    'Comma-separate list of `module ID:Global` pairs. Any module IDs defined here are added to external'
+    'Mark module as global variable. Any module IDs defined here are added to external'
   )
 
 cli.command('*', 'Bundle with bili', (input, flags) => {
