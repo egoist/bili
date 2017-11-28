@@ -1,3 +1,20 @@
+## [Version 0.19.0](https://github.com/egoist/bili/releases/tag/v0.19.0) (2017-11-28)
+
+### Breaking changes
+
+- remove compress option, introduce -min: [`daa659c`](https://github.com/egoist/bili/commit/daa659c)
+
+### New features
+
+- globals option: [`1f1352a`](https://github.com/egoist/bili/commit/1f1352a) ([#31](https://github.com/egoist/bili/issues/31))
+
+### Bug fixes
+
+- fix filename: [`bd51cb2`](https://github.com/egoist/bili/commit/bd51cb2) ([#32](https://github.com/egoist/bili/issues/32))
+- tweaks: [`25cd955`](https://github.com/egoist/bili/commit/25cd955)
+
+[...full changes](https://github.com/egoist/bili/compare/v0.18.2...v0.19.0)
+
 ## [Version 0.18.2](https://github.com/egoist/bubleup/releases/tag/v0.18.2) (2017-10-7)
 
 ### Bug fixes
