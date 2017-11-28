@@ -139,6 +139,12 @@ Type: `Object` `Function`
 
 Also any module IDs defined in `globals` are added to external.
 
+To use in CLI, you can use dot-nested flags:
+
+```bash
+bili --globals.lodash "_" --globals.jquery "$"
+```
+
 ### paths
 
 Type: `object`
