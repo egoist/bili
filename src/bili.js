@@ -1,7 +1,8 @@
 import * as rollup from 'rollup'
 import switchy from 'switchy'
 import chalk from 'chalk'
-import merge from 'lodash.merge'
+import merge from 'lodash/merge'
+import camelcase from 'lodash/camelcase'
 import getRollupOptions from './get-rollup-options'
 import getConfig from './get-config'
 import { handleRollupError } from './utils'
@@ -39,7 +40,6 @@ export default function(options = {}) {
   } else if (!Array.isArray(formats)) {
     throw new TypeError('Expect "format" to be a string or Array')
   }
-
 
   return Promise.all(
     formats.map(format => {
@@ -83,7 +83,7 @@ export default function(options = {}) {
     })
   ).then(result => {
     return result.reduce((res, next, i) => {
-      res[allFormats[i]] = next
+      res[camelcase(formats[i])] = next
       return res
     }, {})
   })

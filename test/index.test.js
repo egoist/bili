@@ -116,16 +116,15 @@ test('it inserts banner', async () => {
   expect(cjs.code).toMatchSnapshot()
 
   // banner: String
-  const { umd, umdCompress } = await bili({
+  const { umd, umdMin } = await bili({
     entry: cwd('fixtures/entry.js'),
-    format: 'umd',
-    compress: true,
+    format: 'umd,umd-min',
     exports: 'named',
     write: false,
     banner: '/*! bilibili */'
   })
   expect(umd.code).toMatchSnapshot()
-  expect(umdCompress.code).toMatchSnapshot()
+  expect(umdMin.code).toMatchSnapshot()
 })
 
 test('generate all bundles', async () => {
@@ -140,28 +139,26 @@ test('generate all bundles', async () => {
 
 describe('compress', () => {
   it('true', async () => {
-    const { umd, cjs, umdCompress, cjsCompress } = await bili({
+    const { umd, cjs, umdMin, cjsMin } = await bili({
       entry: cwd('fixtures/compress.js'),
-      format: 'umd,cjs',
-      compress: true,
+      format: 'umd,cjs,umd-min,cjs-min',
       write: false
     })
     expect(umd.code).toMatchSnapshot()
     expect(cjs.code).toMatchSnapshot()
-    expect(umdCompress.code).toMatchSnapshot()
-    expect(cjsCompress.code).toMatchSnapshot()
+    expect(umdMin.code).toMatchSnapshot()
+    expect(cjsMin.code).toMatchSnapshot()
   })
 
   it('string', async () => {
-    const { umd, cjs, cjsCompress } = await bili({
+    const { umd, cjs, cjsMin } = await bili({
       entry: cwd('fixtures/compress.js'),
-      format: 'umd,cjs',
-      compress: 'cjs',
+      format: 'umd,cjs,cjs-min',
       write: false
     })
     expect(umd.code).toMatchSnapshot()
     expect(cjs.code).toMatchSnapshot()
-    expect(cjsCompress.code).toMatchSnapshot()
+    expect(cjsMin.code).toMatchSnapshot()
   })
 })
 
