@@ -131,6 +131,20 @@ Type: `Array` `Function`
 
 [Exclude files or modules.](https://rollupjs.org/#external-e-external-)
 
+### globals
+
+Type: `Object` `Function`
+
+[Used for umd/iife](https://rollupjs.org/#big-list-of-options#globals-g-globals-)
+
+Also any module IDs defined in `globals` are added to external.
+
+To use in CLI, you can use dot-nested flags:
+
+```bash
+bili --globals.lodash "_" --globals.jquery "$"
+```
+
 ### paths
 
 Type: `object`
