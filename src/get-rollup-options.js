@@ -205,13 +205,6 @@ export default function(options, format) {
   let globals
   if (options.globals) {
     globals = options.globals
-    if (typeof globals === 'string') {
-      globals = {}
-      options.globals.split(',').forEach(g => {
-        const s = g.split(':')
-        globals[s[0].trim()] = s[1].trim()
-      })
-    }
     if (typeof globals === 'object') {
       external = [...(external || []), ...Object.keys(globals)]
     }
