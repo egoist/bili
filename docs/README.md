@@ -4,10 +4,10 @@ Bundling JavaScript library could be easy and interesting.
 
 ## Introduction
 
-With one line of code, you'll have `commonjs` `umd` and `compressed` umd version of your library:
+With one line of code, you'll have `commonjs` `umd` and `minified` umd version of your library:
 
 ```bash
-bili --format cjs --format umd --compress umd
+bili --format cjs,umd,umd-min
 ```
 
 <p class="tip">
@@ -110,19 +110,5 @@ When you add a `umd` format, the `moduleName` would be required too, since we ne
 ```js
 module.exports = {
   moduleName: 'React'
-}
-```
-
-#### compress
-
-Use `compress` option to generate compressed file and its sourcemaps.
-
-```js
-module.exports = {
-  format: 'umd,cjs,es',
-  // true means compress for umd, cjs, iife
-  compress: true,
-  // or specific formats only
-  compress: 'umd,cjs'
 }
 ```

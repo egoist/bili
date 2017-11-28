@@ -15,8 +15,7 @@ export default function(options = {}) {
       input: './src/index.js',
       format: ['cjs'],
       outDir: './dist',
-      filename: 'index',
-      compress: []
+      filename: 'index'
     },
     userConfig,
     options
@@ -41,24 +40,9 @@ export default function(options = {}) {
     throw new TypeError('Expect "format" to be a string or Array')
   }
 
-  // Ensure compress is an array
-  if (typeof options.compress === 'string') {
-    options.compress = options.compress.split(',').map(v => v.trim())
-  } else if (options.compress === true) {
-    // Currently uglifyjs cannot compress es format
-    options.compress = ['cjs', 'umd', 'iife']
-  } else if (!Array.isArray(options.compress)) {
-    throw new TypeError('Expect "compress" to be a string/true or Array')
-  }
-
-  options.compress = options.compress
-    .filter(v => formats.indexOf(v) > -1)
-    .map(v => `${v}Compress`)
-
-  const allFormats = [...formats, ...options.compress]
 
   return Promise.all(
-    allFormats.map(format => {
+    formats.map(format => {
       const rollupOptions = getRollupOptions(options, format)
       if (options.watch) {
         let init

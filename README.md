@@ -21,19 +21,19 @@ dist/[name].common.js # commonjs format
 
 The `[name]` is `name` in `package.json` or `index` as fallback.
 
-You can also generate UMD bundle and compress it with: `bili --format umd --compress umd`, then you get:
+You can also generate UMD bundle and minify it with: `bili --format umd,umd-min`, then you get:
 
 ```bash
 dist/[name].js          # umd format
-dist/[name].min.js      # compressed umd format
-dist/[name].min.js.map  # compressed file will automatically get sourcemaps
+dist/[name].min.js      # minified umd format
+dist/[name].min.js.map  # minified file will automatically get sourcemaps
 ```
 
-Not enough? You can have them all in one command `bili --format cjs,es,umd --compress umd`:
+Not enough? You can have them all in one command `bili --format cjs,es,umd,umd-min`:
 
 ```bash
 dist/[name].js          # umd format
-dist/[name].min.js      # umd format and compressed
+dist/[name].min.js      # umd format and minified
 dist/[name].min.js.map  # sourcemap for umd format
 dist/[name].common.js   # commonjs format
 dist/[name].es.js       # es-modules format
@@ -78,7 +78,7 @@ However, you can't apply different plugins to different target, which means you 
 While in bili, it's as simple as running:
 
 ```bash
-bili src/main.js --format cjs --format umd --format es --compress umd
+bili src/main.js --format cjs,umd,es,umd-min
 ```
 
 Everything can be done via CLI options, if it's too long to read, you can keep them in `bili` field in `package.json`:
@@ -87,8 +87,7 @@ Everything can be done via CLI options, if it's too long to read, you can keep t
 {
   "bili": {
     "entry": "src/main.js",
-    "format": ["cjs", "umd", "es"],
-    "compress": "umd"
+    "format": ["cjs", "umd", "es", "umd-min"]
   }
 }
 ```

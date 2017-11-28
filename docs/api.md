@@ -32,9 +32,9 @@ The filename of bundled files, the default value is package name in `package.jso
 Type: `string` or `array`<br>
 Default: `['cjs']`
 
-Specific the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
+Specify the bundle format, it could be a string like `'umd'` or multiple targets `['umd', 'cjs']`, it's useful if you want to support multiple standards. Default value is `['cjs']`.
 
-You should specify a `moduleName` if your bundle targets `umd` format, otherwise it will fallback to `filename`.
+You should specify a `moduleName` if your bundle targets `umd` format, otherwise `moduleName` will fallback to `filename`.
 
 Here's a shorthand to set `format` to `['cjs', 'es', 'umd']`:
 
@@ -52,21 +52,21 @@ module.exports = {
 }
 ```
 
+You can also add `-min` suffix to generate minified version, eg:
+
+```js
+module.exports = {
+  // Generate CommonJS, UMD and minified UMD bundle
+  format: 'cjs,umd,umd-min'
+}
+```
+
 ### outDir
 
 Type: `string`<br>
 Default: `dist`
 
 Output directory.
-
-### compress
-
-Type: `boolean` `string` `Array`<br>
-Default: `undefined`
-
-Compress specific formats, set it to `true` to compress `cjs` `umd` and `es`, it does not include `es` format because uglifyjs can't parse `es modules`.
-
-It will also automatically generate sourcemaps file when this option is enabled.
 
 ### alias
 
@@ -142,7 +142,7 @@ This helps you import some file from the CDN (as using AMD), or set an alias to 
 Type: `boolean`<br>
 Default: `false`
 
-Enable sourcemaps, note that when option `compress` is enabled it will always generate sourcemaps for compressed files.
+Enable sourcemaps, it defaults to `true` for minified files.
 
 ### flow
 

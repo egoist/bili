@@ -28,7 +28,6 @@ cli
   .option('format', 'Bundle format, array of string')
   .option('module-name', 'The module name for UMD builds')
   .option('map', 'Generate sourcemap, boolean or `inline`')
-  .option('compress', 'Generate a UMD bundle and compress it with sourcemaps')
   .option(
     'skip',
     'Exclude specfic modules in node_modules dir from bundled file'

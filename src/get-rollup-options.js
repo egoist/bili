@@ -28,13 +28,16 @@ function getDest(options, format, compress) {
 }
 
 function getMap(options, compress) {
-  return compress ? true : options.map
+  if (typeof options.map === boolean) {
+    return options.map
+  }
+  return compress
 }
 
 export default function(options, format) {
   let compress = false
-  if (format.endsWith('Compress')) {
-    format = format.replace(/Compress$/, '')
+  if (format.endsWith('-min')) {
+    format = format.replace(/-min$/, '')
     compress = true
   }
 
