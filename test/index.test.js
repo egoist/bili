@@ -31,6 +31,11 @@ snapshot({
 })
 
 snapshot({
+  title: 'buble:async-and-object-rest-spread',
+  input: 'buble/async-dot-dot-dot.js'
+})
+
+snapshot({
   title: 'buble:react-jsx',
   input: 'buble/react-jsx.js'
 })

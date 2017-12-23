@@ -45,9 +45,33 @@ var a = function () { return new Promise(function ($return, $error) {
   return $return({ a: 'a' });
 }.bind(this$1)); };
 
-var async = a().then(function (res) { return (Object.assign({}, res)); });
+var async = a().then(function (res) { return Object.assign({}, res); });
 
 module.exports = async;
+",
+  ],
+]
+`;
+
+exports[`buble:async-and-object-rest-spread 1`] = `
+Array [
+  Array [
+    "dist/async-dot-dot-dot.cjs.js",
+    "'use strict';
+
+var asyncDotDotDot = (function () {
+  return new Promise(function ($return, $error) {
+    return this.bar().then(function ($await_1) {
+      try {
+        return $return(Object.assign({}, $await_1));
+      } catch ($boundEx) {
+        return $error($boundEx);
+      }
+    }.bind(this), $error);
+  }.bind(this));
+});
+
+module.exports = asyncDotDotDot;
 ",
   ],
 ]

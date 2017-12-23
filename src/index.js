@@ -169,7 +169,11 @@ export default class Bili {
             presets: [
               [
                 require.resolve('./babel'),
-                { buble: true, jsx: this.options.jsx }
+                {
+                  buble: true,
+                  jsx: this.options.jsx,
+                  objectAssign: jsOptions.objectAssign
+                }
               ]
             ]
           }),
@@ -361,7 +365,10 @@ function getJsOptions(name, jsx, jsOptions) {
 
   if (name === 'buble') {
     return {
-      objectAssign: 'Object.assign',
+      // objectAssign: 'Object.assign',
+      // We no longer need "objectAssign" for buble
+      // Since we transform object rest spread with babel
+      // And replace objectAssign there
       ...jsOptions,
       transforms: {
         dangerousForOf: true,

@@ -1,6 +1,6 @@
 const env = process.env.BABEL_ENV || process.env.NODE_ENV
 
-export default (ctx, { jsx, buble } = {}) => {
+export default (ctx, { jsx, buble, objectAssign } = {}) => {
   jsx = jsx || 'react'
 
   let presets = []
@@ -27,11 +27,22 @@ export default (ctx, { jsx, buble } = {}) => {
         }
       }
     ],
-    require.resolve('babel-plugin-transform-flow-strip-types')
+    require.resolve('babel-plugin-transform-flow-strip-types'),
+    [
+      require.resolve('babel-plugin-transform-object-rest-spread'),
+      {
+        useBuiltIns: true
+      }
+    ],
+    [
+      require.resolve('babel-plugin-alter-object-assign'),
+      {
+        objectAssign
+      }
+    ]
   )
 
   if (buble) {
-    plugins.push(require.resolve('babel-plugin-syntax-object-rest-spread'))
     return {
       presets,
       plugins
@@ -70,12 +81,6 @@ export default (ctx, { jsx, buble } = {}) => {
   plugins = [
     ...plugins,
     require.resolve('babel-plugin-transform-class-properties'),
-    [
-      require.resolve('babel-plugin-transform-object-rest-spread'),
-      {
-        useBuiltIns: true
-      }
-    ],
     require.resolve('babel-plugin-external-helpers')
   ]
 
