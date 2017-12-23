@@ -9,3 +9,5 @@ bili --plugin vue
 # or with options
 bili --plugin vue --vue.css dist/style.css
 ```
+
+By default CSS files will be extracted to the same location where the JS is generated but with `.css` extension.
