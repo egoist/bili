@@ -8,43 +8,36 @@ function fixture(name) {
 
 process.env.BILI_TEST = true
 
-test('defaults', async t => {
-  const { bundles } = await Bili.generate({
-    input: fixture('defaults/index.js')
+function snapshot({ title, input, ...args }) {
+  test(title, async t => {
+    const { bundles } = await Bili.generate({
+      input: fixture(input),
+      ...args
+    })
+    t.snapshot(Object.keys(bundles).map(filepath => [
+      bundles[filepath].relative,
+      bundles[filepath].code
+    ]))
   })
-  t.snapshot(Object.keys(bundles).map(filepath => [
-    bundles[filepath].relative,
-    bundles[filepath].code
-  ]))
+}
+
+snapshot({
+  title: 'defaults',
+  input: 'defaults/index.js'
 })
 
-test('buble:async', async t => {
-  const { bundles } = await Bili.generate({
-    input: fixture('buble/async.js')
-  })
-  t.snapshot(Object.keys(bundles).map(filepath => [
-    bundles[filepath].relative,
-    bundles[filepath].code
-  ]))
+snapshot({
+  title: 'buble:async',
+  input: 'buble/async.js'
 })
 
-test('buble:react-jsx', async t => {
-  const { bundles } = await Bili.generate({
-    input: fixture('buble/react-jsx.js')
-  })
-  t.snapshot(Object.keys(bundles).map(filepath => [
-    bundles[filepath].relative,
-    bundles[filepath].code
-  ]))
+snapshot({
+  title: 'buble:react-jsx',
+  input: 'buble/react-jsx.js'
 })
 
-test('buble:vue-jsx', async t => {
-  const { bundles } = await Bili.generate({
-    input: fixture('buble/vue-jsx.js'),
-    jsx: 'vue'
-  })
-  t.snapshot(Object.keys(bundles).map(filepath => [
-    bundles[filepath].relative,
-    bundles[filepath].code
-  ]))
+snapshot({
+  title: 'buble:vue-jsx',
+  input: 'buble/vue-jsx.js',
+  jsx: 'vue'
 })
