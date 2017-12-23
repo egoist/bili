@@ -1,6 +1,6 @@
 {
   "name": "bili",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Delightful library bundler.",
   "repository": {
     "url": "egoist/bili",
