@@ -15,7 +15,7 @@ That's it!
 All Rollup plugins that we use can accept options:
 
 ```bash
-bili buble.objectAssign assign
+bili --buble.objectAssign assign
 # options for rollup-plugin-buble
 #=> { buble: { objectAssign: 'assign } }
 
