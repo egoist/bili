@@ -146,12 +146,12 @@ export default class Bili {
       plugins: [
         shebangPlugin(),
         ...this.loadUserPlugins(),
-        jsPluginName === 'buble' &&
-          require('rollup-plugin-nodent')({
-            exclude: 'node_modules/**',
-            promises: true,
-            noRuntime: true
-          }),
+        // jsPluginName === 'buble' &&
+        //   require('rollup-plugin-nodent')({
+        //     exclude: 'node_modules/**',
+        //     promises: true,
+        //     noRuntime: true
+        //   }),
         jsPlugin({
           exclude: 'node_modules/**',
           ...jsOptions
