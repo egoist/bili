@@ -84,7 +84,15 @@ export default class Bili {
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
         pluginOptions = {
-          css: path.resolve(this.options.outDir || 'dist', filename.replace(/\.[^.]+$/, '.css')),
+          css: path.resolve(
+            this.options.outDir || 'dist',
+            filename.replace(/\.[^.]+$/, '.css')
+          ),
+          ...pluginOptions
+        }
+      } else if (pluginName === 'postcss') {
+        pluginOptions = {
+          extract: true,
           ...pluginOptions
         }
       }
@@ -117,10 +125,7 @@ export default class Bili {
       compress,
       name: this.options.name
     })
-    const file = path.resolve(
-      outDir,
-      outFilename
-    )
+    const file = path.resolve(outDir, outFilename)
 
     const jsPluginName = this.options.js || 'buble'
     const jsPlugin = getJsPlugin(jsPluginName)
@@ -142,7 +147,13 @@ export default class Bili {
       input,
       external,
       onwarn: ({ loc, frame, message, code }) => {
-        if (this.options.quiet || code === 'UNRESOLVED_IMPORT' || code === 'THIS_IS_UNDEFINED') return
+        if (
+          this.options.quiet ||
+          code === 'UNRESOLVED_IMPORT' ||
+          code === 'THIS_IS_UNDEFINED'
+        ) {
+          return
+        }
         // print location if applicable
         if (loc) {
           console.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
@@ -155,13 +166,16 @@ export default class Bili {
         shebangPlugin(),
         ...this.loadUserPlugins({ filename: outFilename }),
         jsPluginName === 'buble' &&
-        require('rollup-plugin-babel')({
-          babelrc: false,
-          exclude: 'node_modules/**',
-          presets: [
-            [require.resolve('./babel'), { buble: true, jsx: this.options.jsx }]
-          ]
-        }),
+          require('rollup-plugin-babel')({
+            babelrc: false,
+            exclude: 'node_modules/**',
+            presets: [
+              [
+                require.resolve('./babel'),
+                { buble: true, jsx: this.options.jsx }
+              ]
+            ]
+          }),
         jsPlugin({
           exclude: 'node_modules/**',
           ...jsOptions

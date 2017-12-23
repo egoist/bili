@@ -1,0 +1,12 @@
+{
+  "name": "with-css",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "bili index.js --plugin postcss"
+  },
+  "devDependencies": {
+    "rollup-plugin-postcss": "^0.5.5"
+  }
+}
