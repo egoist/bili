@@ -1,6 +1,6 @@
 {
   "name": "bili",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Delightful library bundler.",
   "repository": {
     "url": "egoist/bili",
@@ -8,7 +8,10 @@
   },
   "main": "lib/index.js",
   "bin": "lib/cli.js",
-  "files": ["lib", "babel.js"],
+  "files": [
+    "lib",
+    "babel.js"
+  ],
   "scripts": {
     "test": "npm run lint && npm run ava",
     "ava": "ava test/**/*.test.js",
@@ -63,10 +66,17 @@
     "prettier-eslint-cli": "^4.6.1"
   },
   "eslintConfig": {
-    "extends": ["xo", "rem"]
+    "extends": [
+      "xo",
+      "rem"
+    ]
   },
-  "eslintIgnore": ["dist/**"],
+  "eslintIgnore": [
+    "dist/**"
+  ],
   "ava": {
-    "require": ["babel-register"]
+    "require": [
+      "babel-register"
+    ]
   }
 }
