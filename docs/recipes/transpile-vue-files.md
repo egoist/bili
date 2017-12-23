@@ -1,0 +1,11 @@
+# Transpile Vue files
+
+You can use [rollup-plugin-vue](https://github.com/vuejs/rollup-plugin-vue) to achieve this.
+
+```bash
+cd my-project
+yarn add rollup-plugin-vue --dev
+bili --plugin vue
+# or with options
+bili --plugin vue --vue.css dist/style.css
+```

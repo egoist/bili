@@ -46,6 +46,8 @@ Dive into the [documentation](https://egoist.moe/bili) to see more neat features
 Here're some quick links:
 
 * [How to use Flow/TypeScript or any compile-to-js language](https://egoist.moe/bili/#/recipes/transpile-js-files)
+* [How to transpile CSS files](https://egoist.moe/bili/#/recipes/transpile-css-files)
+* [How to transpile Vue files](https://egoist.moe/bili/#/recipes/transpile-vue-files)
 
 ## Contributing
 
