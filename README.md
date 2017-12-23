@@ -49,6 +49,13 @@ Here're some quick links:
 * [How to transpile CSS files](https://egoist.moe/bili/#/recipes/transpile-css-files)
 * [How to transpile Vue files](https://egoist.moe/bili/#/recipes/transpile-vue-files)
 
+## Bundled by Bili
+
+* [cac](https://github.com/egoist/cac) - Simple yet powerful framework for building command-line interface.
+* [vue-final-form](https://github.com/egoist/vue-final-form) - 🏁 High performance subscription-based form state management for Vue.js.
+* [babel-preset-vue](https://github.com/vuejs/babel-preset-vue) - Babel preset for transforming Vue JSX.
+* Feel free to submit yours
+
 ## Contributing
 
 1. Fork it!
