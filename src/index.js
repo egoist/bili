@@ -134,7 +134,7 @@ export default class Bili {
       input,
       external,
       onwarn: ({ loc, frame, message, code }) => {
-        if (this.options.quiet || code === 'UNRESOLVED_IMPORT') return
+        if (this.options.quiet || code === 'UNRESOLVED_IMPORT' || code === 'THIS_IS_UNDEFINED') return
         // print location if applicable
         if (loc) {
           console.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
@@ -146,12 +146,14 @@ export default class Bili {
       plugins: [
         shebangPlugin(),
         ...this.loadUserPlugins(),
-        // jsPluginName === 'buble' &&
-        //   require('rollup-plugin-nodent')({
-        //     exclude: 'node_modules/**',
-        //     promises: true,
-        //     noRuntime: true
-        //   }),
+        jsPluginName === 'buble' &&
+        require('rollup-plugin-babel')({
+          babelrc: false,
+          exclude: 'node_modules/**',
+          presets: [
+            [require.resolve('./babel'), { buble: true, jsx: this.options.jsx }]
+          ]
+        }),
         jsPlugin({
           exclude: 'node_modules/**',
           ...jsOptions
@@ -310,7 +312,6 @@ function getJsOptions(name, jsx, jsOptions) {
   if (name === 'buble') {
     return {
       objectAssign: 'Object.assign',
-      jsx,
       ...jsOptions,
       transforms: {
         dangerousForOf: true,

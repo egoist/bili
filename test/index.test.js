@@ -17,3 +17,34 @@ test('defaults', async t => {
     bundles[filepath].code
   ]))
 })
+
+test('buble:async', async t => {
+  const { bundles } = await Bili.generate({
+    input: fixture('buble/async.js')
+  })
+  t.snapshot(Object.keys(bundles).map(filepath => [
+    bundles[filepath].relative,
+    bundles[filepath].code
+  ]))
+})
+
+test('buble:react-jsx', async t => {
+  const { bundles } = await Bili.generate({
+    input: fixture('buble/react-jsx.js')
+  })
+  t.snapshot(Object.keys(bundles).map(filepath => [
+    bundles[filepath].relative,
+    bundles[filepath].code
+  ]))
+})
+
+test('buble:vue-jsx', async t => {
+  const { bundles } = await Bili.generate({
+    input: fixture('buble/vue-jsx.js'),
+    jsx: 'vue'
+  })
+  t.snapshot(Object.keys(bundles).map(filepath => [
+    bundles[filepath].relative,
+    bundles[filepath].code
+  ]))
+})

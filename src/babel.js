@@ -1,9 +1,45 @@
 const env = process.env.BABEL_ENV || process.env.NODE_ENV
 
-export default ({ jsx } = {}) => {
+export default (ctx, { jsx, buble } = {}) => {
   jsx = jsx || 'react'
 
-  const presets = [
+  let presets = []
+  let plugins = []
+
+  if (jsx === 'vue') {
+    presets.push(require.resolve('babel-preset-vue'))
+  } else if (jsx === 'react') {
+    plugins.push(require.resolve('babel-plugin-transform-react-jsx'))
+  } else if (typeof jsx === 'string') {
+    plugins.push([
+      require.resolve('babel-plugin-transform-react-jsx'),
+      { pragma: jsx }
+    ])
+  }
+
+  plugins.push(
+    [
+      require.resolve('fast-async'),
+      {
+        compiler: {
+          promises: true,
+          noRuntime: true
+        }
+      }
+    ],
+    require.resolve('babel-plugin-transform-flow-strip-types')
+  )
+
+  if (buble) {
+    plugins.push(require.resolve('babel-plugin-syntax-object-rest-spread'))
+    return {
+      presets,
+      plugins
+    }
+  }
+
+  presets = [
+    ...presets,
     env === 'test' ?
       [
         require('babel-preset-env').default,
@@ -31,18 +67,9 @@ export default ({ jsx } = {}) => {
       ]
   ]
 
-  const plugins = [
+  plugins = [
+    ...plugins,
     require.resolve('babel-plugin-transform-class-properties'),
-    require.resolve('babel-plugin-transform-flow-strip-types'),
-    [
-      require.resolve('fast-async'),
-      {
-        compiler: {
-          promises: true,
-          noRuntime: true
-        }
-      }
-    ],
     [
       require.resolve('babel-plugin-transform-object-rest-spread'),
       {
@@ -51,17 +78,6 @@ export default ({ jsx } = {}) => {
     ],
     require.resolve('babel-plugin-external-helpers')
   ]
-
-  if (jsx === 'vue') {
-    presets.push(require.resolve('babel-preset-vue'))
-  } else if (jsx === 'react') {
-    plugins.push(require.resolve('babel-plugin-transform-react-jsx'))
-  } else if (typeof jsx === 'string') {
-    plugins.push([
-      require.resolve('babel-plugin-transform-react-jsx'),
-      { pragma: jsx }
-    ])
-  }
 
   return {
     presets,

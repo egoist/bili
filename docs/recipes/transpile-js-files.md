@@ -32,10 +32,13 @@ We use a sane default config for Babel, basically it:
 * Supports [Flow](https://flow.org).
 * Compiles `object-rest-spread` to `Object.assign`.
 * Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
+* Reac/Vue JSX
 
 ## Buble
 
-What Buble does not support:
+What Buble supports:
 
-* async/await (TODO: use `fast-async` before `buble`)
-* Vue JSX (TODO: use `babel` for this)
+* Supports [Flow](https://flow.org).
+* Compiles `object-rest-spread` to `Object.assign`.
+* Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
+* React/Vue JSX
