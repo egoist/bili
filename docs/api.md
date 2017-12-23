@@ -57,6 +57,8 @@ import $ from 'jquery'
 bili --global.jquery "$"
 ```
 
+All module IDs will be automatically added to [`external`](#external)
+
 ### filename
 
 Type: `string`<br>

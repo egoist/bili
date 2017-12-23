@@ -124,9 +124,15 @@ export default class Bili {
 
     const banner = getBanner(this.options.banner, this.pkg)
 
+    let external = this.getArrayOption('external')
+    let globals = this.options.globals || this.options.global
+    if (typeof globals === 'object') {
+      external = [...(external || []), ...Object.keys(globals)]
+    }
+
     const inputOptions = {
       input,
-      external: this.getArrayOption('external'),
+      external,
       onwarn: ({ loc, frame, message, code }) => {
         if (this.options.quiet || code === 'UNRESOLVED_IMPORT') return
         // print location if applicable
@@ -190,7 +196,7 @@ export default class Bili {
 
     const outputOptions = {
       format,
-      globals: this.options.globals || this.options.global,
+      globals,
       name: format === 'umd' && this.getModuleName(),
       file,
       banner,
