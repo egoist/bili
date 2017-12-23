@@ -57,7 +57,8 @@ snapshot({
     year: '2018',
     author: 'author',
     license: 'GPL',
-    name: 'name'
+    name: 'name',
+    version: '1.2.3'
   }
 })
 
