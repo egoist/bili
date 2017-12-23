@@ -1,3 +1,4 @@
+import util from 'util'
 import path from 'path'
 import globby from 'globby'
 import chalk from 'chalk'
@@ -108,17 +109,6 @@ export default class Bili {
   }
 
   async createConfig({ input, format, compress }) {
-    await Promise.all([
-      readPkg().then(res => res.pkg || {}),
-      getBiliConfig()
-    ]).then(([pkg, biliConfig]) => {
-      this.pkg = pkg
-      this.options = {
-        ...biliConfig,
-        ...this.options
-      }
-    })
-
     const {
       outDir = 'dist',
       filename = '[name][suffix].js',
@@ -248,6 +238,16 @@ export default class Bili {
     }
     inputFiles = await globby(inputFiles)
 
+    if (inputFiles.length === 0) {
+      throw new BiliError('No matched files to bundle.')
+    }
+
+    this.pkg = await readPkg().then(res => res.pkg || {})
+    this.options = {
+      ...(await getBiliConfig()),
+      ...this.options
+    }
+
     const formats = this.getArrayOption('format') || FORMATS
     const options = inputFiles.reduce(
       (res, input) => [
@@ -289,6 +289,22 @@ export default class Bili {
         })
         return
       }
+
+      if (this.options.inspectRollup) {
+        console.log(
+          chalk.bold(`Rollup input options for bundling ${option.input} in ${
+            option.format
+          }:\n`),
+          util.inspect(inputOptions, { colors: true })
+        )
+        console.log(
+          chalk.bold(`Rollup output options for bundling ${option.input} in ${
+            option.format
+          }:\n`),
+          util.inspect(outputOptions, { colors: true })
+        )
+      }
+
       const bundle = await rollup(inputOptions)
       if (write) return bundle.write(outputOptions)
       return bundle.generate(outputOptions)

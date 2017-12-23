@@ -58,5 +58,8 @@ cli
     desc:
       'Content to insert to the top of bundle file, boolean or string or object'
   })
+  .option('inspectRollup', {
+    desc: 'Inspect Rollup options'
+  })
 
 cli.parse()
