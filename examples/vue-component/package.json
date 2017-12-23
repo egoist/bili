@@ -1,0 +1,16 @@
+{
+  "name": "vue-component",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "bili Component.vue --plugin vue"
+  },
+  "devDependencies": {
+    "rollup-plugin-vue": "^3.0.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-template-compiler": "^2.5.13"
+  }
+}

@@ -78,10 +78,17 @@ export default class Bili {
     return option
   }
 
-  loadUserPlugins() {
+  loadUserPlugins({ filename }) {
     const plugins = this.getArrayOption('plugin') || []
     return plugins.map(pluginName => {
-      return localRequire(`rollup-plugin-${pluginName}`)(this.options[pluginName])
+      let pluginOptions = this.options[pluginName]
+      if (pluginName === 'vue') {
+        pluginOptions = {
+          css: path.resolve(this.options.outDir || 'dist', filename.replace(/\.[^.]+$/, '.css')),
+          ...pluginOptions
+        }
+      }
+      return localRequire(`rollup-plugin-${pluginName}`)(pluginOptions)
     })
   }
 
@@ -103,15 +110,16 @@ export default class Bili {
       inline = format === 'umd'
     } = this.options
 
+    const outFilename = getFilename({
+      input,
+      format,
+      filename,
+      compress,
+      name: this.options.name
+    })
     const file = path.resolve(
       outDir,
-      getFilename({
-        input,
-        format,
-        filename,
-        compress,
-        name: this.options.name
-      })
+      outFilename
     )
 
     const jsPluginName = this.options.js || 'buble'
@@ -145,7 +153,7 @@ export default class Bili {
       },
       plugins: [
         shebangPlugin(),
-        ...this.loadUserPlugins(),
+        ...this.loadUserPlugins({ filename: outFilename }),
         jsPluginName === 'buble' &&
         require('rollup-plugin-babel')({
           babelrc: false,
@@ -294,8 +302,12 @@ function getSuffix(format, compress) {
   return compress ? `${suffix}.min` : suffix
 }
 
+function getNameFromInput(input) {
+  return path.basename(input, path.extname(input))
+}
+
 function getFilename({ input, format, filename, compress, name }) {
-  name = name || path.basename(input, path.extname(input))
+  name = name || getNameFromInput(input)
   const suffix = getSuffix(format, compress)
   return template(filename, { name, suffix })
 }
