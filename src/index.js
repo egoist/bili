@@ -114,7 +114,7 @@ export default class Bili {
       })
     )
 
-    const jsPluginName = this.options.js || 'babel'
+    const jsPluginName = this.options.js || 'buble'
     const jsPlugin = getJsPlugin(jsPluginName)
     const jsOptions = getJsOptions(
       jsPluginName,
@@ -298,22 +298,25 @@ function getFilename({ input, format, filename, compress, name }) {
   return template(filename, { name, suffix })
 }
 
-function getJsOptions(name, jsx, babelConfig) {
+function getJsOptions(name, jsx, jsOptions) {
   if (name === 'babel') {
     return {
       babelrc: !process.env.BILI_TEST,
       ...getBabelConfig({ jsx }),
-      ...babelConfig
+      ...jsOptions
     }
   }
 
   if (name === 'buble') {
     return {
+      objectAssign: 'Object.assign',
+      jsx,
+      ...jsOptions,
       transforms: {
         dangerousForOf: true,
-        dangerousTaggedTemplateString: true
-      },
-      objectAssign: 'Object.assign'
+        dangerousTaggedTemplateString: true,
+        ...(jsOptions && jsOptions.transforms)
+      }
     }
   }
 

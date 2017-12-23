@@ -1,6 +1,6 @@
 # Transpile JS files
 
-**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel`, if you prefer `buble` then try `--js buble` flag.
+**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `buble`, if you prefer `babel` then try `--js babel` flag.
 
 Maybe you can already tell, you can use `--js` flag to switch plugin for transpiling JS files. To use a custom JS plugin like `typescript`, try:
 
@@ -38,3 +38,4 @@ We use a sane default config for Babel, basically it:
 What Buble does not support:
 
 * async/await (TODO: use `fast-async` before `buble`)
+* Vue JSX (TODO: use `babel` for this)

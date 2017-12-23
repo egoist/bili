@@ -135,9 +135,9 @@ bili --plugin vue --vue.css ./style.css
 
 Type: `string`<br>
 Default: `react`<br>
-Possible values: `react` `vue` or any JSX pragma like `h`
+Possible values: `react` or any JSX pragma like `h`
 
-Switch JSX syntax, only works with our default Babel config.
+Switch JSX syntax, only works with our default Babel config or Buble.
 
 ### replace
 
