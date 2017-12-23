@@ -5,7 +5,7 @@ Array [
   Array [
     "dist/default.cjs.js",
     "/*!
- * name v1.2.2
+ * name v1.2.3
  * (c) 2018-present author
  * Released under the GPL License.
  */
@@ -24,25 +24,6 @@ Array [
   Array [
     "dist/default.cjs.js",
     "woot
-'use strict';
-
-var _default = {};
-
-module.exports = _default;
-",
-  ],
-]
-`;
-
-exports[`banner:true 1`] = `
-Array [
-  Array [
-    "dist/default.cjs.js",
-    "/*!
- * bili v1.2.2
- * (c) 2017-present EGOIST <0x142857@gmail.com>
- * Released under the MIT License.
- */
 'use strict';
 
 var _default = {};

@@ -232,6 +232,12 @@ export default class Bili {
   }
 
   async bundle({ write = true } = {}) {
+    this.pkg = await readPkg().then(res => res.pkg || {})
+    this.options = {
+      ...(await getBiliConfig()),
+      ...this.options
+    }
+
     let inputFiles = this.options.input || 'src/index.js'
     if (Array.isArray(inputFiles) && inputFiles.length === 0) {
       inputFiles = 'src/index.js'
@@ -240,12 +246,6 @@ export default class Bili {
 
     if (inputFiles.length === 0) {
       throw new BiliError('No matched files to bundle.')
-    }
-
-    this.pkg = await readPkg().then(res => res.pkg || {})
-    this.options = {
-      ...(await getBiliConfig()),
-      ...this.options
     }
 
     const formats = this.getArrayOption('format') || FORMATS
