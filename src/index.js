@@ -233,8 +233,9 @@ export default class Bili {
 
   async bundle({ write = true } = {}) {
     this.pkg = await readPkg().then(res => res.pkg || {})
+    const biliConfig = await getBiliConfig()
     this.options = {
-      ...(await getBiliConfig()),
+      ...biliConfig,
       ...this.options
     }
 
@@ -403,6 +404,9 @@ function handleError(err) {
     if (err.codeFrame) {
       console.error(err.message)
       console.error(err.codeFrame)
+    } else if (err.snippet) {
+      console.error(err.message)
+      console.error(err.snippet)
     } else {
       console.error(err.stack)
     }
