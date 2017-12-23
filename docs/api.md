@@ -1,0 +1,161 @@
+# API
+
+```js
+import Bili from 'bili'
+
+Bili.write(options).then(() => {
+  console.log('Done!')
+})
+```
+
+## Use config file
+
+Following options are accpeted both in CLI flags and config file,namely `bili.config.js`, `.bilirc`, `bili` key in `package.json`.
+
+## options
+
+### input
+
+Type: `string` `Array`<br>
+Default: 'src/index.js'
+
+Glob patterns or file paths.
+
+### outDir
+
+Type: `string`<br>
+Default: `dist`
+
+### format
+
+Type: `string` `Array`<br>
+Default: `['cjs']`<br>
+Alias: `formats`
+
+You can add `-min` suffix to generate minified version.
+
+### moduleName
+
+Type: `string`
+
+Required in `umd` format, set the module name.
+
+### global
+
+Type: `object`<br>
+Alias: `globals`
+
+Object of id: name pairs, used for umd/iife bundles. For example, in a case like this...
+
+```js
+import $ from 'jquery'
+```
+
+...we want to tell Bili that the jquery module ID equates to the global $ variable:
+
+```bash
+bili --global.jquery "$"
+```
+
+### filename
+
+Type: `string`<br>
+Default: `[name][suffix].js`
+
+The filename of output file.
+
+* `[name]` is the base name of input, e.g. the base name of `src/index.js` is `index`.
+* `[suffix]` is the corresponding suffix for current format, like `.cjs` for `cjs` format, `.es` for `es` format, and there's no suffix for `umd` format.
+
+### inline
+
+Type: `boolean`<br>
+Default: `false` or `true` when [`format`](#format) is `umd`
+
+Inline node modules into final bundle.
+
+### external
+
+Type: `Array` `function`
+
+Either a Function that takes an id and returns `true` (external) or `false` (not external), or an Array of module IDs that should remain external to the bundle. The IDs should be either:
+
+* The name of an external dependency
+* A resolved ID (like an absolute path to a file)
+
+### banner
+
+Type: `boolean` `string` `object`
+
+When `true` it inserts a copyright message to the top of final bundle like below:
+
+```js
+/*!
+ * bili v0.0.0
+ * (c) 2017-present egoist <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
+```
+
+By default the information in the copyright message is from your `package.json`, but you can use an `object` as `banner` to override it:
+
+```js
+{
+  version, name, year, author, license
+}
+```
+
+Of course a `string` is also accepted.
+
+### plugin
+
+Type: `string` `Array`<br>
+Alias: `plugins`
+
+Add Rollup plugins, e.g. `rollup-plugin-vue`:
+
+```bash
+bili --plugin vue
+# or more
+bili --plugin vue,coffeescript
+# with options
+bili --plugin vue --vue.css ./style.css
+```
+
+### jsx
+
+Type: `string`<br>
+Default: `react`<br>
+Possible values: `react` `vue` or any JSX pragma like `h`
+
+Switch JSX syntax, only works with our default Babel config.
+
+### replace
+
+Type: `object`
+
+Add options for [rollup-plugin-replace](Add options to rollup-plugin-replace.).
+
+### alias
+
+Type: `object`
+
+This is some feature which is similar to Webpack's `resolve.alias`.
+
+### env
+
+Type: `object`
+
+Like [`replace`](#replace) option but it replaces strings that start with `process.env` and automatically stringifies the value:
+
+```js
+bili --env.NODE_ENV development
+```
+
+Then in your app:
+
+```js
+const prod = process.env.NODE_ENV === 'production'
+// compiled to
+const prod = 'development' === 'production'
+```

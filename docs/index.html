@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bili</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docute/dist/docute.css">
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/docute/dist/docute.js"></script>
+  <script>
+    docute.init({
+      repo: 'egoist/bili',
+      twitter: '_egoistlily',
+      'edit-link': 'https://github.com/egoist/bili/blob/master/docs/',
+      nav: [
+        {
+          title: 'Home',
+          path: '/'
+        },
+        {
+          title: 'API',
+          path: '/api'
+        },
+        {
+          title: 'Recipes',
+          type: 'dropdown',
+          items: [
+            {
+              title: 'Transpile JS files',
+              path: '/recipes/transpile-js-files'
+            }
+          ]
+        }
+      ]
+    })
+  </script>
+</body>
+
+</html>
