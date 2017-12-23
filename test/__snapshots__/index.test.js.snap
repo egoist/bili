@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`banner:object 1`] = `
+Array [
+  Array [
+    "dist/default.cjs.js",
+    "/*!
+ * name v1.2.2
+ * (c) 2018-present author
+ * Released under the GPL License.
+ */
+'use strict';
+
+var _default = {};
+
+module.exports = _default;
+",
+  ],
+]
+`;
+
+exports[`banner:string 1`] = `
+Array [
+  Array [
+    "dist/default.cjs.js",
+    "woot
+'use strict';
+
+var _default = {};
+
+module.exports = _default;
+",
+  ],
+]
+`;
+
+exports[`banner:true 1`] = `
+Array [
+  Array [
+    "dist/default.cjs.js",
+    "/*!
+ * bili v1.2.2
+ * (c) 2017-present EGOIST <0x142857@gmail.com>
+ * Released under the MIT License.
+ */
+'use strict';
+
+var _default = {};
+
+module.exports = _default;
+",
+  ],
+]
+`;
+
+exports[`buble:async 1`] = `
+Array [
+  Array [
+    "dist/async.cjs.js",
+    "'use strict';
+
+var this$1 = undefined;
+var a = function () { return new Promise(function ($return, $error) {
+  return $return({ a: 'a' });
+}.bind(this$1)); };
+
+var async = a().then(function (res) { return (Object.assign({}, res)); });
+
+module.exports = async;
+",
+  ],
+]
+`;
+
+exports[`buble:react-jsx 1`] = `
+Array [
+  Array [
+    "dist/react-jsx.cjs.js",
+    "'use strict';
+
+var reactJsx = React.createElement(
+  \\"div\\",
+  { a: 1 },
+  \\"hi\\"
+);
+
+module.exports = reactJsx;
+",
+  ],
+]
+`;
+
+exports[`buble:vue-jsx 1`] = `
+Array [
+  Array [
+    "dist/vue-jsx.cjs.js",
+    "'use strict';
+
+var vueJsx = {
+  render: function render() {
+    var h = arguments[0];
+
+    return h(
+      \\"div\\",
+      {
+        attrs: { a: 1 }
+      },
+      [\\"hi\\"]
+    );
+  }
+};
+
+module.exports = vueJsx;
+",
+  ],
+]
+`;
+
+exports[`defaults 1`] = `
+Array [
+  Array [
+    "dist/index.cjs.js",
+    "'use strict';
+
+var index = 42;
+
+module.exports = index;
+",
+  ],
+]
+`;

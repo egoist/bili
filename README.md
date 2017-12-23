@@ -1,6 +1,6 @@
 # Bili
 
-[![NPM version](https://img.shields.io/npm/v/bili.svg?style=flat)](https://npmjs.com/package/bili) [![NPM downloads](https://img.shields.io/npm/dm/bili.svg?style=flat)](https://npmjs.com/package/bili) [![CircleCI](https://circleci.com/gh/egoist/bili/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/bili/tree/master) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate) [![chat](https://img.shields.io/badge/chat-on%20discord-7289DA.svg?style=flat)](https://chat.egoist.moe)
+[![NPM version](https://img.shields.io/npm/v/bili.svg?style=flat)](https://npmjs.com/package/bili) [![NPM downloads](https://img.shields.io/npm/dm/bili.svg?style=flat)](https://npmjs.com/package/bili) [![CircleCI](https://circleci.com/gh/egoist/bili/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/bili/tree/master) [![codecov](https://codecov.io/gh/egoist/bili/branch/master/graph/badge.svg)](https://codecov.io/gh/egoist/bili) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate) [![chat](https://img.shields.io/badge/chat-on%20discord-7289DA.svg?style=flat)](https://chat.egoist.moe)
 
 > Delightful library bundler.
 

@@ -3,3 +3,4 @@ dist
 lib
 examples/*/yarn.lock
 examples/*/package-lock.json
+coverage/
