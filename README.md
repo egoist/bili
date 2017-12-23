@@ -7,7 +7,7 @@
 ## Features
 
 * 🚀 Fast, well it's using Rollup anyways.
-* 🚗 Automatically transforms JS/CSS using Buble an PostCSS.
+* 🚗 Automatically transforms JS files using Babel.
 * 🎶 Ridiculously easy to use Rollup plugins if you want.
 * 🚨 Friendly error logging experience.
 
