@@ -15,7 +15,11 @@ That's it!
 All Rollup plugins that we use can accept options:
 
 ```bash
-bili --no-babel.babelrc
+bili buble.objectAssign assign
+# options for rollup-plugin-buble
+#=> { buble: { objectAssign: 'assign } }
+
+bili --js babel --no-babel.babelrc
 # options for rollup-plugin-babel
 #=> { babel: { babelrc: false } }
 
