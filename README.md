@@ -16,7 +16,19 @@
 ## Install
 
 ```bash
+# Globally
+yarn global add bili
+# Locally
 yarn add bili --dev
+```
+
+If you prefer npm:
+
+```bash
+# Globally
+npm i -g bili
+# Locally
+npm i -D bili
 ```
 
 ## Usage
