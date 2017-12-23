@@ -67,6 +67,13 @@ The filename of output file.
 * `[name]` is the base name of input, e.g. the base name of `src/index.js` is `index`.
 * `[suffix]` is the corresponding suffix for current format, like `.cjs` for `cjs` format, `.es` for `es` format, and there's no suffix for `umd` format.
 
+### name
+
+Type: `string`<br>
+Default: Base name of input.
+
+Set the `[name]` part of [`filename`](#filename).
+
 ### inline
 
 Type: `boolean`<br>

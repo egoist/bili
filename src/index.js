@@ -105,7 +105,13 @@ export default class Bili {
 
     const file = path.resolve(
       outDir,
-      getFilename(input, format, filename, compress)
+      getFilename({
+        input,
+        format,
+        filename,
+        compress,
+        name: this.options.name
+      })
     )
 
     const jsPluginName = this.options.js || 'babel'
@@ -280,8 +286,8 @@ function getSuffix(format, compress) {
   return compress ? `${suffix}.min` : suffix
 }
 
-function getFilename(input, format, filename, compress) {
-  const name = path.basename(input, path.extname(input))
+function getFilename({ input, format, filename, compress, name }) {
+  name = name || path.basename(input, path.extname(input))
   const suffix = getSuffix(format, compress)
   return template(filename, { name, suffix })
 }

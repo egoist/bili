@@ -19,7 +19,10 @@ cli
     alias: 'd'
   })
   .option('filename', {
-    desc: 'Output filename'
+    desc: 'Output filename, default: "[name][suffix].js"'
+  })
+  .option('name', {
+    desc: 'Set the [name] part of "filename"'
   })
   .option('format', {
     desc: 'Output format'
