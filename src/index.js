@@ -19,6 +19,7 @@ import template from './template'
 import getBanner from './get-banner'
 import shebangPlugin from './shebang'
 import { getBabelConfig, getBiliConfig } from './get-config'
+import BiliError from './bili-error'
 
 const FORMATS = ['cjs']
 
@@ -80,6 +81,7 @@ export default class Bili {
 
   loadUserPlugins({ filename }) {
     const plugins = this.getArrayOption('plugin') || []
+    // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
@@ -96,7 +98,12 @@ export default class Bili {
           ...pluginOptions
         }
       }
-      return localRequire(`rollup-plugin-${pluginName}`)(pluginOptions)
+      const moduleName = `rollup-plugin-${pluginName}`
+      try {
+        return localRequire(moduleName)(pluginOptions)
+      } catch (err) {
+        handleLoadPluginError(moduleName, err)
+      }
     })
   }
 
@@ -352,18 +359,31 @@ function getJsOptions(name, jsx, jsOptions) {
 
 function getJsPlugin(name) {
   const req = name === 'babel' || name === 'buble' ? require : localRequire
-  return req(`rollup-plugin-${name}`)
+  const moduleName = `rollup-plugin-${name}`
+  try {
+    return req(moduleName)
+  } catch (err) {
+    handleLoadPluginError(moduleName, err)
+  }
 }
 
 function localRequire(name) {
   return require(path.resolve('node_modules', name))
 }
 
+function handleLoadPluginError(moduleName, err) {
+  if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName)) {
+    throw new BiliError(`Cannot find plugin "${moduleName}" in current directory!\n${chalk.dim(`You may run "npm install -D ${moduleName}" to install it.`)}`)
+  } else {
+    throw err
+  }
+}
+
 function handleError(err) {
   process.exitCode = process.exitCode || 1
 
   if (err.code === 'PLUGIN_ERROR') {
-    console.error(chalk.red(`Error found by ${err.plugin} plugin:`))
+    console.error('🚨 ', `Error found by ${err.plugin} plugin:`)
     if (err.codeFrame) {
       console.error(err.message)
       console.error(err.codeFrame)
@@ -377,6 +397,10 @@ function handleError(err) {
     console.error('You must supply options.moduleName for UMD bundles, the easiest way is to use --moduleName flag.\n')
     logDocRef('api', 'modulename')
     return
+  }
+
+  if (err.name === 'BiliError') {
+    return console.error('🚨 ', err.message)
   }
 
   if (err.frame) {
