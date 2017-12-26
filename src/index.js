@@ -15,10 +15,10 @@ import jsonPlugin from 'rollup-plugin-json'
 import uglifyPlugin from 'rollup-plugin-uglify'
 import aliasPlugin from 'rollup-plugin-alias'
 import replacePlugin from 'rollup-plugin-replace'
+import hashbangPlugin from 'rollup-plugin-hashbang'
 import textTable from 'text-table'
 import template from './template'
 import getBanner from './get-banner'
-import shebangPlugin from './shebang'
 import { getBabelConfig, getBiliConfig } from './get-config'
 import BiliError from './bili-error'
 
@@ -160,7 +160,7 @@ export default class Bili {
         }
       },
       plugins: [
-        shebangPlugin(),
+        hashbangPlugin(),
         ...this.loadUserPlugins({ filename: outFilename }),
         jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
@@ -199,6 +199,7 @@ export default class Bili {
         this.options.alias && aliasPlugin(this.options.alias),
         this.options.replace && replacePlugin(this.options.replace),
         {
+          name: 'bili',
           ongenerate: (_, { code }) => {
             this.bundles[file] = {
               relative: path.relative(path.resolve(outDir, '..'), file),
