@@ -10,7 +10,7 @@ bili "src/*.js" --format "[name].js"
 
 <details style="margin-bottom: 20px;color: #666"><summary style="font-style: italic">A note on why we use `filename` option here</summary><br>
 
-In `cjs` format the filename of output files will be `[name][suffix].js` where the `[suffix]` is `.cjs` in this case, however you would import `src/index.js` in `src/cli.js` in the form of `import main from './index'` without the `.cjs` suffix, so we have to remove suffix here.
+In `cjs` format the filename of output files will be `[name][suffix].js` where the `[suffix]` is `.cjs` in this case, however you may import `src/index.js` in `src/cli.js` in the form of `import main from './index'` without the `.cjs` suffix, so we have to remove suffix here.
 
 </details>
 
