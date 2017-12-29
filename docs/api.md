@@ -90,7 +90,7 @@ Type: `Array` `function`
 Either a Function that takes an id and returns `true` (external) or `false` (not external), or an Array of module IDs that should remain external to the bundle. The IDs should be either:
 
 * The name of an external dependency
-* A resolved ID (like an absolute path to a file)
+* A resolved ID (like an absolute or relative path to a file)
 
 ### banner
 
