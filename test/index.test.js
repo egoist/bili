@@ -72,3 +72,9 @@ snapshot({
   input: 'default.js',
   banner: 'woot'
 })
+
+snapshot({
+  title: 'exclude file',
+  input: 'exclude-file/index.js',
+  external: ['./test/fixtures/exclude-file/foo.js']
+})

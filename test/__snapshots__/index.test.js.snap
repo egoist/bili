@@ -134,3 +134,21 @@ module.exports = index;
   ],
 ]
 `;
+
+exports[`exclude file 1`] = `
+Array [
+  Array [
+    "dist/index.cjs.js",
+    "'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var foo = _interopDefault(require('./foo.js'));
+
+
+
+module.exports = foo;
+",
+  ],
+]
+`;

@@ -134,10 +134,11 @@ export default class Bili {
 
     const banner = getBanner(this.options.banner, this.pkg)
 
-    let external = this.getArrayOption('external')
+    let external = this.getArrayOption('external') || []
+    external = external.map(e => e.startsWith('./') ? path.resolve(e) : e)
     let globals = this.options.globals || this.options.global
     if (typeof globals === 'object') {
-      external = [...(external || []), ...Object.keys(globals)]
+      external = [...external, ...Object.keys(globals)]
     }
 
     const inputOptions = {
