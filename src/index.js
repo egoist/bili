@@ -135,7 +135,7 @@ export default class Bili {
     const banner = getBanner(this.options.banner, this.pkg)
 
     let external = this.getArrayOption('external') || []
-    external = external.map(e => e.startsWith('./') ? path.resolve(e) : e)
+    external = external.map(e => (e.startsWith('./') ? path.resolve(e) : e))
     let globals = this.options.globals || this.options.global
     if (typeof globals === 'object') {
       external = [...external, ...Object.keys(globals)]
@@ -329,7 +329,7 @@ export default class Bili {
   }
 }
 
-function getSuffix(format, compress) {
+function getSuffix(format) {
   let suffix = ''
   switch (format) {
     case 'cjs':
@@ -343,7 +343,7 @@ function getSuffix(format, compress) {
     default:
       throw new Error('unsupported format')
   }
-  return compress ? `${suffix}.min` : suffix
+  return suffix
 }
 
 function getNameFromInput(input) {
@@ -352,8 +352,11 @@ function getNameFromInput(input) {
 
 function getFilename({ input, format, filename, compress, name }) {
   name = name || getNameFromInput(input)
-  const suffix = getSuffix(format, compress)
-  return template(filename, { name, suffix })
+  const suffix = getSuffix(format)
+  const res = template(filename, { name, suffix })
+  return compress ?
+    path.basename(res, path.extname(res)) + '.min' + path.extname(res) :
+    res
 }
 
 function getJsOptions(name, jsx, jsOptions) {
