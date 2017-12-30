@@ -85,7 +85,7 @@ export default class Bili {
       if (pluginName === 'vue') {
         pluginOptions = {
           css: path.resolve(
-            this.options.outDir || 'dist',
+            this.options.outDir,
             filename.replace(/\.[^.]+$/, '.css')
           ),
           ...pluginOptions
@@ -106,11 +106,7 @@ export default class Bili {
   }
 
   async createConfig({ input, format, compress }) {
-    const {
-      outDir = 'dist',
-      filename = '[name][suffix].js',
-      inline = format === 'umd'
-    } = this.options
+    const { outDir, filename, inline = format === 'umd' } = this.options
 
     const outFilename = getFilename({
       input,
@@ -238,6 +234,8 @@ export default class Bili {
     this.pkg = await readPkg().then(res => res.pkg || {})
     const biliConfig = await getBiliConfig()
     this.options = {
+      outDir: 'dist',
+      filename: '[name][suffix].js',
       ...biliConfig,
       ...this.options
     }
@@ -316,11 +314,15 @@ export default class Bili {
     })
     await Promise.all(actions)
 
-    if (Object.keys(this.bundles).length < formats.length) {
-      throw new BiliError(`Multiple files are emitting to the same path.\nPlease check if ${chalk.green('[suffix]')} is missing in ${chalk.green('filename')} option.\n${getDocRef(
-        'api',
-        'filename'
-      )}`)
+    if (Object.keys(this.bundles).length < formats.length * inputFiles.length) {
+      const hasName = this.options.filename.includes('[name]')
+      const hasSuffix = this.options.filename.includes('[suffix]')
+      const msg = `Multiple files are emitting to the same path.\nPlease check if ${
+        hasName || inputFiles.length === 1 ?
+          '' :
+          `${chalk.green('[name]')}${hasSuffix ? '' : ' or '}`
+      }${hasSuffix ? '' : chalk.green('[suffix]')} is missing in ${chalk.green('filename')} option.\n${getDocRef('api', 'filename')}`
+      throw new BiliError(msg)
     }
 
     return this
