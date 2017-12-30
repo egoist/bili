@@ -118,7 +118,7 @@ Of course a `string` is also accepted.
 
 ### plugin
 
-Type: `string` `Array`<br>
+Type: `string` `Array<string>` `Array<object>`<br>
 Alias: `plugins`
 
 Add Rollup plugins, e.g. `rollup-plugin-vue`:
@@ -129,6 +129,15 @@ bili --plugin vue
 bili --plugin vue,coffeescript
 # with options
 bili --plugin vue --vue.css ./style.css
+```
+
+You can also directly require Rollup plugin if you are using JS config or JS API:
+
+```js
+// bili.config.js
+module.exports = {
+  plugin: [require('rollup-plugin-foo')(options)]
+}
 ```
 
 ### jsx

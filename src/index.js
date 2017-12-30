@@ -81,6 +81,12 @@ export default class Bili {
     const plugins = this.getArrayOption('plugin') || []
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
+      // In bili.config.js or you're using the API
+      // You can require rollup plugin directly
+      if (typeof pluginName === 'object') {
+        return pluginName
+      }
+
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
         pluginOptions = {
