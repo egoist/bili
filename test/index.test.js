@@ -78,3 +78,26 @@ snapshot({
   input: 'exclude-file/index.js',
   external: ['./test/fixtures/exclude-file/foo.js']
 })
+
+describe('multi formats without suffix error', () => {
+  test('it throws', async () => {
+    expect.assertions(1)
+    try {
+      await Bili.generate({
+        input: fixture('defaults/index.js'),
+        format: ['cjs', 'umd'],
+        filename: '[name].js'
+      })
+    } catch (err) {
+      expect(err.message).toMatch(/Multiple files are emitting to the same path/)
+    }
+  })
+
+  test('it does not throw', async () => {
+    await Bili.generate({
+      input: fixture('defaults/index.js'),
+      format: ['umd-min', 'umd'],
+      filename: '[name].js'
+    })
+  })
+})

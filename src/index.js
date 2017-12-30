@@ -21,31 +21,28 @@ import template from './template'
 import getBanner from './get-banner'
 import { getBabelConfig, getBiliConfig } from './get-config'
 import BiliError from './bili-error'
+import { handleError, getDocRef } from './handle-error'
 
 const FORMATS = ['cjs']
 
 export default class Bili {
   static async generate(options) {
-    try {
-      const bundle = await new Bili(options).bundle({ write: false })
-      return bundle
-    } catch (err) {
-      handleError(err)
-    }
+    const bundle = await new Bili(options).bundle({ write: false })
+    return bundle
   }
 
   static async write(options) {
-    try {
-      const bundle = await new Bili(options).bundle()
+    const bundle = await new Bili(options).bundle()
 
-      if (!options.watch) {
-        console.log(await bundle.stats())
-      }
-
-      return bundle
-    } catch (err) {
-      handleError(err)
+    if (!options.watch) {
+      console.log(await bundle.stats())
     }
+
+    return bundle
+  }
+
+  static handleError(err) {
+    return handleError(err)
   }
 
   constructor(options = {}) {
@@ -256,6 +253,7 @@ export default class Bili {
     }
 
     const formats = this.getArrayOption('format') || FORMATS
+
     const options = inputFiles.reduce(
       (res, input) => [
         ...res,
@@ -317,6 +315,14 @@ export default class Bili {
       return bundle.generate(outputOptions)
     })
     await Promise.all(actions)
+
+    if (Object.keys(this.bundles).length < formats.length) {
+      throw new BiliError(`Multiple files are emitting to the same path.\nPlease check if ${chalk.green('[suffix]')} is missing in ${chalk.green('filename')} option.\n${getDocRef(
+        'api',
+        'filename'
+      )}`)
+    }
+
     return this
   }
 
@@ -406,41 +412,4 @@ function handleLoadPluginError(moduleName, err) {
   } else {
     throw err
   }
-}
-
-function handleError(err) {
-  process.exitCode = process.exitCode || 1
-
-  if (err.code === 'PLUGIN_ERROR') {
-    console.error('🚨 ', `Error found by ${err.plugin} plugin:`)
-    if (err.codeFrame) {
-      console.error(err.message)
-      console.error(err.codeFrame)
-    } else if (err.snippet) {
-      console.error(err.message)
-      console.error(err.snippet)
-    } else {
-      console.error(err.stack)
-    }
-    return
-  }
-
-  if (err.message.includes('You must supply options.name for UMD bundles')) {
-    console.error('You must supply options.moduleName for UMD bundles, the easiest way is to use --moduleName flag.\n')
-    logDocRef('api', 'modulename')
-    return
-  }
-
-  if (err.name === 'BiliError') {
-    return console.error('🚨 ', err.message)
-  }
-
-  if (err.frame) {
-    console.log(err.frame)
-  }
-  console.log(err.stack)
-}
-
-function logDocRef(page, id) {
-  console.log(chalk.dim(`Check out: https://egoist.moe/bili/#/${page}${id ? `?id=${id}` : ''}`))
 }

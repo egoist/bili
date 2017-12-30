@@ -62,4 +62,6 @@ cli
     desc: 'Inspect Rollup options'
   })
 
+cli.on('error', err => Bili.handleError(err))
+
 cli.parse()
