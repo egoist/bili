@@ -195,7 +195,7 @@ export default class Bili {
               // Add banner (if there is)
               preamble: banner
             }
-          }),
+          }, require('uglify-es').minify),
         this.options.alias && aliasPlugin(this.options.alias),
         this.options.replace && replacePlugin(this.options.replace),
         {
