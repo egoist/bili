@@ -154,9 +154,9 @@ export default class Bili {
         // print location if applicable
         if (loc) {
           console.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
-          if (frame) console.warn(frame)
+          if (frame) console.warn(chalk.dim(frame))
         } else {
-          console.warn(message)
+          console.warn('🙋‍♂️ ', message)
         }
       },
       plugins: [
@@ -226,6 +226,7 @@ export default class Bili {
       name: format === 'umd' && this.getModuleName(),
       file,
       banner,
+      exports: this.options.exports,
       sourcemap:
         typeof this.options.map === 'boolean' ? this.options.map : compress
     }

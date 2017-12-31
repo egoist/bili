@@ -148,6 +148,13 @@ Possible values: `react` `vue` or any JSX pragma like `h`
 
 Switch JSX syntax, only works with our default Babel config or Buble.
 
+### exports
+
+Type: `string`<br>
+Default: `auto`
+
+https://rollupjs.org/#exports. You will need it to disable the warning when you're mixing default export and named exports.
+
 ### replace
 
 Type: `object`
