@@ -188,14 +188,17 @@ export default class Bili {
           }),
         jsonPlugin(),
         compress &&
-          uglifyPlugin({
-            ...this.options.uglify,
-            output: {
-              ...(this.options.uglify && this.options.uglify.output),
-              // Add banner (if there is)
-              preamble: banner
-            }
-          }, require('uglify-es').minify),
+          uglifyPlugin(
+            {
+              ...this.options.uglify,
+              output: {
+                ...(this.options.uglify && this.options.uglify.output),
+                // Add banner (if there is)
+                preamble: banner
+              }
+            },
+            this.options.uglifyEs ? require('uglify-es').minify : undefined
+          ),
         this.options.alias && aliasPlugin(this.options.alias),
         this.options.replace && replacePlugin(this.options.replace),
         {
@@ -243,6 +246,7 @@ export default class Bili {
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
+      uglifyEs: true,
       ...biliConfig,
       ...this.options
     }

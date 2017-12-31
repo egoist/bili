@@ -155,6 +155,15 @@ Default: `auto`
 
 https://rollupjs.org/#exports. You will need it to disable the warning when you're mixing default export and named exports.
 
+### uglifyEs
+
+Type: `boolean`<br>
+Default: `true`
+
+Use [uglify-es](https://github.com/mishoo/UglifyJS2/tree/harmony) instead of `uglify-js` to compress ES6+ code.
+
+FYI, `uglify-js` cannot minify ES6+ code.
+
 ### replace
 
 Type: `object`
