@@ -320,16 +320,28 @@ export default class Bili {
     })
     await Promise.all(actions)
 
-    if (Object.keys(this.bundles).length < formats.length * inputFiles.length) {
-      const hasName = this.options.filename.includes('[name]')
-      const hasSuffix = this.options.filename.includes('[suffix]')
-      const msg = `Multiple files are emitting to the same path.\nPlease check if ${
-        hasName || inputFiles.length === 1 ?
-          '' :
-          `${chalk.green('[name]')}${hasSuffix ? '' : ' or '}`
-      }${hasSuffix ? '' : chalk.green('[suffix]')} is missing in ${chalk.green('filename')} option.\n${getDocRef('api', 'filename')}`
-      throw new BiliError(msg)
-    }
+    // Since we update `this.bundles` in Rollup plugin's `ongenerate` callback
+    // We have to put follow code into another callback to execute at th end of call stack
+    await nextTick(() => {
+      if (
+        Object.keys(this.bundles).length <
+        formats.length * inputFiles.length
+      ) {
+        const hasName = this.options.filename.includes('[name]')
+        const hasSuffix = this.options.filename.includes('[suffix]')
+        const msg = `Multiple files are emitting to the same path.\nPlease check if ${
+          hasName || inputFiles.length === 1 ?
+            '' :
+            `${chalk.green('[name]')}${hasSuffix ? '' : ' or '}`
+        }${
+          hasSuffix ? '' : chalk.green('[suffix]')
+        } is missing in ${chalk.green('filename')} option.\n${getDocRef(
+          'api',
+          'filename'
+        )}`
+        throw new BiliError(msg)
+      }
+    })
 
     return this
   }
@@ -420,4 +432,17 @@ function handleLoadPluginError(moduleName, err) {
   } else {
     throw err
   }
+}
+
+function nextTick(fn) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        fn()
+        resolve()
+      } catch (err) {
+        reject(err)
+      }
+    })
+  })
 }
