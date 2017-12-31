@@ -3,9 +3,9 @@
 You can specify multi entries like:
 
 ```bash
-bili src/index.js src/cli.js
+bili src/index.js src/cli.js --filename "[name].js"
 # or use glob patterns
-bili "src/*.js" --format "[name].js"
+bili "src/*.js" --filename "[name].js"
 ```
 
 <details style="margin-bottom: 20px;color: #666"><summary style="font-style: italic">A note on why we use `filename` option here</summary><br>
