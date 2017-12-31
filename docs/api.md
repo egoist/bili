@@ -160,7 +160,7 @@ https://rollupjs.org/#exports. You will need it to disable the warning when you'
 Type: `boolean`<br>
 Default: `true`
 
-Use [uglify-es](https://github.com/mishoo/UglifyJS2/tree/harmony) instead of `uglify-js` to compress ES6+ code.
+Use [uglify-es](https://github.com/mishoo/UglifyJS2/tree/harmony) instead of `uglify-js` to minify ES6+ code.
 
 FYI, `uglify-js` cannot minify ES6+ code.
 
