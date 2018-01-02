@@ -34,6 +34,25 @@ module.exports = _default;
 ]
 `;
 
+exports[`banner:true 1`] = `
+Array [
+  Array [
+    "test/fixtures/banner/dist/index.cjs.js",
+    "/*!
+ * foo v0.0.0
+ * (c) 2015-present name <email@email.com>
+ * Released under the MIT License.
+ */
+'use strict';
+
+var index = 42;
+
+module.exports = index;
+",
+  ],
+]
+`;
+
 exports[`buble:async 1`] = `
 Array [
   Array [

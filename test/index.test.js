@@ -46,14 +46,12 @@ snapshot({
   jsx: 'vue'
 })
 
-// Disable this test for now
-// Since `version` is read from bili's package.json
-// So it will always change
-// snapshot({
-//   title: 'banner:true',
-//   input: 'default.js',
-//   banner: true
-// })
+snapshot({
+  title: 'banner:true',
+  input: 'banner/index.js',
+  banner: true,
+  cwd: fixture('banner')
+})
 
 snapshot({
   title: 'banner:object',
