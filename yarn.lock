@@ -1625,6 +1625,12 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
+first-commit-date@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/first-commit-date/download/first-commit-date-0.2.0.tgz#2ee97057ed52103862a58acf4b1d244d7705e261"
+  dependencies:
+    get-first-commit "^0.2.0"
+
 flat-cache@^1.2.1:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-1.3.0.tgz#d3030b32b38154f4e3b7e9c709f490f7ef97c481"
@@ -1725,6 +1731,13 @@ get-caller-file@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.2.tgz#f702e63127e7e231c160a80c1554acb70d5047e5"
 
+get-first-commit@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/get-first-commit/download/get-first-commit-0.2.0.tgz#e2948c0bf7859b40ddba6b5525f383db87251396"
+  dependencies:
+    gitty "^3.2.3"
+    lazy-cache "^0.2.4"
+
 get-stdin@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-5.0.1.tgz#122e161591e21ff4c52530305693f20e6393a398"
@@ -1738,6 +1751,10 @@ getpass@^0.1.1:
   resolved "https://registry.yarnpkg.com/getpass/-/getpass-0.1.7.tgz#5eff8e3e684d569ae4cb2b1282604e8ba62149fa"
   dependencies:
     assert-plus "^1.0.0"
+
+gitty@^3.2.3:
+  version "3.6.0"
+  resolved "http://registry.npm.taobao.org/gitty/download/gitty-3.6.0.tgz#4a001a6cb2f749cc28f7fbe2ca9ed415d71c1e53"
 
 glob-base@^0.3.0:
   version "0.3.0"
@@ -2610,6 +2627,10 @@ kind-of@^4.0.0:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-4.0.0.tgz#20813df3d712928b207378691a45066fae72dd57"
   dependencies:
     is-buffer "^1.1.5"
+
+lazy-cache@^0.2.4:
+  version "0.2.7"
+  resolved "http://registry.npm.taobao.org/lazy-cache/download/lazy-cache-0.2.7.tgz#7feddf2dcb6edb77d11ef1d117ab5ffdf0ab1b65"
 
 lazy-cache@^1.0.3:
   version "1.0.4"

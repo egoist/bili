@@ -1,4 +1,5 @@
 import stringifyAuthor from 'stringify-author'
+import firstCommitDate from 'first-commit-date'
 
 export default (banner, pkg) => {
   if (!banner || typeof banner === 'string') {
@@ -14,7 +15,16 @@ export default (banner, pkg) => {
   }
 
   const version = pkg.version ? `v${pkg.version}` : ''
-  const year = pkg.year || new Date().getFullYear()
+  let year = pkg.year
+
+  if (!year) {
+    try {
+      const date = firstCommitDate.sync()
+      year = new Date(date).getFullYear()
+    } catch (e) {
+      year = new Date().getFullYear()
+    }
+  }
 
   let author =
     typeof pkg.author === 'string' ?
