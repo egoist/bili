@@ -109,5 +109,5 @@ test('cwd', async () => {
   })
   // 2. output file is relative to `cwd`
   const outputPath = Object.keys(bili.bundles)[0]
-  expect(outputPath).toMatch('bili/test/fixtures/defaults/dist/index.cjs.js')
+  expect(outputPath).toMatch('/test/fixtures/defaults/dist/index.cjs.js')
 })
