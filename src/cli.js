@@ -1,13 +1,16 @@
 #!/usr/bin/env node
 import cac from 'cac'
 import Bili from '.'
+import { getBiliConfig } from './get-config'
 
 const cli = cac()
 
 cli
-  .command('*', 'Bundle library', (input, flags) => {
+  .command('*', 'Bundle library', async (input, flags) => {
+    const config = await getBiliConfig()
     return Bili.write({
       input,
+      ...config,
       ...flags
     })
   })

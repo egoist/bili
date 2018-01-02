@@ -19,7 +19,7 @@ import hashbangPlugin from 'rollup-plugin-hashbang'
 import textTable from 'text-table'
 import template from './template'
 import getBanner from './get-banner'
-import { getBabelConfig, getBiliConfig } from './get-config'
+import { getBabelConfig } from './get-config'
 import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
 
@@ -46,7 +46,12 @@ export default class Bili {
   }
 
   constructor(options = {}) {
-    this.options = options
+    this.options = {
+      outDir: 'dist',
+      filename: '[name][suffix].js',
+      uglifyEs: true,
+      ...options
+    }
     this.bundles = {}
   }
 
@@ -242,14 +247,6 @@ export default class Bili {
 
   async bundle({ write = true } = {}) {
     this.pkg = await readPkg().then(res => res.pkg || {})
-    const biliConfig = await getBiliConfig()
-    this.options = {
-      outDir: 'dist',
-      filename: '[name][suffix].js',
-      uglifyEs: true,
-      ...biliConfig,
-      ...this.options
-    }
 
     let inputFiles = this.options.input || 'src/index.js'
     if (Array.isArray(inputFiles) && inputFiles.length === 0) {
