@@ -17,7 +17,7 @@ Following options are accpeted both in CLI flags and config file,namely `bili.co
 ### input
 
 Type: `string` `Array`<br>
-Default: 'src/index.js'
+Default: `src/index.js`
 
 Glob patterns or file paths.
 
