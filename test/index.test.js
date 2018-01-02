@@ -101,3 +101,15 @@ describe('multi formats without suffix error', () => {
     })
   })
 })
+
+test('cwd', async () => {
+  // This tests two things
+  const bili = await Bili.generate({
+    // 1. resolve `input` from `cwd`
+    input: 'index.js',
+    cwd: fixture('defaults')
+  })
+  // 2. output file is relative to `cwd`
+  const outputPath = Object.keys(bili.bundles)[0]
+  expect(outputPath).toMatch('bili/test/fixtures/defaults/dist/index.cjs.js')
+})

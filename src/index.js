@@ -50,6 +50,7 @@ export default class Bili {
       outDir: 'dist',
       filename: '[name][suffix].js',
       uglifyEs: true,
+      cwd: process.cwd(),
       ...options
     }
     this.bundles = {}
@@ -82,6 +83,14 @@ export default class Bili {
     return option
   }
 
+  resolveCwd(...args) {
+    return path.resolve(this.options.cwd, ...args)
+  }
+
+  relativeToProcessCwd(...args) {
+    return path.relative(process.cwd(), this.resolveCwd(...args))
+  }
+
   loadUserPlugins({ filename }) {
     const plugins = this.getArrayOption('plugin') || []
     // eslint-disable-next-line array-callback-return
@@ -109,6 +118,10 @@ export default class Bili {
       }
       const moduleName = `rollup-plugin-${pluginName}`
       try {
+        // TODO:
+        // Local require is always relative to `process.cwd()`
+        // Instead of `this.options.cwd`
+        // We need to ensure that which is actually better
         return localRequire(moduleName)(pluginOptions)
       } catch (err) {
         handleLoadPluginError(moduleName, err)
@@ -126,7 +139,9 @@ export default class Bili {
       compress,
       name: this.options.name
     })
-    const file = path.resolve(outDir, outFilename)
+    // The path to output file
+    // Relative to `this.options.cwd`
+    const file = this.resolveCwd(outDir, outFilename)
 
     const jsPluginName = this.options.js || 'buble'
     const jsPlugin = getJsPlugin(jsPluginName)
@@ -246,13 +261,15 @@ export default class Bili {
   }
 
   async bundle({ write = true } = {}) {
-    this.pkg = await readPkg().then(res => res.pkg || {})
+    this.pkg = await readPkg({ cwd: this.options.cwd }).then(res => res.pkg || {})
 
     let inputFiles = this.options.input || 'src/index.js'
     if (Array.isArray(inputFiles) && inputFiles.length === 0) {
       inputFiles = 'src/index.js'
     }
-    inputFiles = await globby(inputFiles)
+
+    inputFiles = await globby(inputFiles, { cwd: this.options.cwd }).then(res =>
+      res.map(v => this.relativeToProcessCwd(v)))
 
     if (inputFiles.length === 0) {
       throw new BiliError('No matched files to bundle.')
