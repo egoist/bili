@@ -1,0 +1,10 @@
+{
+  "name": "foo",
+  "version": "0.0.0",
+  "year": 2015,
+  "license": "MIT",
+  "author": {
+    "name": "name",
+    "email": "email@email.com"
+  }
+}
