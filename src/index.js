@@ -428,6 +428,17 @@ function getJsOptions(name, jsx, jsOptions) {
     }
   }
 
+  if (name === 'typescript') {
+    let typescript
+    try {
+      typescript = localRequire('typescript')
+    } catch (err) {}
+    return {
+      typescript,
+      ...jsOptions
+    }
+  }
+
   return {}
 }
 
