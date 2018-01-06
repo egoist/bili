@@ -15,11 +15,12 @@ cli
     })
   })
   .option('watch', {
-    desc: 'Run in watch mode'
+    desc: 'Run in watch mode',
+    alias: 'w'
   })
   .option('outDir', {
     desc: 'Output directory',
-    alias: 'd'
+    alias: ['o', 'd']
   })
   .option('filename', {
     desc: 'Output filename, default: "[name][suffix].js"'
