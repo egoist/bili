@@ -207,12 +207,12 @@ Type: `(currentOptions, ctx) => NewOptions`
 
 Update options.
 
-`ctx` is in type `Ctx`:
+`ctx` is of type `Ctx`:
 
-```j
-type Ctx = {
-  input: string,
-  format: string,
+```typescript
+interface Ctx {
+  input: string
+  format: string
   compress: boolean
 }
 ```
