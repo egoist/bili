@@ -143,9 +143,10 @@ export default class Bili {
     // Relative to `this.options.cwd`
     const file = this.resolveCwd(outDir, outFilename)
 
-    const jsPluginName = this.options.js || 'buble'
-    const jsPlugin = getJsPlugin(jsPluginName)
-    const jsOptions = getJsOptions(
+    const transformJS = this.options.js !== false
+    const jsPluginName = transformJS && (this.options.js || 'buble')
+    const jsPlugin = transformJS && getJsPlugin(jsPluginName)
+    const jsOptions = transformJS && getJsOptions(
       jsPluginName,
       this.options.jsx,
       this.options[jsPluginName]
@@ -182,7 +183,7 @@ export default class Bili {
       plugins: [
         hashbangPlugin(),
         ...this.loadUserPlugins({ filename: outFilename }),
-        jsPluginName === 'buble' &&
+        transformJS && jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
             babelrc: false,
             exclude: 'node_modules/**',
@@ -197,7 +198,7 @@ export default class Bili {
               ]
             ]
           }),
-        jsPlugin({
+        transformJS && jsPlugin({
           exclude: 'node_modules/**',
           ...jsOptions
         }),

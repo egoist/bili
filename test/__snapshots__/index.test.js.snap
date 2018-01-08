@@ -171,3 +171,17 @@ module.exports = foo;
   ],
 ]
 `;
+
+exports[`no-js-transform 1`] = `
+Array [
+  Array [
+    "dist/index.cjs.js",
+    "'use strict';
+
+var index = () => {}
+
+module.exports = index;
+",
+  ],
+]
+`;

@@ -116,12 +116,19 @@ By default the information in the copyright message is from your `package.json`,
 
 Of course a `string` is also accepted.
 
+### js
+
+Type: `string` `boolean`<br>
+Default: `buble`
+
+Specify the Rollup plugin we should use to transform JS files, by default we use `rollup-plugin-bubl`, you can set it to `false` to disable this.
+
 ### plugin
 
 Type: `string` `Array<string>` `Array<object>`<br>
 Alias: `plugins`
 
-Add Rollup plugins, e.g. `rollup-plugin-vue`:
+Add extra Rollup plugins, e.g. `rollup-plugin-vue`:
 
 ```bash
 bili --plugin vue

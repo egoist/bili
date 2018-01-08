@@ -66,6 +66,12 @@ snapshot({
 })
 
 snapshot({
+  title: 'no-js-transform',
+  input: 'no-js-transform/index.js',
+  js: false
+})
+
+snapshot({
   title: 'banner:string',
   input: 'default.js',
   banner: 'woot'
