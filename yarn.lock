@@ -1351,20 +1351,11 @@ escodegen@^1.9.0:
   optionalDependencies:
     source-map "~0.5.6"
 
-eslint-config-prettier@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-1.7.0.tgz#cda3ce22df1e852daa9370f1f3446e8b8a02ce44"
+eslint-config-rem@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-rem/-/eslint-config-rem-4.0.0.tgz#a33022c2122d925e5cf632dc45555cd2e090e50f"
   dependencies:
-    get-stdin "^5.0.1"
-
-eslint-config-rem@3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/eslint-config-rem/-/eslint-config-rem-3.2.2.tgz#20589c4388c65bd03822d15385d6eea6f10b8611"
-  dependencies:
-    eslint-config-prettier "^1.7.0"
     eslint-plugin-markdown "^1.0.0-beta.6"
-    eslint-plugin-prettier "^2.0.1"
-    prettier "^1.2.2"
 
 eslint-config-xo@0.19.0:
   version "0.19.0"
@@ -1377,13 +1368,6 @@ eslint-plugin-markdown@^1.0.0-beta.6:
     object-assign "^4.0.1"
     remark-parse "^3.0.0"
     unified "^6.1.2"
-
-eslint-plugin-prettier@^2.0.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.4.0.tgz#85cab0775c6d5e3344ef01e78d960f166fb93aae"
-  dependencies:
-    fast-diff "^1.1.1"
-    jest-docblock "^21.0.0"
 
 eslint-scope@^3.7.1:
   version "3.7.1"
@@ -1605,10 +1589,6 @@ fast-async@^6.3.0:
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
-
-fast-diff@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.1.2.tgz#4b62c42b8e03de3f848460b639079920695d0154"
 
 fast-json-stable-stringify@^2.0.0:
   version "2.0.0"
@@ -2383,10 +2363,6 @@ jest-diff@^22.0.3:
     diff "^3.2.0"
     jest-get-type "^22.0.3"
     pretty-format "^22.0.3"
-
-jest-docblock@^21.0.0:
-  version "21.2.0"
-  resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-21.2.0.tgz#51529c3b30d5fd159da60c27ceedc195faf8d414"
 
 jest-docblock@^22.0.3:
   version "22.0.3"
@@ -3281,7 +3257,7 @@ prettier-eslint@^8.5.0:
     typescript "^2.5.1"
     typescript-eslint-parser "^11.0.0"
 
-prettier@^1.2.2, prettier@^1.7.0:
+prettier@^1.7.0:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
 
