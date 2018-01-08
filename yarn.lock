@@ -3308,10 +3308,6 @@ progress@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
 
-promise.series@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/promise.series/-/promise.series-0.2.0.tgz#2cc7ebe959fc3a6619c04ab4dbdc9e452d864bbd"
-
 pseudomap@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
@@ -4195,13 +4191,12 @@ unist-util-visit@^1.1.0:
   dependencies:
     unist-util-is "^2.1.1"
 
-use-config@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/use-config/-/use-config-1.1.0.tgz#0a0c7760e1f12cd546154fc67afefe49d048fbb4"
+use-config@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/use-config/-/use-config-2.0.1.tgz#56807134bb427224ce655de0a1a2be3221c10d9e"
   dependencies:
     load-json-file "^2.0.0"
     path-exists "^3.0.0"
-    promise.series "^0.2.0"
     pupa "^1.0.0"
 
 user-home@^1.1.1:
