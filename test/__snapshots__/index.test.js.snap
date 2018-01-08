@@ -172,6 +172,69 @@ module.exports = foo;
 ]
 `;
 
+exports[`extendOptions 1`] = `
+Array [
+  Array [
+    "dist/foo.cjs.js",
+    "'use strict';
+
+var foo = 'foo';
+
+module.exports = foo;
+",
+  ],
+  Array [
+    "dist/bar.cjs.js",
+    "'use strict';
+
+var bar = 'bar';
+
+module.exports = bar;
+",
+  ],
+  Array [
+    "dist/foo.js",
+    "(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.umd = factory());
+}(this, (function () { 'use strict';
+
+var foo = 'foo';
+
+return foo;
+
+})));
+",
+  ],
+  Array [
+    "dist/bar.js",
+    "(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.umd = factory());
+}(this, (function () { 'use strict';
+
+var bar = 'bar';
+
+return bar;
+
+})));
+",
+  ],
+  Array [
+    "dist/foo.min.js",
+    "!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.min=n()}(this,function(){\\"use strict\\";return\\"foo\\"});
+",
+  ],
+  Array [
+    "dist/bar.min.js",
+    "!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.min=n()}(this,function(){\\"use strict\\";return\\"bar\\"});
+",
+  ],
+]
+`;
+
 exports[`no-js-transform 1`] = `
 Array [
   Array [

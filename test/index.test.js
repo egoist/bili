@@ -8,9 +8,10 @@ function fixture(name) {
 process.env.BILI_TEST = true
 
 function snapshot({ title, input, ...args }) {
+  input = Array.isArray(input) ? input : [input]
   test(title, async () => {
     const { bundles } = await Bili.generate({
-      input: fixture(input),
+      input: input.map(v => fixture(v)),
       ...args
     })
     expect(Object.keys(bundles).map(filepath => [
@@ -81,6 +82,24 @@ snapshot({
   title: 'exclude file',
   input: 'exclude-file/index.js',
   external: ['./test/fixtures/exclude-file/foo.js']
+})
+
+snapshot({
+  title: 'extendOptions',
+  format: 'umd,umd-min,cjs',
+  input: ['extend-options/foo.js', 'extend-options/bar.js'],
+  extendOptions(options, { input, format, compress }) {
+    if (input.endsWith('foo.js')) {
+      options.moduleName = 'endsWithFoo'
+    }
+    if (format === 'umd') {
+      options.moduleName = 'umd'
+    }
+    if (compress) {
+      options.moduleName = 'min'
+    }
+    return options
+  }
 })
 
 describe('multi formats without suffix error', () => {

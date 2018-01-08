@@ -200,3 +200,19 @@ const prod = process.env.NODE_ENV === 'production'
 // compiled to
 const prod = 'development' === 'production'
 ```
+
+### extendOptions
+
+Type: `(currentOptions, ctx) => NewOptions`
+
+Update options.
+
+`ctx` is in type `Ctx`:
+
+```j
+type Ctx = {
+  input: string,
+  format: string,
+  compress: boolean
+}
+```

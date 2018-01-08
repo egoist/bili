@@ -130,33 +130,43 @@ export default class Bili {
   }
 
   async createConfig({ input, format, compress }) {
-    const { outDir, filename, inline = format === 'umd' } = this.options
+    const options = this.options.extendOptions ?
+      this.options.extendOptions(this.options, {
+        input,
+        format,
+        compress
+      }) :
+      this.options
+
+    if (typeof options !== 'object') {
+      throw new BiliError('You must return the options in `extendOptions` method!')
+    }
+
+    const { outDir, filename, inline = format === 'umd' } = options
 
     const outFilename = getFilename({
       input,
       format,
       filename,
       compress,
-      name: this.options.name
+      name: options.name
     })
     // The path to output file
     // Relative to `this.options.cwd`
     const file = this.resolveCwd(outDir, outFilename)
 
-    const transformJS = this.options.js !== false
-    const jsPluginName = transformJS && (this.options.js || 'buble')
+    const transformJS = options.js !== false
+    const jsPluginName = transformJS && (options.js || 'buble')
     const jsPlugin = transformJS && getJsPlugin(jsPluginName)
-    const jsOptions = transformJS && getJsOptions(
-      jsPluginName,
-      this.options.jsx,
-      this.options[jsPluginName]
-    )
+    const jsOptions =
+      transformJS &&
+      getJsOptions(jsPluginName, options.jsx, options[jsPluginName])
 
-    const banner = getBanner(this.options.banner, this.pkg)
+    const banner = getBanner(options.banner, this.pkg)
 
     let external = this.getArrayOption('external') || []
     external = external.map(e => (e.startsWith('./') ? path.resolve(e) : e))
-    let globals = this.options.globals || this.options.global
+    let globals = options.globals || options.global
     if (typeof globals === 'object') {
       external = [...external, ...Object.keys(globals)]
     }
@@ -166,7 +176,7 @@ export default class Bili {
       external,
       onwarn: ({ loc, frame, message, code }) => {
         if (
-          this.options.quiet ||
+          options.quiet ||
           code === 'UNRESOLVED_IMPORT' ||
           code === 'THIS_IS_UNDEFINED'
         ) {
@@ -183,7 +193,8 @@ export default class Bili {
       plugins: [
         hashbangPlugin(),
         ...this.loadUserPlugins({ filename: outFilename }),
-        transformJS && jsPluginName === 'buble' &&
+        transformJS &&
+          jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
             babelrc: false,
             exclude: 'node_modules/**',
@@ -192,16 +203,17 @@ export default class Bili {
                 require.resolve('./babel'),
                 {
                   buble: true,
-                  jsx: this.options.jsx,
+                  jsx: options.jsx,
                   objectAssign: jsOptions.objectAssign
                 }
               ]
             ]
           }),
-        transformJS && jsPlugin({
-          exclude: 'node_modules/**',
-          ...jsOptions
-        }),
+        transformJS &&
+          jsPlugin({
+            exclude: 'node_modules/**',
+            ...jsOptions
+          }),
         inline && commonjsPlugin(),
         inline &&
           nodeResolvePlugin({
@@ -211,17 +223,17 @@ export default class Bili {
         compress &&
           uglifyPlugin(
             {
-              ...this.options.uglify,
+              ...options.uglify,
               output: {
-                ...(this.options.uglify && this.options.uglify.output),
+                ...(options.uglify && options.uglify.output),
                 // Add banner (if there is)
                 preamble: banner
               }
             },
-            this.options.uglifyEs ? require('uglify-es').minify : undefined
+            options.uglifyEs ? require('uglify-es').minify : undefined
           ),
-        this.options.alias && aliasPlugin(this.options.alias),
-        this.options.replace && replacePlugin(this.options.replace),
+        options.alias && aliasPlugin(options.alias),
+        options.replace && replacePlugin(options.replace),
         {
           name: 'bili',
           ongenerate: (_, { code }) => {
@@ -234,10 +246,10 @@ export default class Bili {
             }
           }
         },
-        this.options.env &&
+        options.env &&
           replacePlugin({
-            values: Object.keys(this.options.env).reduce((res, key) => {
-              res[`process.env.${key}`] = JSON.stringify(this.options.env[key])
+            values: Object.keys(options.env).reduce((res, key) => {
+              res[`process.env.${key}`] = JSON.stringify(options.env[key])
               return res
             }, {})
           })
@@ -250,9 +262,9 @@ export default class Bili {
       name: format === 'umd' && this.getModuleName(),
       file,
       banner,
-      exports: this.options.exports,
+      exports: options.exports,
       sourcemap:
-        typeof this.options.map === 'boolean' ? this.options.map : compress
+        typeof options.map === 'boolean' ? options.map : compress
     }
 
     return {
