@@ -7,7 +7,7 @@
     "build": "bili Component.vue --plugin vue"
   },
   "devDependencies": {
-    "rollup-plugin-vue": "^3.0.0"
+    "rollup-plugin-vue": "3.0.0"
   },
   "dependencies": {
     "vue": "^2.5.13",
