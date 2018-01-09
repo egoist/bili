@@ -7,6 +7,6 @@
     "build": "bili index.js --plugin postcss"
   },
   "devDependencies": {
-    "rollup-plugin-postcss": "0.5.5"
+    "rollup-plugin-postcss": "0.5.6"
   }
 }
