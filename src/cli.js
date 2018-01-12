@@ -65,6 +65,9 @@ cli
   .option('inspectRollup', {
     desc: 'Inspect Rollup options'
   })
+  .option('inspectOptions', {
+    desc: 'Inspect Bili options'
+  })
 
 cli.on('error', err => Bili.handleError(err))
 

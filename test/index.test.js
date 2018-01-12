@@ -102,6 +102,12 @@ snapshot({
   }
 })
 
+snapshot({
+  title: 'inline:true',
+  input: 'inline/index.js',
+  inline: true
+})
+
 describe('multi formats without suffix error', () => {
   test('it throws', async () => {
     expect.assertions(1)

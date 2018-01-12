@@ -1,4 +1,5 @@
 import util from 'util'
+import fs from 'fs'
 import path from 'path'
 import globby from 'globby'
 import chalk from 'chalk'
@@ -77,12 +78,6 @@ export default class Bili {
     ))
   }
 
-  getArrayOption(name) {
-    const option = this.options[name] || this.options[`${name}s`]
-    if (typeof option === 'string') return option.split(',')
-    return option
-  }
-
   resolveCwd(...args) {
     return path.resolve(this.options.cwd, ...args)
   }
@@ -91,8 +86,7 @@ export default class Bili {
     return path.relative(process.cwd(), this.resolveCwd(...args))
   }
 
-  loadUserPlugins({ filename }) {
-    const plugins = this.getArrayOption('plugin') || []
+  loadUserPlugins({ plugins, filename }) {
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
       // In bili.config.js or you're using the API
@@ -129,6 +123,7 @@ export default class Bili {
     })
   }
 
+  // eslint-disable-next-line complexity
   async createConfig({ input, format, compress }) {
     const options = this.options.extendOptions ?
       this.options.extendOptions(this.options, {
@@ -137,6 +132,11 @@ export default class Bili {
         compress
       }) :
       this.options
+
+    if (options.inspectOptions) {
+      console.log(`Bili options for ${input} in ${format}:`)
+      console.log(util.inspect(options, { colors: true }))
+    }
 
     if (typeof options !== 'object') {
       throw new BiliError('You must return the options in `extendOptions` method!')
@@ -164,7 +164,7 @@ export default class Bili {
 
     const banner = getBanner(options.banner, this.pkg)
 
-    let external = this.getArrayOption('external') || []
+    let external = getArrayOption(options, 'external') || []
     external = external.map(e => (e.startsWith('./') ? path.resolve(e) : e))
     let globals = options.globals || options.global
     if (typeof globals === 'object') {
@@ -174,12 +174,23 @@ export default class Bili {
     const inputOptions = {
       input,
       external,
-      onwarn: ({ loc, frame, message, code }) => {
+      onwarn: ({ loc, frame, message, code, source }) => {
+        if (options.quiet || code === 'THIS_IS_UNDEFINED') {
+          return
+        }
+        // Unresolved modules
+        // If `inline` is not trusty there will always be this warning
+        // But we only need this when the module is not installed
+        // i.e. does not exist on disk
         if (
-          options.quiet ||
-          code === 'UNRESOLVED_IMPORT' ||
-          code === 'THIS_IS_UNDEFINED'
+          code === 'UNRESOLVED_IMPORT' &&
+          source &&
+          !fs.existsSync(path.resolve('node_modules', source))
         ) {
+          console.warn(
+            '😒 ',
+            `Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`
+          )
           return
         }
         // print location if applicable
@@ -192,7 +203,10 @@ export default class Bili {
       },
       plugins: [
         hashbangPlugin(),
-        ...this.loadUserPlugins({ filename: outFilename }),
+        ...this.loadUserPlugins({
+          filename: outFilename,
+          plugins: getArrayOption(options, 'plugins') || []
+        }),
         transformJS &&
           jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
@@ -214,11 +228,13 @@ export default class Bili {
             exclude: 'node_modules/**',
             ...jsOptions
           }),
-        inline && commonjsPlugin(),
         inline &&
           nodeResolvePlugin({
-            module: true
+            module: true,
+            extensions: ['.js', '.json'],
+            ...options.nodeResolve
           }),
+        inline && commonjsPlugin(options.commonjs),
         jsonPlugin(),
         compress &&
           uglifyPlugin(
@@ -263,8 +279,7 @@ export default class Bili {
       file,
       banner,
       exports: options.exports,
-      sourcemap:
-        typeof options.map === 'boolean' ? options.map : compress
+      sourcemap: typeof options.map === 'boolean' ? options.map : compress
     }
 
     return {
@@ -288,7 +303,7 @@ export default class Bili {
       throw new BiliError('No matched files to bundle.')
     }
 
-    const formats = this.getArrayOption('format') || FORMATS
+    const formats = getArrayOption(this.options, 'format') || FORMATS
 
     const options = inputFiles.reduce(
       (res, input) => [
@@ -488,4 +503,18 @@ function nextTick(fn) {
       }
     })
   })
+}
+
+function getArrayOption(options, name) {
+  const option = options[name] || options[`${name}s`]
+  if (typeof option === 'string') return option.split(',')
+  return option
+}
+
+let packageManager
+
+function getPackageManager() {
+  if (packageManager) return packageManager
+  packageManager = fs.existsSync('yarn.lock') ? 'yarn' : 'npm'
+  return packageManager
 }
