@@ -1,7 +1,10 @@
 import util from 'util'
-import fs from 'fs'
+import os from 'os'
+import url from 'url'
+import http from 'http'
 import path from 'path'
 import globby from 'globby'
+import fs from 'fs-extra'
 import chalk from 'chalk'
 import { rollup, watch } from 'rollup'
 import readPkg from 'read-pkg-up'
@@ -17,6 +20,7 @@ import uglifyPlugin from 'rollup-plugin-uglify'
 import aliasPlugin from 'rollup-plugin-alias'
 import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
+import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
 import template from './template'
 import getBanner from './get-banner'
@@ -25,6 +29,7 @@ import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
 
 const FORMATS = ['cjs']
+const SERVE_DIR = path.join(os.tmpdir(), `.bili`)
 
 export default class Bili {
   static async generate(options) {
@@ -35,7 +40,7 @@ export default class Bili {
   static async write(options) {
     const bundle = await new Bili(options).bundle()
 
-    if (!options.watch) {
+    if (!options.watch && !options.serve) {
       console.log(await bundle.stats())
     }
 
@@ -55,6 +60,45 @@ export default class Bili {
       ...options
     }
     this.bundles = {}
+
+    if (this.options.serve) {
+      this.options.watch = true
+      this.options.outDir = SERVE_DIR
+      this.options.format = 'umd'
+      console.warn(`🙅  Output dir is forced to be OS tmp dir in --serve mode`)
+      console.warn(`🙅  Bundle format is forced to be: "umd" in --serve mode`)
+      fs.remove(SERVE_DIR).then(() => this.serve())
+    }
+  }
+
+  async serve() {
+    const serveStatic = require('serve-static')
+    const finalHandler = require('finalhandler')
+
+    const serve = serveStatic(this.options.outDir, {
+      index: ['index.html']
+    })
+
+    const localHTML = path.resolve('index.html')
+    const hasLocalHTML = await fs.pathExists(localHTML)
+    const htmlFile = this.options.html || (hasLocalHTML && localHTML) || path.join(__dirname, '../app/index.html')
+    console.log(`🔔  Using HTML file at ${chalk.green(path.relative(process.cwd(), htmlFile))}`)
+
+    const server = http.createServer(async (req, res) => {
+      if (url.parse(req.url).pathname === '/') {
+        const html = await fs.readFile(
+          htmlFile,
+          'utf8'
+        )
+        return res.end(await renderHTML(html))
+      }
+      serve(req, res, finalHandler(req, res))
+    })
+
+    const port =
+      typeof this.options.serve === 'number' ? this.options.serve : 2018
+    server.listen(port)
+    console.log(`🔗  http://localhost:${port}`)
   }
 
   async stats() {
@@ -182,15 +226,16 @@ export default class Bili {
         // If `inline` is not trusty there will always be this warning
         // But we only need this when the module is not installed
         // i.e. does not exist on disk
-        if (
-          code === 'UNRESOLVED_IMPORT' &&
-          source &&
-          !fs.existsSync(path.resolve('node_modules', source))
-        ) {
-          console.warn(
-            '😒 ',
-            `Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`
-          )
+        if (code === 'UNRESOLVED_IMPORT' && source) {
+          if (
+            !isBuiltinModule(source) &&
+            !fs.existsSync(path.resolve('node_modules', source))
+          ) {
+            console.warn(
+              '😒 ',
+              `Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`
+            )
+          }
           return
         }
         // print location if applicable
@@ -337,10 +382,16 @@ export default class Bili {
           }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
-            console.log(`${e.input} -> ${path.relative(
-              path.resolve(this.options.outDir || 'dist', '..'),
-              outputOptions.file
-            )}`)
+            const outputPath = this.options.serve ?
+              `${chalk.dim('<tmp>/')}${path.relative(
+                path.resolve(this.options.outDir),
+                outputOptions.file
+              )}` :
+              path.relative(
+                path.resolve(this.options.outDir, '..'),
+                outputOptions.file
+              )
+            console.log(`📦  ${e.input} -> ${outputPath}`)
           }
         })
         return
@@ -370,10 +421,8 @@ export default class Bili {
     // Since we update `this.bundles` in Rollup plugin's `ongenerate` callback
     // We have to put follow code into another callback to execute at th end of call stack
     await nextTick(() => {
-      if (
-        Object.keys(this.bundles).length <
-        formats.length * inputFiles.length
-      ) {
+      const bundleCount = Object.keys(this.bundles).length
+      if (bundleCount > 0 && bundleCount < formats.length * inputFiles.length) {
         const hasName = this.options.filename.includes('[name]')
         const hasSuffix = this.options.filename.includes('[suffix]')
         const msg = `Multiple files are emitting to the same path.\nPlease check if ${
@@ -517,4 +566,17 @@ function getPackageManager() {
   if (packageManager) return packageManager
   packageManager = fs.existsSync('yarn.lock') ? 'yarn' : 'npm'
   return packageManager
+}
+
+async function renderHTML(html) {
+  const files = await globby('*.{js,css}', { cwd: SERVE_DIR })
+  const js = files
+    .filter(file => file.endsWith('.js'))
+    .map(file => `<script src="${file}"></script>`)
+    .join('\n')
+  const css = files
+    .filter(file => file.endsWith('.css'))
+    .map(file => `<script src="${file}"></script>`)
+    .join('\n')
+  return html.replace('<!--%JS%-->', js).replace('<!--%CSS%-->', css)
 }

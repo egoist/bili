@@ -15,8 +15,12 @@ cli
     })
   })
   .option('watch', {
-    desc: 'Run in watch mode',
+    desc: 'Build and watch files',
     alias: 'w'
+  })
+  .option('serve', {
+    desc: 'Serve and build in watch mode',
+    alias: 's'
   })
   .option('outDir', {
     desc: 'Output directory',
