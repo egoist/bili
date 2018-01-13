@@ -3,6 +3,7 @@ import os from 'os'
 import url from 'url'
 import http from 'http'
 import path from 'path'
+import EventEmitter from 'events'
 import globby from 'globby'
 import fs from 'fs-extra'
 import chalk from 'chalk'
@@ -31,7 +32,7 @@ import { handleError, getDocRef } from './handle-error'
 const FORMATS = ['cjs']
 const SERVE_DIR = path.join(os.tmpdir(), `.bili`)
 
-export default class Bili {
+export default class Bili extends EventEmitter {
   static async generate(options) {
     const bundle = await new Bili(options).bundle({ write: false })
     return bundle
@@ -52,6 +53,7 @@ export default class Bili {
   }
 
   constructor(options = {}) {
+    super()
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
@@ -65,6 +67,12 @@ export default class Bili {
       this.options.watch = true
       this.options.outDir = SERVE_DIR
       this.options.format = 'iife'
+      this.options.port =
+            typeof this.options.port === 'number' ? this.options.port : 2018
+      this.options.env = {
+        ...this.options.env,
+        NODE_ENV: 'development'
+      }
       console.warn(`🙅  Output dir is forced to be OS tmp dir in "serve" mode`)
       console.warn(`🙅  Bundle format is forced to be: "iife" in "serve" mode`)
     }
@@ -93,11 +101,13 @@ export default class Bili {
       }
       serve(req, res, finalHandler(req, res))
     })
-
-    const port =
-      typeof this.options.port === 'number' ? this.options.port : 2018
-    server.listen(port)
-    console.log(`🔗  http://localhost:${port}`)
+    server.listen(this.options.port)
+    this.once('BUNDLE_START', () => {
+      console.log('📦  Starting...')
+    })
+    this.once('BUNDLE_END', () => {
+      console.log(`🔗  http://localhost:${this.options.port}`)
+    })
   }
 
   async stats() {
@@ -351,6 +361,11 @@ export default class Bili {
       throw new BiliError('No matched files to bundle.')
     }
 
+    if (this.options.serve) {
+      await fs.remove(SERVE_DIR)
+      await this.serve()
+    }
+
     const formats = getArrayOption(this.options, 'format') || FORMATS
 
     const options = inputFiles.reduce(
@@ -383,6 +398,9 @@ export default class Bili {
           if (e.code === 'ERROR' || e.code === 'FATAL') {
             handleError(e.error)
           }
+          if (e.code === 'BUNDLE_START') {
+            this.emit(e.code)
+          }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
             const outputPath = this.options.serve ?
@@ -395,6 +413,7 @@ export default class Bili {
                 outputOptions.file
               )
             console.log(`📦  ${e.input} -> ${outputPath}`)
+            this.emit(e.code)
           }
         })
         return
@@ -419,12 +438,8 @@ export default class Bili {
       if (write) return bundle.write(outputOptions)
       return bundle.generate(outputOptions)
     })
-    await Promise.all(actions)
 
-    if (this.options.serve) {
-      await fs.remove(SERVE_DIR)
-      await this.serve()
-    }
+    await Promise.all(actions)
 
     // Since we update `this.bundles` in Rollup plugin's `ongenerate` callback
     // We have to put follow code into another callback to execute at th end of call stack
