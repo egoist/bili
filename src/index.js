@@ -386,6 +386,21 @@ export default class Bili extends EventEmitter {
     const actions = options.map(async option => {
       const { inputOptions, outputOptions } = await this.createConfig(option)
 
+      if (this.options.inspectRollup) {
+        console.log(
+          chalk.bold(`Rollup input options for bundling ${option.input} in ${
+            option.format
+          }:\n`),
+          util.inspect(inputOptions, { colors: true })
+        )
+        console.log(
+          chalk.bold(`Rollup output options for bundling ${option.input} in ${
+            option.format
+          }:\n`),
+          util.inspect(outputOptions, { colors: true })
+        )
+      }
+
       if (this.options.watch) {
         const watcher = watch({
           ...inputOptions,
@@ -417,21 +432,6 @@ export default class Bili extends EventEmitter {
           }
         })
         return
-      }
-
-      if (this.options.inspectRollup) {
-        console.log(
-          chalk.bold(`Rollup input options for bundling ${option.input} in ${
-            option.format
-          }:\n`),
-          util.inspect(inputOptions, { colors: true })
-        )
-        console.log(
-          chalk.bold(`Rollup output options for bundling ${option.input} in ${
-            option.format
-          }:\n`),
-          util.inspect(outputOptions, { colors: true })
-        )
       }
 
       const bundle = await rollup(inputOptions)
