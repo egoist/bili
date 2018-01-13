@@ -71,3 +71,9 @@ bili serve demo.js
 <img src="https://i.loli.net/2018/01/13/5a59a65f75b05.png" alt="preview serve" width="500">
 
 That's it, go visit `http://localhost:2018` and you'll see your demo application alive. 💃
+
+Some caveats:
+
+* This command is for development only.
+* No live-reloading support, which means you need to manually refresh the browser.
+* It could be slow for simple application, since it's not what Rollup is good at.
