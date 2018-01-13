@@ -605,7 +605,7 @@ async function renderHTML(html, pkg) {
     .join('\n')
   const css = files
     .filter(file => file.endsWith('.css'))
-    .map(file => `<script src="${file}"></script>`)
+    .map(file => `<link rel="stylesheet" href="${file}" />`)
     .join('\n')
   return html
     .replace('<!--%JS%-->', js)
