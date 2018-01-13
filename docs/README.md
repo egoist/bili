@@ -65,7 +65,7 @@ ReactDOM.render(<MyComponent />, document.getElementById('app'))
 Finally serve the demo app:
 
 ```bash
-bili serve app.js
+bili serve demo.js
 ```
 
 <img src="https://i.loli.net/2018/01/13/5a59a65f75b05.png" alt="preview serve" width="500">
