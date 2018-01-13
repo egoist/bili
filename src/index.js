@@ -263,7 +263,7 @@ export default class Bili extends EventEmitter {
         hashbangPlugin(),
         ...this.loadUserPlugins({
           filename: outFilename,
-          plugins: getArrayOption(options, 'plugins') || []
+          plugins: getArrayOption(options, 'plugin') || []
         }),
         transformJS &&
           jsPluginName === 'buble' &&
