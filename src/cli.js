@@ -18,28 +18,41 @@ cli
     desc: 'Build and watch files',
     alias: 'w'
   })
-  .option('serve', {
-    desc: 'Serve and build in watch mode',
-    alias: 's'
-  })
   .option('outDir', {
     desc: 'Output directory',
     alias: ['o', 'd']
   })
+  .option('moduleName', {
+    desc: 'Module name for UMD/IIFE bundle'
+  })
+  .option('format', {
+    desc: 'Output format'
+  })
+
+cli
+  .command('serve', 'Serve application', async (input, flags) => {
+    const config = await getBiliConfig()
+    return Bili.write({
+      input,
+      ...config,
+      ...flags,
+      serve: true
+    })
+  })
+  .option('port', {
+    desc: 'Server port',
+    alias: 'p'
+  })
+
+cli
   .option('filename', {
     desc: 'Output filename, default: "[name][suffix].js"'
   })
   .option('name', {
     desc: 'Set the [name] part of "filename"'
   })
-  .option('format', {
-    desc: 'Output format'
-  })
   .option('plugin', {
     desc: 'Add custom Rollup plugins'
-  })
-  .option('moduleName', {
-    desc: 'Module name for UMD bundle'
   })
   .option('jsx', {
     desc: 'Switch JSX syntax, eg: "vue" "h"'

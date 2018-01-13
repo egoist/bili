@@ -64,10 +64,9 @@ export default class Bili {
     if (this.options.serve) {
       this.options.watch = true
       this.options.outDir = SERVE_DIR
-      this.options.format = 'umd'
-      console.warn(`🙅  Output dir is forced to be OS tmp dir in --serve mode`)
-      console.warn(`🙅  Bundle format is forced to be: "umd" in --serve mode`)
-      fs.remove(SERVE_DIR).then(() => this.serve())
+      this.options.format = 'iife'
+      console.warn(`🙅  Output dir is forced to be OS tmp dir in "serve" mode`)
+      console.warn(`🙅  Bundle format is forced to be: "iife" in "serve" mode`)
     }
   }
 
@@ -81,22 +80,22 @@ export default class Bili {
 
     const localHTML = path.resolve('index.html')
     const hasLocalHTML = await fs.pathExists(localHTML)
-    const htmlFile = this.options.html || (hasLocalHTML && localHTML) || path.join(__dirname, '../app/index.html')
+    const htmlFile =
+      this.options.html ||
+      (hasLocalHTML && localHTML) ||
+      path.join(__dirname, '../app/index.html')
     console.log(`🔔  Using HTML file at ${chalk.green(path.relative(process.cwd(), htmlFile))}`)
 
     const server = http.createServer(async (req, res) => {
       if (url.parse(req.url).pathname === '/') {
-        const html = await fs.readFile(
-          htmlFile,
-          'utf8'
-        )
-        return res.end(await renderHTML(html))
+        const html = await fs.readFile(htmlFile, 'utf8')
+        return res.end(await renderHTML(html, this.pkg))
       }
       serve(req, res, finalHandler(req, res))
     })
 
     const port =
-      typeof this.options.serve === 'number' ? this.options.serve : 2018
+      typeof this.options.port === 'number' ? this.options.port : 2018
     server.listen(port)
     console.log(`🔗  http://localhost:${port}`)
   }
@@ -186,7 +185,11 @@ export default class Bili {
       throw new BiliError('You must return the options in `extendOptions` method!')
     }
 
-    const { outDir, filename, inline = format === 'umd' } = options
+    const {
+      outDir,
+      filename,
+      inline = format === 'umd' || format === 'iife'
+    } = options
 
     const outFilename = getFilename({
       input,
@@ -320,7 +323,7 @@ export default class Bili {
     const outputOptions = {
       format,
       globals,
-      name: format === 'umd' && this.getModuleName(),
+      name: this.getModuleName(format),
       file,
       banner,
       exports: options.exports,
@@ -418,6 +421,11 @@ export default class Bili {
     })
     await Promise.all(actions)
 
+    if (this.options.serve) {
+      await fs.remove(SERVE_DIR)
+      await this.serve()
+    }
+
     // Since we update `this.bundles` in Rollup plugin's `ongenerate` callback
     // We have to put follow code into another callback to execute at th end of call stack
     await nextTick(() => {
@@ -442,7 +450,10 @@ export default class Bili {
     return this
   }
 
-  getModuleName() {
+  getModuleName(format) {
+    if (format !== 'umd' && format !== 'iife') return null
+    if (format === 'iife') return 'MyBundle'
+
     return (
       this.options.moduleName ||
       this.pkg.moduleName ||
@@ -461,6 +472,9 @@ function getSuffix(format) {
       break
     case 'es':
       suffix += '.m'
+      break
+    case 'iife':
+      suffix += '.iife'
       break
     default:
       throw new Error('unsupported format')
@@ -568,7 +582,7 @@ function getPackageManager() {
   return packageManager
 }
 
-async function renderHTML(html) {
+async function renderHTML(html, pkg) {
   const files = await globby('*.{js,css}', { cwd: SERVE_DIR })
   const js = files
     .filter(file => file.endsWith('.js'))
@@ -578,5 +592,8 @@ async function renderHTML(html) {
     .filter(file => file.endsWith('.css'))
     .map(file => `<script src="${file}"></script>`)
     .join('\n')
-  return html.replace('<!--%JS%-->', js).replace('<!--%CSS%-->', css)
+  return html
+    .replace('<!--%JS%-->', js)
+    .replace('<!--%CSS%-->', css)
+    .replace('<!--%title%-->', pkg.name)
 }
