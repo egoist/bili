@@ -8,7 +8,7 @@
 
 * 🚀 Fast, well it's using Rollup anyways.
 * 🚗 Automatically transforms JS files using Buble/Babel.
-* 💅 Built-in support for `CSS` `Sass` `Stylus` `Less` `CSS modules` support.
+* 💅 Built-in support for `CSS` `Sass` `Stylus` `Less` `CSS modules`.
 * 🎶 Ridiculously easy to use Rollup plugins if you want.
 * 🚨 Friendly error logging experience.
 
