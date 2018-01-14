@@ -128,7 +128,12 @@ Options for `rollup-plugin-postcss`, it will also automatically load local PostC
 Type: `string` `boolean`<br>
 Default: `buble`
 
-Specify the Rollup plugin we should use to transform JS files, by default we use `rollup-plugin-bubl`, you can set it to `false` to disable this.
+Specify the Rollup plugin we should use to transform JS files, you can set it to `false` to disable this.
+
+Built-in js plugin:
+
+- `buble`: using `rollup-plugin-buble` together with `rollup-plugin-babel` for minimal output
+- `babel`: using `rollup-plugin-babel` only
 
 ### plugin
 
