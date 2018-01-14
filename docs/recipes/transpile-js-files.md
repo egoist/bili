@@ -6,8 +6,8 @@ Maybe you can already tell, you can use `--js` flag to switch plugin for transpi
 
 ```bash
 cd my-project
-yarn add rollup-plugin-typescript --dev
-bili --js typescript
+yarn add rollup-plugin-typescript2 --dev
+bili --js typescript2
 ```
 
 That's it!
