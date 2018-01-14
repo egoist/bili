@@ -14,10 +14,9 @@ function snapshot({ title, input, ...args }) {
       input: input.map(v => fixture(v)),
       ...args
     })
-    expect(Object.keys(bundles).map(filepath => [
-      bundles[filepath].relative,
-      bundles[filepath].code
-    ])).toMatchSnapshot()
+    expect(Object.keys(bundles)
+      .sort()
+      .map(filepath => [bundles[filepath].relative, bundles[filepath].code])).toMatchSnapshot()
   })
 }
 

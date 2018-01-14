@@ -127,7 +127,7 @@ export default class Bili extends EventEmitter {
   }
 
   // eslint-disable-next-line complexity
-  async createConfig({ input, format, compress }) {
+  async createConfig({ input, format, compress }, buildIndex) {
     const options = this.options.extendOptions ?
       this.options.extendOptions(this.options, {
         input,
@@ -236,6 +236,11 @@ export default class Bili extends EventEmitter {
             exclude: 'node_modules/**',
             ...jsOptions
           }),
+        // Only generate CSS for the first build
+        // To prevent from duplicated css files
+        buildIndex === 0 && require('rollup-plugin-postcss')({
+          extract: true
+        }),
         inline &&
           nodeResolvePlugin({
             module: true,
@@ -328,8 +333,8 @@ export default class Bili extends EventEmitter {
       []
     )
 
-    const actions = options.map(async option => {
-      const { inputOptions, outputOptions } = await this.createConfig(option)
+    const actions = options.map(async (option, index) => {
+      const { inputOptions, outputOptions } = await this.createConfig(option, index)
 
       if (this.options.inspectRollup) {
         console.log(

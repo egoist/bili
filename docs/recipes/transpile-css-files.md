@@ -1,12 +1,6 @@
 # Transpile CSS files
 
-You can use [rollup-plugin-postcss](https://github.com/egoist/rollup-plugin-postcss) to achieve this:
-
-```bash
-cd my-project
-yarn add rollup-plugin-postcss --dev
-bili --plugin postcss
-```
+`Bili` supports CSS by default with the help from [rollup-plugin-postcss](https://github.com/egoist/rollup-plugin-postcss):
 
 The default options for `rollup-plugin-postcss`:
 
