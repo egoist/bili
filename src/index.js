@@ -166,6 +166,8 @@ export default class Bili extends EventEmitter {
       inline = format === 'umd' || format === 'iife'
     } = options
 
+    const sourceMap = typeof options.map === 'boolean' ? options.map : compress
+
     const outFilename = getFilename({
       input,
       format,
@@ -256,6 +258,7 @@ export default class Bili extends EventEmitter {
         require('rollup-plugin-postcss')({
           extract: true,
           minimize: compress,
+          sourceMap,
           ...options.postcss,
           // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
           onExtract: async css => {
@@ -326,7 +329,7 @@ export default class Bili extends EventEmitter {
       file,
       banner,
       exports: options.exports,
-      sourcemap: typeof options.map === 'boolean' ? options.map : compress
+      sourcemap: sourceMap
     }
 
     return {
