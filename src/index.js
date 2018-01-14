@@ -239,6 +239,7 @@ export default class Bili extends EventEmitter {
           extract: true,
           minimize: compress,
           sourceMap,
+          exclude: 'node_modules/**',
           ...options.postcss,
           // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
           onExtract: async css => {
@@ -263,7 +264,6 @@ export default class Bili extends EventEmitter {
           require('rollup-plugin-babel')({
             babelrc: false,
             exclude: 'node_modules/**',
-            include: ['**/*.js+(|x)'],
             presets: [
               [
                 require.resolve('./babel'),
@@ -496,7 +496,6 @@ function getJsOptions(name, jsx, jsOptions) {
   if (name === 'babel') {
     return {
       babelrc: !process.env.BILI_TEST,
-      include: ['**/*.js+(|x)'],
       ...getBabelConfig({ jsx }),
       ...jsOptions
     }
@@ -504,7 +503,6 @@ function getJsOptions(name, jsx, jsOptions) {
 
   if (name === 'buble') {
     return {
-      include: ['**/*.js+(|x)'],
       // objectAssign: 'Object.assign',
       // We no longer need "objectAssign" for buble
       // Since we transform object rest spread with babel
@@ -524,7 +522,6 @@ function getJsOptions(name, jsx, jsOptions) {
       typescript = localRequire('typescript')
     } catch (err) {}
     return {
-      include: ['**/*.ts+(|x)'],
       typescript,
       ...jsOptions
     }
