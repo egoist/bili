@@ -145,7 +145,7 @@ export default class Bili extends EventEmitter {
   }
 
   // eslint-disable-next-line complexity
-  async createConfig({ input, format, compress }) {
+  async createConfig({ input, format, compress }, { multipleEntries }) {
     const options = this.options.extendOptions ?
       this.options.extendOptions(this.options, {
         input,
@@ -176,7 +176,9 @@ export default class Bili extends EventEmitter {
       format,
       filename,
       compress,
-      name: options.name
+      // If it's not bundling multi-entry
+      // The name can fallback to pkg name
+      name: options.name || (!multipleEntries && this.pkg.name)
     })
     // The path to output file
     // Relative to `this.options.cwd`
@@ -372,8 +374,9 @@ export default class Bili extends EventEmitter {
       []
     )
 
+    const multipleEntries = inputFiles.length > 1
     const actions = options.map(async option => {
-      const { inputOptions, outputOptions } = await this.createConfig(option)
+      const { inputOptions, outputOptions } = await this.createConfig(option, { multipleEntries })
 
       if (this.options.inspectRollup) {
         console.log(

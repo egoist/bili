@@ -3,7 +3,7 @@
 exports[`banner:object 1`] = `
 Array [
   Array [
-    "dist/default.cjs.js",
+    "dist/bili.cjs.js",
     "/*!
  * name v1.2.3
  * (c) 2018-present author
@@ -22,7 +22,7 @@ module.exports = _default;
 exports[`banner:string 1`] = `
 Array [
   Array [
-    "dist/default.cjs.js",
+    "dist/bili.cjs.js",
     "woot
 'use strict';
 
@@ -37,7 +37,7 @@ module.exports = _default;
 exports[`banner:true 1`] = `
 Array [
   Array [
-    "test/fixtures/banner/dist/index.cjs.js",
+    "test/fixtures/banner/dist/foo.cjs.js",
     "/*!
  * foo v0.0.0
  * (c) 2015-present name <email@email.com>
@@ -56,7 +56,7 @@ module.exports = index;
 exports[`buble:async 1`] = `
 Array [
   Array [
-    "dist/async.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var this$1 = undefined;
@@ -75,7 +75,7 @@ module.exports = async;
 exports[`buble:async-and-object-rest-spread 1`] = `
 Array [
   Array [
-    "dist/async-dot-dot-dot.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var asyncDotDotDot = (function () {
@@ -99,7 +99,7 @@ module.exports = asyncDotDotDot;
 exports[`buble:react-jsx 1`] = `
 Array [
   Array [
-    "dist/react-jsx.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var reactJsx = React.createElement(
@@ -117,7 +117,7 @@ module.exports = reactJsx;
 exports[`buble:vue-jsx 1`] = `
 Array [
   Array [
-    "dist/vue-jsx.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var vueJsx = {
@@ -143,7 +143,7 @@ module.exports = vueJsx;
 exports[`defaults 1`] = `
 Array [
   Array [
-    "dist/index.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var index = 42;
@@ -157,7 +157,7 @@ module.exports = index;
 exports[`exclude file 1`] = `
 Array [
   Array [
-    "dist/index.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -238,7 +238,7 @@ return foo;
 exports[`inline:true 1`] = `
 Array [
   Array [
-    "dist/index.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 function createCommonjsModule(fn, module) {
@@ -327,7 +327,7 @@ module.exports = index;
 exports[`no-js-transform 1`] = `
 Array [
   Array [
-    "dist/index.cjs.js",
+    "dist/bili.cjs.js",
     "'use strict';
 
 var index = () => {}
