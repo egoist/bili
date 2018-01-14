@@ -74,14 +74,16 @@ export default class Bili extends EventEmitter {
         ]
       }))
 
-    await Promise.all(Object.keys(this.cssBundles).sort().map(async input => {
-      const bundle = this.cssBundles[input]
-      sizes.push([
-        path.relative(process.cwd(), bundle.filepath),
-        prettyBytes(bundle.code.length),
-        chalk.green(prettyBytes(await gzipSize(bundle.code)))
-      ])
-    }))
+    await Promise.all(Object.keys(this.cssBundles)
+      .sort()
+      .map(async input => {
+        const bundle = this.cssBundles[input]
+        sizes.push([
+          path.relative(process.cwd(), bundle.filepath),
+          prettyBytes(bundle.code.length),
+          chalk.green(prettyBytes(await gzipSize(bundle.code)))
+        ])
+      }))
 
     return boxen(textTable(
       [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
@@ -111,6 +113,7 @@ export default class Bili extends EventEmitter {
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
         pluginOptions = {
+          include: ['**/*.vue'],
           css: path.resolve(
             this.options.outDir,
             filename.replace(/\.[^.]+$/, '.css')
@@ -232,29 +235,6 @@ export default class Bili extends EventEmitter {
           filename: outFilename,
           plugins: getArrayOption(options, 'plugin') || []
         }),
-        transformJS &&
-          jsPluginName === 'buble' &&
-          require('rollup-plugin-babel')({
-            babelrc: false,
-            exclude: 'node_modules/**',
-            include: ['**/*.js'],
-            presets: [
-              [
-                require.resolve('./babel'),
-                {
-                  buble: true,
-                  jsx: options.jsx,
-                  objectAssign: jsOptions.objectAssign
-                }
-              ]
-            ]
-          }),
-        transformJS &&
-          jsPlugin({
-            exclude: 'node_modules/**',
-            include: ['**/*.js'],
-            ...jsOptions
-          }),
         require('rollup-plugin-postcss')({
           extract: true,
           minimize: compress,
@@ -278,6 +258,28 @@ export default class Bili extends EventEmitter {
             return false
           }
         }),
+        transformJS &&
+          jsPluginName === 'buble' &&
+          require('rollup-plugin-babel')({
+            babelrc: false,
+            exclude: 'node_modules/**',
+            include: ['**/*.js+(|x)'],
+            presets: [
+              [
+                require.resolve('./babel'),
+                {
+                  buble: true,
+                  jsx: options.jsx,
+                  objectAssign: jsOptions.objectAssign
+                }
+              ]
+            ]
+          }),
+        transformJS &&
+          jsPlugin({
+            exclude: 'node_modules/**',
+            ...jsOptions
+          }),
         inline &&
           nodeResolvePlugin({
             module: true,
@@ -494,6 +496,7 @@ function getJsOptions(name, jsx, jsOptions) {
   if (name === 'babel') {
     return {
       babelrc: !process.env.BILI_TEST,
+      include: ['**/*.js+(|x)'],
       ...getBabelConfig({ jsx }),
       ...jsOptions
     }
@@ -501,6 +504,7 @@ function getJsOptions(name, jsx, jsOptions) {
 
   if (name === 'buble') {
     return {
+      include: ['**/*.js+(|x)'],
       // objectAssign: 'Object.assign',
       // We no longer need "objectAssign" for buble
       // Since we transform object rest spread with babel
@@ -514,12 +518,13 @@ function getJsOptions(name, jsx, jsOptions) {
     }
   }
 
-  if (name === 'typescript') {
+  if (name === 'typescript' || name === 'typescript2') {
     let typescript
     try {
       typescript = localRequire('typescript')
     } catch (err) {}
     return {
+      include: ['**/*.ts+(|x)'],
       typescript,
       ...jsOptions
     }
