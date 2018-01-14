@@ -21,10 +21,7 @@ export default (ctx, { jsx, buble, objectAssign } = {}) => {
     [
       require.resolve('fast-async'),
       {
-        compiler: {
-          promises: true,
-          noRuntime: true
-        }
+        spec: true
       }
     ],
     require.resolve('babel-plugin-transform-flow-strip-types'),

@@ -73,6 +73,14 @@ export default class Bili extends EventEmitter {
         ]
       }))
 
+    if (this.css) {
+      sizes.push([
+        path.relative(process.cwd(), this.css.filepath),
+        prettyBytes(this.css.code.length),
+        chalk.green(prettyBytes(await gzipSize(this.css.code)))
+      ])
+    }
+
     return boxen(textTable(
       [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
       {
@@ -126,8 +134,18 @@ export default class Bili extends EventEmitter {
     })
   }
 
+  async writeCSS() {
+    if (this.css) {
+      const { code, map, filepath } = this.css
+      await Promise.all([
+        fs.writeFile(filepath, code, 'utf8'),
+        map && fs.writeFile(`${filepath}.map`, map, 'utf8')
+      ])
+    }
+  }
+
   // eslint-disable-next-line complexity
-  async createConfig({ input, format, compress }, buildIndex) {
+  async createConfig({ input, format, compress }) {
     const options = this.options.extendOptions ?
       this.options.extendOptions(this.options, {
         input,
@@ -220,6 +238,7 @@ export default class Bili extends EventEmitter {
           require('rollup-plugin-babel')({
             babelrc: false,
             exclude: 'node_modules/**',
+            include: ['**/*.js'],
             presets: [
               [
                 require.resolve('./babel'),
@@ -234,12 +253,28 @@ export default class Bili extends EventEmitter {
         transformJS &&
           jsPlugin({
             exclude: 'node_modules/**',
+            include: ['**/*.js'],
             ...jsOptions
           }),
-        // Only generate CSS for the first build
-        // To prevent from duplicated css files
-        buildIndex === 0 && require('rollup-plugin-postcss')({
-          extract: true
+        require('rollup-plugin-postcss')({
+          extract: true,
+          // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
+          onExtract: async css => {
+            if (!this.css) {
+              // Don't really need suffix for format
+              const filepath = css.codeFilePath.replace(
+                /(\.(iife|cjs|m))\.css$/,
+                '.css'
+              )
+              this.css = {
+                ...css,
+                filepath
+              }
+            }
+            // We extract CSS but never atually let `rollup-plugin-postcss` write to disk
+            // To prevent from duplicated css files
+            return false
+          }
         }),
         inline &&
           nodeResolvePlugin({
@@ -267,7 +302,7 @@ export default class Bili extends EventEmitter {
           name: 'bili',
           ongenerate: (_, { code }) => {
             this.bundles[file] = {
-              relative: path.relative(path.resolve(outDir, '..'), file),
+              relative: path.relative(process.cwd(), file),
               input,
               format,
               compress,
@@ -333,8 +368,8 @@ export default class Bili extends EventEmitter {
       []
     )
 
-    const actions = options.map(async (option, index) => {
-      const { inputOptions, outputOptions } = await this.createConfig(option, index)
+    const actions = options.map(async option => {
+      const { inputOptions, outputOptions } = await this.createConfig(option)
 
       if (this.options.inspectRollup) {
         console.log(
@@ -401,6 +436,9 @@ export default class Bili extends EventEmitter {
         throw new BiliError(msg)
       }
     })
+
+    // Write potential CSS files
+    await this.writeCSS()
 
     return this
   }

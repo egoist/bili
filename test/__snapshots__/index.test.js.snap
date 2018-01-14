@@ -80,7 +80,7 @@ Array [
 
 var asyncDotDotDot = (function () {
   return new Promise(function ($return, $error) {
-    return this.bar().then(function ($await_1) {
+    return Promise.resolve(this.bar()).then(function ($await_1) {
       try {
         return $return(Object.assign({}, $await_1));
       } catch ($boundEx) {

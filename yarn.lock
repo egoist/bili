@@ -4349,9 +4349,9 @@ rollup-plugin-node-resolve@^3.0.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
-rollup-plugin-postcss@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-postcss/-/rollup-plugin-postcss-1.1.0.tgz#07cf997807f6edb64507e6c98041caf08e4e91a3"
+rollup-plugin-postcss@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-postcss/-/rollup-plugin-postcss-1.2.0.tgz#e0bc29e794575fadf9a0b7da1fda997d18e4dd12"
   dependencies:
     chalk "^2.0.0"
     concat-with-sourcemaps "^1.0.5"
