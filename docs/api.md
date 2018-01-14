@@ -30,6 +30,7 @@ Default: `dist`
 
 Type: `string` `Array`<br>
 Default: `['cjs']`<br>
+Possible values: `cjs` `umd` `es` `iife`<br>
 Alias: `formats`
 
 You can add `-min` suffix to generate minified version.
@@ -79,7 +80,7 @@ Set the `[name]` part of [`filename`](#filename).
 ### inline
 
 Type: `boolean`<br>
-Default: `false` or `true` when [`format`](#format) is `umd`
+Default: `false` or `true` when [`format`](#format) is `umd` or `iife`
 
 Inline node modules into final bundle.
 
@@ -132,8 +133,8 @@ Specify the Rollup plugin we should use to transform JS files, you can set it to
 
 Built-in js plugin:
 
-- `buble`: using `rollup-plugin-buble` together with `rollup-plugin-babel` for minimal output
-- `babel`: using `rollup-plugin-babel` only
+* `buble`: using `rollup-plugin-buble` together with `rollup-plugin-babel` for minimal output
+* `babel`: using `rollup-plugin-babel` only
 
 ### plugin
 
