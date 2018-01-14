@@ -58,6 +58,7 @@ export default class Bili extends EventEmitter {
       ...options
     }
     this.bundles = {}
+    this.cssBundles = {}
   }
 
   async stats() {
@@ -73,13 +74,14 @@ export default class Bili extends EventEmitter {
         ]
       }))
 
-    if (this.css) {
+    await Promise.all(Object.keys(this.cssBundles).sort().map(async input => {
+      const bundle = this.cssBundles[input]
       sizes.push([
-        path.relative(process.cwd(), this.css.filepath),
-        prettyBytes(this.css.code.length),
-        chalk.green(prettyBytes(await gzipSize(this.css.code)))
+        path.relative(process.cwd(), bundle.filepath),
+        prettyBytes(bundle.code.length),
+        chalk.green(prettyBytes(await gzipSize(bundle.code)))
       ])
-    }
+    }))
 
     return boxen(textTable(
       [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
@@ -130,13 +132,13 @@ export default class Bili extends EventEmitter {
   }
 
   async writeCSS() {
-    if (this.css) {
-      const { code, map, filepath } = this.css
-      await Promise.all([
+    await Promise.all(Object.keys(this.cssBundles).map(input => {
+      const { code, map, filepath } = this.cssBundles[input]
+      return Promise.all([
         fs.writeFile(filepath, code, 'utf8'),
         map && fs.writeFile(`${filepath}.map`, map, 'utf8')
       ])
-    }
+    }))
   }
 
   // eslint-disable-next-line complexity
@@ -257,13 +259,13 @@ export default class Bili extends EventEmitter {
           ...options.postcss,
           // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
           onExtract: async css => {
-            if (!this.css) {
+            if (!this.cssBundles[input]) {
               // Don't really need suffix for format
               const filepath = css.codeFilePath.replace(
                 /(\.(iife|cjs|m))(\.min)?\.css$/,
                 compress ? '.min.css' : '.css'
               )
-              this.css = {
+              this.cssBundles[input] = {
                 ...css,
                 filepath
               }
