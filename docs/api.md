@@ -116,6 +116,13 @@ By default the information in the copyright message is from your `package.json`,
 
 Of course a `string` is also accepted.
 
+### postcss
+
+Type: `object`<br>
+Default: `{extract: true}`
+
+Options for `rollup-plugin-postcss`, it will also automatically load local PostCSS config file.
+
 ### js
 
 Type: `string` `boolean`<br>

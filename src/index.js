@@ -115,11 +115,6 @@ export default class Bili extends EventEmitter {
           ),
           ...pluginOptions
         }
-      } else if (pluginName === 'postcss') {
-        pluginOptions = {
-          extract: true,
-          ...pluginOptions
-        }
       }
       const moduleName = `rollup-plugin-${pluginName}`
       try {
@@ -258,13 +253,15 @@ export default class Bili extends EventEmitter {
           }),
         require('rollup-plugin-postcss')({
           extract: true,
+          minimize: compress,
+          ...options.postcss,
           // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
           onExtract: async css => {
             if (!this.css) {
               // Don't really need suffix for format
               const filepath = css.codeFilePath.replace(
-                /(\.(iife|cjs|m))\.css$/,
-                '.css'
+                /(\.(iife|cjs|m))(\.min)?\.css$/,
+                compress ? '.min.css' : '.css'
               )
               this.css = {
                 ...css,
