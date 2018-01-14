@@ -1,7 +1,4 @@
 import util from 'util'
-import os from 'os'
-import url from 'url'
-import http from 'http'
 import path from 'path'
 import EventEmitter from 'events'
 import globby from 'globby'
@@ -30,7 +27,6 @@ import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
 
 const FORMATS = ['cjs']
-const SERVE_DIR = path.join(os.tmpdir(), `.bili`)
 
 export default class Bili extends EventEmitter {
   static async generate(options) {
@@ -41,7 +37,7 @@ export default class Bili extends EventEmitter {
   static async write(options) {
     const bundle = await new Bili(options).bundle()
 
-    if (!options.watch && !options.serve) {
+    if (!options.watch) {
       console.log(await bundle.stats())
     }
 
@@ -62,52 +58,6 @@ export default class Bili extends EventEmitter {
       ...options
     }
     this.bundles = {}
-
-    if (this.options.serve) {
-      this.options.watch = true
-      this.options.outDir = SERVE_DIR
-      this.options.format = 'iife'
-      this.options.port =
-            typeof this.options.port === 'number' ? this.options.port : 2018
-      this.options.env = {
-        ...this.options.env,
-        NODE_ENV: 'development'
-      }
-      console.warn(`🙅  Output dir is forced to be OS tmp dir in "serve" mode`)
-      console.warn(`🙅  Bundle format is forced to be: "iife" in "serve" mode`)
-    }
-  }
-
-  async serve() {
-    const serveStatic = require('serve-static')
-    const finalHandler = require('finalhandler')
-
-    const serve = serveStatic(this.options.outDir, {
-      index: ['index.html']
-    })
-
-    const localHTML = path.resolve('index.html')
-    const hasLocalHTML = await fs.pathExists(localHTML)
-    const htmlFile =
-      this.options.html ||
-      (hasLocalHTML && localHTML) ||
-      path.join(__dirname, '../app/index.html')
-    console.log(`🔔  Using HTML file at ${chalk.green(path.relative(process.cwd(), htmlFile))}`)
-
-    const server = http.createServer(async (req, res) => {
-      if (url.parse(req.url).pathname === '/') {
-        const html = await fs.readFile(htmlFile, 'utf8')
-        return res.end(await renderHTML(html, this.pkg))
-      }
-      serve(req, res, finalHandler(req, res))
-    })
-    server.listen(this.options.port)
-    this.once('BUNDLE_START', () => {
-      console.log('📦  Starting...')
-    })
-    this.once('BUNDLE_END', () => {
-      console.log(`🔗  http://localhost:${this.options.port}`)
-    })
   }
 
   async stats() {
@@ -361,11 +311,6 @@ export default class Bili extends EventEmitter {
       throw new BiliError('No matched files to bundle.')
     }
 
-    if (this.options.serve) {
-      await fs.remove(SERVE_DIR)
-      await this.serve()
-    }
-
     const formats = getArrayOption(this.options, 'format') || FORMATS
 
     const options = inputFiles.reduce(
@@ -413,22 +358,12 @@ export default class Bili extends EventEmitter {
           if (e.code === 'ERROR' || e.code === 'FATAL') {
             handleError(e.error)
           }
-          if (e.code === 'BUNDLE_START') {
-            this.emit(e.code)
-          }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
-            const outputPath = this.options.serve ?
-              `${chalk.dim('<tmp>/')}${path.relative(
-                path.resolve(this.options.outDir),
-                outputOptions.file
-              )}` :
-              path.relative(
-                path.resolve(this.options.outDir, '..'),
-                outputOptions.file
-              )
-            console.log(`📦  ${e.input} -> ${outputPath}`)
-            this.emit(e.code)
+            console.log(`📦  ${e.input} -> ${path.relative(
+              path.resolve(this.options.outDir, '..'),
+              outputOptions.file
+            )}`)
           }
         })
         return
@@ -595,20 +530,4 @@ function getPackageManager() {
   if (packageManager) return packageManager
   packageManager = fs.existsSync('yarn.lock') ? 'yarn' : 'npm'
   return packageManager
-}
-
-async function renderHTML(html, pkg) {
-  const files = await globby('*.{js,css}', { cwd: SERVE_DIR })
-  const js = files
-    .filter(file => file.endsWith('.js'))
-    .map(file => `<script src="${file}"></script>`)
-    .join('\n')
-  const css = files
-    .filter(file => file.endsWith('.css'))
-    .map(file => `<link rel="stylesheet" href="${file}" />`)
-    .join('\n')
-  return html
-    .replace('<!--%JS%-->', js)
-    .replace('<!--%CSS%-->', css)
-    .replace('<!--%title%-->', pkg.name)
 }

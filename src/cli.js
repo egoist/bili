@@ -28,23 +28,6 @@ cli
   .option('format', {
     desc: 'Output format'
   })
-
-cli
-  .command('serve', 'Serve application', async (input, flags) => {
-    const config = await getBiliConfig()
-    return Bili.write({
-      input,
-      ...config,
-      ...flags,
-      serve: true
-    })
-  })
-  .option('port', {
-    desc: 'Server port',
-    alias: 'p'
-  })
-
-cli
   .option('filename', {
     desc: 'Output filename, default: "[name][suffix].js"'
   })
