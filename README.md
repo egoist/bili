@@ -15,7 +15,7 @@
 
 <img src="./media/preview.svg" width="600" alt="preview">
 
-_In `umd` format it inlines node modules so it takes a bit longer._
+_In `umd` format it inlines node modules (could be turned off) so it takes a bit longer._
 
 ## Install
 
