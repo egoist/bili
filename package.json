@@ -43,6 +43,8 @@
     "globby": "^7.1.1",
     "gzip-size": "^4.1.0",
     "is-builtin-module": "^2.0.0",
+    "is-ci": "^1.1.0",
+    "log-update": "^2.3.0",
     "pretty-bytes": "^4.0.2",
     "read-pkg-up": "^3.0.0",
     "rollup": "^0.54.0",

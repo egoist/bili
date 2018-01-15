@@ -6,6 +6,7 @@ import fs from 'fs-extra'
 import chalk from 'chalk'
 import { rollup, watch } from 'rollup'
 import readPkg from 'read-pkg-up'
+import logUpdate from 'log-update'
 import camelcase from 'camelcase'
 import prettyBytes from 'pretty-bytes'
 import gzipSize from 'gzip-size'
@@ -20,11 +21,14 @@ import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
 import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
+import isCi from 'is-ci'
+import progressPlugin from './progress-plugin'
 import template from './template'
 import getBanner from './get-banner'
 import { getBabelConfig } from './get-config'
 import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
+import { logAndPersist } from './utils'
 
 const FORMATS = ['cjs']
 
@@ -38,7 +42,7 @@ export default class Bili extends EventEmitter {
     const bundle = await new Bili(options).bundle()
 
     if (!options.watch) {
-      console.log(await bundle.stats())
+      logAndPersist(await bundle.stats())
     }
 
     return bundle
@@ -155,8 +159,8 @@ export default class Bili extends EventEmitter {
       this.options
 
     if (options.inspectOptions) {
-      console.log(`Bili options for ${input} in ${format}:`)
-      console.log(util.inspect(options, { colors: true }))
+      logAndPersist(chalk.bold(`Bili options for ${input} in ${format}:`))
+      logAndPersist(util.inspect(options, { colors: true }))
     }
 
     if (typeof options !== 'object') {
@@ -200,6 +204,14 @@ export default class Bili extends EventEmitter {
       external = [...external, ...Object.keys(globals)]
     }
 
+    let env = options.env
+    if (format === 'umd' || format === 'iife') {
+      env = {
+        NODE_ENV: compress ? 'production' : 'development',
+        ...env
+      }
+    }
+
     const inputOptions = {
       input,
       external,
@@ -216,7 +228,7 @@ export default class Bili extends EventEmitter {
             !isBuiltinModule(source) &&
             !fs.existsSync(path.resolve('node_modules', source))
           ) {
-            console.warn(
+            logAndPersist(
               '😒 ',
               `Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`
             )
@@ -225,13 +237,17 @@ export default class Bili extends EventEmitter {
         }
         // print location if applicable
         if (loc) {
-          console.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
-          if (frame) console.warn(chalk.dim(frame))
+          logAndPersist(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
+          if (frame) logAndPersist(chalk.dim(frame))
         } else {
-          console.warn('🙋‍♂️ ', message)
+          logAndPersist('🙋‍♂️ ', message)
         }
       },
       plugins: [
+        !isCi &&
+          process.stderr.isTTY &&
+          !process.env.BILI_TEST &&
+          progressPlugin(),
         hashbangPlugin(),
         ...this.loadUserPlugins({
           filename: outFilename,
@@ -316,10 +332,11 @@ export default class Bili extends EventEmitter {
             }
           }
         },
-        options.env &&
+        env &&
+          Object.keys(env).length > 0 &&
           replacePlugin({
-            values: Object.keys(options.env).reduce((res, key) => {
-              res[`process.env.${key}`] = JSON.stringify(options.env[key])
+            values: Object.keys(env).reduce((res, key) => {
+              res[`process.env.${key}`] = JSON.stringify(env[key])
               return res
             }, {})
           })
@@ -376,16 +393,18 @@ export default class Bili extends EventEmitter {
 
     const multipleEntries = inputFiles.length > 1
     const actions = options.map(async option => {
-      const { inputOptions, outputOptions } = await this.createConfig(option, { multipleEntries })
+      const { inputOptions, outputOptions } = await this.createConfig(option, {
+        multipleEntries
+      })
 
       if (this.options.inspectRollup) {
-        console.log(
+        logAndPersist(
           chalk.bold(`Rollup input options for bundling ${option.input} in ${
             option.format
           }:\n`),
           util.inspect(inputOptions, { colors: true })
         )
-        console.log(
+        logAndPersist(
           chalk.bold(`Rollup output options for bundling ${option.input} in ${
             option.format
           }:\n`),
@@ -407,10 +426,7 @@ export default class Bili extends EventEmitter {
           }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
-            console.log(`📦  ${e.input} -> ${path.relative(
-              path.resolve(this.options.outDir, '..'),
-              outputOptions.file
-            )}`)
+            logUpdate(await this.stats())
           }
         })
         return
@@ -451,13 +467,11 @@ export default class Bili extends EventEmitter {
   }
 
   getModuleName(format) {
-    if (format !== 'umd' && format !== 'iife') return null
-    if (format === 'iife') return 'MyBundle'
-
+    if (format !== 'umd' && format !== 'iife') return undefined
     return (
       this.options.moduleName ||
       this.pkg.moduleName ||
-      (this.pkg.name && camelcase(this.pkg.name))
+      (this.pkg.name ? camelcase(this.pkg.name) : undefined)
     )
   }
 }

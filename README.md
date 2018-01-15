@@ -13,7 +13,9 @@
 * 🎶 Ridiculously easy to use Rollup plugins if you want.
 * 🚨 Friendly error logging experience.
 
-<img src="https://i.loli.net/2017/12/23/5a3e1771e062f.png" width="400" alt="preview">
+<img src="./media/preview.svg" width="600" alt="preview">
+
+_In `umd` format it inlines node modules so it takes a bit longer._
 
 ## Install
 

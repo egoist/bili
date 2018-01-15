@@ -1,24 +1,23 @@
 import chalk from 'chalk'
+import logUpdate from 'log-update'
 
 function logError(message) {
-  console.error('🚨 ', message)
+  logUpdate('🚨 ', message)
 }
 
 export function handleError(err) {
   process.exitCode = process.exitCode || 1
-
+  let msg = ''
   if (err.code === 'PLUGIN_ERROR') {
-    logError(`Error found by ${err.plugin} plugin:`)
+    msg += chalk.red(`🚨  Error found by "${err.plugin}" plugin:`)
     if (err.codeFrame) {
-      console.error(err.message)
-      console.error(err.codeFrame)
+      msg += `\n${err.message}\n${err.codeFrame}`
     } else if (err.snippet) {
-      console.error(err.message)
-      console.error(err.snippet)
+      msg += `\n${err.message}\n${err.snippet}`
     } else {
-      console.error(err.stack)
+      msg += `\n${err.stack}`
     }
-    return
+    return logUpdate(msg)
   }
 
   if (err.message.includes('You must supply options.name for UMD bundles')) {
@@ -30,9 +29,10 @@ export function handleError(err) {
   }
 
   if (err.frame) {
-    console.log(err.frame)
+    msg += `${err.frame}\n`
   }
-  console.log(err.stack)
+  msg += err.stack
+  logUpdate(msg)
 }
 
 export function getDocRef(page, id) {
