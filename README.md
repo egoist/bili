@@ -13,7 +13,7 @@
 * 🎶 Ridiculously easy to use Rollup plugins if you want.
 * 🚨 Friendly error logging experience.
 
-<img src="https://cdn.rawgit.com/egoist/bili/0ddbeb1d/media/preview.svg" width="600" alt="preview">
+<img src="https://cdn.rawgit.com/egoist/bili/master/media/preview.svg" width="600" alt="preview">
 
 _In `umd` format it inlines node modules (could be turned off) so it takes a bit longer._
 
