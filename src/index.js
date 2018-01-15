@@ -259,8 +259,7 @@ export default class Bili extends EventEmitter {
           sourceMap,
           exclude: 'node_modules/**',
           ...options.postcss,
-          // `async` is not required but rollup-plugin-postcss can't await non-promise expression since Bili's `fast-async` didn't enable `wrapAwait` yet, will fix this in next release of Bili to fix rollup-plugin-postcss in order to fix this...
-          onExtract: async css => {
+          onExtract: css => {
             if (!this.cssBundles[input]) {
               // Don't really need suffix for format
               const filepath = css.codeFilePath.replace(

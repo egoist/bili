@@ -8,7 +8,10 @@
   },
   "main": "lib/index.js",
   "bin": "lib/cli.js",
-  "files": ["lib", "babel.js"],
+  "files": [
+    "lib",
+    "babel.js"
+  ],
   "scripts": {
     "test": "npm run lint && jest",
     "test:cov": "npm run lint && jest --coverage",
@@ -51,7 +54,7 @@
     "rollup-plugin-hashbang": "^1.0.1",
     "rollup-plugin-json": "^2.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-postcss": "^1.2.0",
+    "rollup-plugin-postcss": "^1.2.1",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "string-width": "^2.1.1",
@@ -73,12 +76,17 @@
     "prettier-eslint-cli": "4.7.0"
   },
   "eslintConfig": {
-    "extends": ["xo", "rem"],
+    "extends": [
+      "xo",
+      "rem"
+    ],
     "env": {
       "jest": true
     }
   },
-  "eslintIgnore": ["dist/**"],
+  "eslintIgnore": [
+    "dist/**"
+  ],
   "jest": {
     "testEnvironment": "node"
   }
