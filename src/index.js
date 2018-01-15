@@ -159,8 +159,8 @@ export default class Bili extends EventEmitter {
       this.options
 
     if (options.inspectOptions) {
-      logAndPersist(chalk.bold(`Bili options for ${input} in ${format}:`))
-      logAndPersist(util.inspect(options, { colors: true }))
+      console.log(chalk.bold(`Bili options for ${input} in ${format}:`))
+      console.log(util.inspect(options, { colors: true }))
     }
 
     if (typeof options !== 'object') {
@@ -395,13 +395,13 @@ export default class Bili extends EventEmitter {
       })
 
       if (this.options.inspectRollup) {
-        logAndPersist(
+        console.log(
           chalk.bold(`Rollup input options for bundling ${option.input} in ${
             option.format
           }:\n`),
           util.inspect(inputOptions, { colors: true })
         )
-        logAndPersist(
+        console.log(
           chalk.bold(`Rollup output options for bundling ${option.input} in ${
             option.format
           }:\n`),
