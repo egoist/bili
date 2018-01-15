@@ -20,7 +20,7 @@ import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
 import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
-import isCi from 'is-ci'
+import isCI from 'is-ci'
 import progressPlugin from './progress-plugin'
 import template from './template'
 import getBanner from './get-banner'
@@ -244,7 +244,7 @@ export default class Bili extends EventEmitter {
         }
       },
       plugins: [
-        !isCi &&
+        !isCI &&
           process.stderr.isTTY &&
           !process.env.BILI_TEST &&
           progressPlugin(),
