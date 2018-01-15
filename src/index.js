@@ -5,7 +5,6 @@ import globby from 'globby'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 import { rollup, watch } from 'rollup'
-import readPkg from 'read-pkg-up'
 import logUpdate from 'log-update'
 import camelcase from 'camelcase'
 import prettyBytes from 'pretty-bytes'
@@ -61,6 +60,7 @@ export default class Bili extends EventEmitter {
       cwd: process.cwd(),
       ...options
     }
+    this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
     this.cssBundles = {}
   }
@@ -360,8 +360,6 @@ export default class Bili extends EventEmitter {
   }
 
   async bundle({ write = true } = {}) {
-    this.pkg = await readPkg({ cwd: this.options.cwd }).then(res => res.pkg || {})
-
     let inputFiles = this.options.input || 'src/index.js'
     if (Array.isArray(inputFiles) && inputFiles.length === 0) {
       inputFiles = 'src/index.js'
@@ -594,4 +592,15 @@ function getPackageManager() {
   if (packageManager) return packageManager
   packageManager = fs.existsSync('yarn.lock') ? 'yarn' : 'npm'
   return packageManager
+}
+
+function readPkg(cwd = process.cwd()) {
+  try {
+    return require(path.resolve(cwd, 'package.json'))
+  } catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return {}
+    }
+    throw err
+  }
 }
