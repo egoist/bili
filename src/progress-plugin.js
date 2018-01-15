@@ -11,7 +11,7 @@ export default () => {
         bundling > 1 ? 's' : ''
       }: ${chalk.green(path.relative(process.cwd(), id))}`)
     },
-    transformBundle() {
+    ongenerate() {
       bundling = 0
     }
   }
