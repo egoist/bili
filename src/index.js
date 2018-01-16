@@ -259,15 +259,16 @@ export default class Bili extends EventEmitter {
           sourceMap,
           exclude: 'node_modules/**',
           ...options.postcss,
-          onExtract: css => {
+          onExtract: getExtracted => {
             if (!this.cssBundles[input]) {
               // Don't really need suffix for format
-              const filepath = css.codeFilePath.replace(
-                /(\.(iife|cjs|m))(\.min)?\.css$/,
+              const filepath = this.resolveCwd(outDir, outFilename.replace(
+                /(\.(iife|cjs|m))(\.min)?\.js$/,
                 compress ? '.min.css' : '.css'
-              )
+              ))
+              const bundle = getExtracted(filepath)
               this.cssBundles[input] = {
-                ...css,
+                ...bundle,
                 filepath
               }
             }
