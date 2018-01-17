@@ -532,6 +532,17 @@ function getJsOptions(name, jsx, jsOptions) {
     }
   }
 
+  if (name === 'buble') {
+    return {
+      ...jsOptions,
+      transforms: {
+        // Skip transforming for..of
+        forOf: false,
+        ...(jsOptions && jsOptions.transforms)
+      }
+    }
+  }
+
   return jsOptions
 }
 
