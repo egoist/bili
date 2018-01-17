@@ -246,7 +246,8 @@ export default class Bili extends EventEmitter {
       plugins: [
         !isCI &&
           process.stderr.isTTY &&
-          !process.env.BILI_TEST &&
+          process.env.NODE_ENV !== 'test' &&
+          options.progress !== false &&
           progressPlugin(),
         hashbangPlugin(),
         ...this.loadUserPlugins({
@@ -262,11 +263,15 @@ export default class Bili extends EventEmitter {
           onExtract: getExtracted => {
             if (!this.cssBundles[input]) {
               // Don't really need suffix for format
-              const filepath = this.resolveCwd(outDir, outFilename.replace(
-                /(\.(iife|cjs|m))(\.min)?\.js$/,
-                compress ? '.min.css' : '.css'
-              ))
+              const filepath = this.resolveCwd(
+                outDir,
+                outFilename.replace(
+                  /(\.(iife|cjs|m))(\.min)?\.js$/,
+                  compress ? '.min.css' : '.css'
+                )
+              )
               const bundle = getExtracted(filepath)
+
               this.cssBundles[input] = {
                 ...bundle,
                 filepath
@@ -288,7 +293,7 @@ export default class Bili extends EventEmitter {
                 {
                   buble: true,
                   jsx: options.jsx,
-                  objectAssign: jsOptions.objectAssign
+                  objectAssign: options.objectAssign
                 }
               ]
             ]
@@ -510,24 +515,9 @@ function getFilename({ input, format, filename, compress, name }) {
 function getJsOptions(name, jsx, jsOptions) {
   if (name === 'babel') {
     return {
-      babelrc: !process.env.BILI_TEST,
+      babelrc: process.env.NODE_ENV !== 'test',
       ...getBabelConfig({ jsx }),
       ...jsOptions
-    }
-  }
-
-  if (name === 'buble') {
-    return {
-      // objectAssign: 'Object.assign',
-      // We no longer need "objectAssign" for buble
-      // Since we transform object rest spread with babel
-      // And replace objectAssign there
-      ...jsOptions,
-      transforms: {
-        dangerousForOf: true,
-        dangerousTaggedTemplateString: true,
-        ...(jsOptions && jsOptions.transforms)
-      }
     }
   }
 
@@ -542,7 +532,7 @@ function getJsOptions(name, jsx, jsOptions) {
     }
   }
 
-  return {}
+  return jsOptions
 }
 
 function getJsPlugin(name) {

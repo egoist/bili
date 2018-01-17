@@ -5,8 +5,6 @@ function fixture(name) {
   return path.join(__dirname, 'fixtures', name)
 }
 
-process.env.BILI_TEST = true
-
 function snapshot({ title, input, ...args }) {
   input = Array.isArray(input) ? input : [input]
   test(title, async () => {
