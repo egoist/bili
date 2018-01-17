@@ -168,6 +168,15 @@ Possible values: `react` `vue` or any JSX pragma like `h`
 
 Switch JSX syntax, only works with our default Babel config or Buble.
 
+### objectAssign
+
+Type: `string`<br>
+Default: `undefined`
+
+Replace `Object.assign` (including the ones transformed from object reset spread) with a custom function name.
+
+This only works with our default Babel config or Buble.
+
 ### exports
 
 Type: `string`<br>
