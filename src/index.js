@@ -266,7 +266,7 @@ export default class Bili extends EventEmitter {
               const filepath = this.resolveCwd(
                 outDir,
                 outFilename.replace(
-                  /(\.(iife|cjs|m))(\.min)?\.js$/,
+                  /(\.(iife|cjs|m))?(\.min)?\.js$/,
                   compress ? '.min.css' : '.css'
                 )
               )
