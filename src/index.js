@@ -62,7 +62,7 @@ export default class Bili extends EventEmitter {
     }
     this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
-    this.cssBundles = {}
+    this.cssBundles = new Map()
   }
 
   async stats() {
@@ -78,10 +78,10 @@ export default class Bili extends EventEmitter {
         ]
       }))
 
-    await Promise.all(Object.keys(this.cssBundles)
+    await Promise.all(Array.from(this.cssBundles.keys())
       .sort()
-      .map(async input => {
-        const bundle = this.cssBundles[input]
+      .map(async id => {
+        const bundle = this.cssBundles.get(id)
         sizes.push([
           path.relative(process.cwd(), bundle.filepath),
           prettyBytes(bundle.code.length),
@@ -139,8 +139,8 @@ export default class Bili extends EventEmitter {
   }
 
   async writeCSS() {
-    await Promise.all(Object.keys(this.cssBundles).map(input => {
-      const { code, map, filepath } = this.cssBundles[input]
+    await Promise.all(Array.from(this.cssBundles.keys()).map(id => {
+      const { code, map, filepath } = this.cssBundles.get(id)
       return Promise.all([
         fs.writeFile(filepath, code, 'utf8'),
         map && fs.writeFile(`${filepath}.map`, map, 'utf8')
@@ -261,7 +261,9 @@ export default class Bili extends EventEmitter {
           exclude: 'node_modules/**',
           ...options.postcss,
           onExtract: getExtracted => {
-            if (!this.cssBundles[input]) {
+            // Use `z` `a` to ensure the order when we log the stats
+            const id = `${input}::${compress ? 'z-compressed' : 'a-normal'}`
+            if (!this.cssBundles.has(id)) {
               // Don't really need suffix for format
               const filepath = this.resolveCwd(
                 outDir,
@@ -272,10 +274,10 @@ export default class Bili extends EventEmitter {
               )
               const bundle = getExtracted(filepath)
 
-              this.cssBundles[input] = {
+              this.cssBundles.set(id, {
                 ...bundle,
                 filepath
-              }
+              })
             }
             // We extract CSS but never atually let `rollup-plugin-postcss` write to disk
             // To prevent from duplicated css files
