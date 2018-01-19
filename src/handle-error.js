@@ -1,8 +1,8 @@
 import chalk from 'chalk'
-import logUpdate from 'log-update'
+import { logAndPersist } from './utils'
 
 function logError(message) {
-  logUpdate('🚨 ', message)
+  logAndPersist('🚨 ', message)
 }
 
 export function handleError(err) {
@@ -17,7 +17,7 @@ export function handleError(err) {
     } else {
       msg += `\n${err.stack}`
     }
-    return logUpdate(msg)
+    return logAndPersist(msg)
   }
 
   if (err.message.includes('You must supply options.name for UMD bundles')) {
@@ -32,7 +32,7 @@ export function handleError(err) {
     msg += `${err.frame}\n`
   }
   msg += err.stack
-  logUpdate(msg)
+  logError(msg)
 }
 
 export function getDocRef(page, id) {
