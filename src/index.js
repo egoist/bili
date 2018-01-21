@@ -268,7 +268,7 @@ export default class Bili extends EventEmitter {
               const filepath = this.resolveCwd(
                 outDir,
                 outFilename.replace(
-                  /(\.(iife|cjs|m))?(\.min)?\.js$/,
+                  /(\.(iife|cjs|es))?(\.min)?\.js$/,
                   compress ? '.min.css' : '.css'
                 )
               )
@@ -490,7 +490,7 @@ function getSuffix(format) {
     case 'umd':
       break
     case 'es':
-      suffix += '.m'
+      suffix += '.es'
       break
     case 'iife':
       suffix += '.iife'

@@ -37,6 +37,6 @@ bili --format cjs,umd,umd-min
 * `dist/index.cjs.js`: CommonJS format, to use in Node.js or with a bundler.
 * `dist/index.js`: UMD format, to use in browser directly.
 * `dist/index.min.js`: UMD format, to use in browser directly.
-* `dist/index.m.js`: ES modules format.
+* `dist/index.es.js`: ES modules format.
 
 You may use a custom [`moduleName`](/api#modulename) for the UMD format.

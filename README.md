@@ -56,7 +56,7 @@ index.js            # UMD format
 index.min.js        # Minified UMD format
 index.min.js.map    # Sourcemaps for minified UMD format
 index.cjs.js        # CommonJS format
-index.m.js          # ES module format
+index.es.js         # ES module format
 ```
 
 Dive into the [documentation](https://egoist.moe/bili) to see more neat features!
