@@ -72,6 +72,12 @@ Here're some quick links:
 * [cac](https://github.com/egoist/cac) - Simple yet powerful framework for building command-line interface.
 * [vue-final-form](https://github.com/egoist/vue-final-form) - 🏁 High performance subscription-based form state management for Vue.js.
 * [babel-preset-vue](https://github.com/vuejs/babel-preset-vue) - Babel preset for transforming Vue JSX.
+* [uncouple](https://github.com/VitorLuizC/uncouple) - A simple lib to uncouple prototype methods.
+* [cullender](https://github.com/VitorLuizC/cullender) - A simple and composable way to filter data.
+* [vuex-handler](https://github.com/VitorLuizC/vuex-handler) - A vuex plugin to globally handle actions successes and failures.
+* [gulp-html-accents](https://github.com/VitorLuizC/gulp-html-accents) - A gulp plugin that parse accents and special characters to HTMLEntities.
+* [vue-data-tablee](https://github.com/VitorLuizC/vue-data-tablee) - A pretty simple Vue DataTable component with some features like sort and select rows.
+* [vue-uuid](https://github.com/VitorLuizC/vue-uuid) - Vue plugin to add UUID methods to Vue instance.
 * Feel free to submit yours
 
 ## Contributing
