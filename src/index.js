@@ -298,7 +298,9 @@ export default class Bili extends EventEmitter {
                   objectAssign: options.objectAssign
                 }
               ]
-            ]
+            ],
+            // Your can still set babel options while using buble
+            ...options.babel
           }),
         transformJS &&
           jsPlugin({
