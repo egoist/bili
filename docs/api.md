@@ -231,7 +231,7 @@ Note that in `umd` and `iife` format, `NODE_ENV` will default to `development` w
 
 Type: `object`
 
-Limit bundle size to a threshold and exit with non-zero code when it exceeds the threshold:
+Limit bundle gzip size to a threshold and exit with non-zero code when it exceeds the threshold:
 
 ```js
 {
