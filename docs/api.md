@@ -227,6 +227,28 @@ const prod = 'development' === 'production'
 Note that in `umd` and `iife` format, `NODE_ENV` will default to `development` when uncompressed or `production` when compressed.
 </p>
 
+### sizeLimit
+
+Type: `object`
+
+Limit bundle size to a threshold and exit with non-zero code when it exceeds the threshold:
+
+```js
+{
+  "bili": {
+    "sizeLimit": {
+      "cjs": "3KB"
+    }
+  }
+}
+```
+
+You can also set it in CLI flag:
+
+<img src="https://i.loli.net/2018/01/26/5a6a09d130b6d.png" width="450" alt="sizelimit">
+
+Each entry of this option is a [`format`](#format).
+
 ### extendOptions
 
 Type: `(currentOptions, ctx) => NewOptions`

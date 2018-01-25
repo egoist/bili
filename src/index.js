@@ -7,7 +7,7 @@ import chalk from 'chalk'
 import { rollup, watch } from 'rollup'
 import logUpdate from 'log-update'
 import camelcase from 'camelcase'
-import prettyBytes from 'pretty-bytes'
+import bytes from 'bytes'
 import gzipSize from 'gzip-size'
 import stringWidth from 'string-width'
 import boxen from 'boxen'
@@ -30,6 +30,8 @@ import { handleError, getDocRef } from './handle-error'
 import { logAndPersist } from './utils'
 
 const FORMATS = ['cjs']
+
+const prettyBytes = v => bytes.format(v, { unitSeparator: ' ' })
 
 export default class Bili extends EventEmitter {
   static async generate(options) {
@@ -67,14 +69,27 @@ export default class Bili extends EventEmitter {
 
   async stats() {
     const { bundles } = this
+    const { sizeLimit } = this.options
     const sizes = await Promise.all(Object.keys(bundles)
       .sort()
       .map(async filepath => {
-        const { code, relative } = bundles[filepath]
+        const { code, relative, formatFull } = bundles[filepath]
+        const gzipSizeNumber = await gzipSize(code)
+        const expectedSize =
+            sizeLimit &&
+            sizeLimit[formatFull] &&
+            bytes.parse(sizeLimit[formatFull])
+        let sizeInfo
+        if (expectedSize && gzipSizeNumber > expectedSize) {
+          process.exitCode = 1
+          sizeInfo = chalk.red(` threshold: ${sizeLimit[formatFull]}`)
+        } else {
+          sizeInfo = ''
+        }
         return [
           relative,
           prettyBytes(code.length),
-          chalk.green(prettyBytes(await gzipSize(code)))
+          chalk.green(prettyBytes(gzipSizeNumber)) + sizeInfo
         ]
       }))
 
@@ -149,7 +164,10 @@ export default class Bili extends EventEmitter {
   }
 
   // eslint-disable-next-line complexity
-  async createConfig({ input, format, compress }, { multipleEntries }) {
+  async createConfig(
+    { input, format, formatFull, compress },
+    { multipleEntries }
+  ) {
     const options = this.options.extendOptions ?
       this.options.extendOptions(this.options, {
         input,
@@ -336,6 +354,7 @@ export default class Bili extends EventEmitter {
               relative: path.relative(process.cwd(), file),
               input,
               format,
+              formatFull,
               compress,
               code
             }
@@ -391,6 +410,7 @@ export default class Bili extends EventEmitter {
           return {
             input,
             format: format.replace(/-min$/, ''),
+            formatFull: format,
             compress
           }
         })
