@@ -223,6 +223,10 @@ const prod = process.env.NODE_ENV === 'production'
 const prod = 'development' === 'production'
 ```
 
+<p class="tip">
+Note that in `umd` and `iife` format, `NODE_ENV` will default to `development` when uncompressed or `production` when compressed.
+</p>
+
 ### extendOptions
 
 Type: `(currentOptions, ctx) => NewOptions`
