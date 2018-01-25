@@ -311,6 +311,7 @@ export default class Bili extends EventEmitter {
           nodeResolvePlugin({
             module: true,
             extensions: ['.js', '.json'],
+            preferBuiltIns: true,
             ...options.nodeResolve
           }),
         inline && commonjsPlugin(options.commonjs),
