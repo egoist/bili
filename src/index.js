@@ -258,7 +258,6 @@ export default class Bili extends EventEmitter {
           extract: true,
           minimize: compress,
           sourceMap,
-          exclude: 'node_modules/**',
           ...options.postcss,
           onExtract: getExtracted => {
             // Use `z` `a` to ensure the order when we log the stats
