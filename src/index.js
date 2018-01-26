@@ -28,6 +28,7 @@ import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
 import Logger from './logger'
 import emoji from './emoji'
+import { relativePath } from './util'
 
 const FORMATS = ['cjs']
 
@@ -109,7 +110,9 @@ export default class Bili extends EventEmitter {
       }))
 
     if (sizeExceeded) {
-      leading = chalk.red(`${emoji.error}  Bundle size exceeded the limit, check below for details.\n`)
+      leading = chalk.red(`${
+        emoji.error
+      }  Bundle size exceeded the limit, check below for details.\n`)
     }
 
     await Promise.all(Array.from(this.cssBundles.keys())
@@ -123,20 +126,19 @@ export default class Bili extends EventEmitter {
         ])
       }))
 
-    return leading + boxen(textTable(
-      [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
-      {
-        stringLength: stringWidth
-      }
-    ))
+    return (
+      leading +
+      boxen(textTable(
+        [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
+        {
+          stringLength: stringWidth
+        }
+      ))
+    )
   }
 
   resolveCwd(...args) {
     return path.resolve(this.options.cwd, ...args)
-  }
-
-  relativeToProcessCwd(...args) {
-    return path.relative(process.cwd(), this.resolveCwd(...args))
   }
 
   loadUserPlugins({ plugins, filename }) {
@@ -408,7 +410,7 @@ export default class Bili extends EventEmitter {
     }
 
     inputFiles = await globby(inputFiles, { cwd: this.options.cwd }).then(res =>
-      res.map(v => this.relativeToProcessCwd(v)))
+      res.map(v => relativePath(this.resolveCwd(v))))
 
     if (inputFiles.length === 0) {
       throw new BiliError('No matched files to bundle.')

@@ -8,10 +8,7 @@
   },
   "main": "lib/index.js",
   "bin": "lib/cli.js",
-  "files": [
-    "lib",
-    "babel.js"
-  ],
+  "files": ["lib", "babel.js"],
   "scripts": {
     "test": "npm run lint && jest",
     "test:cov": "npm run lint && jest --coverage",
@@ -76,17 +73,12 @@
     "prettier-eslint-cli": "4.7.0"
   },
   "eslintConfig": {
-    "extends": [
-      "xo",
-      "rem"
-    ],
+    "extends": ["xo", "rem"],
     "env": {
       "jest": true
     }
   },
-  "eslintIgnore": [
-    "dist/**"
-  ],
+  "eslintIgnore": ["dist/**"],
   "jest": {
     "testEnvironment": "node"
   }

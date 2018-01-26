@@ -1,20 +1,30 @@
 import logUpdate from 'log-update'
+import chalk from 'chalk'
 import emoji from './emoji'
+import { relativePath } from './util'
 
 const prettyError = err => {
   let message
-  let stack
+  const stack = []
   if (err.plugin) {
     message = `(${err.plugin}) ${err.message}`
-    stack = err.codeFrame || err.snippet || err.stack
+    stack.push(err.codeFrame || err.snippet || err.stack)
   } else {
     message = err.message
-    stack = err.stack
+    if (err.loc) {
+      message += ` at ${relativePath(err.loc.file || err.id)}:${err.loc.line}:${
+        err.loc.column
+      }`
+    }
+    if (err.url) {
+      stack.push(err.url)
+    }
+    stack.push(chalk.red(err.frame || err.stack))
   }
 
   return {
     message,
-    stack
+    stack: stack.join('\n')
   }
 }
 
