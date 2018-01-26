@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 import cac from 'cac'
 import Bili from '.'
-import { getBiliConfig } from './get-config'
 
 const cli = cac()
 
 cli
   .command('*', 'Bundle library', async (input, flags) => {
-    const config = await getBiliConfig()
-    return Bili.write({
+    const options = {
       input,
-      ...config,
       ...flags
-    })
+    }
+    if (options.debug) {
+      options.logLevel = 4
+    } else if (options.quiet) {
+      options.logLevel = 1
+    }
+    return Bili.write(options)
   })
   .option('watch', {
     desc: 'Build and watch files',
@@ -62,13 +65,14 @@ cli
     desc:
       'Content to insert to the top of bundle file, boolean or string or object'
   })
-  .option('inspectRollup', {
-    desc: 'Inspect Rollup options'
+  .option('debug', {
+    desc: 'Show debug logs'
   })
-  .option('inspectOptions', {
-    desc: 'Inspect Bili options'
+  .option('quiet', {
+    desc: 'Show error logs only'
   })
-
-cli.on('error', err => Bili.handleError(err))
+  .option('no-logUpdate', {
+    desc: 'Disable logUpdate'
+  })
 
 cli.parse()

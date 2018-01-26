@@ -5,7 +5,6 @@ import globby from 'globby'
 import fs from 'fs-extra'
 import chalk from 'chalk'
 import { rollup, watch } from 'rollup'
-import logUpdate from 'log-update'
 import camelcase from 'camelcase'
 import bytes from 'bytes'
 import gzipSize from 'gzip-size'
@@ -24,10 +23,11 @@ import isCI from 'is-ci'
 import progressPlugin from './progress-plugin'
 import template from './template'
 import getBanner from './get-banner'
-import { getBabelConfig } from './get-config'
+import { getBabelConfig, getBiliConfig } from './get-config'
 import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
-import { logAndPersist } from './utils'
+import Logger from './logger'
+import emoji from './emoji'
 
 const FORMATS = ['cjs']
 
@@ -40,22 +40,32 @@ export default class Bili extends EventEmitter {
   }
 
   static async write(options) {
-    const bundle = await new Bili(options).bundle()
+    const bundler = new Bili(options)
+    const startTime = Date.now()
+    try {
+      await bundler.bundle()
+      const buildTime = Date.now() - startTime
+      const time =
+        buildTime < 1000 ?
+          `${buildTime}ms` :
+          `${(buildTime / 1000).toFixed(2)}s`
 
-    if (!options.watch) {
-      logAndPersist(await bundle.stats())
+      if (!options.watch) {
+        bundler.logger.status(emoji.success, chalk.green(`Built in ${time}.`))
+        bundler.logger.log(await bundler.stats())
+      }
+      return bundler
+    } catch (err) {
+      bundler.handleError(err)
     }
-
-    return bundle
-  }
-
-  static handleError(err) {
-    return handleError(err)
   }
 
   constructor(options = {}) {
     super()
+    this.logger = new Logger(options)
+
     this.options = {
+      ...getBiliConfig(this.logger),
       outDir: 'dist',
       filename: '[name][suffix].js',
       uglifyEs: true,
@@ -65,6 +75,8 @@ export default class Bili extends EventEmitter {
     this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
     this.cssBundles = new Map()
+
+    this.handleError = err => handleError(this.logger, err)
   }
 
   async stats() {
@@ -82,7 +94,7 @@ export default class Bili extends EventEmitter {
         let sizeInfo
         if (expectedSize && gzipSizeNumber > expectedSize) {
           process.exitCode = 1
-          sizeInfo = chalk.red(` threshold: ${sizeLimit[formatFull]}`)
+          sizeInfo = chalk.red(` threshold: ${prettyBytes(expectedSize)}`)
         } else {
           sizeInfo = ''
         }
@@ -176,10 +188,8 @@ export default class Bili extends EventEmitter {
       }) :
       this.options
 
-    if (options.inspectOptions) {
-      console.log(chalk.bold(`Bili options for ${input} in ${format}:`))
-      console.log(util.inspect(options, { colors: true }))
-    }
+    this.logger.debug(chalk.bold(`Bili options for ${input} in ${formatFull}:\n`) +
+        util.inspect(options, { colors: true }))
 
     if (typeof options !== 'object') {
       throw new BiliError('You must return the options in `extendOptions` method!')
@@ -246,19 +256,16 @@ export default class Bili extends EventEmitter {
             !isBuiltinModule(source) &&
             !fs.existsSync(path.resolve('node_modules', source))
           ) {
-            logAndPersist(
-              '😒 ',
-              `Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`
-            )
+            this.logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
           }
           return
         }
         // print location if applicable
         if (loc) {
-          logAndPersist(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
-          if (frame) logAndPersist(chalk.dim(frame))
+          this.logger.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
+          if (frame) this.logger.warn(chalk.dim(frame))
         } else {
-          logAndPersist('🙋‍♂️ ', message)
+          this.logger.warn(message)
         }
       },
       plugins: [
@@ -266,7 +273,7 @@ export default class Bili extends EventEmitter {
           process.stderr.isTTY &&
           process.env.NODE_ENV !== 'test' &&
           options.progress !== false &&
-          progressPlugin(),
+          progressPlugin(this),
         hashbangPlugin(),
         ...this.loadUserPlugins({
           filename: outFilename,
@@ -424,20 +431,13 @@ export default class Bili extends EventEmitter {
         multipleEntries
       })
 
-      if (this.options.inspectRollup) {
-        console.log(
-          chalk.bold(`Rollup input options for bundling ${option.input} in ${
-            option.format
-          }:\n`),
-          util.inspect(inputOptions, { colors: true })
-        )
-        console.log(
-          chalk.bold(`Rollup output options for bundling ${option.input} in ${
-            option.format
-          }:\n`),
-          util.inspect(outputOptions, { colors: true })
-        )
-      }
+      this.logger.debug(chalk.bold(`Rollup input options for bundling ${option.input} in ${
+        option.formatFull
+      }:\n`) + util.inspect(inputOptions, { colors: true }))
+
+      this.logger.debug(chalk.bold(`Rollup output options for bundling ${option.input} in ${
+        option.formatFull
+      }:\n`) + util.inspect(outputOptions, { colors: true }))
 
       if (this.options.watch) {
         const watcher = watch({
@@ -449,11 +449,11 @@ export default class Bili extends EventEmitter {
         })
         watcher.on('event', async e => {
           if (e.code === 'ERROR' || e.code === 'FATAL') {
-            handleError(e.error)
+            handleError(this.logger, e.error)
           }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
-            logUpdate(await this.stats())
+            this.logger.write(await this.stats())
           }
         })
         return

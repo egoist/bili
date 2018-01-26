@@ -4895,9 +4895,9 @@ unpipe@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
 
-use-config@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/use-config/-/use-config-2.0.3.tgz#ee8cda5b2874f953784b8372b61b0fa18d6b5942"
+use-config@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/use-config/-/use-config-2.0.4.tgz#1e14e5dbc600533aa5cd1b35d43a5be849b45b0c"
   dependencies:
     load-json-file "^2.0.0"
     path-exists "^3.0.0"
