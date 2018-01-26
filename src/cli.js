@@ -10,6 +10,9 @@ cli
       input,
       ...flags
     }
+    if (options.input.length === 0) {
+      delete options.input
+    }
     if (options.debug) {
       options.logLevel = 4
     } else if (options.quiet) {
