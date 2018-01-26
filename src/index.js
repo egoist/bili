@@ -63,6 +63,7 @@ export default class Bili extends EventEmitter {
 
   constructor(options = {}) {
     super()
+    this.logger = new Logger(options)
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
@@ -71,7 +72,6 @@ export default class Bili extends EventEmitter {
       ...getBiliConfig(this.logger),
       ...options
     }
-    this.logger = new Logger(this.options)
     this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
     this.cssBundles = new Map()
