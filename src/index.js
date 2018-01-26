@@ -82,6 +82,8 @@ export default class Bili extends EventEmitter {
   async stats() {
     const { bundles } = this
     const { sizeLimit } = this.options
+    let leading = ''
+    let sizeExceeded = false
     const sizes = await Promise.all(Object.keys(bundles)
       .sort()
       .map(async filepath => {
@@ -94,6 +96,7 @@ export default class Bili extends EventEmitter {
         let sizeInfo
         if (expectedSize && gzipSizeNumber > expectedSize) {
           process.exitCode = 1
+          sizeExceeded = true
           sizeInfo = chalk.red(` threshold: ${prettyBytes(expectedSize)}`)
         } else {
           sizeInfo = ''
@@ -104,6 +107,10 @@ export default class Bili extends EventEmitter {
           chalk.green(prettyBytes(gzipSizeNumber)) + sizeInfo
         ]
       }))
+
+    if (sizeExceeded) {
+      leading = chalk.red(`${emoji.error}  Bundle size exceeded the limit, check below for details.\n`)
+    }
 
     await Promise.all(Array.from(this.cssBundles.keys())
       .sort()
@@ -116,7 +123,7 @@ export default class Bili extends EventEmitter {
         ])
       }))
 
-    return boxen(textTable(
+    return leading + boxen(textTable(
       [['file', 'size', 'gzip size'].map(v => chalk.bold(v)), ...sizes],
       {
         stringLength: stringWidth
