@@ -1,6 +1,6 @@
 const env = process.env.BABEL_ENV || process.env.NODE_ENV
 
-export default (ctx, { jsx, buble, objectAssign } = {}) => {
+export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
   jsx = jsx || 'react'
 
   let presets = []
@@ -55,7 +55,8 @@ export default (ctx, { jsx, buble, objectAssign } = {}) => {
           modules: false,
           targets: {
             node: 'current'
-          }
+          },
+          ...envOption
         }
       ] :
       [
@@ -70,7 +71,8 @@ export default (ctx, { jsx, buble, objectAssign } = {}) => {
           exclude: [
             'babel-plugin-transform-regenerator',
             'babel-plugin-transform-async-to-generator'
-          ]
+          ],
+          ...envOption
         }
       ]
   ]
