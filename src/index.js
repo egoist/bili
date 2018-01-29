@@ -260,8 +260,9 @@ export default class Bili extends EventEmitter {
         // But we only need this when the module is not installed
         // i.e. does not exist on disk
         // Skip sub path for now
-        if (code === 'UNRESOLVED_IMPORT' && source && source.indexOf('/') === -1) {
+        if (code === 'UNRESOLVED_IMPORT' && source) {
           if (
+            source.indexOf('/') > -1 &&
             !isBuiltinModule(source) &&
             !fs.existsSync(path.resolve('node_modules', source))
           ) {
