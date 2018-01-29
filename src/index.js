@@ -259,11 +259,13 @@ export default class Bili extends EventEmitter {
         // If `inline` is not trusty there will always be this warning
         // But we only need this when the module is not installed
         // i.e. does not exist on disk
-        // Skip sub path for now
         if (code === 'UNRESOLVED_IMPORT' && source) {
           if (
-            source.indexOf('/') > -1 &&
+            // Skip sub path for now
+            source.indexOf('/') === -1 &&
+            // Skip built-in modules
             !isBuiltinModule(source) &&
+            // Check if the module exists
             !fs.existsSync(path.resolve('node_modules', source))
           ) {
             this.logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
