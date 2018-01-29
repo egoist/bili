@@ -259,7 +259,8 @@ export default class Bili extends EventEmitter {
         // If `inline` is not trusty there will always be this warning
         // But we only need this when the module is not installed
         // i.e. does not exist on disk
-        if (code === 'UNRESOLVED_IMPORT' && source) {
+        // Skip sub path for now
+        if (code === 'UNRESOLVED_IMPORT' && source && source.indexOf('/') === -1) {
           if (
             !isBuiltinModule(source) &&
             !fs.existsSync(path.resolve('node_modules', source))
