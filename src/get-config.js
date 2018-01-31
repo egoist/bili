@@ -1,6 +1,7 @@
 import path from 'path'
 import UseConfig from 'use-config'
 import chalk from 'chalk'
+import logger from './logger'
 
 export function getBabelConfig({ jsx }) {
   return {
@@ -8,7 +9,7 @@ export function getBabelConfig({ jsx }) {
   }
 }
 
-export function getBiliConfig(logger) {
+export function getBiliConfig() {
   const useConfig = new UseConfig({
     name: 'bili',
     files: ['package.json', '{name}.config.js', '.{name}rc']

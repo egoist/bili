@@ -26,7 +26,7 @@ import getBanner from './get-banner'
 import { getBabelConfig, getBiliConfig } from './get-config'
 import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
-import Logger from './logger'
+import logger from './logger'
 import emoji from './emoji'
 import { relativePath } from './util'
 
@@ -52,8 +52,8 @@ export default class Bili extends EventEmitter {
           `${(buildTime / 1000).toFixed(2)}s`
 
       if (!options.watch) {
-        bundler.logger.status(emoji.success, chalk.green(`Built in ${time}.`))
-        bundler.logger.log(await bundler.stats())
+        logger.status(emoji.success, chalk.green(`Built in ${time}.`))
+        logger.log(await bundler.stats())
       }
       return bundler
     } catch (err) {
@@ -63,20 +63,20 @@ export default class Bili extends EventEmitter {
 
   constructor(options = {}) {
     super()
-    this.logger = new Logger(options)
+    logger.setOptions(options)
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
       uglifyEs: true,
       cwd: process.cwd(),
-      ...getBiliConfig(this.logger),
+      ...getBiliConfig(),
       ...options
     }
     this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
     this.cssBundles = new Map()
 
-    this.handleError = err => handleError(this.logger, err)
+    this.handleError = err => handleError(err)
   }
 
   async stats() {
@@ -196,7 +196,7 @@ export default class Bili extends EventEmitter {
       }) :
       this.options
 
-    this.logger.debug(chalk.bold(`Bili options for ${input} in ${formatFull}:\n`) +
+    logger.debug(chalk.bold(`Bili options for ${input} in ${formatFull}:\n`) +
         util.inspect(options, { colors: true }))
 
     if (typeof options !== 'object') {
@@ -268,16 +268,16 @@ export default class Bili extends EventEmitter {
             // Check if the module exists
             !fs.existsSync(path.resolve('node_modules', source))
           ) {
-            this.logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
+            logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
           }
           return
         }
         // print location if applicable
         if (loc) {
-          this.logger.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
-          if (frame) this.logger.warn(chalk.dim(frame))
+          logger.warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`)
+          if (frame) logger.warn(chalk.dim(frame))
         } else {
-          this.logger.warn(message)
+          logger.warn(message)
         }
       },
       plugins: [
@@ -285,7 +285,7 @@ export default class Bili extends EventEmitter {
           process.stderr.isTTY &&
           process.env.NODE_ENV !== 'test' &&
           options.progress !== false &&
-          progressPlugin(this),
+          progressPlugin(),
         hashbangPlugin(),
         ...this.loadUserPlugins({
           filename: outFilename,
@@ -443,11 +443,11 @@ export default class Bili extends EventEmitter {
         multipleEntries
       })
 
-      this.logger.debug(chalk.bold(`Rollup input options for bundling ${option.input} in ${
+      logger.debug(chalk.bold(`Rollup input options for bundling ${option.input} in ${
         option.formatFull
       }:\n`) + util.inspect(inputOptions, { colors: true }))
 
-      this.logger.debug(chalk.bold(`Rollup output options for bundling ${option.input} in ${
+      logger.debug(chalk.bold(`Rollup output options for bundling ${option.input} in ${
         option.formatFull
       }:\n`) + util.inspect(outputOptions, { colors: true }))
 
@@ -461,11 +461,11 @@ export default class Bili extends EventEmitter {
         })
         watcher.on('event', async e => {
           if (e.code === 'ERROR' || e.code === 'FATAL') {
-            handleError(this.logger, e.error)
+            handleError(e.error)
           }
           if (e.code === 'BUNDLE_END') {
             process.exitCode = 0
-            this.logger.write(await this.stats())
+            logger.write(await this.stats())
           }
         })
         return

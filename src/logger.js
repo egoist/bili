@@ -30,8 +30,12 @@ const prettyError = err => {
   }
 }
 
-export default class Logger {
-  constructor(options = {}) {
+class Logger {
+  constructor(options) {
+    this.setOptions(options)
+  }
+
+  setOptions(options = {}) {
     this.logLevel = typeof options.logLevel === 'number' ? options.logLevel : 3
     this.useLogUpdate =
       typeof options.logUpdate === 'boolean' ? options.logUpdate : true
@@ -117,3 +121,5 @@ export default class Logger {
     console.log(`${emoji}  ${message}`)
   }
 }
+
+export default new Logger()

@@ -1,8 +1,9 @@
 import path from 'path'
 import chalk from 'chalk'
 import emoji from './emoji'
+import logger from './logger'
 
-export default ({ logger }) => {
+export default () => {
   let bundling = 0
   return {
     name: 'bili-progress',
