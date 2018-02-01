@@ -8,17 +8,15 @@
   },
   "main": "dist/index.js",
   "bin": "dist/cli.js",
-  "files": [
-    "dist",
-    "babel.js"
-  ],
+  "files": ["dist", "babel.js"],
   "scripts": {
     "test": "npm run lint && jest",
     "test:cov": "npm run lint && jest --coverage",
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
     "prepublishOnly": "npm run build",
-    "build": "bili src/{index,cli,babel}.js --filename [name].js --js babel --no-babel.babelrc",
+    "build":
+      "bili src/{index,cli,babel}.js --filename [name].js --js babel --no-babel.babelrc",
     "watch": "yarn build --watch"
   },
   "author": "EGOIST <0x142857@gmail.com>",
@@ -77,18 +75,35 @@
     "prettier-eslint-cli": "4.7.0"
   },
   "eslintConfig": {
-    "extends": [
-      "xo",
-      "rem"
-    ],
+    "extends": ["xo", "rem"],
     "env": {
       "jest": true
     }
   },
-  "eslintIgnore": [
-    "dist/**"
-  ],
+  "eslintIgnore": ["dist/**"],
   "jest": {
     "testEnvironment": "node"
-  }
+  },
+  "keywords": [
+    "rollup",
+    "webpack",
+    "bundler",
+    "zero-config",
+    "zero",
+    "config",
+    "simple",
+    "fast",
+    "bundle",
+    "package",
+    "gulp",
+    "typescript",
+    "babel",
+    "buble",
+    "css",
+    "sass",
+    "postcss",
+    "bili",
+    "poi",
+    "parcel"
+  ]
 }
