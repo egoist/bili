@@ -102,7 +102,9 @@ class Logger {
     let { message, stack } = prettyError(err)
 
     this.status(emoji.error, message)
-    console.log(stack)
+    if (stack) {
+      console.log(stack)
+    }
   }
 
   // Status message should be persisted

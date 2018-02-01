@@ -160,7 +160,9 @@ export default class Bili extends EventEmitter {
           ...pluginOptions
         }
       }
-      const moduleName = `rollup-plugin-${pluginName}`
+      const moduleName = isPath(pluginName) ?
+        path.resolve(pluginName) :
+        `rollup-plugin-${pluginName}`
       try {
         // TODO:
         // Local require is always relative to `process.cwd()`
@@ -583,12 +585,18 @@ function getJsOptions(name, jsx, jsOptions) {
 }
 
 function getJsPlugin(name) {
-  const req = name === 'babel' || name === 'buble' ? require : localRequire
-  const moduleName = `rollup-plugin-${name}`
+  let req
+  if (isPath(name)) {
+    req = require
+    name = path.resolve(name)
+  } else {
+    req = name === 'babel' || name === 'buble' ? require : localRequire
+    name = `rollup-plugin-${name}`
+  }
   try {
-    return req(moduleName)
+    return req(name)
   } catch (err) {
-    handleLoadPluginError(moduleName, err)
+    handleLoadPluginError(name, err)
   }
 }
 
@@ -596,9 +604,19 @@ function localRequire(name) {
   return require(path.resolve('node_modules', name))
 }
 
+function isPath(v) {
+  return /^[./]|(^[a-zA-Z]:)/.test(v)
+}
+
 function handleLoadPluginError(moduleName, err) {
   if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName)) {
-    throw new BiliError(`Cannot find plugin "${moduleName}" in current directory!\n${chalk.dim(`You may run "npm install -D ${moduleName}" to install it.`)}`)
+    let msg = `Cannot find plugin "${chalk.cyan(moduleName)}" in current directory!`
+    const pm = getPackageManager()
+    const command = pm === 'yarn' ? `yarn add ${moduleName} --dev` : `npm install -D ${moduleName}`
+    if (!isPath(moduleName)) {
+      msg += `\n${chalk.dim(`You may run "${command}" to install it.`)}`
+    }
+    throw new BiliError(msg)
   } else {
     throw err
   }
