@@ -20,7 +20,7 @@ const prettyError = err => {
       stack.push(err.url)
     }
     if (err.frame || err.stack) {
-      stack.push(chalk.red())
+      stack.push(chalk.red(err.frame || err.stack))
     }
   }
 

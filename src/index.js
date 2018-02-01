@@ -67,7 +67,7 @@ export default class Bili extends EventEmitter {
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
-      uglifyEs: true,
+      minifier: 'uglify-es',
       cwd: process.cwd(),
       ...getBiliConfig(),
       ...options
@@ -208,6 +208,7 @@ export default class Bili extends EventEmitter {
     const {
       outDir,
       filename,
+      minifier,
       inline = format === 'umd' || format === 'iife'
     } = options
 
@@ -355,6 +356,7 @@ export default class Bili extends EventEmitter {
         inline && commonjsPlugin(options.commonjs),
         jsonPlugin(),
         compress &&
+          minifier.startsWith('uglify-') &&
           uglifyPlugin(
             {
               ...options.uglify,
@@ -364,7 +366,7 @@ export default class Bili extends EventEmitter {
                 preamble: banner
               }
             },
-            options.uglifyEs ? require('uglify-es').minify : undefined
+            minifier === 'uglify-es' ? require('uglify-es').minify : undefined
           ),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
@@ -612,7 +614,10 @@ function handleLoadPluginError(moduleName, err) {
   if (err.code === 'MODULE_NOT_FOUND' && err.message.includes(moduleName)) {
     let msg = `Cannot find plugin "${chalk.cyan(moduleName)}" in current directory!`
     const pm = getPackageManager()
-    const command = pm === 'yarn' ? `yarn add ${moduleName} --dev` : `npm install -D ${moduleName}`
+    const command =
+      pm === 'yarn' ?
+        `yarn add ${moduleName} --dev` :
+        `npm install -D ${moduleName}`
     if (!isPath(moduleName)) {
       msg += `\n${chalk.dim(`You may run "${command}" to install it.`)}`
     }
