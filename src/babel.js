@@ -62,16 +62,16 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
       [
         require('@babel/preset-env').default,
         {
-          useBuiltIns: true,
+          // Never polyfill something like `Promise` `Proxy`
+          // Since we're building a library instead of an app
+          // You should not include polyfill in your lib anyways
+          useBuiltIns: false,
+          forceAllTransforms: true,
           modules: false,
           targets: {
-            ie: 9,
-            uglify: true
+            ie: 9
           },
-          exclude: [
-            '@babel/plugin-transform-regenerator',
-            '@babel/plugin-transform-async-to-generator'
-          ],
+          exclude: ['transform-regenerator', 'transform-async-to-generator'],
           ...envOption
         }
       ]
@@ -79,8 +79,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
 
   plugins = [
     ...plugins,
-    require.resolve('@babel/plugin-proposal-class-properties'),
-    require.resolve('@babel/plugin-external-helpers')
+    require.resolve('@babel/plugin-proposal-class-properties')
   ]
 
   return {

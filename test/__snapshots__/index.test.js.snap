@@ -1,5 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`async 1`] = `
+Array [
+  Array [
+    "dist/bili.cjs.js",
+    "'use strict';
+
+var a = {
+  a: 1
+};
+var index = (function () {
+  return new Promise(function ($return, $error) {
+    return $return(Object.assign({}, a));
+  }.bind(this));
+});
+
+module.exports = index;
+",
+  ],
+]
+`;
+
 exports[`banner:object 1`] = `
 Array [
   Array [

@@ -254,7 +254,15 @@ export default class Bili extends EventEmitter {
     const inputOptions = {
       input,
       external,
-      onwarn: ({ loc, frame, message, code, source }) => {
+      onwarn: err => {
+        if (options.quiet) return
+
+        if (typeof err === 'string') {
+          return logger.warn(err)
+        }
+
+        const { loc, frame, message, code, source } = err
+
         if (options.quiet || code === 'THIS_IS_UNDEFINED') {
           return
         }
@@ -555,7 +563,8 @@ function getFilename({ input, format, filename, compress, name }) {
 function getJsOptions(name, jsx, jsOptions) {
   if (name === 'babel') {
     return {
-      babelrc: process.env.NODE_ENV !== 'test',
+      // Do not try to use .babelrc in our tests
+      babelrc: !process.env.BILI_TEST,
       ...getBabelConfig({ jsx }),
       ...jsOptions
     }

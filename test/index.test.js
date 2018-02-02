@@ -1,6 +1,10 @@
 import path from 'path'
 import Bili from '../src'
 
+// Ensure that we don't load .babelrc in rollup-plugin-babel
+process.env.BILI_TEST = true
+process.env.BABEL_ENV = 'anything-not-test'
+
 function fixture(name) {
   return path.join(__dirname, 'fixtures', name)
 }
@@ -25,23 +29,27 @@ snapshot({
 
 snapshot({
   title: 'buble:async',
-  input: 'buble/async.js'
+  input: 'buble/async.js',
+  js: 'buble'
 })
 
 snapshot({
   title: 'buble:async-and-object-rest-spread',
-  input: 'buble/async-dot-dot-dot.js'
+  input: 'buble/async-dot-dot-dot.js',
+  js: 'buble'
 })
 
 snapshot({
   title: 'buble:react-jsx',
-  input: 'buble/react-jsx.js'
+  input: 'buble/react-jsx.js',
+  js: 'buble'
 })
 
 snapshot({
   title: 'buble:vue-jsx',
   input: 'buble/vue-jsx.js',
-  jsx: 'vue'
+  jsx: 'vue',
+  js: 'buble'
 })
 
 snapshot({
@@ -103,6 +111,11 @@ snapshot({
   title: 'inline:true',
   input: 'inline/index.js',
   inline: true
+})
+
+snapshot({
+  title: 'async',
+  input: 'async/index.js'
 })
 
 describe('multi formats without suffix error', () => {
