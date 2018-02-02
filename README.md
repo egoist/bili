@@ -1,8 +1,8 @@
-# Bili
+<p align="center">
+<img src="https://i.loli.net/2018/02/02/5a741da489499.png" alt="logo">
+</p>
 
-[![NPM version](https://img.shields.io/npm/v/bili.svg?style=flat)](https://npmjs.com/package/bili) [![NPM downloads](https://img.shields.io/npm/dm/bili.svg?style=flat)](https://npmjs.com/package/bili) [![CircleCI](https://circleci.com/gh/egoist/bili/tree/master.svg?style=shield)](https://circleci.com/gh/egoist/bili/tree/master) [![codecov](https://codecov.io/gh/egoist/bili/branch/master/graph/badge.svg)](https://codecov.io/gh/egoist/bili) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate) [![chat](https://img.shields.io/badge/chat-on%20discord-7289DA.svg?style=flat)](https://chat.egoist.moe)
-
-**😇 Migrating from v1 to v2? Check out [release note](https://github.com/egoist/bili/releases/tag/v2.0.0).**
+<p align="center"><a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/v/bili.svg?style=flat" alt="NPM version"></a> <a href="https://npmjs.com/package/bili"><img src="https://img.shields.io/npm/dm/bili.svg?style=flat" alt="NPM downloads"></a> <a href="https://circleci.com/gh/egoist/bili/tree/master"><img src="https://circleci.com/gh/egoist/bili/tree/master.svg?style=shield" alt="CircleCI"></a> <a href="https://codecov.io/gh/egoist/bili"><img src="https://codecov.io/gh/egoist/bili/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://github.com/egoist/donate"><img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat" alt="donate"></a> <a href="https://chat.egoist.moe"><img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg?style=flat" alt="chat"></a></p>
 
 ## Features
 
@@ -18,6 +18,8 @@
 _In `umd` format it inlines node modules (could be turned off) so it takes a bit longer._
 
 ## Install
+
+<strong>😇 Migrating from v1 to v2? Check out <a href="https://github.com/egoist/bili/releases/tag/v2.0.0">release note</a>.</strong>
 
 ```bash
 # Globally
