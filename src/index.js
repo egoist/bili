@@ -228,7 +228,7 @@ export default class Bili extends EventEmitter {
     const file = this.resolveCwd(outDir, outFilename)
 
     const transformJS = options.js !== false
-    const jsPluginName = transformJS && (options.js || 'buble')
+    const jsPluginName = transformJS && (options.js || 'babel')
     const jsPlugin = transformJS && getJsPlugin(jsPluginName)
     const jsOptions =
       transformJS &&
