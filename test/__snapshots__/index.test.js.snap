@@ -59,10 +59,12 @@ Array [
     "dist/bili.cjs.js",
     "'use strict';
 
-var this$1 = undefined;
+var this$1$1 = undefined;
 var a = function () { return new Promise(function ($return, $error) {
-  return $return({ a: 'a' });
-}.bind(this$1)); };
+  return $return({
+    a: 'a'
+  });
+}.bind(this$1$1)); };
 
 var async = a().then(function (res) { return Object.assign({}, res); });
 
@@ -78,7 +80,7 @@ Array [
     "dist/bili.cjs.js",
     "'use strict';
 
-var asyncDotDotDot = (function () {
+function asyncDotDotDot () {
   return new Promise(function ($return, $error) {
     return Promise.resolve(this.bar()).then(function ($await_1) {
       try {
@@ -88,7 +90,7 @@ var asyncDotDotDot = (function () {
       }
     }.bind(this), $error);
   }.bind(this));
-});
+}
 
 module.exports = asyncDotDotDot;
 ",
@@ -102,11 +104,9 @@ Array [
     "dist/bili.cjs.js",
     "'use strict';
 
-var reactJsx = React.createElement(
-  \\"div\\",
-  { a: 1 },
-  \\"hi\\"
-);
+var reactJsx = React.createElement(\\"div\\", {
+  a: 1
+}, \\"hi\\");
 
 module.exports = reactJsx;
 ",
@@ -123,15 +123,13 @@ Array [
 var vueJsx = {
   render: function render() {
     var h = arguments[0];
-
-    return h(
-      \\"div\\",
-      {
-        attrs: { a: 1 }
-      },
-      [\\"hi\\"]
-    );
+    return h(\\"div\\", {
+      attrs: {
+        a: 1
+      }
+    }, [\\"hi\\"]);
   }
+
 };
 
 module.exports = vueJsx;
@@ -316,7 +314,10 @@ module.exports = (iterable, mapper, opts) => new Promise((resolve, reject) => {
 
 var pAll = (iterable, opts) => pMap(iterable, el => el(), opts);
 
-var index = { all: pAll, map: pMap };
+var index = {
+  all: pAll,
+  map: pMap
+};
 
 module.exports = index;
 ",

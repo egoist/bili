@@ -9,10 +9,10 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
   if (jsx === 'vue') {
     presets.push(require.resolve('babel-preset-vue'))
   } else if (jsx === 'react') {
-    plugins.push(require.resolve('babel-plugin-transform-react-jsx'))
+    plugins.push(require.resolve('@babel/plugin-transform-react-jsx'))
   } else if (typeof jsx === 'string') {
     plugins.push([
-      require.resolve('babel-plugin-transform-react-jsx'),
+      require.resolve('@babel/plugin-transform-react-jsx'),
       { pragma: jsx }
     ])
   }
@@ -24,9 +24,9 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
         spec: true
       }
     ],
-    require.resolve('babel-plugin-transform-flow-strip-types'),
+    require.resolve('@babel/plugin-transform-flow-strip-types'),
     [
-      require.resolve('babel-plugin-transform-object-rest-spread'),
+      require.resolve('@babel/plugin-proposal-object-rest-spread'),
       {
         useBuiltIns: true
       }
@@ -50,7 +50,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
     ...presets,
     env === 'test' ?
       [
-        require('babel-preset-env').default,
+        require('@babel/preset-env').default,
         {
           modules: false,
           targets: {
@@ -60,7 +60,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
         }
       ] :
       [
-        require('babel-preset-env').default,
+        require('@babel/preset-env').default,
         {
           useBuiltIns: true,
           modules: false,
@@ -69,8 +69,8 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
             uglify: true
           },
           exclude: [
-            'babel-plugin-transform-regenerator',
-            'babel-plugin-transform-async-to-generator'
+            '@babel/plugin-transform-regenerator',
+            '@babel/plugin-transform-async-to-generator'
           ],
           ...envOption
         }
@@ -79,8 +79,8 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
 
   plugins = [
     ...plugins,
-    require.resolve('babel-plugin-transform-class-properties'),
-    require.resolve('babel-plugin-external-helpers')
+    require.resolve('@babel/plugin-proposal-class-properties'),
+    require.resolve('@babel/plugin-external-helpers')
   ]
 
   return {
