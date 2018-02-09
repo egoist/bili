@@ -240,7 +240,7 @@ export default class Bili extends EventEmitter {
     external = external.map(e => (e.startsWith('./') ? path.resolve(e) : e))
     let globals = options.globals || options.global
     if (typeof globals === 'object') {
-      external = [...external, ...Object.keys(globals)]
+      external = [...new Set(external.concat(Object.keys(globals)))]
     }
 
     let env = options.env
