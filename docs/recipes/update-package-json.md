@@ -1,10 +1,10 @@
 # Update `package.json`
 
-Configure fields in `package.json` to make your package work with various enviroments like `npm` `webpack`, or a CDN provider like `jsdelivr`.
+Configure fields in `package.json` to make your package work in various environments like `npm`, `webpack`, or a CDN provider like `jsdelivr`.
 
 ## Configure the default file
 
-* `main`: the default file for every enviroment, it's usually pointed to your CommonJS bundle.
+* `main`: the default file for every environment, it's usually pointed to your CommonJS bundle.
 * `module`: the default file for tools that supports `es` format.
 * `unpkg`: the default file for unpkg.com with fallback to `main` file. You should point it to the `umd` or `iife` bundle.
 * `jsdelivr`: like `unpkg` but for jsdelivr.com.
