@@ -12,7 +12,7 @@ export function getBabelConfig({ jsx }) {
 export function getBiliConfig() {
   const useConfig = new UseConfig({
     name: 'bili',
-    files: ['package.json', '{name}.config.js', '.{name}rc']
+    files: ['package.json', '{name}.config.js', '.{name}rc', '.{name}rc.js']
   })
   const { path: configPath, config } = useConfig.loadSync()
   if (configPath) {
