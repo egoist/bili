@@ -10,7 +10,7 @@ Bili.write(options).then(() => {
 
 ## Use config file
 
-Following options are accepted both in CLI flags and config file,namely `bili.config.js`, `.bilirc`, `bili` key in `package.json`.
+Following options are accepted both in CLI flags and config file, namely `bili.config.js`, `.bilirc`, `.bilirc.js`, `bili` key in `package.json`.
 
 ## options
 
