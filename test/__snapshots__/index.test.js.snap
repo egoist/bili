@@ -80,12 +80,12 @@ Array [
     "dist/bili.cjs.js",
     "'use strict';
 
-var this$1$1 = undefined;
+var this$1 = undefined;
 var a = function () { return new Promise(function ($return, $error) {
   return $return({
     a: 'a'
   });
-}.bind(this$1$1)); };
+}.bind(this$1)); };
 
 var async = a().then(function (res) { return Object.assign({}, res); });
 
