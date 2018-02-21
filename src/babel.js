@@ -66,7 +66,6 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
           // Since we're building a library instead of an app
           // You should not include polyfill in your lib anyways
           useBuiltIns: false,
-          forceAllTransforms: true,
           modules: false,
           targets: {
             ie: 9
