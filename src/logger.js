@@ -3,12 +3,30 @@ import chalk from 'chalk'
 import emoji from './emoji'
 import { relativePath } from './util'
 
+const prettyPluginName = name => {
+  return name === 'rpt2' ? 'typescript2' : name
+}
+
+const prettyPluginError = err => {
+  if (err.plugin === 'rpt2') {
+    return err.message.replace(/\.ts\((\d+),(\d+)\):\s*/, '.ts:$1:$2\n')
+  }
+  return err.message
+}
+
 const prettyError = err => {
+  if (err.name === 'BiliError') {
+    return {
+      message: err.message
+    }
+  }
+
   let message
-  const stack = []
+  const frames = []
+
   if (err.plugin) {
-    message = `(${err.plugin}) ${err.message}`
-    stack.push(err.codeFrame || err.snippet || err.stack)
+    message = `(${prettyPluginName(err.plugin)}) ${prettyPluginError(err)}`
+    frames.push(err.codeFrame || err.snippet)
   } else {
     message = err.message
     if (err.loc) {
@@ -17,16 +35,14 @@ const prettyError = err => {
       }`
     }
     if (err.url) {
-      stack.push(err.url)
+      frames.push(err.url)
     }
-    if (err.frame || err.stack) {
-      stack.push(chalk.red(err.frame || err.stack))
-    }
+    frames.push(chalk.red(err.frame || err.stack))
   }
 
   return {
     message,
-    stack: stack.join('\n')
+    frames: frames.join('\n')
   }
 }
 
@@ -99,11 +115,11 @@ class Logger {
       return this.status(emoji.error, err)
     }
 
-    let { message, stack } = prettyError(err)
+    let { message, frames } = prettyError(err)
 
     this.status(emoji.error, message)
-    if (stack) {
-      console.log(stack)
+    if (frames) {
+      console.error(frames)
     }
   }
 
