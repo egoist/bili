@@ -514,6 +514,9 @@ export default class Bili extends EventEmitter {
       []
     )
 
+    // clean the desination path if writing and the cleanDest flag is set
+    if (write && this.options.cleanDest) await fs.emptyDir(this.options.outDir)
+
     const multipleEntries = inputFiles.length > 1
     const actions = options.map(async option => {
       const { inputOptions, outputOptions } = await this.createConfig(option, {
