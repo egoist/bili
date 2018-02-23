@@ -19,7 +19,8 @@ _In `umd` format it inlines node modules (could be turned off) so it takes a bit
 
 ## Install
 
-<strong>😇 Migrating from v1 to v2? Check out <a href="https://github.com/egoist/bili/releases/tag/v2.0.0">release note</a>.</strong>
+__😇 Migrating from v1 to v2? Check out [release note](https://github.com/egoist/bili/releases/tag/v2.0.0).__<br>
+__📝 The differences [between v2 and v3(beta)](./docs/differences-v2-v3.md).__
 
 ```bash
 # Globally
