@@ -18,7 +18,7 @@
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
     "prepublishOnly": "npm run build",
-    "build": "bili src/{index,cli,babel}.js --filename [name].js --js babel --no-babel.babelrc",
+    "build": "bili src/{index,cli,cli-parser,babel}.js --filename [name].js --js babel --no-babel.babelrc",
     "watch": "yarn build --watch"
   },
   "author": "EGOIST <0x142857@gmail.com>",
