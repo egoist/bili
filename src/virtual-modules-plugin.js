@@ -5,9 +5,11 @@ const PREFIX = `\0virtual:`
 export default function virtual(modules, cwd) {
   const resolvedIds = new Map()
 
-  Object.keys(modules).forEach(id => {
-    resolvedIds.set(path.resolve(cwd, id), modules[id])
-  })
+  if (modules) {
+    Object.keys(modules).forEach(id => {
+      resolvedIds.set(path.resolve(cwd, id), modules[id])
+    })
+  }
 
   return {
     name: 'virtual',
