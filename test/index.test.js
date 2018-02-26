@@ -180,3 +180,9 @@ snapshot({
     baz: `export default 2`
   }
 })
+
+snapshot({
+  title: 'loose transform',
+  input: 'index.js',
+  cwd: fixture('loose')
+})

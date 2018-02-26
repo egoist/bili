@@ -52,7 +52,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
       [
         require('@babel/preset-env').default,
         {
-          modules: false,
+          loose: true,
           targets: {
             node: 'current'
           },
@@ -62,6 +62,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
       [
         require('@babel/preset-env').default,
         {
+          loose: true,
           // Never polyfill something like `Promise` `Proxy`
           // Since we're building a library instead of an app
           // You should not include polyfill in your lib anyways
