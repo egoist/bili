@@ -1,32 +1,8 @@
 # Transpile JS files
 
-**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `buble`, if you prefer `babel` then try `--js babel` flag.
-
-Maybe you can already tell, you can use `--js` flag to switch plugin for transpiling JS files. To use a custom JS plugin like `typescript`, try:
-
-```bash
-cd my-project
-yarn add rollup-plugin-typescript2 --dev
-bili --js typescript2
-```
+**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel` in `loose` mode, if you prefer `buble` then try `--js buble` flag.
 
 That's it!
-
-All Rollup plugins that we use can accept options:
-
-```bash
-bili --buble.objectAssign assign
-# options for rollup-plugin-buble
-#=> { buble: { objectAssign: 'assign } }
-
-bili --js babel --no-babel.babelrc
-# options for rollup-plugin-babel
-#=> { babel: { babelrc: false } }
-
-bili --js typescript --typescript.tsconfig ./there/tsconfig.json
-# options for rollup-plugin-typescript
-#=> { typescript: { tsconfig: './there/tsconfig.json' } }
-```
 
 ## Babel
 
@@ -46,3 +22,15 @@ What Buble supports:
 * Compiles `object-rest-spread` to `Object.assign`.
 * Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
 * React/Vue JSX
+
+## TypeScript
+
+We automatically use [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) when the entry file ending with `.ts` and no custom JS plugin is specified, however you have to install [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) to make it work.
+
+## Custom JS plugin
+
+Use `js` option for `--js` flag to specify desired JS preprocessor, eg: `--js coffee2` for CoffeeScript 2.
+
+---
+
+See [Use Rollup Plugins](/recipes/use-rollup-plugins#pass-options) for how to pass options to plugins.
