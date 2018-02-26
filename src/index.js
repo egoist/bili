@@ -422,19 +422,31 @@ export default class Bili extends EventEmitter {
   }
 
   async bundle({ write = true } = {}) {
-    let inputFiles = this.options.input || 'src/index.js'
-    if (Array.isArray(inputFiles) && inputFiles.length === 0) {
-      inputFiles = 'src/index.js'
+    let inputFiles = this.options.input
+    if (!inputFiles || inputFiles.length === 0) {
+      inputFiles = ['src/index.js']
+    }
+    if (!Array.isArray(inputFiles)) {
+      inputFiles = [inputFiles]
     }
 
-    if (this.options.virtualModules) {
-      inputFiles = inputFiles.map(v => relativePath(this.resolveCwd(v)))
-    } else {
-      inputFiles = await globby(inputFiles, { cwd: this.options.cwd }).then(res => res.map(v => relativePath(this.resolveCwd(v))))
-
-      if (inputFiles.length === 0) {
-        throw new BiliError('No matched files to bundle.')
+    const magicPatterns = []
+    inputFiles = inputFiles.filter(v => {
+      if (globby.hasMagic(v)) {
+        magicPatterns.push(v)
+        return false
       }
+      return true
+    })
+
+    await globby(magicPatterns, { cwd: this.options.cwd }).then(files => {
+      inputFiles = inputFiles
+        .concat(files)
+        .map(v => relativePath(this.resolveCwd(v)))
+    })
+
+    if (inputFiles.length === 0) {
+      throw new BiliError('No matched files to bundle.')
     }
 
     const formats = getArrayOption(this.options, 'format') || FORMATS
