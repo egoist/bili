@@ -1,6 +1,9 @@
 const env = process.env.BABEL_ENV || process.env.NODE_ENV
 
-export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
+export default (
+  ctx,
+  { jsx, buble, target, objectAssign, env: envOption } = {}
+) => {
   jsx = jsx || 'react'
 
   let presets = []
@@ -52,7 +55,7 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
       [
         require('@babel/preset-env').default,
         {
-          loose: true,
+          modules: false,
           targets: {
             node: 'current'
           },
@@ -62,15 +65,19 @@ export default (ctx, { jsx, buble, objectAssign, env: envOption } = {}) => {
       [
         require('@babel/preset-env').default,
         {
-          loose: true,
           // Never polyfill something like `Promise` `Proxy`
           // Since we're building a library instead of an app
           // You should not include polyfill in your lib anyways
           useBuiltIns: false,
           modules: false,
-          targets: {
-            ie: 9
-          },
+          targets:
+              target === 'node' ?
+                {
+                  node: 6
+                } :
+                {
+                  ie: 9
+                },
           exclude: ['transform-regenerator', 'transform-async-to-generator'],
           ...envOption
         }

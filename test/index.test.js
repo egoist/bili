@@ -182,7 +182,8 @@ snapshot({
 })
 
 snapshot({
-  title: 'loose transform',
+  title: 'target:node',
   input: 'index.js',
-  cwd: fixture('loose')
+  cwd: fixture('target/node'),
+  target: 'node'
 })

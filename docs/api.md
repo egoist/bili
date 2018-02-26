@@ -167,6 +167,23 @@ module.exports = {
 }
 ```
 
+### target
+
+Type: `string`<br>
+Default: `browser`<br>
+Possible values: `node` `node:{NUMBER}`
+
+Compile for specific target:
+
+* For `node`
+  * we compile JS to `node: 6` syntax with `babel-preset-env`.
+  * Never use `browser` field in `package.json`.
+* For `browser`
+  * we compile JS to `ie: 9` syntax with `babel-preset-env`.
+  * Use `browser` field in `package.json`
+
+Note that this option won't work if you're using custom babel config file.
+
 ### jsx
 
 Type: `string`<br>

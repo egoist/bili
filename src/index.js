@@ -70,6 +70,7 @@ export default class Bili extends EventEmitter {
       filename: '[name][suffix].js',
       minifier: 'uglify-es',
       cwd: process.cwd(),
+      target: 'browser',
       ...getBiliConfig(),
       ...options
     }
@@ -228,12 +229,18 @@ export default class Bili extends EventEmitter {
     // Relative to `this.options.cwd`
     const file = this.resolveCwd(outDir, outFilename)
 
+    const babelOptions = {
+      objectAssign: options.objectAssign,
+      jsx: options.jsx,
+      target: options.target
+    }
+
     const transformJS = options.js !== false
     const jsPluginName = transformJS && getJsPluginName(options.js, input)
     const jsPlugin = transformJS && getJsPlugin(jsPluginName)
     const jsOptions =
       transformJS &&
-      getJsOptions(jsPluginName, options.jsx, options[jsPluginName])
+      getJsOptions(jsPluginName, options[jsPluginName], babelOptions)
 
     const banner = getBanner(options.banner, this.pkg)
 
@@ -343,9 +350,8 @@ export default class Bili extends EventEmitter {
               [
                 require.resolve('./babel'),
                 {
-                  buble: true,
-                  jsx: options.jsx,
-                  objectAssign: options.objectAssign
+                  ...babelOptions,
+                  buble: true
                 }
               ]
             ],
@@ -362,6 +368,7 @@ export default class Bili extends EventEmitter {
             module: true,
             extensions: ['.js', '.json'],
             preferBuiltIns: true,
+            browser: !options.target.startsWith('node'),
             ...options.nodeResolve
           }),
         inline && commonjsPlugin(options.commonjs),
@@ -578,12 +585,12 @@ function getFilename({ input, format, filename, compress, name }) {
     res
 }
 
-function getJsOptions(name, jsx, jsOptions) {
+function getJsOptions(name, jsOptions, babelOptions) {
   if (name === 'babel') {
     return {
       // Do not try to use .babelrc in our tests
       babelrc: !process.env.BILI_TEST,
-      ...getBabelConfig({ jsx }),
+      ...getBabelConfig(babelOptions),
       ...jsOptions
     }
   }

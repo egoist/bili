@@ -25,17 +25,21 @@ cli
     alias: 'w'
   })
   .option('outDir', {
-    desc: 'Output directory',
+    desc: 'Output directory (default: "dist")',
     alias: ['o', 'd']
+  })
+  .option('target', {
+    desc: 'Output target (default: "browser")',
+    alias: 't'
   })
   .option('moduleName', {
     desc: 'Module name for UMD/IIFE bundle'
   })
   .option('format', {
-    desc: 'Output format'
+    desc: 'Output format (default: "cjs")'
   })
   .option('filename', {
-    desc: 'Output filename, default: "[name][suffix].js"'
+    desc: 'Output filename (default: "[name][suffix].js")'
   })
   .option('name', {
     desc: 'Set the [name] part of "filename"'
@@ -44,7 +48,7 @@ cli
     desc: 'Add custom Rollup plugins'
   })
   .option('jsx', {
-    desc: 'Switch JSX syntax, eg: "vue" "h"'
+    desc: 'Switch JSX syntax, eg: "vue" "h" (default: "react")'
   })
   .option('global', {
     desc:

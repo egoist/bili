@@ -3,9 +3,9 @@ import UseConfig from 'use-config'
 import chalk from 'chalk'
 import logger from './logger'
 
-export function getBabelConfig({ jsx }) {
+export function getBabelConfig(options) {
   return {
-    presets: [[require.resolve('./babel'), { jsx }]]
+    presets: [[require.resolve('./babel'), options]]
   }
 }
 

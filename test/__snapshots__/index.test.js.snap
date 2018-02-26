@@ -346,32 +346,6 @@ module.exports = index;
 ]
 `;
 
-exports[`loose transform 1`] = `
-Array [
-  Array [
-    "test/fixtures/loose/dist/index.cjs.js",
-    "'use strict';
-
-var foo =
-/*#__PURE__*/
-function () {
-  function foo() {}
-
-  var _proto = foo.prototype;
-
-  _proto.bar = function bar() {
-    console.log(1);
-  };
-
-  return foo;
-}();
-
-module.exports = foo;
-",
-  ],
-]
-`;
-
 exports[`no-js-transform 1`] = `
 Array [
   Array [
@@ -381,6 +355,20 @@ Array [
 var index = () => {}
 
 module.exports = index;
+",
+  ],
+]
+`;
+
+exports[`target:node 1`] = `
+Array [
+  Array [
+    "test/fixtures/target/node/dist/index.cjs.js",
+    "'use strict';
+
+class Foo {}
+
+module.exports = Foo;
 ",
   ],
 ]

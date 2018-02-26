@@ -1,6 +1,6 @@
 # Transpile JS files
 
-**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel` in `loose` mode, if you prefer `buble` then try `--js buble` flag.
+**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel` mode, if you prefer using `buble` to generate smaller output then try `--js buble` flag.
 
 That's it!
 
