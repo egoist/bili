@@ -19,8 +19,8 @@ _In `umd` format it inlines node modules (could be turned off) so it takes a bit
 
 ## Install
 
-__😇 Migrating from v1 to v2? Check out [release note](https://github.com/egoist/bili/releases/tag/v2.0.0).__<br>
-__📝 The differences [between v2 and v3(beta)](./docs/differences-v2-v3.md).__
+**😇 Migrating from v1 to v2? Check out [release note](https://github.com/egoist/bili/releases/tag/v2.0.0).**<br>
+**😇 Migrating from v2 to v3? Check out [release note](https://github.com/egoist/bili/releases/tag/v3.0.0).**
 
 ```bash
 # Globally
@@ -66,6 +66,7 @@ Dive into the [documentation](https://egoist.moe/bili) to see more neat features
 
 Here're some quick links:
 
+* [How to use Rollup plugins](https://egoist.moe/bili/#/recipes/use-rollup-plugins)
 * [How to use Flow/TypeScript or any compile-to-js language](https://egoist.moe/bili/#/recipes/transpile-js-files)
 * [How to transpile CSS files](https://egoist.moe/bili/#/recipes/transpile-css-files)
 * [How to transpile Vue files](https://egoist.moe/bili/#/recipes/transpile-vue-files)
