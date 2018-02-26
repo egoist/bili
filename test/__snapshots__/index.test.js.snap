@@ -3,7 +3,7 @@
 exports[`async 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/async/dist/index.cjs.js",
     "'use strict';
 
 var a = {
@@ -24,7 +24,7 @@ module.exports = index;
 exports[`banner:object 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/dist/default.cjs.js",
     "/*!
  * name v1.2.3
  * (c) 2018-present author
@@ -43,7 +43,7 @@ module.exports = _default;
 exports[`banner:string 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/dist/default.cjs.js",
     "woot
 'use strict';
 
@@ -77,7 +77,7 @@ module.exports = index;
 exports[`buble:async 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/buble/dist/async.cjs.js",
     "'use strict';
 
 var this$1 = undefined;
@@ -98,7 +98,7 @@ module.exports = async;
 exports[`buble:async-and-object-rest-spread 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/buble/dist/async-dot-dot-dot.cjs.js",
     "'use strict';
 
 function asyncDotDotDot () {
@@ -122,7 +122,7 @@ module.exports = asyncDotDotDot;
 exports[`buble:react-jsx 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/buble/dist/react-jsx.cjs.js",
     "'use strict';
 
 var reactJsx = React.createElement(\\"div\\", {
@@ -138,7 +138,7 @@ module.exports = reactJsx;
 exports[`buble:vue-jsx 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/buble/dist/vue-jsx.cjs.js",
     "'use strict';
 
 var vueJsx = {
@@ -162,7 +162,7 @@ module.exports = vueJsx;
 exports[`defaults 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/defaults/dist/index.cjs.js",
     "'use strict';
 
 var index = 42;
@@ -176,7 +176,7 @@ module.exports = index;
 exports[`exclude file 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/exclude-file/dist/index.cjs.js",
     "'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
@@ -194,7 +194,7 @@ module.exports = foo;
 exports[`extendOptions 1`] = `
 Array [
   Array [
-    "dist/bar.cjs.js",
+    "test/fixtures/extend-options/dist/bar.cjs.js",
     "'use strict';
 
 var bar = 'bar';
@@ -203,7 +203,7 @@ module.exports = bar;
 ",
   ],
   Array [
-    "dist/bar.js",
+    "test/fixtures/extend-options/dist/bar.js",
     "(function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -218,12 +218,12 @@ return bar;
 ",
   ],
   Array [
-    "dist/bar.min.js",
+    "test/fixtures/extend-options/dist/bar.min.js",
     "!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.min=n()}(this,function(){\\"use strict\\";return\\"bar\\"});
 ",
   ],
   Array [
-    "dist/foo.cjs.js",
+    "test/fixtures/extend-options/dist/foo.cjs.js",
     "'use strict';
 
 var foo = 'foo';
@@ -232,7 +232,7 @@ module.exports = foo;
 ",
   ],
   Array [
-    "dist/foo.js",
+    "test/fixtures/extend-options/dist/foo.js",
     "(function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -247,7 +247,7 @@ return foo;
 ",
   ],
   Array [
-    "dist/foo.min.js",
+    "test/fixtures/extend-options/dist/foo.min.js",
     "!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):e.min=n()}(this,function(){\\"use strict\\";return\\"foo\\"});
 ",
   ],
@@ -257,7 +257,7 @@ return foo;
 exports[`inline:true 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/inline/dist/index.cjs.js",
     "'use strict';
 
 function createCommonjsModule(fn, module) {
@@ -349,12 +349,30 @@ module.exports = index;
 exports[`no-js-transform 1`] = `
 Array [
   Array [
-    "dist/bili.cjs.js",
+    "test/fixtures/no-js-transform/dist/index.cjs.js",
     "'use strict';
 
 var index = () => {}
 
 module.exports = index;
+",
+  ],
+]
+`;
+
+exports[`virtualModules 1`] = `
+Array [
+  Array [
+    "test/fixtures/virtual/dist/dayyum.cjs.js",
+    "'use strict';
+
+var baz = 2
+
+var bar = baz + 1
+
+var dayyum = bar + 123
+
+module.exports = dayyum;
 ",
   ],
 ]

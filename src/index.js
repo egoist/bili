@@ -20,6 +20,7 @@ import hashbangPlugin from 'rollup-plugin-hashbang'
 import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
 import isCI from 'is-ci'
+import virtualModulesPlugin from './virtual-modules-plugin'
 import progressPlugin from './progress-plugin'
 import template from './template'
 import getBanner from './get-banner'
@@ -237,7 +238,7 @@ export default class Bili extends EventEmitter {
     const banner = getBanner(options.banner, this.pkg)
 
     let external = getArrayOption(options, 'external') || []
-    external = external.map(e => (e.startsWith('./') ? path.resolve(e) : e))
+    external = external.map(e => (e.startsWith('./') ? path.resolve(options.cwd, e) : e))
     let globals = options.globals || options.global
     if (typeof globals === 'object') {
       external = [...new Set(external.concat(Object.keys(globals)))]
@@ -298,6 +299,8 @@ export default class Bili extends EventEmitter {
           options.progress !== false &&
           progressPlugin(),
         hashbangPlugin(),
+        options.virtualModules &&
+          virtualModulesPlugin(options.virtualModules, this.options.cwd),
         ...this.loadUserPlugins({
           filename: outFilename,
           plugins: getArrayOption(options, 'plugin') || []
@@ -424,11 +427,14 @@ export default class Bili extends EventEmitter {
       inputFiles = 'src/index.js'
     }
 
-    inputFiles = await globby(inputFiles, { cwd: this.options.cwd }).then(res =>
-      res.map(v => relativePath(this.resolveCwd(v))))
+    if (this.options.virtualModules) {
+      inputFiles = inputFiles.map(v => relativePath(this.resolveCwd(v)))
+    } else {
+      inputFiles = await globby(inputFiles, { cwd: this.options.cwd }).then(res => res.map(v => relativePath(this.resolveCwd(v))))
 
-    if (inputFiles.length === 0) {
-      throw new BiliError('No matched files to bundle.')
+      if (inputFiles.length === 0) {
+        throw new BiliError('No matched files to bundle.')
+      }
     }
 
     const formats = getArrayOption(this.options, 'format') || FORMATS

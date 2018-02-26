@@ -84,6 +84,13 @@ Default: `false` or `true` when [`format`](#format) is `umd` or `iife`
 
 Inline node modules into final bundle.
 
+### cwd
+
+Type: `string`<br>
+Default: `process.cwd()`
+
+The base dir to resolve relative paths from.
+
 ### external
 
 Type: `Array` `function`
@@ -227,6 +234,49 @@ const prod = 'development' === 'production'
 <p class="tip">
 Note that in `umd` and `iife` format, `NODE_ENV` will default to `development` when uncompressed or `production` when compressed.
 </p>
+
+### virtualModules
+
+Type: `object`
+
+Load modules from memory.
+
+Let's say you have `src/index.js`:
+
+```js
+import foo from 'foo'
+
+console.log(foo + 'bar')
+```
+
+And config file:
+
+```js
+module.exports = {
+  input: './src/index.js',
+  virtualModules: {
+    foo: `export default 'foo'`
+  }
+}
+```
+
+Then the result would be:
+
+```js
+console.log('foobar')
+```
+
+The entry of `virtualModules` could be a bare module id or absolute path or relative path:
+
+```js
+{
+  foo: 'export default 1',
+  '/path/to/bar': 'export default 2',
+  './baz': 'export default 3'
+}
+```
+
+Note that relative paths are relative to [cwd](#cwd).
 
 ### sizeLimit
 

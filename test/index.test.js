@@ -5,15 +5,15 @@ import Bili from '../src'
 process.env.BILI_TEST = true
 process.env.BABEL_ENV = 'anything-not-test'
 
-function fixture(name) {
-  return path.join(__dirname, 'fixtures', name)
+function fixture(...args) {
+  return path.join(__dirname, 'fixtures', ...args)
 }
 
 function snapshot({ title, input, ...args }) {
   input = Array.isArray(input) ? input : [input]
   test(title, async () => {
     const { bundles } = await Bili.generate({
-      input: input.map(v => fixture(v)),
+      input,
       ...args
     })
     expect(Object.keys(bundles)
@@ -24,38 +24,43 @@ function snapshot({ title, input, ...args }) {
 
 snapshot({
   title: 'defaults',
-  input: 'defaults/index.js'
+  input: 'index.js',
+  cwd: fixture('defaults')
 })
 
 snapshot({
   title: 'buble:async',
-  input: 'buble/async.js',
-  js: 'buble'
+  input: 'async.js',
+  js: 'buble',
+  cwd: fixture('buble')
 })
 
 snapshot({
   title: 'buble:async-and-object-rest-spread',
-  input: 'buble/async-dot-dot-dot.js',
-  js: 'buble'
+  input: 'async-dot-dot-dot.js',
+  js: 'buble',
+  cwd: fixture('buble')
 })
 
 snapshot({
   title: 'buble:react-jsx',
-  input: 'buble/react-jsx.js',
-  js: 'buble'
+  input: 'react-jsx.js',
+  js: 'buble',
+  cwd: fixture('buble')
 })
 
 snapshot({
   title: 'buble:vue-jsx',
-  input: 'buble/vue-jsx.js',
+  input: 'vue-jsx.js',
   jsx: 'vue',
-  js: 'buble'
+  js: 'buble',
+  cwd: fixture('buble')
 })
 
 snapshot({
   title: 'banner:true',
-  input: 'banner/index.js',
   banner: true,
+  input: 'index.js',
   cwd: fixture('banner')
 })
 
@@ -68,31 +73,36 @@ snapshot({
     license: 'GPL',
     name: 'name',
     version: '1.2.3'
-  }
+  },
+  cwd: fixture()
 })
 
 snapshot({
   title: 'no-js-transform',
-  input: 'no-js-transform/index.js',
-  js: false
+  js: false,
+  input: 'index.js',
+  cwd: fixture('no-js-transform')
 })
 
 snapshot({
   title: 'banner:string',
   input: 'default.js',
-  banner: 'woot'
+  banner: 'woot',
+  cwd: fixture()
 })
 
 snapshot({
   title: 'exclude file',
-  input: 'exclude-file/index.js',
-  external: ['./test/fixtures/exclude-file/foo.js']
+  input: 'index.js',
+  external: ['./foo.js'],
+  cwd: fixture('exclude-file')
 })
 
 snapshot({
   title: 'extendOptions',
   format: 'umd,umd-min,cjs',
-  input: ['extend-options/foo.js', 'extend-options/bar.js'],
+  input: ['foo.js', 'bar.js'],
+  cwd: fixture('extend-options'),
   extendOptions(options, { input, format, compress }) {
     if (input.endsWith('foo.js')) {
       options.moduleName = 'endsWithFoo'
@@ -109,13 +119,15 @@ snapshot({
 
 snapshot({
   title: 'inline:true',
-  input: 'inline/index.js',
-  inline: true
+  inline: true,
+  input: 'index.js',
+  cwd: fixture('inline')
 })
 
 snapshot({
   title: 'async',
-  input: 'async/index.js'
+  input: 'index.js',
+  cwd: fixture('async')
 })
 
 describe('multi formats without suffix error', () => {
@@ -123,9 +135,11 @@ describe('multi formats without suffix error', () => {
     expect.assertions(1)
     try {
       await Bili.generate({
-        input: fixture('defaults/index.js'),
+        input: 'index.js',
         format: ['cjs', 'umd'],
-        filename: '[name].js'
+        filename: '[name].js',
+        cwd: fixture('defaults'),
+        moduleName: 'foo'
       })
     } catch (err) {
       expect(err.message).toMatch(/Multiple files are emitting to the same path/)
@@ -134,9 +148,11 @@ describe('multi formats without suffix error', () => {
 
   test('it does not throw', async () => {
     await Bili.generate({
-      input: fixture('defaults/index.js'),
+      input: 'index.js',
       format: ['umd-min', 'umd'],
-      filename: '[name].js'
+      filename: '[name].js',
+      cwd: fixture('defaults'),
+      moduleName: 'foo'
     })
   })
 })
@@ -151,4 +167,16 @@ test('cwd', async () => {
   // 2. output file is relative to `cwd`
   const outputPath = Object.keys(bili.bundles)[0]
   expect(outputPath).toMatch('/test/fixtures/defaults/dist/index.cjs.js')
+})
+
+snapshot({
+  title: 'virtualModules',
+  input: './dayyum',
+  cwd: fixture('virtual'),
+  virtualModules: {
+    './dayyum': `import bar from './bar'\nexport default bar + 123`,
+    // Relative path is relative to process.cwd()
+    './bar': `import baz from 'baz';export default baz + 1`,
+    baz: `export default 2`
+  }
 })
