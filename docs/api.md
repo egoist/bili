@@ -171,7 +171,7 @@ module.exports = {
 
 Type: `string`<br>
 Default: `browser`<br>
-Possible values: `node` `node:{NUMBER}`
+Possible values: `node` `node:{TARGET}`
 
 Compile for specific target:
 
