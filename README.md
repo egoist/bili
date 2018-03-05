@@ -49,7 +49,7 @@ bili
 Then you will get `./dist/index.cjs.js`. To generate in more formats, try:
 
 ```bash
-bili --format cjs,es,umd,umd-min
+bili --format cjs --format es --format umd --format umd-min
 ```
 
 Then you will get:
