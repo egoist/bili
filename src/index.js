@@ -312,6 +312,7 @@ export default class Bili extends EventEmitter {
           filename: outFilename,
           plugins: getArrayOption(options, 'plugin') || []
         }),
+        jsonPlugin(),
         require('rollup-plugin-postcss')({
           extract: true,
           minimize: compress,
@@ -345,6 +346,7 @@ export default class Bili extends EventEmitter {
           jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
             babelrc: false,
+            include: '**/*.js',
             exclude: 'node_modules/**',
             presets: [
               [
@@ -372,7 +374,6 @@ export default class Bili extends EventEmitter {
             ...options.nodeResolve
           }),
         inline && commonjsPlugin(options.commonjs),
-        jsonPlugin(),
         compress &&
           minifier.startsWith('uglify-') &&
           uglifyPlugin(
