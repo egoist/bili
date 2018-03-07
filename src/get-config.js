@@ -4,14 +4,14 @@ import chalk from 'chalk'
 import findBabelConfig from 'find-babel-config'
 import logger from './logger'
 
-export function getBabelConfig(cwd, babelOptions) {
+export function getBabelConfig(cwd, disableBabelRc, babelOptions) {
   // Only find babelrc one level deep
-  const { file, config } = findBabelConfig.sync(cwd, 1)
+  const { file } = findBabelConfig.sync(cwd, 1)
   const babelConfig = {
     babelrc: false
   }
 
-  if (file && config.babelrc !== false) {
+  if (file && !disableBabelRc) {
     logger.debug(`${chalk.bold('Babel config')}:\n${file}`)
     babelConfig.extends = file
   }

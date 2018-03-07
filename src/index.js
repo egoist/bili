@@ -72,6 +72,7 @@ export default class Bili extends EventEmitter {
       cwd: process.cwd(),
       target: 'browser',
       js: 'babel',
+      babel: {},
       ...getBiliConfig(),
       ...options
     }
@@ -82,7 +83,11 @@ export default class Bili extends EventEmitter {
       buble: this.options.js === 'buble'
     }
     this.options.babel = {
-      ...getBabelConfig(this.options.cwd, this.babelPresetOptions),
+      ...getBabelConfig(
+        this.options.cwd,
+        this.options.babel.babelrc === false,
+        this.babelPresetOptions
+      ),
       ...this.options.babel
     }
     this.pkg = readPkg(this.options.cwd)

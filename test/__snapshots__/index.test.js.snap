@@ -21,6 +21,28 @@ module.exports = index;
 ]
 `;
 
+exports[`babel:disable-config 1`] = `
+Array [
+  Array [
+    "test/fixtures/babel/with-config/dist/index.cjs.js",
+    "'use strict';
+
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError(\\"Cannot call a class as a function\\");
+  }
+}
+
+var _class = function _class() {
+  _classCallCheck(this, _class);
+};
+
+module.exports = _class;
+",
+  ],
+]
+`;
+
 exports[`babel:with-config 1`] = `
 Array [
   Array [

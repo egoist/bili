@@ -191,3 +191,12 @@ snapshot({
   input: 'index.js',
   cwd: fixture('babel/with-config')
 })
+
+snapshot({
+  title: 'babel:disable-config',
+  input: 'index.js',
+  cwd: fixture('babel/with-config'),
+  babel: {
+    babelrc: false
+  }
+})
