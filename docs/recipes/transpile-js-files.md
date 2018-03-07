@@ -14,6 +14,8 @@ We use a sane default config for Babel, basically it:
 * Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
 * Reac/Vue JSX
 
+You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babel.babelrc` flag.
+
 ## Buble
 
 What Buble supports:
