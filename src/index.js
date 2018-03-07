@@ -71,8 +71,19 @@ export default class Bili extends EventEmitter {
       minifier: 'uglify-es',
       cwd: process.cwd(),
       target: 'browser',
+      js: 'babel',
       ...getBiliConfig(),
       ...options
+    }
+    this.babelPresetOptions = {
+      objectAssign: this.options.objectAssign,
+      jsx: this.options.jsx,
+      target: this.options.target,
+      buble: this.options.js === 'buble'
+    }
+    this.options.babel = {
+      ...getBabelConfig(this.options.cwd, this.babelPresetOptions),
+      ...this.options.babel
     }
     this.pkg = readPkg(this.options.cwd)
     this.bundles = {}
@@ -187,6 +198,36 @@ export default class Bili extends EventEmitter {
     }))
   }
 
+  getJsOptions(name, pluginOptions) {
+    if (name === 'babel') {
+      return this.options.babel
+    }
+
+    if (name === 'typescript' || name === 'typescript2') {
+      let typescript
+      try {
+        typescript = localRequire('typescript')
+      } catch (err) {}
+      return {
+        typescript,
+        ...pluginOptions
+      }
+    }
+
+    if (name === 'buble') {
+      return {
+        ...pluginOptions,
+        transforms: {
+          // Skip transforming for..of
+          forOf: false,
+          ...(pluginOptions && pluginOptions.transforms)
+        }
+      }
+    }
+
+    return pluginOptions
+  }
+
   // eslint-disable-next-line complexity
   async createConfig(
     { input, format, formatFull, compress },
@@ -229,18 +270,11 @@ export default class Bili extends EventEmitter {
     // Relative to `this.options.cwd`
     const file = this.resolveCwd(outDir, outFilename)
 
-    const babelOptions = {
-      objectAssign: options.objectAssign,
-      jsx: options.jsx,
-      target: options.target
-    }
-
     const transformJS = options.js !== false
     const jsPluginName = transformJS && getJsPluginName(options.js, input)
     const jsPlugin = transformJS && getJsPlugin(jsPluginName)
     const jsOptions =
-      transformJS &&
-      getJsOptions(jsPluginName, options[jsPluginName], babelOptions)
+      transformJS && this.getJsOptions(jsPluginName, options[jsPluginName])
 
     const banner = getBanner(options.banner, this.pkg)
 
@@ -345,20 +379,9 @@ export default class Bili extends EventEmitter {
         transformJS &&
           jsPluginName === 'buble' &&
           require('rollup-plugin-babel')({
-            babelrc: false,
             include: '**/*.js',
             exclude: 'node_modules/**',
-            presets: [
-              [
-                require.resolve('./babel'),
-                {
-                  ...babelOptions,
-                  buble: true
-                }
-              ]
-            ],
-            // Your can still set babel options while using buble
-            ...options.babel
+            ...this.options.babel
           }),
         transformJS &&
           jsPlugin({
@@ -584,41 +607,6 @@ function getFilename({ input, format, filename, compress, name }) {
   return compress ?
     path.basename(res, path.extname(res)) + '.min' + path.extname(res) :
     res
-}
-
-function getJsOptions(name, jsOptions, babelOptions) {
-  if (name === 'babel') {
-    return {
-      // Do not try to use .babelrc in our tests
-      babelrc: !process.env.BILI_TEST,
-      ...getBabelConfig(babelOptions),
-      ...jsOptions
-    }
-  }
-
-  if (name === 'typescript' || name === 'typescript2') {
-    let typescript
-    try {
-      typescript = localRequire('typescript')
-    } catch (err) {}
-    return {
-      typescript,
-      ...jsOptions
-    }
-  }
-
-  if (name === 'buble') {
-    return {
-      ...jsOptions,
-      transforms: {
-        // Skip transforming for..of
-        forOf: false,
-        ...(jsOptions && jsOptions.transforms)
-      }
-    }
-  }
-
-  return jsOptions
 }
 
 function getJsPlugin(name) {

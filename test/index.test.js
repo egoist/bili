@@ -1,8 +1,6 @@
 import path from 'path'
 import Bili from '../src'
 
-// Ensure that we don't load .babelrc in rollup-plugin-babel
-process.env.BILI_TEST = true
 process.env.BABEL_ENV = 'anything-not-test'
 
 function fixture(...args) {
@@ -186,4 +184,10 @@ snapshot({
   input: 'index.js',
   cwd: fixture('target/node'),
   target: 'node'
+})
+
+snapshot({
+  title: 'babel:with-config',
+  input: 'index.js',
+  cwd: fixture('babel/with-config')
 })

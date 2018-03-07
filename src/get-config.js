@@ -1,12 +1,26 @@
 import path from 'path'
 import UseConfig from 'use-config'
 import chalk from 'chalk'
+import findBabelConfig from 'find-babel-config'
 import logger from './logger'
 
-export function getBabelConfig(options) {
-  return {
-    presets: [[require.resolve('./babel'), options]]
+export function getBabelConfig(cwd, babelOptions) {
+  // Only find babelrc one level deep
+  const { file, config } = findBabelConfig.sync(cwd, 1)
+  const babelConfig = {
+    babelrc: false
   }
+
+  if (file && config.babelrc !== false) {
+    logger.debug(`${chalk.bold('Babel config')}:\n${file}`)
+    babelConfig.extends = file
+  }
+  if (!babelConfig.extends) {
+    // Use our default preset when no babelrc was found
+    babelConfig.presets = [[require.resolve('./babel'), babelOptions]]
+  }
+
+  return babelConfig
 }
 
 export function getBiliConfig() {

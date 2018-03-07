@@ -21,6 +21,20 @@ module.exports = index;
 ]
 `;
 
+exports[`babel:with-config 1`] = `
+Array [
+  Array [
+    "test/fixtures/babel/with-config/dist/index.cjs.js",
+    "'use strict';
+
+class index {}
+
+module.exports = index;
+",
+  ],
+]
+`;
+
 exports[`banner:object 1`] = `
 Array [
   Array [
