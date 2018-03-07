@@ -16,6 +16,8 @@ We use a sane default config for Babel, basically it:
 
 You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babel.babelrc` flag.
 
+To check if any `.babelrc` file is used, run `bili` with `--debug` flag.
+
 ## Buble
 
 What Buble supports:
