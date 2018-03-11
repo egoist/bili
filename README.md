@@ -83,6 +83,7 @@ Here're some quick links:
 * [vue-data-tablee](https://github.com/VitorLuizC/vue-data-tablee) - A pretty simple Vue DataTable component with some features like sort and select rows.
 * [vue-uuid](https://github.com/VitorLuizC/vue-uuid) - Vue plugin to add UUID methods to Vue instance.
 * [vue-gh-corners](https://github.com/gluons/vue-gh-corners) - :octocat: GitHub Corners for Vue.
+* [alphaX](https://github.com/ulivz/alphax) - :fire: Fueling your scaffolding.
 * Feel free to submit yours
 
 ## Contributing
