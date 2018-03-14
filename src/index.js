@@ -172,6 +172,9 @@ export default class Bili extends EventEmitter {
       if (pluginName === 'vue') {
         pluginOptions = {
           include: ['**/*.vue'],
+          // Let rollup-plugin-postcss handle external CSS dependencies
+          autoStyles: false,
+          styleToImports: true,
           css: path.resolve(
             this.options.outDir,
             filename.replace(/\.[^.]+$/, '.css')
