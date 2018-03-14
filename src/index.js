@@ -91,6 +91,7 @@ export default class Bili extends EventEmitter {
       ...this.options.babel
     }
     this.pkg = readPkg(this.options.cwd)
+    this.pkgName = this.pkg.name && this.pkg.name.replace(/^@.+\//, '')
     this.bundles = {}
     this.cssBundles = new Map()
 
@@ -269,7 +270,7 @@ export default class Bili extends EventEmitter {
       compress,
       // If it's not bundling multi-entry
       // The name can fallback to pkg name
-      name: options.name || (!multipleEntries && this.pkg.name)
+      name: options.name || (!multipleEntries && this.pkgName)
     })
     // The path to output file
     // Relative to `this.options.cwd`
@@ -576,7 +577,7 @@ export default class Bili extends EventEmitter {
     return (
       this.options.moduleName ||
       this.pkg.moduleName ||
-      (this.pkg.name ? camelcase(this.pkg.name) : undefined)
+      (this.pkgName ? camelcase(this.pkgName) : undefined)
     )
   }
 }
