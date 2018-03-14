@@ -401,7 +401,7 @@ export default class Bili extends EventEmitter {
             browser: !options.target.startsWith('node'),
             ...options.nodeResolve
           }),
-        inline && commonjsPlugin(options.commonjs),
+        commonjsPlugin(options.commonjs),
         compress &&
           minifier.startsWith('uglify-') &&
           uglifyPlugin(

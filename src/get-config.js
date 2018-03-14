@@ -8,7 +8,8 @@ export function getBabelConfig(cwd, disableBabelRc, babelOptions) {
   // Only find babelrc one level deep
   const { file } = findBabelConfig.sync(cwd, 1)
   const babelConfig = {
-    babelrc: false
+    babelrc: false,
+    runtimeHelpers: true
   }
 
   if (file && !disableBabelRc) {
