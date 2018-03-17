@@ -12,7 +12,7 @@ We use a sane default config for Babel, basically it:
 * Supports [Flow](https://flow.org).
 * Compiles `object-rest-spread` to `Object.assign`.
 * Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
-* Reac/Vue JSX
+* React/Vue JSX
 
 You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babel.babelrc` flag.
 
