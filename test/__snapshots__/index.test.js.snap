@@ -43,6 +43,20 @@ module.exports = _class;
 ]
 `;
 
+exports[`babel:object-rest-spread 1`] = `
+Array [
+  Array [
+    "test/fixtures/babel/object-rest-spread/dist/index.cjs.js",
+    "'use strict';
+
+var index = Object.assign({}, a);
+
+module.exports = index;
+",
+  ],
+]
+`;
+
 exports[`babel:with-config 1`] = `
 Array [
   Array [

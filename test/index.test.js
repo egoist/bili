@@ -200,3 +200,9 @@ snapshot({
     babelrc: false
   }
 })
+
+snapshot({
+  title: 'babel:object-rest-spread',
+  input: 'index.js',
+  cwd: fixture('babel/object-rest-spread')
+})
