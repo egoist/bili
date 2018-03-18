@@ -8,28 +8,26 @@
   },
   "main": "dist/index.js",
   "bin": "dist/cli.js",
-  "files": [
-    "dist",
-    "babel.js"
-  ],
+  "files": ["dist", "babel.js"],
   "scripts": {
     "test": "npm run lint && jest",
     "test:cov": "npm run lint && jest --coverage",
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
     "prepublishOnly": "npm run build",
-    "build": "bili src/{index,cli,babel}.js --filename [name].js --js babel --no-babel.babelrc",
+    "build":
+      "bili src/{index,cli,babel}.js --filename [name].js --js babel --no-babel.babelrc",
     "watch": "yarn build --watch"
   },
   "author": "EGOIST <0x142857@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.39",
-    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.39",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.39",
-    "@babel/plugin-transform-flow-strip-types": "^7.0.0-beta.39",
-    "@babel/plugin-transform-react-jsx": "^7.0.0-beta.39",
-    "@babel/preset-env": "^7.0.0-beta.39",
+    "@babel/core": "7.0.0-beta.39",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.39",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.39",
+    "@babel/plugin-transform-flow-strip-types": "7.0.0-beta.39",
+    "@babel/plugin-transform-react-jsx": "7.0.0-beta.39",
+    "@babel/preset-env": "7.0.0-beta.39",
     "babel-plugin-alter-object-assign": "^1.0.1",
     "babel-preset-vue": "^2.0.1",
     "boxen": "^1.3.0",
@@ -77,17 +75,12 @@
     "prettier-eslint-cli": "4.7.0"
   },
   "eslintConfig": {
-    "extends": [
-      "xo",
-      "rem"
-    ],
+    "extends": ["xo", "rem"],
     "env": {
       "jest": true
     }
   },
-  "eslintIgnore": [
-    "dist/**"
-  ],
+  "eslintIgnore": ["dist/**"],
   "jest": {
     "testEnvironment": "node"
   },
