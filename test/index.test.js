@@ -206,3 +206,10 @@ snapshot({
   input: 'index.js',
   cwd: fixture('babel/object-rest-spread')
 })
+
+snapshot({
+  title: 'uglify',
+  input: 'index.js',
+  cwd: fixture('uglify'),
+  format: 'cjs-min'
+})

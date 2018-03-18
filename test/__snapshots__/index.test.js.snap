@@ -260,9 +260,9 @@ module.exports = bar;
 	(global.umd = factory());
 }(this, (function () { 'use strict';
 
-var bar = 'bar';
+	var bar = 'bar';
 
-return bar;
+	return bar;
 
 })));
 ",
@@ -289,9 +289,9 @@ module.exports = foo;
 	(global.umd = factory());
 }(this, (function () { 'use strict';
 
-var foo = 'foo';
+	var foo = 'foo';
 
-return foo;
+	return foo;
 
 })));
 ",
@@ -310,12 +310,7 @@ Array [
     "test/fixtures/inline/dist/index.cjs.js",
     "'use strict';
 
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var pMap = createCommonjsModule(function (module) {
-module.exports = (iterable, mapper, opts) => new Promise((resolve, reject) => {
+var pMap = (iterable, mapper, opts) => new Promise((resolve, reject) => {
 	opts = Object.assign({
 		concurrency: Infinity
 	}, opts);
@@ -381,7 +376,6 @@ module.exports = (iterable, mapper, opts) => new Promise((resolve, reject) => {
 		}
 	}
 });
-});
 
 var pAll = (iterable, opts) => pMap(iterable, el => el(), opts);
 
@@ -419,6 +413,16 @@ Array [
 class Foo {}
 
 module.exports = Foo;
+",
+  ],
+]
+`;
+
+exports[`uglify 1`] = `
+Array [
+  Array [
+    "test/fixtures/uglify/dist/index.cjs.min.js",
+    "\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});var a=1;exports.a=a;
 ",
   ],
 ]

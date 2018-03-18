@@ -208,16 +208,6 @@ Default: `auto`
 
 https://rollupjs.org/#exports. You will need it to disable the warning when you're mixing default export and named exports.
 
-### minifier
-
-Type: `string`<br>
-Default: `uglify-es`<br>
-Possible values: `uglify-es` `uglify-js`
-
-Choose a minifier.
-
-FYI, `uglify-js` cannot minify ES2015+ code.
-
 ### replace
 
 Type: `object`

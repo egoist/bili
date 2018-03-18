@@ -68,7 +68,6 @@ export default class Bili extends EventEmitter {
     this.options = {
       outDir: 'dist',
       filename: '[name][suffix].js',
-      minifier: 'uglify-es',
       cwd: process.cwd(),
       target: 'browser',
       js: 'babel',
@@ -260,7 +259,6 @@ export default class Bili extends EventEmitter {
     const {
       outDir,
       filename,
-      minifier,
       inline = format === 'umd' || format === 'iife'
     } = options
 
@@ -407,18 +405,14 @@ export default class Bili extends EventEmitter {
           }),
         commonjsPlugin(options.commonjs),
         compress &&
-          minifier.startsWith('uglify-') &&
-          uglifyPlugin(
-            {
-              ...options.uglify,
-              output: {
-                ...(options.uglify && options.uglify.output),
-                // Add banner (if there is)
-                preamble: banner
-              }
-            },
-            minifier === 'uglify-es' ? require('uglify-es').minify : undefined
-          ),
+          uglifyPlugin({
+            ...options.uglify,
+            output: {
+              ...(options.uglify && options.uglify.output),
+              // Add banner (if there is)
+              preamble: banner
+            }
+          }),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
         {
