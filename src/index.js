@@ -388,7 +388,9 @@ export default class Bili extends EventEmitter {
           require('rollup-plugin-babel')({
             include: '**/*.js',
             exclude: 'node_modules/**',
-            ...this.options.babel
+            presets: [
+              [require.resolve('./babel'), this.options.babelPresetOptions]
+            ]
           }),
         transformJS &&
           jsPlugin({
