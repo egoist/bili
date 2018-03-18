@@ -33,11 +33,11 @@ function _classCallCheck(instance, Constructor) {
   }
 }
 
-var _class = function _class() {
-  _classCallCheck(this, _class);
+var _default = function _default() {
+  _classCallCheck(this, _default);
 };
 
-module.exports = _class;
+module.exports = _default;
 ",
   ],
 ]

@@ -31,7 +31,9 @@ export default (
     [
       require.resolve('@babel/plugin-proposal-object-rest-spread'),
       {
-        useBuiltIns: true
+        useBuiltIns: true,
+        // TODO: temp fix for https://github.com/babel/babel/issues/7590
+        loose: true
       }
     ],
     [
