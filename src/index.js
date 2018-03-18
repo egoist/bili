@@ -79,7 +79,7 @@ export default class Bili extends EventEmitter {
       objectAssign: this.options.objectAssign,
       jsx: this.options.jsx,
       target: this.options.target,
-      buble: this.options.js === 'buble'
+      buble: false
     }
     this.options.babel = {
       ...getBabelConfig(
@@ -388,7 +388,13 @@ export default class Bili extends EventEmitter {
           require('rollup-plugin-babel')({
             include: '**/*.js',
             exclude: 'node_modules/**',
-            ...this.options.babel
+            babelrc: false,
+            presets: [
+              [require.resolve('./babel'), {
+                ...this.babelPresetOptions,
+                buble: true
+              }]
+            ]
           }),
         transformJS &&
           jsPlugin({
