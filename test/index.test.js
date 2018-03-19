@@ -7,10 +7,17 @@ function fixture(...args) {
   return path.join(__dirname, 'fixtures', ...args)
 }
 
+function generate(options) {
+  return Bili.generate({
+    config: false,
+    ...options
+  })
+}
+
 function snapshot({ title, input, ...args }) {
   input = Array.isArray(input) ? input : [input]
   test(title, async () => {
-    const { bundles } = await Bili.generate({
+    const { bundles } = await generate({
       input,
       ...args
     })
@@ -132,7 +139,7 @@ describe('multi formats without suffix error', () => {
   test('it throws', async () => {
     expect.assertions(1)
     try {
-      await Bili.generate({
+      await generate({
         input: 'index.js',
         format: ['cjs', 'umd'],
         filename: '[name].js',
@@ -145,7 +152,7 @@ describe('multi formats without suffix error', () => {
   })
 
   test('it does not throw', async () => {
-    await Bili.generate({
+    await generate({
       input: 'index.js',
       format: ['umd-min', 'umd'],
       filename: '[name].js',
@@ -157,7 +164,7 @@ describe('multi formats without suffix error', () => {
 
 test('cwd', async () => {
   // This tests two things
-  const bili = await Bili.generate({
+  const bili = await generate({
     // 1. resolve `input` from `cwd`
     input: 'index.js',
     cwd: fixture('defaults')

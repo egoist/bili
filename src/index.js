@@ -73,7 +73,7 @@ export default class Bili extends EventEmitter {
       target: 'browser',
       js: 'babel',
       babel: {},
-      ...getBiliConfig(),
+      ...(options.config !== false && getBiliConfig()),
       ...options
     }
     this.babelPresetOptions = {
