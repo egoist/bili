@@ -19,6 +19,7 @@ import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
 import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
+import resolveFrom from 'resolve-from'
 import isCI from 'is-ci'
 import virtualModulesPlugin from './virtual-modules-plugin'
 import progressPlugin from './progress-plugin'
@@ -326,7 +327,7 @@ export default class Bili extends EventEmitter {
             // Skip built-in modules
             !isBuiltinModule(source) &&
             // Check if the module exists
-            !fs.existsSync(path.resolve('node_modules', source))
+            resolveFrom.silent(process.cwd(), source) === null
           ) {
             logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
           }

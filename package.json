@@ -46,6 +46,7 @@
     "is-ci": "^1.1.0",
     "log-update": "^2.3.0",
     "parse-package-name": "^0.1.0",
+    "resolve-from": "^4.0.0",
     "rollup": "^0.57.1",
     "rollup-plugin-alias": "^1.4.0",
     "rollup-plugin-babel": "^4.0.0-beta.2",
