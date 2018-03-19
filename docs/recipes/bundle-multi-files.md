@@ -66,14 +66,3 @@ var main = _interopDefault(require('./index'))
 
 console.log(main)
 ```
-
-### Alternative ways
-
-```js
-#!/usr/bin/env node
-import main from '.'
-
-console.log('.')
-```
-
-Somehow importing `'.'` instead of `'./index'` seems to work around this too.

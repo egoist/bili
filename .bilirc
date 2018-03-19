@@ -1,0 +1,8 @@
+{
+  "input": "src/{index,cli,babel}.js",
+  "filename": "[name].js",
+  "babel": {
+    "babelrc": false
+  },
+  "external": ["./src/index.js"]
+}
