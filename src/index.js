@@ -391,10 +391,13 @@ export default class Bili extends EventEmitter {
             exclude: 'node_modules/**',
             babelrc: false,
             presets: [
-              [require.resolve('./babel'), {
-                ...this.babelPresetOptions,
-                buble: true
-              }]
+              [
+                require.resolve('./babel'),
+                {
+                  ...this.babelPresetOptions,
+                  buble: true
+                }
+              ]
             ]
           }),
         transformJS &&
@@ -551,24 +554,20 @@ export default class Bili extends EventEmitter {
 
     // Since we update `this.bundles` in Rollup plugin's `ongenerate` callback
     // We have to put follow code into another callback to execute at th end of call stack
-    await nextTick(() => {
-      const bundleCount = Object.keys(this.bundles).length
-      if (bundleCount > 0 && bundleCount < formats.length * inputFiles.length) {
-        const hasName = this.options.filename.includes('[name]')
-        const hasSuffix = this.options.filename.includes('[suffix]')
-        const msg = `Multiple files are emitting to the same path.\nPlease check if ${
-          hasName || inputFiles.length === 1 ?
-            '' :
-            `${chalk.green('[name]')}${hasSuffix ? '' : ' or '}`
-        }${
-          hasSuffix ? '' : chalk.green('[suffix]')
-        } is missing in ${chalk.green('filename')} option.\n${getDocRef(
-          'api',
-          'filename'
-        )}`
-        throw new BiliError(msg)
-      }
-    })
+    await nextTick()
+    const bundleCount = Object.keys(this.bundles).length
+
+    if (bundleCount < formats.length * inputFiles.length) {
+      const hasName = this.options.filename.includes('[name]')
+      const hasSuffix = this.options.filename.includes('[suffix]')
+      const msg = `Multiple files are emitting to the same path.\nPlease check if ${
+        hasName || inputFiles.length === 1 ?
+          '' :
+          `${chalk.green('[name]')}${hasSuffix ? '' : ' or '}`
+      }${hasSuffix ? '' : chalk.green('[suffix]')} is missing in ${chalk.green('filename')} option.\n${getDocRef('api', 'filename')}`
+
+      throw new BiliError(msg)
+    }
 
     // Write potential CSS files
     await this.writeCSS()
@@ -660,15 +659,10 @@ function handleLoadPluginError(moduleName, err) {
   }
 }
 
-function nextTick(fn) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      try {
-        fn()
-        resolve()
-      } catch (err) {
-        reject(err)
-      }
+function nextTick() {
+  return new Promise(resolve => {
+    process.nextTick(() => {
+      resolve()
     })
   })
 }
