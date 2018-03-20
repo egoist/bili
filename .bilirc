@@ -4,5 +4,6 @@
   "babel": {
     "babelrc": false
   },
+  "target": "node",
   "external": ["./src/index.js"]
 }
