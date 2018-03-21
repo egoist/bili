@@ -84,6 +84,7 @@ Here're some quick links:
 * [vue-uuid](https://github.com/VitorLuizC/vue-uuid) - Vue plugin to add UUID methods to Vue instance.
 * [vue-gh-corners](https://github.com/gluons/vue-gh-corners) - :octocat: GitHub Corners for Vue.
 * [alphaX](https://github.com/ulivz/alphax) - :fire: Fueling your scaffolding.
+* [vuejs-storage](https://github.com/maple3142/vuejs-storage) - Vue.js and vuex plugin to persistence data with localStorage/sessionStorage.
 * Feel free to submit yours
 
 ## Contributing
