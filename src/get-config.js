@@ -3,6 +3,7 @@ import UseConfig from 'use-config'
 import chalk from 'chalk'
 import findBabelConfig from 'find-babel-config'
 import logger from './logger'
+import BiliError from './bili-error'
 
 export function getBabelConfig(cwd, disableBabelRc, babelOptions) {
   // Only find babelrc one level deep
@@ -24,14 +25,16 @@ export function getBabelConfig(cwd, disableBabelRc, babelOptions) {
   return babelConfig
 }
 
-export function getBiliConfig() {
+export function getBiliConfig(_config) {
   const useConfig = new UseConfig({
     name: 'bili',
-    files: ['package.json', '{name}.config.js', '.{name}rc']
+    files: _config ? [_config] : ['package.json', '{name}.config.js', '.{name}rc']
   })
   const { path: configPath, config } = useConfig.loadSync()
   if (configPath) {
     logger.debug(chalk.bold(`Bili config file: ${path.relative(process.cwd(), configPath)}`))
+  } else if (_config) {
+    throw new BiliError(`Cannot find Bili config file at ${_config}`)
   }
   return config
 }

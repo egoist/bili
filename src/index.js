@@ -37,15 +37,18 @@ const FORMATS = ['cjs']
 const prettyBytes = v => bytes.format(v, { unitSeparator: ' ' })
 
 export default class Bili extends EventEmitter {
-  static async generate(options) {
-    const bundle = await new Bili(options).bundle({ write: false })
-    return bundle
+  static generate(options) {
+    try {
+      return new Bili(options).bundle({ write: false })
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   static async write(options) {
-    const bundler = new Bili(options)
-    const startTime = Date.now()
     try {
+      const bundler = new Bili(options)
+      const startTime = Date.now()
       await bundler.bundle()
       const buildTime = Date.now() - startTime
       const time =
@@ -59,7 +62,7 @@ export default class Bili extends EventEmitter {
       }
       return bundler
     } catch (err) {
-      bundler.handleError(err)
+      handleError(err)
     }
   }
 
@@ -73,7 +76,7 @@ export default class Bili extends EventEmitter {
       target: 'browser',
       js: 'babel',
       babel: {},
-      ...(options.config !== false && getBiliConfig()),
+      ...(options.config !== false && getBiliConfig(options.config)),
       ...options
     }
     this.babelPresetOptions = {

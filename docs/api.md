@@ -10,7 +10,7 @@ Bili.write(options).then(() => {
 
 ## Use config file
 
-Following options are accepted both in CLI flags and config file,namely `bili.config.js`, `.bilirc`, `bili` key in `package.json`.
+Following options are accepted both in CLI flags and config file,namely `bili.config.js`, `.bilirc`, `bili` key in `package.json`. But you can also use a [custom config file](#config).
 
 ## options
 
@@ -25,6 +25,12 @@ Glob patterns or file paths.
 
 Type: `string`<br>
 Default: `dist`
+
+### config
+
+Type: `string`
+
+The path to your custom Bili config file.
 
 ### format
 

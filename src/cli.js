@@ -24,6 +24,10 @@ cli
     desc: 'Build and watch files',
     alias: 'w'
   })
+  .option('config', {
+    desc: 'Set the path to config file',
+    alias: 'c'
+  })
   .option('outDir', {
     desc: 'Output directory (default: "dist")',
     alias: ['o', 'd']
