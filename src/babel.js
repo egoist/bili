@@ -10,7 +10,7 @@ export default (
   let plugins = []
 
   if (jsx === 'vue') {
-    presets.push(require.resolve('babel-preset-vue'))
+    plugins.push(require.resolve('babel-plugin-transform-vue-jsx'))
   } else if (jsx === 'react') {
     plugins.push(require.resolve('@babel/plugin-transform-react-jsx'))
   } else if (typeof jsx === 'string') {
