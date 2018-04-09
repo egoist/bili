@@ -86,6 +86,7 @@ Here're some quick links:
 * [alphaX](https://github.com/ulivz/alphax) - :fire: Fueling your scaffolding.
 * [vuejs-storage](https://github.com/maple3142/vuejs-storage) - Vue.js and vuex plugin to persistence data with localStorage/sessionStorage.
 * [w7](https://github.com/ulivz/w7) - :shamrock: Serves the pure htmls, updates the browser on changes.
+* [consola](https://github.com/nuxt/consola) - Elegant Console Logger
 * Feel free to submit yours
 
 ## Contributing
