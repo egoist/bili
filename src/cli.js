@@ -63,7 +63,7 @@ cli
     desc: 'Set option for rollup-plugin-alias'
   })
   .option('replace', {
-    desc: 'Set option for rollup-plugin-replace'
+    desc: 'Set option for rollup-plugin-replace, eg: --replace.IS_DEV true'
   })
   .option('env', {
     desc: 'Replace env variables in your bundle',
