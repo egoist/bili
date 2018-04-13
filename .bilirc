@@ -1,9 +1,9 @@
 {
-  "input": "src/{index,cli,babel}.js",
+  "input": "src/{index,cli,cli_parser,babel}.js",
   "filename": "[name].js",
   "babel": {
     "babelrc": false
   },
   "target": "node",
-  "external": ["./src/index.js"]
+  "external": ["./src/index.js", "./src/cli_parser.js"]
 }
