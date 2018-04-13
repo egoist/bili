@@ -163,8 +163,9 @@ export default class Bili extends EventEmitter {
   }
 
   isSubpath(target) {
-    const relativePath = path.relative(this.options.cwd, target)
-    return relativePath.length > 0 && !/^\.\./.test(relativePath)
+    const cwd = this.resolveCwd() + path.sep
+    const targetPath = this.resolveCwd(target)
+    return cwd !== targetPath && targetPath.startsWith(cwd)
   }
 
   loadUserPlugins({ plugins, filename }) {
