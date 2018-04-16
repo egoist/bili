@@ -85,10 +85,10 @@ Set the `[name]` part of [`filename`](#filename).
 
 ### inline
 
-Type: `boolean`<br>
+Type: `boolean` `string` `string[]`<br>
 Default: `false` or `true` when [`format`](#format) is `umd` or `iife`
 
-Inline node modules into final bundle.
+Inline all node modules or specified node modules into final bundle.
 
 ### cwd
 

@@ -390,6 +390,28 @@ module.exports = index;
 ]
 `;
 
+exports[`inline-certain-modules 1`] = `
+Array [
+  Array [
+    "test/fixtures/inline-certain-modules/dist/index.cjs.js",
+    "'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var another = _interopDefault(require('another-module'));
+
+var fakeModule = function (a) {
+  return a;
+};
+
+var index = fakeModule(1, another);
+
+module.exports = index;
+",
+  ],
+]
+`;
+
 exports[`no-js-transform 1`] = `
 Array [
   Array [

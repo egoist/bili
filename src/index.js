@@ -262,9 +262,13 @@ export default class Bili extends EventEmitter {
 
     const {
       outDir,
-      filename,
-      inline = format === 'umd' || format === 'iife'
+      filename
     } = options
+
+    let inline = options.inline || (format === 'umd' || format === 'iife')
+    if (typeof inline === 'string') {
+      inline = [inline]
+    }
 
     const sourceMap = typeof options.map === 'boolean' ? options.map : compress
 
@@ -414,6 +418,7 @@ export default class Bili extends EventEmitter {
             extensions: ['.js', '.json'],
             preferBuiltIns: true,
             browser: !options.target.startsWith('node'),
+            only: Array.isArray(inline) ? inline : null,
             ...options.nodeResolve
           }),
         commonjsPlugin(options.commonjs),

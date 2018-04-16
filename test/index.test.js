@@ -220,3 +220,10 @@ snapshot({
   cwd: fixture('uglify'),
   format: 'cjs-min'
 })
+
+snapshot({
+  title: 'inline-certain-modules',
+  input: 'index.js',
+  cwd: fixture('inline-certain-modules'),
+  inline: 'fake-module'
+})
