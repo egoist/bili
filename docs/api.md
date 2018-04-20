@@ -218,7 +218,7 @@ https://rollupjs.org/#exports. You will need it to disable the warning when you'
 
 Type: `object`
 
-Add options for [rollup-plugin-replace](Add options to rollup-plugin-replace.).
+Add options for [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace).
 
 ### alias
 
