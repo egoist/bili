@@ -74,7 +74,7 @@ export default class Bili extends EventEmitter {
       filename: '[name][suffix].js',
       cwd: process.cwd(),
       target: 'browser',
-      js: 'babel',
+      js: null,
       babel: {},
       ...(options.config !== false && getBiliConfig(options.config)),
       ...options
