@@ -66,10 +66,10 @@ Dive into the [documentation](https://bili.egoist.moe) to see more neat features
 
 Here're some quick links:
 
-* [How to use Rollup plugins](https://egoist.moe/bili/#/recipes/use-rollup-plugins)
-* [How to use Flow/TypeScript or any compile-to-js language](https://egoist.moe/bili/#/recipes/transpile-js-files)
-* [How to transpile CSS files](https://egoist.moe/bili/#/recipes/transpile-css-files)
-* [How to transpile Vue files](https://egoist.moe/bili/#/recipes/transpile-vue-files)
+* [How to use Rollup plugins](https://bili.egoist.moe/#/recipes/use-rollup-plugins)
+* [How to use Flow/TypeScript or any compile-to-js language](https://bili.egoist.moe/#/recipes/transpile-js-files)
+* [How to transpile CSS files](https://bili.egoist.moe/#/recipes/transpile-css-files)
+* [How to transpile Vue files](https://bili.egoist.moe/#/recipes/transpile-vue-files)
 
 ## Bundled by Bili
 
@@ -91,11 +91,11 @@ Here're some quick links:
 
 ## Contributing
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+1.  Fork it!
+2.  Create your feature branch: `git checkout -b my-new-feature`
+3.  Commit your changes: `git commit -am 'Add some feature'`
+4.  Push to the branch: `git push origin my-new-feature`
+5.  Submit a pull request :D
 
 ## Author
 
