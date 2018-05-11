@@ -62,7 +62,7 @@ index.cjs.js        # CommonJS format
 index.es.js         # ES module format
 ```
 
-Dive into the [documentation](https://egoist.moe/bili) to see more neat features!
+Dive into the [documentation](https://bili.egoist.moe) to see more neat features!
 
 Here're some quick links:
 
