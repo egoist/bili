@@ -193,7 +193,8 @@ export default class Bili extends EventEmitter {
         // Local require is always relative to `process.cwd()`
         // Instead of `this.options.cwd`
         // We need to ensure that which is actually better
-        return localRequire(moduleName)(pluginOptions)
+        const p = localRequire(moduleName)
+        return p.default ? p.default(pluginOptions) : p(pluginOptions)
       } catch (err) {
         handleLoadPluginError(moduleName, err)
       }
