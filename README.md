@@ -87,6 +87,9 @@ Here're some quick links:
 * [vuejs-storage](https://github.com/maple3142/vuejs-storage) - Vue.js and vuex plugin to persistence data with localStorage/sessionStorage.
 * [w7](https://github.com/ulivz/w7) - :shamrock: Serves the pure htmls, updates the browser on changes.
 * [consola](https://github.com/nuxt/consola) - Elegant Console Logger
+* [vue-slide-bar](https://github.com/biigpongsatorn/vue-slide-bar) - 🎢 A simple Vue slider bar component.
+* [vue-svg-filler](https://github.com/biigpongsatorn/vue-svg-filler) - 🎨 Vue component for customize svg file.
+* [vue-lib-template](https://github.com/biigpongsatorn/vue-lib-template) - 🛠 A simple template for building and publishing component/library to NPM (bundled by bili).
 * Feel free to submit yours
 
 ## Contributing
