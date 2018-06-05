@@ -90,6 +90,10 @@ Here're some quick links:
 * [vue-slide-bar](https://github.com/biigpongsatorn/vue-slide-bar) - 🎢 A simple Vue slider bar component.
 * [vue-svg-filler](https://github.com/biigpongsatorn/vue-svg-filler) - 🎨 Vue component for customize svg file.
 * [vue-lib-template](https://github.com/biigpongsatorn/vue-lib-template) - 🛠 A simple template for building and publishing component/library to NPM (bundled by bili).
+* [vue-highlight-text](https://github.com/TonPC64/vue-highlight-text) - Vue component for highlight multiple instances of a word.
+* [vue-spinkit](https://github.com/TonPC64/vue-spinkit) - A collection of loading indicators animated with CSS for VueJS
+* [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
+* [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
 * Feel free to submit yours
 
 ## Contributing
