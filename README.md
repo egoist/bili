@@ -94,6 +94,7 @@ Here're some quick links:
 * [vue-spinkit](https://github.com/TonPC64/vue-spinkit) - A collection of loading indicators animated with CSS for VueJS
 * [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
 * [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
+* [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
 * Feel free to submit yours
 
 ## Contributing
