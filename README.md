@@ -95,6 +95,7 @@ Here're some quick links:
 * [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
 * [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
 * [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
+* [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader
 * Feel free to submit yours
 
 ## Contributing
