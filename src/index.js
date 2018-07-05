@@ -643,8 +643,12 @@ function getJsPlugin(name) {
   }
 }
 
-function localRequire(name) {
-  return require(path.resolve('node_modules', name))
+function localRequire (name) {
+  try {
+    return require(path.resolve('node_modules', name))
+  } catch (error) {
+    return require(name)
+  }
 }
 
 function isPath(v) {
