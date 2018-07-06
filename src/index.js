@@ -643,7 +643,7 @@ function getJsPlugin(name) {
   }
 }
 
-function localRequire (name) {
+function localRequire(name) {
   try {
     return require(path.resolve('node_modules', name))
   } catch (error) {
