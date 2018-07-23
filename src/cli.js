@@ -36,6 +36,10 @@ cli
     desc: 'Output target (default: "browser")',
     alias: 't'
   })
+  .option('cleanDest', {
+    desc: 'Clean the output directory before building',
+    alias: 'clean'
+  })
   .option('moduleName', {
     desc: 'Module name for UMD/IIFE bundle'
   })

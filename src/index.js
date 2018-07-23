@@ -162,6 +162,12 @@ export default class Bili extends EventEmitter {
     return path.resolve(this.options.cwd, ...args)
   }
 
+  isSubpath(target) {
+    const cwd = this.resolveCwd() + path.sep
+    const targetPath = this.resolveCwd(target)
+    return cwd !== targetPath && targetPath.startsWith(cwd)
+  }
+
   loadUserPlugins({ plugins, filename }) {
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
@@ -519,6 +525,11 @@ export default class Bili extends EventEmitter {
       ],
       []
     )
+
+    // clean the desination path if writing and the cleanDest flag is set
+    if (write && this.options.cleanDest && this.isSubpath(this.options.outDir)) {
+      await fs.emptyDir(this.options.outDir)
+    }
 
     const multipleEntries = inputFiles.length > 1
     const actions = options.map(async option => {
