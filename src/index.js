@@ -559,7 +559,7 @@ export default class Bili extends EventEmitter {
           // SEE https://github.com/egoist/bili/issues/135
           watcher.on('event', function handler(e) {
             if (e.code === 'BUNDLE_END') {
-              watcher.off('event', handler)
+              watcher.removeListener('event', handler)
               resolve()
             }
           })
