@@ -418,7 +418,7 @@ Array [
     "test/fixtures/no-js-transform/dist/index.cjs.js",
     "'use strict';
 
-var index = () => {}
+var index = () => {};
 
 module.exports = index;
 ",
@@ -456,11 +456,11 @@ Array [
     "test/fixtures/virtual/dist/dayyum.cjs.js",
     "'use strict';
 
-var baz = 2
+var baz = 2;
 
-var bar = baz + 1
+var bar = baz + 1;
 
-var dayyum = bar + 123
+var dayyum = bar + 123;
 
 module.exports = dayyum;
 ",
