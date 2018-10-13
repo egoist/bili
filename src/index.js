@@ -411,6 +411,7 @@ export default class Bili extends EventEmitter {
         transformJS &&
           jsPlugin({
             exclude: 'node_modules/**',
+            ...(jsPluginName === 'typescript2' ? { clean: true } : {}),
             ...jsOptions
           }),
         inline &&
