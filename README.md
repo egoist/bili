@@ -97,6 +97,7 @@ Here're some quick links:
 * [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
 * [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
 * [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
+* [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
 * Feel free to submit yours
 
 ## Contributing
