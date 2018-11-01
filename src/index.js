@@ -162,6 +162,29 @@ export default class Bili extends EventEmitter {
     return path.resolve(this.options.cwd, ...args)
   }
 
+  getJsPlugin(name) {
+    let req
+    if (isPath(name)) {
+      req = require
+      name = this.resolveCwd(name)
+    } else {
+      req =
+        name === 'babel' || name === 'buble' ?
+          require :
+          this.localRequire.bind(this)
+      name = `rollup-plugin-${name}`
+    }
+    try {
+      return req(name)
+    } catch (err) {
+      handleLoadPluginError(name, err)
+    }
+  }
+
+  localRequire(name) {
+    return require(resolveFrom(this.options.cwd, name))
+  }
+
   loadUserPlugins({ plugins, filename }) {
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
@@ -193,7 +216,7 @@ export default class Bili extends EventEmitter {
         // Local require is always relative to `process.cwd()`
         // Instead of `this.options.cwd`
         // We need to ensure that which is actually better
-        const p = localRequire(moduleName)
+        const p = this.localRequire(moduleName)
         return p.default ? p.default(pluginOptions) : p(pluginOptions)
       } catch (err) {
         handleLoadPluginError(moduleName, err)
@@ -219,7 +242,7 @@ export default class Bili extends EventEmitter {
     if (name === 'typescript' || name === 'typescript2') {
       let typescript
       try {
-        typescript = localRequire('typescript')
+        typescript = this.localRequire('typescript')
       } catch (err) {}
       return {
         typescript,
@@ -261,10 +284,7 @@ export default class Bili extends EventEmitter {
       throw new BiliError('You must return the options in `extendOptions` method!')
     }
 
-    const {
-      outDir,
-      filename
-    } = options
+    const { outDir, filename } = options
 
     let inline = options.inline || (format === 'umd' || format === 'iife')
     if (typeof inline === 'string') {
@@ -288,7 +308,7 @@ export default class Bili extends EventEmitter {
 
     const transformJS = options.js !== false
     const jsPluginName = transformJS && getJsPluginName(options.js, input)
-    const jsPlugin = transformJS && getJsPlugin(jsPluginName)
+    const jsPlugin = transformJS && this.getJsPlugin(jsPluginName)
     const jsOptions =
       transformJS && this.getJsOptions(jsPluginName, options[jsPluginName])
 
@@ -625,26 +645,6 @@ function getFilename({ input, format, filename, compress, name }) {
   return compress ?
     path.basename(res, path.extname(res)) + '.min' + path.extname(res) :
     res
-}
-
-function getJsPlugin(name) {
-  let req
-  if (isPath(name)) {
-    req = require
-    name = path.resolve(name)
-  } else {
-    req = name === 'babel' || name === 'buble' ? require : localRequire
-    name = `rollup-plugin-${name}`
-  }
-  try {
-    return req(name)
-  } catch (err) {
-    handleLoadPluginError(name, err)
-  }
-}
-
-function localRequire(name) {
-  return require(path.resolve('node_modules', name))
 }
 
 function isPath(v) {
