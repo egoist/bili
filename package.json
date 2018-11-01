@@ -3,7 +3,7 @@
   "version": "3.1.2",
   "description": "Delightful library bundler.",
   "repository": {
-    "url": "egoist/bili",
+    "url": "git+https://github.com/egoist/bili.git",
     "type": "git"
   },
   "main": "dist/index.js",
