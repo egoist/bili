@@ -13,7 +13,7 @@ import boxen from 'boxen'
 import nodeResolvePlugin from 'rollup-plugin-node-resolve'
 import commonjsPlugin from 'rollup-plugin-commonjs'
 import jsonPlugin from 'rollup-plugin-json'
-import { uglify as uglifyPlugin } from 'rollup-plugin-uglify'
+import { terser as terserPlugin } from 'rollup-plugin-terser'
 import aliasPlugin from 'rollup-plugin-alias'
 import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
@@ -329,6 +329,8 @@ export default class Bili extends EventEmitter {
       }
     }
 
+    const terserOptions = options.terser || options.uglify || {}
+
     const inputOptions = {
       input,
       external,
@@ -444,10 +446,10 @@ export default class Bili extends EventEmitter {
           }),
         commonjsPlugin(options.commonjs),
         compress &&
-          uglifyPlugin({
-            ...options.uglify,
+          terserPlugin({
+            ...terserOptions,
             output: {
-              ...(options.uglify && options.uglify.output),
+              ...terserOptions.output,
               // Add banner (if there is)
               preamble: banner
             }
