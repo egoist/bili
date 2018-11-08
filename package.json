@@ -13,12 +13,13 @@
     "babel.js"
   ],
   "scripts": {
-    "test": "npm run lint && jest && npm run build",
+    "test": "npm run lint && jest",
     "test:cov": "npm run lint && jest --coverage",
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
     "build": "bili",
-    "watch": "yarn build --watch"
+    "watch": "yarn build --watch",
+    "prepublishOnly": "npm run build"
   },
   "author": "EGOIST <0x142857@gmail.com>",
   "license": "MIT",
