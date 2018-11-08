@@ -1,5 +1,5 @@
 const a = { a: 1 }
 
 export default async () => {
-  return { ...a }
+  return { ...a, b: this.b }
 }
