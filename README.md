@@ -97,6 +97,7 @@ Here're some quick links:
 * [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
 * [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader* [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
 * [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
+* [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
 * [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
 * Feel free to submit yours
 
