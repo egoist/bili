@@ -97,6 +97,7 @@ Here're some quick links:
 * [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
 * [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
 * [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
+* [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
 * Feel free to submit yours
 
 ## Contributing
