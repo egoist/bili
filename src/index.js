@@ -250,7 +250,7 @@ export default class Bili extends EventEmitter {
         typescript,
         ...pluginOptions
       }
-      if (name === 'typescript') {
+      if (name === 'typescript2') {
         options.cacheRoot = path.join(
           os.tmpdir(),
           `.rpt2-${cacheId}`
