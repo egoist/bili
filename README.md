@@ -95,7 +95,9 @@ Here're some quick links:
 * [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
 * [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
 * [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
-* [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader
+* [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader* [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
+* [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
+* [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
 * Feel free to submit yours
 
 ## Contributing
