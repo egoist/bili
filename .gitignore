@@ -2,6 +2,7 @@
 examples/**/node_modules
 dist
 lib
+yarn-error.log
 examples/*/yarn.lock
 examples/*/package-lock.json
 coverage/
