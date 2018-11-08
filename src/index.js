@@ -17,6 +17,7 @@ import { terser as terserPlugin } from 'rollup-plugin-terser'
 import aliasPlugin from 'rollup-plugin-alias'
 import replacePlugin from 'rollup-plugin-replace'
 import hashbangPlugin from 'rollup-plugin-hashbang'
+import prettierPlugin from 'rollup-plugin-prettier'
 import isBuiltinModule from 'is-builtin-module'
 import textTable from 'text-table'
 import resolveFrom from 'resolve-from'
@@ -25,7 +26,7 @@ import virtualModulesPlugin from './virtual-modules-plugin'
 import progressPlugin from './progress-plugin'
 import template from './template'
 import getBanner from './get-banner'
-import { getBabelConfig, getBiliConfig } from './get-config'
+import { getBabelConfig, getBiliConfig, getPrettierConfig } from './get-config'
 import BiliError from './bili-error'
 import { handleError, getDocRef } from './handle-error'
 import logger from './logger'
@@ -284,6 +285,10 @@ export default class Bili extends EventEmitter {
       throw new BiliError('You must return the options in `extendOptions` method!')
     }
 
+    if (compress && options.pretty) {
+      throw new BiliError('You can not use --pretty with min format')
+    }
+
     const { outDir, filename } = options
 
     let inline = options.inline || (format === 'umd' || format === 'iife')
@@ -454,6 +459,8 @@ export default class Bili extends EventEmitter {
               preamble: banner
             }
           }),
+        options.pretty &&
+          prettierPlugin(getPrettierConfig()),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
         {
