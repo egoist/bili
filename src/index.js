@@ -1,5 +1,7 @@
 import util from 'util'
+import os from 'os'
 import path from 'path'
+import crypto from 'crypto'
 import EventEmitter from 'events'
 import globby from 'globby'
 import fs from 'fs-extra'
@@ -234,7 +236,7 @@ export default class Bili extends EventEmitter {
     }))
   }
 
-  getJsOptions(name, pluginOptions) {
+  getJsOptions(name, pluginOptions, { cacheId }) {
     if (name === 'babel') {
       return this.options.babel
     }
@@ -244,10 +246,17 @@ export default class Bili extends EventEmitter {
       try {
         typescript = this.localRequire('typescript')
       } catch (err) {}
-      return {
+      const options = {
         typescript,
         ...pluginOptions
       }
+      if (name === 'typescript') {
+        options.cacheRoot = path.join(
+          os.tmpdir(),
+          `.rpt2-${cacheId}`
+        )
+      }
+      return options
     }
 
     if (name === 'buble') {
@@ -309,8 +318,9 @@ export default class Bili extends EventEmitter {
     const transformJS = options.js !== false
     const jsPluginName = transformJS && getJsPluginName(options.js, input)
     const jsPlugin = transformJS && this.getJsPlugin(jsPluginName)
+    const cacheId = crypto.createHash('md5').update(`bili-output:${file}`).digest('hex')
     const jsOptions =
-      transformJS && this.getJsOptions(jsPluginName, options[jsPluginName])
+      transformJS && this.getJsOptions(jsPluginName, options[jsPluginName], { cacheId })
 
     const banner = getBanner(options.banner, this.pkg)
 
