@@ -69,13 +69,15 @@
     "babel-jest": "22.4.1",
     "babel-register": "6.26.0",
     "bili": "^3.0.11",
+    "cz-conventional-changelog": "^2.1.0",
     "eslint": "4.15.0",
     "eslint-config-rem": "4.0.0",
     "eslint-config-xo": "0.19.0",
     "jest": "22.0.6",
     "p-all": "1.0.0",
     "p-map": "1.2.0",
-    "prettier-eslint-cli": "4.7.0"
+    "prettier-eslint-cli": "4.7.0",
+    "semantic-release": "^15.10.8"
   },
   "eslintConfig": {
     "extends": [
@@ -113,5 +115,13 @@
     "bili",
     "poi",
     "parcel"
-  ]
+  ],
+  "release": {
+    "branch": "master"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

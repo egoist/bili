@@ -25,3 +25,6 @@ jobs:
       - run:
           name: upload coverage
           command: bash <(curl -s https://codecov.io/bash)
+      - run:
+          name: Release
+          command: yarn semantic-release
