@@ -38,15 +38,3 @@ export function getBiliConfig(_config) {
   }
   return config
 }
-
-export function getPrettierConfig() {
-  const useConfig = new UseConfig({
-    name: 'prettier',
-    files: ['.{name}rc', '{name}.config.js', '.{name}rc.js', 'package.json']
-  })
-  const { path: configPath, config } = useConfig.loadSync()
-  if (configPath === undefined) {
-    throw new BiliError('Cannot find Prettier config file.')
-  }
-  return config
-}
