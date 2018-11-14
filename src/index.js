@@ -335,7 +335,7 @@ export default class Bili extends EventEmitter {
 
     const terserOptions = options.terser || options.uglify || {}
     const prettierOptions = options.prettier || {}
-    const pretty = Boolean(options.pretty) && !compress
+    const pretty = options.pretty && !compress
 
     const inputOptions = {
       input,
