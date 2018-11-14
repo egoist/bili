@@ -233,7 +233,7 @@ snapshot({
   title: 'prettier (should set options)',
   input: 'index.js',
   cwd: fixture('prettier'),
-  format: 'iife',
+  format: 'cjs',
   pretty: true,
   prettier: {
     tabWidth: 4,

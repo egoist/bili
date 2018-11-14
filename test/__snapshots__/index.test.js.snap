@@ -432,7 +432,7 @@ module.exports = index;
 exports[`prettier (should ignore min files) 1`] = `
 Array [
   Array [
-    "test/fixtures/prettier/dist/prettier.cjs.min.js",
+    "test/fixtures/prettier/dist/index.cjs.min.js",
     "\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});var a=1,d=\\"double stringh\\";function done(){return{prop:343,another:782}}exports.a=a,exports.d=d,exports.done=done;
 ",
   ],
@@ -442,26 +442,24 @@ Array [
 exports[`prettier (should set options) 1`] = `
 Array [
   Array [
-    "test/fixtures/prettier/dist/prettier.iife.js",
-    "var prettier = (function(exports) {
-    \\"use strict\\"
+    "test/fixtures/prettier/dist/index.cjs.js",
+    "\\"use strict\\"
 
-    var a = 1
-    var d = \\"double stringh\\"
-    function done() {
-        var t = {
-            prop: 343,
-            another: 782,
-        }
-        return t
+Object.defineProperty(exports, \\"__esModule\\", { value: true })
+
+var a = 1
+var d = \\"double stringh\\"
+function done() {
+    var t = {
+        prop: 343,
+        another: 782,
     }
+    return t
+}
 
-    exports.a = a
-    exports.d = d
-    exports.done = done
-
-    return exports
-})({})
+exports.a = a
+exports.d = d
+exports.done = done
 ",
   ],
 ]
