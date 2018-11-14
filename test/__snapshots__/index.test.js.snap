@@ -439,7 +439,7 @@ Array [
 ]
 `;
 
-exports[`prettier (should set options from config file) 1`] = `
+exports[`prettier (should set options) 1`] = `
 Array [
   Array [
     "test/fixtures/prettier/dist/prettier.iife.js",
