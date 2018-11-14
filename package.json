@@ -1,6 +1,6 @@
 {
   "name": "bili",
-  "version": "3.3.1",
+  "version": "0.0.0-managed-by-semantic-relased",
   "description": "Delightful library bundler.",
   "repository": {
     "url": "git+https://github.com/egoist/bili.git",
