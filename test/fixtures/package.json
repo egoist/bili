@@ -1,0 +1,6 @@
+{
+  "main": "index.js",
+  "dependencies": {
+    "rollup-plugin-prettier": "^0.5.0"
+  }
+}
