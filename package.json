@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "test": "npm run test:dep && npm run lint && jest && npm run build",
-    "test:cov": "npm run test:dep && npm run lint && jest --coverage",
+    "test:cov": "npm run lint && npm run test:dep && jest --coverage",
     "test:dep": "cd ./test/fixtures && yarn",
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
