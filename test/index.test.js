@@ -222,6 +222,28 @@ snapshot({
 })
 
 snapshot({
+  title: 'prettier (should ignore min files)',
+  input: 'index.js',
+  cwd: fixture('prettier'),
+  format: 'cjs-min',
+  pretty: true
+})
+
+snapshot({
+  title: 'prettier (should set options)',
+  input: 'index.js',
+  cwd: fixture('prettier'),
+  format: 'cjs',
+  pretty: true,
+  prettier: {
+    tabWidth: 4,
+    singleQuote: false,
+    trailingComma: 'all',
+    semi: false
+  }
+})
+
+snapshot({
   title: 'inline-certain-modules',
   input: 'index.js',
   cwd: fixture('inline-certain-modules'),

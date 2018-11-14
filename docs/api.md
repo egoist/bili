@@ -226,6 +226,13 @@ Type: `object`
 
 This is some feature which is similar to Webpack's `resolve.alias`.
 
+### pretty
+
+Type: `boolean`
+Default: `false`
+
+Prettfies the output with Prettier, you can pass Prettier options via `prettier`, you need to have `rollup-plugin-prettier` installed.
+
 ### env
 
 Type: `object`

@@ -72,6 +72,9 @@ cli
   .option('inline', {
     desc: 'Inline external node modules'
   })
+  .option('pretty', {
+    desc: 'Prettify output file (default: false)'
+  })
   .option('banner', {
     desc:
       'Content to insert to the top of bundle file, boolean or string or object'

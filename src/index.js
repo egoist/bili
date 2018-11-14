@@ -293,6 +293,10 @@ export default class Bili extends EventEmitter {
       throw new BiliError('You must return the options in `extendOptions` method!')
     }
 
+    if (compress && options.pretty) {
+      logger.debug(chalk.bold(`Ignored prettifying (--pretty) ${chalk.cyan(`${formatFull}`)} format`))
+    }
+
     const { outDir, filename } = options
 
     let inline = options.inline || (format === 'umd' || format === 'iife')
@@ -340,6 +344,8 @@ export default class Bili extends EventEmitter {
     }
 
     const terserOptions = options.terser || options.uglify || {}
+    const prettierOptions = options.prettier || {}
+    const pretty = options.pretty && !compress
 
     const inputOptions = {
       input,
@@ -464,6 +470,8 @@ export default class Bili extends EventEmitter {
               preamble: banner
             }
           }),
+        pretty &&
+          this.localRequire('rollup-plugin-prettier')(prettierOptions),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
         {

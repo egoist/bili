@@ -13,8 +13,9 @@
     "babel.js"
   ],
   "scripts": {
-    "test": "npm run lint && jest",
-    "test:cov": "npm run lint && jest --coverage",
+    "test": "npm run lint && npm run test:dep && jest",
+    "test:cov": "npm run lint && npm run test:dep && jest --coverage",
+    "test:dep": "cd ./test/fixtures && yarn",
     "lint": "eslint src/**/*.js",
     "format": "prettier-eslint src/**/*.js --write",
     "build": "bili",
