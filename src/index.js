@@ -575,23 +575,39 @@ export default class Bili extends EventEmitter {
       }:\n`) + util.inspect(outputOptions, { colors: true }))
 
       if (this.options.watch) {
-        const watcher = watch({
-          ...inputOptions,
-          output: outputOptions,
-          watch: {
-            clearScreen: true
-          }
+        return new Promise(resolve => {
+          const watcher = watch({
+            ...inputOptions,
+            output: outputOptions,
+            watch: {
+              clearScreen: true
+            }
+          })
+
+          watcher.on('event', async e => {
+            if (e.code === 'ERROR' || e.code === 'FATAL') {
+              handleError(e.error)
+            }
+            if (e.code === 'BUNDLE_END') {
+              process.exitCode = 0
+              logger.write(await this.stats())
+            }
+          })
+
+          // better ensure that `ongenerate` methods run at least once
+          // since we will check `bundleCount` later
+          // SEE https://github.com/egoist/bili/issues/135
+          watcher.on('event', function handler(e) {
+            if (e.code === 'BUNDLE_END') {
+              watcher.removeListener('event', handler)
+              resolve()
+            }
+          })
+
+          // save watchers to gain more control over them
+          this.watchers = this.watchers || []
+          this.watchers.push(watcher)
         })
-        watcher.on('event', async e => {
-          if (e.code === 'ERROR' || e.code === 'FATAL') {
-            handleError(e.error)
-          }
-          if (e.code === 'BUNDLE_END') {
-            process.exitCode = 0
-            logger.write(await this.stats())
-          }
-        })
-        return
       }
 
       const bundle = await rollup(inputOptions)
