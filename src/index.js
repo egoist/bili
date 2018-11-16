@@ -375,7 +375,7 @@ export default class Bili extends EventEmitter {
             // Check if the module exists
             resolveFrom.silent(process.cwd(), source) === null
           ) {
-            logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager()} add ${source}`)}" to install it!`)
+            logger.warn(`Module "${source}" was not installed, you may run "${chalk.cyan(`${getPackageManager() === 'yarn' ? 'yarn add' : 'npm install'} ${source}`)}" to install it!`)
           }
           return
         }
