@@ -6,12 +6,12 @@
 
 ## Features
 
-* 🚀 Fast, zero-config by default.
-* 📦 Using Rollup under the hood.
-* 🚗 Automatically transforms JS files using Buble/Babel.
-* 💅 Built-in support for `CSS` `Sass` `Stylus` `Less` `CSS modules`.
-* 🎶 Ridiculously easy to use Rollup plugins if you want.
-* 🚨 Friendly error logging experience.
+- 🚀 Fast, zero-config by default.
+- 📦 Using Rollup under the hood.
+- 🚗 Automatically transforms JS files using Buble/Babel.
+- 💅 Built-in support for `CSS` `Sass` `Stylus` `Less` `CSS modules`.
+- 🎶 Ridiculously easy to use Rollup plugins if you want.
+- 🚨 Friendly error logging experience.
 
 <img src="https://cdn.rawgit.com/egoist/bili/master/media/preview.svg" width="600" alt="preview">
 
@@ -62,44 +62,37 @@ index.cjs.js        # CommonJS format
 index.es.js         # ES module format
 ```
 
-Dive into the [documentation](https://bili.egoist.moe) to see more neat features!
-
-Here're some quick links:
-
-* [How to use Rollup plugins](https://bili.egoist.moe/#/recipes/use-rollup-plugins)
-* [How to use Flow/TypeScript or any compile-to-js language](https://bili.egoist.moe/#/recipes/transpile-js-files)
-* [How to transpile CSS files](https://bili.egoist.moe/#/recipes/transpile-css-files)
-* [How to transpile Vue files](https://bili.egoist.moe/#/recipes/transpile-vue-files)
+Dive into the [documentation](https://bili.egoist.sh) to see more neat features!
 
 ## Bundled by Bili
 
-* [cac](https://github.com/egoist/cac) - Simple yet powerful framework for building command-line interface.
-* [vue-final-form](https://github.com/egoist/vue-final-form) - 🏁 High performance subscription-based form state management for Vue.js.
-* [babel-preset-vue](https://github.com/vuejs/babel-preset-vue) - Babel preset for transforming Vue JSX.
-* [uncouple](https://github.com/VitorLuizC/uncouple) - A simple lib to uncouple prototype methods.
-* [cullender](https://github.com/VitorLuizC/cullender) - A simple and composable way to filter data.
-* [vuex-handler](https://github.com/VitorLuizC/vuex-handler) - A vuex plugin to globally handle actions successes and failures.
-* [gulp-html-accents](https://github.com/VitorLuizC/gulp-html-accents) - A gulp plugin that parse accents and special characters to HTMLEntities.
-* [vue-data-tablee](https://github.com/VitorLuizC/vue-data-tablee) - A pretty simple Vue DataTable component with some features like sort and select rows.
-* [vue-uuid](https://github.com/VitorLuizC/vue-uuid) - Vue plugin to add UUID methods to Vue instance.
-* [vue-gh-corners](https://github.com/gluons/vue-gh-corners) - :octocat: GitHub Corners for Vue.
-* [alphaX](https://github.com/ulivz/alphax) - :fire: Fueling your scaffolding.
-* [vuejs-storage](https://github.com/maple3142/vuejs-storage) - Vue.js and vuex plugin to persistence data with localStorage/sessionStorage.
-* [w7](https://github.com/ulivz/w7) - :shamrock: Serves the pure htmls, updates the browser on changes.
-* [consola](https://github.com/nuxt/consola) - Elegant Console Logger
-* [vue-slide-bar](https://github.com/biigpongsatorn/vue-slide-bar) - 🎢 A simple Vue slider bar component.
-* [vue-svg-filler](https://github.com/biigpongsatorn/vue-svg-filler) - 🎨 Vue component for customize svg file.
-* [vue-lib-template](https://github.com/biigpongsatorn/vue-lib-template) - 🛠 A simple template for building and publishing component/library to NPM (bundled by bili).
-* [vue-highlight-text](https://github.com/TonPC64/vue-highlight-text) - Vue component for highlight multiple instances of a word.
-* [vue-spinkit](https://github.com/TonPC64/vue-spinkit) - A collection of loading indicators animated with CSS for VueJS
-* [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
-* [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
-* [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
-* [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader* [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
-* [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
-* [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
-* [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
-* Feel free to submit yours
+- [cac](https://github.com/egoist/cac) - Simple yet powerful framework for building command-line interface.
+- [vue-final-form](https://github.com/egoist/vue-final-form) - 🏁 High performance subscription-based form state management for Vue.js.
+- [babel-preset-vue](https://github.com/vuejs/babel-preset-vue) - Babel preset for transforming Vue JSX.
+- [uncouple](https://github.com/VitorLuizC/uncouple) - A simple lib to uncouple prototype methods.
+- [cullender](https://github.com/VitorLuizC/cullender) - A simple and composable way to filter data.
+- [vuex-handler](https://github.com/VitorLuizC/vuex-handler) - A vuex plugin to globally handle actions successes and failures.
+- [gulp-html-accents](https://github.com/VitorLuizC/gulp-html-accents) - A gulp plugin that parse accents and special characters to HTMLEntities.
+- [vue-data-tablee](https://github.com/VitorLuizC/vue-data-tablee) - A pretty simple Vue DataTable component with some features like sort and select rows.
+- [vue-uuid](https://github.com/VitorLuizC/vue-uuid) - Vue plugin to add UUID methods to Vue instance.
+- [vue-gh-corners](https://github.com/gluons/vue-gh-corners) - :octocat: GitHub Corners for Vue.
+- [alphaX](https://github.com/ulivz/alphax) - :fire: Fueling your scaffolding.
+- [vuejs-storage](https://github.com/maple3142/vuejs-storage) - Vue.js and vuex plugin to persistence data with localStorage/sessionStorage.
+- [w7](https://github.com/ulivz/w7) - :shamrock: Serves the pure htmls, updates the browser on changes.
+- [consola](https://github.com/nuxt/consola) - Elegant Console Logger
+- [vue-slide-bar](https://github.com/biigpongsatorn/vue-slide-bar) - 🎢 A simple Vue slider bar component.
+- [vue-svg-filler](https://github.com/biigpongsatorn/vue-svg-filler) - 🎨 Vue component for customize svg file.
+- [vue-lib-template](https://github.com/biigpongsatorn/vue-lib-template) - 🛠 A simple template for building and publishing component/library to NPM (bundled by bili).
+- [vue-highlight-text](https://github.com/TonPC64/vue-highlight-text) - Vue component for highlight multiple instances of a word.
+- [vue-spinkit](https://github.com/TonPC64/vue-spinkit) - A collection of loading indicators animated with CSS for VueJS
+- [vue-chat-autosize-typebox](https://github.com/TonPC64/vue-chat-autosize-typebox) - Vue component of typebox chat with autosize
+- [vue-emoji-react](https://github.com/TonPC64/vue-emoji-react) - a clone of slack emoji reactions in VueJS
+- [vue-infinite-slide-bar](https://github.com/biigpongsatorn/vue-infinite-slide-bar) - ∞ Infinite slide bar component.
+- [vue-img-inputer](https://github.com/waynecz/vue-img-inputer) - 🏞 A graceful image type inputer / uploader\* [vuex-dry](https://github.com/eunjae-lee/vuex-dry) - Keep your vuex codes DRY
+- [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
+- [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
+- [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
+- Feel free to submit yours
 
 ## Contributing
 
@@ -114,4 +107,4 @@ Here're some quick links:
 **bili** © [EGOIST](https://github.com/egoist), Released under the [MIT](./LICENSE) License.<br>
 Authored and maintained by EGOIST with help from contributors ([list](https://github.com/egoist/bili/contributors)).
 
-> [egoist.moe](https://egoist.moe) · GitHub [@EGOIST](https://github.com/egoist) · Twitter [@\_egoistlily](https://twitter.com/_egoistlily)
+> [Website](https://egoist.sh) · GitHub [@EGOIST](https://github.com/egoist) · Twitter [@\_egoistlily](https://twitter.com/_egoistlily)

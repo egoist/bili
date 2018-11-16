@@ -1,4 +1,4 @@
-# Bundle multi files
+# Bundle Multiple Files
 
 You can specify multi entries like:
 
@@ -8,7 +8,7 @@ bili src/index.js src/cli.js --filename "[name].js"
 bili "src/*.js" --filename "[name].js"
 ```
 
-<details style="margin-bottom: 20px;color: #666"><summary style="font-style: italic">A note on why we use `filename` option here</summary><br>
+<details style="margin-bottom: 20px;color: #666"><summary style="font-style: italic">A note on why we use `filename` option here</summary>
 
 In `cjs` format the filename of output files will be `[name][suffix].js` where the `[suffix]` is `.cjs` in this case, however you may import `src/index.js` in `src/cli.js` in the form of `import main from './index'` without the `.cjs` suffix, so we have to remove suffix here.
 
@@ -23,7 +23,7 @@ dist/cli.js
 
 It's common to build a CLI library and expose the API at the same time, so this could be very useful.
 
-## Exclude specific files from bundle
+## Exclude specific files from the bundle
 
 In `cjs` and `es` format, only modules in `node_modules` directory will be excluded from your bundle, this is fine when you are building a single-entry library.
 
@@ -41,7 +41,7 @@ console.log(main)
 
 ```js
 // src/index.js
-export default 42
+export default 42;
 ```
 
 All you have to do is adding `./src/index.js` to the `external` option:
@@ -56,13 +56,13 @@ Then your `dist/cli.cjs.js` will look similar to:
 
 ```js
 #!/usr/bin/env node
-'use strict'
+"use strict";
 
 function _interopDefault(ex) {
-  return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex
+  return ex && typeof ex === "object" && "default" in ex ? ex["default"] : ex;
 }
 
-var main = _interopDefault(require('./index'))
+var main = _interopDefault(require("./index"));
 
-console.log(main)
+console.log(main);
 ```

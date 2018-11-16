@@ -1,4 +1,4 @@
-# Inline 3rd-party modules
+# Inline Third-Party Modules
 
 By default Bili inlines all 3rd-party modules in `umd` and `iife` format into your bundle, however you can use [`inline`](/api#inline) option to toggle this.
 

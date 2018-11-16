@@ -1,4 +1,4 @@
-# Transpile JS files
+# Transpile JavaScript
 
 **Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel`, if you prefer using `buble` to generate smaller output then try `--js buble` flag.
 
@@ -8,11 +8,11 @@ That's it!
 
 We use a sane default config for Babel, basically it:
 
-* Uses `babel-preset-env`.
-* Supports [Flow](https://flow.org).
-* Compiles `object-rest-spread` to `Object.assign`.
-* Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
-* React/Vue JSX
+- Uses `babel-preset-env`.
+- Supports [Flow](https://flow.org).
+- Compiles `object-rest-spread` to `Object.assign`.
+- Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
+- React/Vue JSX
 
 You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babel.babelrc` flag.
 
@@ -22,10 +22,10 @@ To check if any `.babelrc` file is used, run `bili` with `--debug` flag.
 
 What Buble supports:
 
-* Supports [Flow](https://flow.org).
-* Compiles `object-rest-spread` to `Object.assign`.
-* Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
-* React/Vue JSX
+- Supports [Flow](https://flow.org).
+- Compiles `object-rest-spread` to `Object.assign`.
+- Compiles `async/await` to Promise without regenerator using [fast-async](https://github.com/MatAtBread/fast-async).
+- React/Vue JSX
 
 ## TypeScript
 

@@ -1,4 +1,4 @@
-# Use Rollup plugins
+# Use Rollup Plugins
 
 You can add any Rollup plugin via `plugins` option or `--plugin` flag.
 
@@ -8,11 +8,11 @@ Via config file:
 module.exports = {
   plugins: [
     // Bare string, use `rollup-plugin-vue`
-    'vue',
+    "vue",
     // Directly require
-    require('rollup-plugin-foo')()
+    require("rollup-plugin-foo")()
   ]
-}
+};
 ```
 
 Or CLI flags:
@@ -32,11 +32,11 @@ Via config file:
 
 ```js
 module.exports = {
-  plugins: ['vue'],
+  plugins: ["vue"],
   vue: {
-    someOption: 'value'
+    someOption: "value"
   }
-}
+};
 ```
 
 Or CLI flags:

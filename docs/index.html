@@ -1,69 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Bili</title>
+    <link rel="stylesheet" href="https://unpkg.com/docute@4/dist/docute.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bili</title>
-  <link rel="stylesheet" href="https://unpkg.com/docute@3/dist/docute.css">
-</head>
-
-<body>
-  <div id="app"></div>
-  <script src="https://unpkg.com/docute@3/dist/docute.js"></script>
-  <script src="https://unpkg.com/prismjs@1.9.0/components/prism-typescript.min.js"></script>
-  <script>
-    docute.init({
-      repo: 'egoist/bili',
-      twitter: '_egoistlily',
-      'edit-link': 'https://github.com/egoist/bili/blob/master/docs/',
-      nav: [
-        {
-          title: 'Home',
-          path: '/'
-        },
-        {
-          title: 'API',
-          path: '/api'
-        },
-        {
-          title: 'Recipes',
-          type: 'dropdown',
-          items: [
-            {
-              title: 'Use Rollup plugins',
-              path: '/recipes/use-rollup-plugins'
-            },
-            {
-              title: 'Transpile JS files',
-              path: '/recipes/transpile-js-files'
-            },
-            {
-              title: 'Transpile CSS files',
-              path: '/recipes/transpile-css-files'
-            },
-            {
-              title: 'Transpile Vue files',
-              path: '/recipes/transpile-vue-files'
-            },
-            {
-              title: 'Bundle multi files',
-              path: '/recipes/bundle-multi-files'
-            },
-            {
-              title: 'Inline 3rd-party modules',
-              path: '/recipes/inline-3rd-party-modules'
-            },
-            {
-              title: 'Update package.json',
-              path: '/recipes/update-package-json'
-            }
-          ]
-        }
-      ]
-    })
-  </script>
-</body>
-
+  <body>
+    <div id="docute"></div>
+    <script src="https://unpkg.com/docute@4/dist/docute.js"></script>
+    <script>
+      new Docute({
+        target: "#docute",
+        editLinkBase: "https://github.com/egoist/bili/blob/master/docs",
+        sidebar: [
+          {
+            links: [
+              {
+                title: "Home",
+                link: "/"
+              },
+              {
+                title: "Options",
+                link: "/options"
+              }
+            ]
+          },
+          {
+            title: "Recipes",
+            links: [
+              {
+                title: "Use Rollup Plugins",
+                link: "/recipes/use-rollup-plugins"
+              },
+              {
+                title: "Transpile JavaScript",
+                link: "/recipes/transpile-javascript"
+              },
+              {
+                title: "Transpile CSS",
+                link: "/recipes/transpile-css"
+              },
+              {
+                title: "Transpile Vue Components",
+                link: "/recipes/transpile-vue-components"
+              },
+              {
+                title: "Bundle Multiple Files",
+                link: "/recipes/bundle-multiple-files"
+              },
+              {
+                title: "Inline Third-Party Modules",
+                link: "/recipes/inline-3rd-party-modules"
+              },
+              {
+                title: "Update package.json",
+                link: "/recipes/update-package-json"
+              }
+            ]
+          },
+          {
+            title: "Support",
+            links: [
+              {
+                title: "GitHub",
+                link: "https://github.com/egoist/bili"
+              },
+              {
+                title: "Twitter",
+                link: "https://twitter.com/_egoistlily"
+              }
+            ]
+          }
+        ],
+        highlight: ["typescript", "bash"]
+      });
+    </script>
+  </body>
 </html>

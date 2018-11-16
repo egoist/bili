@@ -1,64 +1,63 @@
-# API
+# Options
 
-```js
-import Bili from 'bili'
+Options can be passed in from both CLI flags and config file, namely `bili.config.js`, `.bilirc` and `bili` key in `package.json`. However you can also use a [custom config file](#config).
 
-Bili.write(options).then(() => {
-  console.log('Done!')
-})
-```
+## input
 
-## Use config file
-
-Following options are accepted both in CLI flags and config file,namely `bili.config.js`, `.bilirc`, `bili` key in `package.json`. But you can also use a [custom config file](#config).
-
-## options
-
-### input
-
-Type: `string` `Array`<br>
-Default: `src/index.js`
+- Type: `string` `Array`
+- Default: `src/index.js`
 
 Glob patterns or file paths.
 
-### outDir
+## outDir
 
-Type: `string`<br>
-Default: `dist`
+- Type: `string`
+- Default: `dist`
 
-### config
+## config
 
-Type: `string`
+- Type: `string`
 
 The path to your custom Bili config file.
 
-### format
+## format
 
-Type: `string` `Array`<br>
-Default: `['cjs']`<br>
-Possible values: `cjs` `umd` `es` `iife`<br>
-Alias: `formats`
+- Type: `string` `Array`
+- Default: `['cjs']`
+- Possible values: `cjs` `umd` `es` `iife`
+- Alias: `formats`
 
 You can add `-min` suffix to generate minified version.
 
-### moduleName
+To pass an array using CLI flags, there're two ways:
 
-Type: `string`
+```bash
+# Separate each one with a comma
+bili --format cjs,umd,es
+
+# Use the flag multiple times
+# You can't use comma here
+bili --format cjs --format es --format umd
+```
+
+## moduleName
+
+- Type: `string`
 
 Required in `umd` format, set the module name.
 
-### global
+## global
 
-Type: `object`<br>
-Alias: `globals`
+- Type: `object`
+- Alias: `globals`
 
 Object of id: name pairs, used for umd/iife bundles. For example, in a case like this...
 
 ```js
-import $ from 'jquery'
+import $ from "jquery";
 ```
 
-...we want to tell Bili that the jquery module ID equates to the global $ variable:
+...we want to tell Bili that the jquery module ID equates to the global \$ variable:
 
 ```bash
 bili --global.jquery "$"
@@ -66,49 +65,49 @@ bili --global.jquery "$"
 
 All module IDs will be automatically added to [`external`](#external)
 
-### filename
+## filename
 
-Type: `string`<br>
-Default: `[name][suffix].js`
+- Type: `string`
+- Default: `[name][suffix].js`
 
 The filename of output file.
 
-* `[name]` is the base name of input, e.g. the base name of `src/index.js` is `index`.
-* `[suffix]` is the corresponding suffix for current format, like `.cjs` for `cjs` format, `.es` for `es` format, and there's no suffix for `umd` format.
+- `[name]` is the base name of input, e.g. the base name of `src/index.js` is `index`.
+- `[suffix]` is the corresponding suffix for current format, like `.cjs` for `cjs` format, `.es` for `es` format, and there's no suffix for `umd` format.
 
-### name
+## name
 
-Type: `string`<br>
-Default: Base name of input.
+- Type: `string`
+- Default: Base name of input.
 
 Set the `[name]` part of [`filename`](#filename).
 
-### inline
+## inline
 
-Type: `boolean` `string` `string[]`<br>
-Default: `false` or `true` when [`format`](#format) is `umd` or `iife`
+- Type: `boolean` `string` `string[]`
+- Default: `false` or `true` when [`format`](#format) is `umd` or `iife`
 
 Inline all node modules or specified node modules into final bundle.
 
-### cwd
+## cwd
 
-Type: `string`<br>
-Default: `process.cwd()`
+- Type: `string`
+- Default: `process.cwd()`
 
 The base dir to resolve relative paths from.
 
-### external
+## external
 
-Type: `Array` `function`
+- Type: `Array` `function`
 
 Either a Function that takes an id and returns `true` (external) or `false` (not external), or an Array of module IDs that should remain external to the bundle. The IDs should be either:
 
-* The name of an external dependency
-* A resolved ID (like an absolute or relative path to a file)
+- The name of an external dependency
+- A resolved ID (like an absolute or relative path to a file)
 
-### banner
+## banner
 
-Type: `boolean` `string` `object`
+- Type: `boolean` `string` `object`
 
 When `true` it inserts a copyright message to the top of final bundle like below:
 
@@ -124,35 +123,35 @@ By default the information in the copyright message is from your `package.json`,
 
 ```js
 {
-  version, name, year, author, license
+  version, name, year, author, license;
 }
 ```
 
 Of course a `string` is also accepted.
 
-### postcss
+## postcss
 
-Type: `object`<br>
-Default: `{extract: true}`
+- Type: `object`
+- Default: `{extract: true}`
 
 Options for `rollup-plugin-postcss`, it will also automatically load local PostCSS config file.
 
-### js
+## js
 
-Type: `string` `boolean`<br>
-Default: `babel`
+- Type: `string` `boolean`
+- Default: `babel`
 
 Specify the Rollup plugin we should use to transform `.js` files. To disable this feature, set it to `false` or use the CLI option `--no-js`.
 
 Built-in js plugin:
 
-* `buble`: using `rollup-plugin-buble` together with `rollup-plugin-babel` for minimal output
-* `babel`: using `rollup-plugin-babel` only
+- `buble`: using `rollup-plugin-buble` together with `rollup-plugin-babel` for minimal output
+- `babel`: using `rollup-plugin-babel` only
 
-### plugin
+## plugin
 
-Type: `string` `Array<string>` `Array<object>`<br>
-Alias: `plugins`
+- Type: `string` `Array<string>` `Array<object>`
+- Alias: `plugins`
 
 Add extra Rollup plugins, e.g. `rollup-plugin-vue`:
 
@@ -169,73 +168,73 @@ You can also directly require Rollup plugin if you are using JS config or JS API
 ```js
 // bili.config.js
 module.exports = {
-  plugin: [require('rollup-plugin-foo')(options)]
-}
+  plugin: [require("rollup-plugin-foo")(options)]
+};
 ```
 
-### target
+## target
 
-Type: `string`<br>
-Default: `browser`<br>
-Possible values: `node` `node:{TARGET}`
+- Type: `string`
+- Default: `browser`
+- Possible values: `node` `node:{TARGET}`
 
 Compile for specific target:
 
-* For `node`
-  * we compile JS to `node: 6` syntax with `babel-preset-env`.
-  * Never use `browser` field in `package.json`.
-* For `browser`
-  * we compile JS to `ie: 9` syntax with `babel-preset-env`.
-  * Use `browser` field in `package.json`
+- For `node`
+  - we compile JS to `node: 6` syntax with `babel-preset-env`.
+  - Never use `browser` field in `package.json`.
+- For `browser`
+  - we compile JS to `ie: 9` syntax with `babel-preset-env`.
+  - Use `browser` field in `package.json`
 
 Note that this option won't work if you're using custom babel config file.
 
-### jsx
+## jsx
 
-Type: `string`<br>
-Default: `react`<br>
-Possible values: `react` `vue` or any JSX pragma like `h`
+- Type: `string`
+- Default: `react`
+- Possible values: `react` `vue` or any JSX pragma like `h`
 
 Switch JSX syntax, only works with our default Babel config or Buble.
 
-### objectAssign
+## objectAssign
 
-Type: `string`<br>
-Default: `undefined`
+- Type: `string`
+- Default: `undefined`
 
 Replace `Object.assign` (including the ones transformed from object reset spread) with a custom function name.
 
 This only works with our default Babel config or Buble.
 
-### exports
+## exports
 
-Type: `string`<br>
-Default: `auto`
+- Type: `string`
+- Default: `auto`
 
 https://rollupjs.org/#exports. You will need it to disable the warning when you're mixing default export and named exports.
 
-### replace
+## replace
 
-Type: `object`
+- Type: `object`
 
 Add options for [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace).
 
-### alias
+## alias
 
-Type: `object`
+- Type: `object`
 
 This is some feature which is similar to Webpack's `resolve.alias`.
 
-### pretty
+## pretty
 
-Type: `boolean`
-Default: `false`
+- Type: `boolean`
+- Default: `false`
 
 Prettfies the output with Prettier, you can pass Prettier options via `prettier`, you need to have `rollup-plugin-prettier` installed.
 
-### env
+## env
 
-Type: `object`
+- Type: `object`
 
 Like [`replace`](#replace) option but it replaces strings that start with `process.env` and automatically stringifies the value:
 
@@ -246,44 +245,44 @@ bili --env.NODE_ENV development
 Then in your app:
 
 ```js
-const prod = process.env.NODE_ENV === 'production'
+const prod = process.env.NODE_ENV === "production";
 // compiled to
-const prod = 'development' === 'production'
+const prod = "development" === "production";
 ```
 
 <p class="tip">
 Note that in `umd` and `iife` format, `NODE_ENV` will default to `development` when uncompressed or `production` when compressed.
 </p>
 
-### virtualModules
+## virtualModules
 
-Type: `object`
+- Type: `object`
 
 Load modules from memory.
 
 Let's say you have `src/index.js`:
 
 ```js
-import foo from 'foo'
+import foo from "foo";
 
-console.log(foo + 'bar')
+console.log(foo + "bar");
 ```
 
 And config file:
 
 ```js
 module.exports = {
-  input: './src/index.js',
+  input: "./src/index.js",
   virtualModules: {
     foo: `export default 'foo'`
   }
-}
+};
 ```
 
 Then the result would be:
 
 ```js
-console.log('foobar')
+console.log("foobar");
 ```
 
 The entry of `virtualModules` could be a bare module id or absolute path or relative path:
@@ -298,9 +297,9 @@ The entry of `virtualModules` could be a bare module id or absolute path or rela
 
 Note that relative paths are relative to [cwd](#cwd).
 
-### sizeLimit
+## sizeLimit
 
-Type: `object`
+- Type: `object`
 
 Limit bundle gzip size to a threshold and exit with non-zero code when it exceeds the threshold:
 
@@ -316,13 +315,13 @@ Limit bundle gzip size to a threshold and exit with non-zero code when it exceed
 
 You can also set it in CLI flag:
 
-<img src="https://i.loli.net/2018/01/26/5a6a09d130b6d.png" width="450" alt="sizelimit">
+<image-zoom :border="false" url="https://i.loli.net/2018/01/26/5a6a09d130b6d.png" width="450" alt="sizelimit" />
 
 Each entry of this option is a [`format`](#format).
 
-### extendOptions
+## extendOptions
 
-Type: `(currentOptions, ctx) => NewOptions`
+- Type: `(currentOptions, ctx) => NewOptions`
 
 Update options.
 
@@ -330,8 +329,8 @@ Update options.
 
 ```typescript
 interface Ctx {
-  input: string
-  format: string
-  compress: boolean
+  input: string;
+  format: string;
+  compress: boolean;
 }
 ```
