@@ -38,6 +38,10 @@ const FORMATS = ['cjs']
 
 const prettyBytes = v => bytes.format(v, { unitSeparator: ' ' })
 
+// Make rollup-plugin-vue use basename in component.__file instead of absolute path
+// TODO: PR to rollup-plugin-vue to allow this as an API option
+process.env.BUILD = 'production'
+
 export default class Bili extends EventEmitter {
   static generate(options) {
     try {
@@ -187,7 +191,7 @@ export default class Bili extends EventEmitter {
     return require(resolveFrom(this.options.cwd, name))
   }
 
-  loadUserPlugins({ plugins, filename }) {
+  loadUserPlugins({ plugins }) {
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
       // In bili.config.js or you're using the API
@@ -198,15 +202,14 @@ export default class Bili extends EventEmitter {
 
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
+        const pluginVuePkg = this.localRequire('rollup-plugin-vue/package')
+        const version = parseInt(pluginVuePkg.version, 10)
+        if (version < 4) {
+          throw new BiliError(`rollup-plugin-vue >= 4 is required!`)
+        }
         pluginOptions = {
           include: ['**/*.vue'],
-          // Let rollup-plugin-postcss handle external CSS dependencies
-          autoStyles: false,
-          styleToImports: true,
-          css: path.resolve(
-            this.options.outDir,
-            filename.replace(/\.[^.]+$/, '.css')
-          ),
+          css: false,
           ...pluginOptions
         }
       }
@@ -397,7 +400,6 @@ export default class Bili extends EventEmitter {
         options.virtualModules &&
           virtualModulesPlugin(options.virtualModules, this.options.cwd),
         ...this.loadUserPlugins({
-          filename: outFilename,
           plugins: getArrayOption(options, 'plugin') || []
         }),
         jsonPlugin(),
