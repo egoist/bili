@@ -38,6 +38,10 @@ const FORMATS = ['cjs']
 
 const prettyBytes = v => bytes.format(v, { unitSeparator: ' ' })
 
+// Make rollup-plugin-vue use basename in component.__file instead of absolute path
+// TODO: PR to rollup-plugin-vue to allow this as an API option
+process.env.BUILD = 'production'
+
 export default class Bili extends EventEmitter {
   static generate(options) {
     try {
