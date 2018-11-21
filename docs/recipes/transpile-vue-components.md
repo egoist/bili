@@ -4,7 +4,7 @@
 
 ```bash
 cd my-project
-yarn add rollup-plugin-vue --dev
+yarn add rollup-plugin-vue vue-template-compiler --dev
 bili --plugin vue
 ```
 
