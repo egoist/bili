@@ -202,6 +202,11 @@ export default class Bili extends EventEmitter {
 
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
+        const pluginVuePkg = this.localRequire('rollup-plugin-vue/package')
+        const version = parseInt(pluginVuePkg.version)
+        if (version < 4) {
+          throw new BiliError(`rollup-plugin-vue >= 4 is required!`)
+        }
         pluginOptions = {
           include: ['**/*.vue'],
           css: false,
