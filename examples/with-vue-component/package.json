@@ -4,10 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "bili Component.vue --plugin vue"
+    "build": "NODE_ENV=production bili Component.vue --plugin vue"
   },
   "devDependencies": {
-    "rollup-plugin-vue": "3.0.0"
+    "rollup-plugin-vue": "^4.0.0"
   },
   "dependencies": {
     "vue": "^2.5.13",
