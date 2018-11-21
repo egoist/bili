@@ -191,7 +191,7 @@ export default class Bili extends EventEmitter {
     return require(resolveFrom(this.options.cwd, name))
   }
 
-  loadUserPlugins({ plugins, filename }) {
+  loadUserPlugins({ plugins }) {
     // eslint-disable-next-line array-callback-return
     return plugins.map(pluginName => {
       // In bili.config.js or you're using the API
@@ -203,7 +203,7 @@ export default class Bili extends EventEmitter {
       let pluginOptions = this.options[pluginName]
       if (pluginName === 'vue') {
         const pluginVuePkg = this.localRequire('rollup-plugin-vue/package')
-        const version = parseInt(pluginVuePkg.version)
+        const version = parseInt(pluginVuePkg.version, 10)
         if (version < 4) {
           throw new BiliError(`rollup-plugin-vue >= 4 is required!`)
         }
@@ -400,7 +400,6 @@ export default class Bili extends EventEmitter {
         options.virtualModules &&
           virtualModulesPlugin(options.virtualModules, this.options.cwd),
         ...this.loadUserPlugins({
-          filename: outFilename,
           plugins: getArrayOption(options, 'plugin') || []
         }),
         jsonPlugin(),
