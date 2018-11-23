@@ -280,3 +280,28 @@ snapshot({
   }
 })
 
+describe('testing inputs', () => {
+  test('it throws for no empty directory', async () => {
+    expect.assertions(1)
+
+    try {
+      await generate({
+        input: '*.js',
+        format: ['cjs', 'umd'],
+        filename: '[name].js',
+        cwd: fixture('input/empty'),
+        moduleName: 'foo'
+      })
+    } catch (err) {
+      expect(err.message).toMatch(/No matched files to bundle/)
+    }
+  })
+
+  snapshot({
+    input: [],
+    title: 'it should take index.js as input',
+    cwd: fixture('input/index'),
+    format: 'cjs-min'
+  })
+})
+
