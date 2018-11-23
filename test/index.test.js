@@ -269,3 +269,14 @@ snapshot({
   input: 'index.ts',
   cwd: fixture('typescript')
 })
+
+snapshot({
+  title: 'custom rollup plugin',
+  input: 'index.js',
+  cwd: fixture('custom-rollup-plugin'),
+  plugin: 'strip',
+  strip: {
+    functions: ['console.log']
+  }
+})
+
