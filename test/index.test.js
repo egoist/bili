@@ -329,3 +329,16 @@ describe('testing getSuffix()', () => {
   })
 })
 
+test('should throw for wrong path to Bili config', async () => {
+  expect.assertions(1)
+  try {
+    await Bili.generate({
+      input: 'index.js',
+      cwd: fixture('defaults'),
+      config: 'confs/bilirc.json'
+    })
+  } catch (err) {
+    expect(err.message).toContain('Cannot find Bili config file at confs/bilirc.json')
+  }
+})
+
