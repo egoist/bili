@@ -37,7 +37,7 @@ yarn add typescript rollup-plugin-typescript2 --dev
 
 ## Custom JS plugin
 
-Use `js` option for `--js` flag to specify desired JS preprocessor, eg: `--js coffee2` for CoffeeScript 2.
+Use `js` option or `--js` flag to specify desired JS preprocessor, eg: `--js coffee2` for CoffeeScript 2.
 
 ---
 
