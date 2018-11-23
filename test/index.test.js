@@ -63,10 +63,17 @@ snapshot({
 })
 
 snapshot({
-  title: 'banner:true',
+  title: 'banner:true with date',
   banner: true,
   input: 'index.js',
-  cwd: fixture('banner')
+  cwd: fixture('banner/with-date')
+})
+
+snapshot({
+  title: 'banner:true without any date',
+  banner: true,
+  input: 'index.js',
+  cwd: fixture('banner/without-date')
 })
 
 snapshot({
