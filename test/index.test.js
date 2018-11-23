@@ -263,3 +263,9 @@ snapshot({
   cwd: fixture('vue'),
   plugins: 'vue'
 })
+
+snapshot({
+  title: 'Typescript',
+  input: 'index.ts',
+  cwd: fixture('typescript')
+})
