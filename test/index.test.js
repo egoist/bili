@@ -305,3 +305,27 @@ describe('testing inputs', () => {
   })
 })
 
+describe('testing getSuffix()', () => {
+  test('it throws with unsupported format', async () => {
+    expect.assertions(1)
+    try {
+      await generate({
+        input: 'index.js',
+        format: 'holyFormat',
+        filename: '[name].js',
+        cwd: fixture('default')
+      })
+    } catch (err) {
+      expect(err.message).toMatch(/unsupported format/)
+    }
+  })
+
+  snapshot({
+    input: 'index',
+    title: 'it should create output with all supported formats',
+    format: ['cjs', 'umd', 'es', 'iife'],
+    cwd: fixture('defaults'),
+    moduleName: 'foo'
+  })
+})
+
