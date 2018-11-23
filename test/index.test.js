@@ -249,3 +249,10 @@ snapshot({
   cwd: fixture('inline-certain-modules'),
   inline: 'fake-module'
 })
+
+snapshot({
+  title: 'vue plugin',
+  input: 'component.vue',
+  cwd: fixture('vue'),
+  plugins: 'vue'
+})
