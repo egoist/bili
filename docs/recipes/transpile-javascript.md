@@ -1,6 +1,6 @@
 # Transpile JavaScript
 
-**Bili** supports Babel and Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel`, if you prefer using `buble` to generate smaller output then try `--js buble` flag.
+**Bili** supports Babel, Buble out of the box, you don't need to install any extra plugins to make them work, by default we use `babel`, if you prefer using `buble` to generate smaller output then try `--js buble` flag.
 
 That's it!
 
@@ -29,7 +29,11 @@ What Buble supports:
 
 ## TypeScript
 
-We automatically use [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) when the entry file ending with `.ts` and no custom JS plugin is specified, however you have to install [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) to make it work.
+We automatically use [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) when the entry file ends with `.ts` extension and no custom JS plugin is specified, however you have to install [rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) alongside `typescript` to make it work.
+
+```bash
+yarn add typescript rollup-plugin-typescript2 --dev
+```
 
 ## Custom JS plugin
 
