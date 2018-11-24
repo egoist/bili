@@ -44,11 +44,7 @@ process.env.BUILD = 'production'
 
 export default class Bili extends EventEmitter {
   static generate(options) {
-    try {
-      return new Bili(options).bundle({ write: false })
-    } catch (err) {
-      handleError(err)
-    }
+    return new Bili(options).bundle({ write: false })
   }
 
   static async write(options) {
