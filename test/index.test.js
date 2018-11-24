@@ -342,3 +342,18 @@ test('should throw for wrong path to Bili config', async () => {
   }
 })
 
+// test('it should throw error for not found plugin via handleLoadPluginError()', async () => {
+//   expect.assertions(1)
+//   try {
+//     await generate({
+//       input: 'index.js',
+//       format: 'cjs',
+//       filename: '[name].js',
+//       cwd: fixture('input/empty'),
+//       plugin: 'noPlugin'
+//     })
+//   } catch (err) {
+//     // eslint-disable-next-line no-useless-escape
+//     expect(err.message).toContain('Cannot find plugin "rollup-plugin-noPlugin" in current directory!')
+//   }
+// })
