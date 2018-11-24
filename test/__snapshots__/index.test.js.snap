@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Typescript 1`] = `
+Array [
+  Array [
+    "test/fixtures/typescript/dist/index.cjs.js",
+    "'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function greeter(person) {
+    return \\"Hello, \\" + person.firstName + \\" \\" + person.lastName;
+}
+var user = { firstName: \\"Jane\\", lastName: \\"User\\" };
+var s = greeter(user);
+
+exports.s = s;
+",
+  ],
+]
+`;
+
 exports[`async 1`] = `
 Array [
   Array [
@@ -109,13 +129,32 @@ module.exports = _default;
 ]
 `;
 
-exports[`banner:true 1`] = `
+exports[`banner:true with date 1`] = `
 Array [
   Array [
-    "test/fixtures/banner/dist/foo.cjs.js",
+    "test/fixtures/banner/with-date/dist/foo.cjs.js",
     "/*!
  * foo v0.0.0
  * (c) 2015-present name <email@email.com>
+ * Released under the MIT License.
+ */
+'use strict';
+
+var index = 42;
+
+module.exports = index;
+",
+  ],
+]
+`;
+
+exports[`banner:true without any date 1`] = `
+Array [
+  Array [
+    "test/fixtures/banner/without-date/dist/foo.cjs.js",
+    "/*!
+ * foo v0.0.0
+ * (c) 2018-present name <email@email.com>
  * Released under the MIT License.
  */
 'use strict';
@@ -207,6 +246,30 @@ var vueJsx = {
 };
 
 module.exports = vueJsx;
+",
+  ],
+]
+`;
+
+exports[`custom rollup plugin 1`] = `
+Array [
+  Array [
+    "test/fixtures/custom-rollup-plugin/dist/index.cjs.js",
+    "'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var tt = 'is there anything?';
+
+function afun() {
+  return tt;
+}
+
+function another() {
+  return afun();
+}
+
+exports.another = another;
 ",
   ],
 ]
@@ -479,6 +542,64 @@ module.exports = Foo;
 ]
 `;
 
+exports[`testing getSuffix() it should create output with all supported formats 1`] = `
+Array [
+  Array [
+    "test/fixtures/defaults/dist/index.cjs.js",
+    "'use strict';
+
+var index = 42;
+
+module.exports = index;
+",
+  ],
+  Array [
+    "test/fixtures/defaults/dist/index.es.js",
+    "var index = 42;
+
+export default index;
+",
+  ],
+  Array [
+    "test/fixtures/defaults/dist/index.iife.js",
+    "var foo = (function () {
+	'use strict';
+
+	var index = 42;
+
+	return index;
+
+}());
+",
+  ],
+  Array [
+    "test/fixtures/defaults/dist/index.js",
+    "(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.foo = factory());
+}(this, (function () { 'use strict';
+
+	var index = 42;
+
+	return index;
+
+})));
+",
+  ],
+]
+`;
+
+exports[`testing inputs it should take index.js as input 1`] = `
+Array [
+  Array [
+    "test/fixtures/input/index/dist/index.cjs.min.js",
+    "\\"use strict\\";var index=42;module.exports=index;
+",
+  ],
+]
+`;
+
 exports[`uglify 1`] = `
 Array [
   Array [
@@ -502,6 +623,88 @@ var bar = baz + 1;
 var dayyum = bar + 123;
 
 module.exports = dayyum;
+",
+  ],
+]
+`;
+
+exports[`vue plugin 1`] = `
+Array [
+  Array [
+    "test/fixtures/vue/dist/component.cjs.js",
+    "'use strict';
+
+//
+//
+//
+//
+//
+//
+//
+var script = {
+  name: \\"main-content\\",
+  data: function data() {
+    return {
+      name: 'Bili !'
+    };
+  }
+};
+
+/* script */
+            const __vue_script__ = script;
+/* template */
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:\\"main-content\\"},[_c('h1',[_vm._v(\\" This is your first component in Vue \\")]),_vm._v(\\" \\"),_c('h3',[_vm._v(\\" \\"+_vm._s(_vm.name)+\\" \\")])])};
+var __vue_staticRenderFns__ = [];
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = \\"data-v-723e2de2\\";
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* component normalizer */
+  function __vue_normalize__(
+    template, style, script$$1,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = \\"component.vue\\";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var component = __vue_normalize__(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+module.exports = component;
 ",
   ],
 ]
