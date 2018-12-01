@@ -1,7 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "node-sass": "^4.10.0",
     "rollup-plugin-prettier": "^0.5.0",
     "rollup-plugin-strip": "^1.2.0",
     "rollup-plugin-typescript2": "^0.18.0",
