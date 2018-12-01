@@ -18,7 +18,7 @@ cli
     } else if (options.quiet) {
       options.logLevel = 1
     }
-    return Bili.write(options)
+    Bili.write(options).catch(Bili.handlError)
   })
   .option('watch', {
     desc: 'Build and watch files',

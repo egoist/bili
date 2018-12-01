@@ -48,24 +48,22 @@ export default class Bili extends EventEmitter {
   }
 
   static async write(options) {
-    try {
-      const bundler = new Bili(options)
-      const startTime = Date.now()
-      await bundler.bundle()
-      const buildTime = Date.now() - startTime
-      const time =
-        buildTime < 1000 ?
-          `${buildTime}ms` :
-          `${(buildTime / 1000).toFixed(2)}s`
+    const bundler = new Bili(options)
+    const startTime = Date.now()
+    await bundler.bundle()
+    const buildTime = Date.now() - startTime
+    const time =
+      buildTime < 1000 ? `${buildTime}ms` : `${(buildTime / 1000).toFixed(2)}s`
 
-      if (!options.watch) {
-        logger.status(emoji.success, chalk.green(`Built in ${time}.`))
-        logger.log(await bundler.stats())
-      }
-      return bundler
-    } catch (err) {
-      handleError(err)
+    if (!options.watch) {
+      logger.status(emoji.success, chalk.green(`Built in ${time}.`))
+      logger.log(await bundler.stats())
     }
+    return bundler
+  }
+
+  static handlError(err) {
+    return handleError(err)
   }
 
   constructor(options = {}) {
@@ -250,10 +248,7 @@ export default class Bili extends EventEmitter {
         ...pluginOptions
       }
       if (name === 'typescript2') {
-        options.cacheRoot = path.join(
-          os.tmpdir(),
-          `.rpt2-${cacheId}`
-        )
+        options.cacheRoot = path.join(os.tmpdir(), `.rpt2-${cacheId}`)
       }
       return options
     }
@@ -321,9 +316,13 @@ export default class Bili extends EventEmitter {
     const transformJS = options.js !== false
     const jsPluginName = transformJS && getJsPluginName(options.js, input)
     const jsPlugin = transformJS && this.getJsPlugin(jsPluginName)
-    const cacheId = crypto.createHash('md5').update(`bili-output:${file}`).digest('hex')
+    const cacheId = crypto
+      .createHash('md5')
+      .update(`bili-output:${file}`)
+      .digest('hex')
     const jsOptions =
-      transformJS && this.getJsOptions(jsPluginName, options[jsPluginName], { cacheId })
+      transformJS &&
+      this.getJsOptions(jsPluginName, options[jsPluginName], { cacheId })
 
     const banner = getBanner(options.banner, this.pkg)
 
@@ -468,8 +467,7 @@ export default class Bili extends EventEmitter {
               preamble: banner
             }
           }),
-        pretty &&
-          this.localRequire('rollup-plugin-prettier')(prettierOptions),
+        pretty && this.localRequire('rollup-plugin-prettier')(prettierOptions),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
         {
