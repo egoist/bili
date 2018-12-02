@@ -63,10 +63,17 @@ snapshot({
 })
 
 snapshot({
-  title: 'banner:true',
+  title: 'banner:true with date',
   banner: true,
   input: 'index.js',
-  cwd: fixture('banner')
+  cwd: fixture('banner/with-date')
+})
+
+snapshot({
+  title: 'banner:true without any date',
+  banner: true,
+  input: 'index.js',
+  cwd: fixture('banner/without-date')
 })
 
 snapshot({
@@ -248,4 +255,105 @@ snapshot({
   input: 'index.js',
   cwd: fixture('inline-certain-modules'),
   inline: 'fake-module'
+})
+
+snapshot({
+  title: 'vue plugin',
+  input: 'component.vue',
+  cwd: fixture('vue'),
+  plugins: 'vue'
+})
+
+snapshot({
+  title: 'Typescript',
+  input: 'index.ts',
+  cwd: fixture('typescript')
+})
+
+snapshot({
+  title: 'custom rollup plugin',
+  input: 'index.js',
+  cwd: fixture('custom-rollup-plugin'),
+  plugin: 'strip',
+  strip: {
+    functions: ['console.log']
+  }
+})
+
+describe('testing inputs', () => {
+  test('it throws for no empty directory', async () => {
+    expect.assertions(1)
+
+    try {
+      await generate({
+        input: '*.js',
+        format: ['cjs', 'umd'],
+        filename: '[name].js',
+        cwd: fixture('input/empty'),
+        moduleName: 'foo'
+      })
+    } catch (err) {
+      expect(err.message).toMatch(/No matched files to bundle/)
+    }
+  })
+
+  snapshot({
+    input: [],
+    title: 'it should take index.js as input',
+    cwd: fixture('input/index'),
+    format: 'cjs-min'
+  })
+})
+
+describe('testing getSuffix()', () => {
+  test('it throws with unsupported format', async () => {
+    expect.assertions(1)
+    try {
+      await generate({
+        input: 'index.js',
+        format: 'holyFormat',
+        filename: '[name].js',
+        cwd: fixture('default')
+      })
+    } catch (err) {
+      expect(err.message).toMatch(/unsupported format/)
+    }
+  })
+
+  snapshot({
+    input: 'index',
+    title: 'it should create output with all supported formats',
+    format: ['cjs', 'umd', 'es', 'iife'],
+    cwd: fixture('defaults'),
+    moduleName: 'foo'
+  })
+})
+
+test('should throw for wrong path to Bili config', async () => {
+  expect.assertions(1)
+  try {
+    await Bili.generate({
+      input: 'index.js',
+      cwd: fixture('defaults'),
+      config: 'confs/bilirc.json'
+    })
+  } catch (err) {
+    expect(err.message).toContain('Cannot find Bili config file at confs/bilirc.json')
+  }
+})
+
+test('it should throw error for not found plugin via handleLoadPluginError()', async () => {
+  expect.assertions(2)
+  try {
+    await generate({
+      input: 'index.js',
+      format: 'cjs',
+      filename: '[name].js',
+      cwd: fixture('input/empty'),
+      plugin: 'noPlugin'
+    })
+  } catch (err) {
+    expect(err.message).toContain('Cannot find plugin')
+    expect(err.message).toContain('rollup-plugin-noPlugin')
+  }
 })
