@@ -36,7 +36,7 @@
     "babel-plugin-transform-vue-jsx": "^4",
     "boxen": "^1.3.0",
     "bytes": "^3.0.0",
-    "cac": "^4.2.4",
+    "cac": "^6.3.9",
     "camelcase": "^4.1.0",
     "chalk": "^2.3.0",
     "fast-async": "^6.3.0",
