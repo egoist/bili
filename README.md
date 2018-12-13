@@ -92,6 +92,7 @@ Dive into the [documentation](https://bili.egoist.sh) to see more neat features!
 - [apitool](https://github.com/eunjae-lee/apitool) - An organized way to work with your APIs
 - [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
 - [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
+- [talquei](https://github.com/luciorubeens/talquei) - 🤖 Vue components to build webforms looking like a conversation
 - Feel free to submit yours
 
 ## Contributing
