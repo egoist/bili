@@ -10,4 +10,4 @@ bili --plugin vue
 
 By default `<style>` tag in Vue SFC will be extracted to the same location where the JS is generated but with `.css` extension.
 
-> Note that Bili requires `rollup-plugin-vue >=4`.
+<Note type="warning">Bili requires `rollup-plugin-vue >=4`.</Note>
