@@ -112,9 +112,9 @@ export default class Bili extends EventEmitter {
         const { code, relative, formatFull } = bundles[filepath]
         const gzipSizeNumber = await gzipSize(code)
         const expectedSize =
-            sizeLimit &&
-            sizeLimit[formatFull] &&
-            bytes.parse(sizeLimit[formatFull])
+          sizeLimit &&
+          sizeLimit[formatFull] &&
+          bytes.parse(sizeLimit[formatFull])
         let sizeInfo
         if (expectedSize && gzipSizeNumber > expectedSize) {
           process.exitCode = 1
@@ -242,7 +242,7 @@ export default class Bili extends EventEmitter {
       let typescript
       try {
         typescript = this.localRequire('typescript')
-      } catch (err) {}
+      } catch (err) { }
       const options = {
         typescript,
         ...pluginOptions
@@ -281,7 +281,7 @@ export default class Bili extends EventEmitter {
       this.options
 
     logger.debug(chalk.bold(`Bili options for ${input} in ${formatFull}:\n`) +
-        util.inspect(options, { colors: true }))
+      util.inspect(options, { colors: true }))
 
     if (typeof options !== 'object') {
       throw new BiliError('You must return the options in `extendOptions` method!')
@@ -387,13 +387,13 @@ export default class Bili extends EventEmitter {
       },
       plugins: [
         !isCI &&
-          process.stderr.isTTY &&
-          process.env.NODE_ENV !== 'test' &&
-          options.progress !== false &&
-          progressPlugin(),
+        process.stderr.isTTY &&
+        process.env.NODE_ENV !== 'test' &&
+        options.progress !== false &&
+        progressPlugin(),
         hashbangPlugin(),
         options.virtualModules &&
-          virtualModulesPlugin(options.virtualModules, this.options.cwd),
+        virtualModulesPlugin(options.virtualModules, this.options.cwd),
         ...this.loadUserPlugins({
           plugins: getArrayOption(options, 'plugin') || []
         }),
@@ -428,51 +428,51 @@ export default class Bili extends EventEmitter {
           }
         }),
         transformJS &&
-          jsPluginName === 'buble' &&
-          require('rollup-plugin-babel')({
-            include: '**/*.js',
-            exclude: 'node_modules/**',
-            babelrc: false,
-            presets: [
-              [
-                require.resolve('./babel'),
-                {
-                  ...this.babelPresetOptions,
-                  buble: true
-                }
-              ]
+        jsPluginName === 'buble' &&
+        require('rollup-plugin-babel')({
+          include: '**/*.js',
+          exclude: 'node_modules/**',
+          babelrc: false,
+          presets: [
+            [
+              require.resolve('./babel'),
+              {
+                ...this.babelPresetOptions,
+                buble: true
+              }
             ]
-          }),
+          ]
+        }),
         transformJS &&
-          jsPlugin({
-            exclude: 'node_modules/**',
-            ...jsOptions
-          }),
+        jsPlugin({
+          exclude: 'node_modules/**',
+          ...jsOptions
+        }),
         inline &&
-          nodeResolvePlugin({
-            module: true,
-            extensions: ['.js', '.json'],
-            preferBuiltIns: true,
-            browser: !options.target.startsWith('node'),
-            only: Array.isArray(inline) ? inline : null,
-            ...options.nodeResolve
-          }),
+        nodeResolvePlugin({
+          module: true,
+          extensions: ['.js', '.json'],
+          preferBuiltIns: true,
+          browser: !options.target.startsWith('node'),
+          only: Array.isArray(inline) ? inline : null,
+          ...options.nodeResolve
+        }),
         commonjsPlugin(options.commonjs),
         compress &&
-          terserPlugin({
-            ...terserOptions,
-            output: {
-              ...terserOptions.output,
-              // Add banner (if there is)
-              preamble: banner
-            }
-          }),
+        terserPlugin({
+          ...terserOptions,
+          output: {
+            ...terserOptions.output,
+            // Add banner (if there is)
+            preamble: banner
+          }
+        }),
         pretty && this.localRequire('rollup-plugin-prettier')(prettierOptions),
         options.alias && aliasPlugin(options.alias),
         options.replace && replacePlugin(options.replace),
         {
           name: 'bili',
-          ongenerate: (_, { code }) => {
+          generateBundle: (_, { code }) => {
             this.bundles[file] = {
               relative: path.relative(process.cwd(), file),
               input,
@@ -484,13 +484,13 @@ export default class Bili extends EventEmitter {
           }
         },
         env &&
-          Object.keys(env).length > 0 &&
-          replacePlugin({
-            values: Object.keys(env).reduce((res, key) => {
-              res[`process.env.${key}`] = JSON.stringify(env[key])
-              return res
-            }, {})
-          })
+        Object.keys(env).length > 0 &&
+        replacePlugin({
+          values: Object.keys(env).reduce((res, key) => {
+            res[`process.env.${key}`] = JSON.stringify(env[key])
+            return res
+          }, {})
+        })
       ].filter(v => Boolean(v))
     }
 

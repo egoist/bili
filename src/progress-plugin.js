@@ -16,7 +16,7 @@ export default () => {
         true
       )
     },
-    ongenerate() {
+    generateBundle() {
       bundling = 0
     }
   }
