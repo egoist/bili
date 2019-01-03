@@ -28,7 +28,9 @@ export function getBabelConfig(cwd, disableBabelRc, babelOptions) {
 export function getBiliConfig(_config) {
   const useConfig = new UseConfig({
     name: 'bili',
-    files: _config ? [_config] : ['package.json', '{name}.config.js', '.{name}rc']
+    files: _config ?
+      [_config] :
+      ['package.json', '{name}.config.js', '.{name}rc']
   })
   const { path: configPath, config } = useConfig.loadSync()
   if (configPath) {

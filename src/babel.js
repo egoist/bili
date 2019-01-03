@@ -71,13 +71,14 @@ export default (
           // You should not include polyfill in your lib anyways
           useBuiltIns: false,
           modules: false,
-          targets: target && target.startsWith('node') ?
-            {
-              node: target.split(':')[1] || 6
-            } :
-            {
-              ie: 9
-            },
+          targets:
+              target && target.startsWith('node') ?
+                {
+                  node: target.split(':')[1] || 6
+                } :
+                {
+                  ie: 9
+                },
           exclude: ['transform-regenerator', 'transform-async-to-generator'],
           ...envOption
         }

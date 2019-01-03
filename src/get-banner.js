@@ -29,9 +29,7 @@ export default (banner, pkg) => {
   let author =
     typeof pkg.author === 'string' ?
       pkg.author :
-      typeof pkg.author === 'object' ?
-        stringifyAuthor(pkg.author) :
-        ''
+      typeof pkg.author === 'object' ? stringifyAuthor(pkg.author) : ''
   author = author ? author : ''
 
   const license = pkg.license || ''
