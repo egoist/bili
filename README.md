@@ -93,6 +93,7 @@ Dive into the [documentation](https://bili.egoist.sh) to see more neat features!
 - [vuedarkmode](https://github.com/LeCoupa/vuedarkmode) - A Minimalist Dark Design System for Vue.js 🎨
 - [v-stylish](https://github.com/gigioSouza/v-stylish) - Vue.js directives to easly manipulate dynamic classes and styles
 - [talquei](https://github.com/luciorubeens/talquei) - 🤖 Vue components to build webforms looking like a conversation
+- [radial-color-picker](https://github.com/radial-color-picker/vue-color-picker) - Minimalistic color picker with a focus on size, accessibility and performance.
 - Feel free to submit yours
 
 ## Contributing
