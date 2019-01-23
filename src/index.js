@@ -327,9 +327,13 @@ export default class Bili extends EventEmitter {
     const banner = getBanner(options.banner, this.pkg)
 
     let external = getArrayOption(options, 'external') || []
-    external = external.map(e => (e.startsWith('./') ? path.resolve(options.cwd, e) : e))
     let globals = options.globals || options.global
-    if (typeof globals === 'object') {
+
+    const isExternalArray = Array.isArray(external)
+    if (isExternalArray) {
+      external = external.map(e => (e.startsWith('./') ? path.resolve(options.cwd, e) : e))
+    }
+    if (typeof globals === 'object' && isExternalArray) {
       external = [...new Set(external.concat(Object.keys(globals)))]
     }
 
