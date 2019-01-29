@@ -12,6 +12,8 @@
 - 🚨 Friendly error logging experience.
 - 💻 Written in TypeScript, automatically generated API docs.
 
+<img src="https://unpkg.com/@egoist/media@1/projects/bili/preview.svg" alt="preview">
+
 ## Documentation
 
 https://bili.egoist.sh
