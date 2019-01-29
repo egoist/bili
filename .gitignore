@@ -1,0 +1,9 @@
+*.log
+.DS_Store
+/node_modules
+/test/fixtures/node_modules
+.rpt2_cache
+/lib
+/dist
+/types
+/docs/api

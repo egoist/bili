@@ -1,0 +1,85 @@
+#!/usr/bin/env node
+import cac from 'cac'
+import { version } from '../package.json'
+
+const cli = cac('bili')
+
+cli
+  .command('[...input]', 'Bundle input files', {
+    ignoreOptionDefaultValue: true
+  })
+  .option('-w, --watch', 'Watch files')
+  .option(
+    '--format <format>',
+    'Output format (cjs | umd | es  | iife), can be used multiple times'
+  )
+  .option('--input.* [file]', 'An object mapping names to entry points')
+  .option('-d, --out-dir <outDir>', 'Output directory', { default: 'dist' })
+  .option('--file-name <name>', 'Set the file name for output files')
+  .option('--module-name <name>', 'Set the module name for umd bundle')
+  .option('--env.* [value]', 'Replace env variables')
+  .option('--plugin, --plugins.* [options]', 'Use a plugin')
+  .option(
+    '--global.* [path]',
+    'id:moduleName pair for external imports in umd/iife bundles'
+  )
+  .option('--no-extract-css', 'Do not extract CSS files')
+  .option('--bundle-node-modules', 'Include node modules in your bundle')
+  .option('--minify', 'Minify output files')
+  .option('--external <id>', 'Mark a module id as external', {
+    type: []
+  })
+  .option('-c, --config <file>', 'Use a custom config file')
+  .option('--banner', 'Add banner with pkg info to the bundle')
+  .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
+  .option('--verbose', 'Show verbose logs')
+  .option('--quiet', 'Show minimal logs')
+  .option('--stack-trace', 'Show stack trace for bundle errors')
+  .example(bin => `  ${bin} --format cjs --format esm`)
+  .example(bin => `  ${bin} src/index.js,src/cli.ts`)
+  .example(bin => `  ${bin} --input.index src/foo.ts`)
+  .action(async (input, options) => {
+    const { Bundler } = await import('./')
+    const bundler = new Bundler(
+      {
+        input: options.input || (input.length === 0 ? undefined : input),
+        output: {
+          format: options.format,
+          dir: options.outDir,
+          moduleName: options.moduleName,
+          fileName: options.fileName,
+          minify: options.minify,
+          extractCSS: options.extractCss
+        },
+        bundleNodeModules: options.bundleNodeModules,
+        env: options.env,
+        plugins: options.plugins,
+        externals: options.external,
+        globals: options.global,
+        banner: options.banner,
+        babel: {
+          asyncToPromises: options.asyncToPromises
+        }
+      },
+      {
+        logLevel: options.verbose
+          ? 'verbose'
+          : options.quiet
+          ? 'quiet'
+          : undefined,
+        stackTrace: options.stackTrace,
+        configFile: options.config
+      }
+    )
+    await bundler
+      .run({ write: true, watch: options.watch })
+      .catch((err: any) => {
+        bundler.handleError(err)
+        process.exit(1)
+      })
+  })
+
+cli.version(version)
+cli.help()
+
+cli.parse()

@@ -1,0 +1,342 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Typescript: Typescript dist/index.js 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function greeter(person) {
+  return \\"Hello, \\" + person.firstName + \\" \\" + person.lastName;
+}
+
+let user = {
+  firstName: \\"Jane\\",
+  lastName: \\"User\\"
+};
+let s = greeter(user);
+
+exports.s = s;
+"
+`;
+
+exports[`async: async dist/index.js 1`] = `
+"'use strict';
+
+function _async(f) {
+  return function () {
+    for (var args = [], i = 0; i < arguments.length; i++) {
+      args[i] = arguments[i];
+    }
+
+    try {
+      return Promise.resolve(f.apply(this, args));
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  };
+}
+
+const a = {
+  a: 1
+};
+var index = _async(function () {
+  return Object.assign({}, a, {
+    b
+  });
+});
+
+module.exports = index;
+"
+`;
+
+exports[`babel:disable-config: babel:disable-config dist/index.js 1`] = `
+"'use strict';
+
+class index {}
+
+module.exports = index;
+"
+`;
+
+exports[`babel:object-rest-spread: babel:object-rest-spread dist/index.js 1`] = `
+"'use strict';
+
+var index = Object.assign({}, a);
+
+module.exports = index;
+"
+`;
+
+exports[`babel:with-config: babel:with-config dist/index.js 1`] = `
+"'use strict';
+
+class index {}
+
+module.exports = index;
+"
+`;
+
+exports[`banner:object: banner:object dist/default.js 1`] = `
+"/*!
+ * name v1.2.3
+ * (c) author
+ * Released under the GPL License.
+ */
+'use strict';
+
+var _default = {};
+
+module.exports = _default;
+"
+`;
+
+exports[`banner:string: banner:string dist/default.js 1`] = `
+"woot
+'use strict';
+
+var _default = {};
+
+module.exports = _default;
+"
+`;
+
+exports[`banner:true with date: banner:true with date dist/index.js 1`] = `
+"/*!
+ * foo v0.0.0
+ * (c) name <email@email.com>
+ * Released under the MIT License.
+ */
+'use strict';
+
+var index = 42;
+
+module.exports = index;
+"
+`;
+
+exports[`banner:true without any date: banner:true without any date dist/index.js 1`] = `
+"/*!
+ * foo v0.0.0
+ * (c) name <email@email.com>
+ * Released under the MIT License.
+ */
+'use strict';
+
+var index = 42;
+
+module.exports = index;
+"
+`;
+
+exports[`bundle-node-modules: bundle-node-modules dist/index.js 1`] = `
+"'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var all = _interopDefault(require('p-all'));
+var map = _interopDefault(require('p-map'));
+
+var index = {
+  all,
+  map
+};
+
+module.exports = index;
+"
+`;
+
+exports[`custom rollup plugin: custom rollup plugin dist/index.js 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const tt = 'is there anything?';
+
+function afun() {
+  return tt;
+}
+
+function another() {
+  return afun();
+}
+
+exports.another = another;
+"
+`;
+
+exports[`defaults: defaults dist/index.js 1`] = `
+"'use strict';
+
+var index = 42;
+
+module.exports = index;
+"
+`;
+
+exports[`exclude file: exclude file dist/index.js 1`] = `
+"'use strict';
+
+var foo = 'foo';
+
+module.exports = foo;
+"
+`;
+
+exports[`extendOptions: extendOptions dist/bar.js 1`] = `
+"'use strict';
+
+var bar = 'bar';
+
+module.exports = bar;
+"
+`;
+
+exports[`extendOptions: extendOptions dist/bar.umd.js 1`] = `
+"(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global = global || self, global.umd = factory());
+}(this, function () { 'use strict';
+
+	var bar = 'bar';
+
+	return bar;
+
+}));
+"
+`;
+
+exports[`extendOptions: extendOptions dist/bar.umd.min.js 1`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,function(){\\"use strict\\";return\\"bar\\"});
+"
+`;
+
+exports[`extendOptions: extendOptions dist/foo.js 1`] = `
+"'use strict';
+
+var foo = 'foo';
+
+module.exports = foo;
+"
+`;
+
+exports[`extendOptions: extendOptions dist/foo.umd.js 1`] = `
+"(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global = global || self, global.umd = factory());
+}(this, function () { 'use strict';
+
+	var foo = 'foo';
+
+	return foo;
+
+}));
+"
+`;
+
+exports[`extendOptions: extendOptions dist/foo.umd.min.js 1`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,function(){\\"use strict\\";return\\"foo\\"});
+"
+`;
+
+exports[`inline-certain-modules: inline-certain-modules dist/index.js 1`] = `
+"'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var another = _interopDefault(require('another-module'));
+
+var fakeModule = a => a;
+
+var index = fakeModule(1, another);
+
+module.exports = index;
+"
+`;
+
+exports[`uglify: uglify dist/index.cjs.min.js 1`] = `
+"\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});const a=1;exports.a=1;
+"
+`;
+
+exports[`vue plugin: vue plugin dist/component.css 1`] = `
+"
+.main-content[data-v-653a9d1f] {
+  margin: 0 auto;
+  font-family: sans-serif;
+  background-color: #ccf7e2;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 500px;
+}
+"
+`;
+
+exports[`vue plugin: vue plugin dist/component.js 1`] = `
+"'use strict';
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var __vue_normalize__ = _interopDefault(require('vue-runtime-helpers/dist/normalize-component.js'));
+
+//
+//
+//
+//
+//
+//
+//
+var script = {
+  name: 'main-content',
+  data: () => ({
+    name: 'Bili !'
+  })
+};
+
+/* script */
+const __vue_script__ = script;
+// For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
+script.__file = \\"/Users/egoist/dev/bili/test/fixtures/vue/component.vue\\";
+/* template */
+var __vue_render__ = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(\\"div\\", { staticClass: \\"main-content\\" }, [
+    _c(\\"h1\\", [_vm._v(\\"This is your first component in Vue\\")]),
+    _vm._v(\\" \\"),
+    _c(\\"h3\\", [_vm._v(_vm._s(_vm.name))])
+  ])
+};
+var __vue_staticRenderFns__ = [];
+__vue_render__._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = \\"data-v-653a9d1f\\";
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var component = __vue_normalize__(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+module.exports = component;
+"
+`;
