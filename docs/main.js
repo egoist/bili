@@ -26,6 +26,10 @@ new Docute({
           link: '/configuration-file'
         },
         {
+          title: 'Plugins',
+          link: '/plugins'
+        },
+        {
           title: 'Configuration',
           link: API_LINK + 'interfaces/config'
         }
