@@ -30,7 +30,8 @@ import {
   NormalizedConfig,
   Format,
   ConfigEntryObject,
-  Env
+  Env,
+  ConfigOutput
 } from './types'
 
 // Make rollup-plugin-vue use basename in component.__file instead of absolute path
@@ -615,4 +616,4 @@ async function printAssets(assets: Assets) {
   )
 }
 
-export { Config, NormalizedConfig, Options }
+export { Config, NormalizedConfig, Options, ConfigOutput }

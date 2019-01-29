@@ -57,7 +57,7 @@ export interface BabelPresetOptions {
   minimal?: boolean
 }
 
-interface ConfigOutput {
+export interface ConfigOutput {
   /**
    * Output format(s). You can append `min` to the format to generate minified bundle.
    *
