@@ -15,7 +15,10 @@ export type Env = {
   [k: string]: string | number | boolean
 }
 
-type External = string | RegExp | ((id: string) => boolean)
+export type External =
+  | string
+  | RegExp
+  | ((id: string, parentId?: string) => boolean)
 
 export type Externals = Array<External>
 

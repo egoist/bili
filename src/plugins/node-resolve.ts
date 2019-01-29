@@ -61,7 +61,7 @@ export default (options: Options) => {
         }
       }
 
-      if (isExternal(options.externals, id)) {
+      if (isExternal(options.externals, id, importer)) {
         return false
       }
 

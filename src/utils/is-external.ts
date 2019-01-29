@@ -1,7 +1,11 @@
 import slash from 'slash'
 import { NormalizedConfig } from '../'
 
-export default function(externals: NormalizedConfig['externals'], id: string) {
+export default function(
+  externals: NormalizedConfig['externals'],
+  id: string,
+  parentId?: string
+) {
   id = slash(id)
 
   if (!Array.isArray(externals)) {
@@ -21,7 +25,7 @@ export default function(externals: NormalizedConfig['externals'], id: string) {
       }
     }
     if (typeof external === 'function') {
-      if (external(id)) {
+      if (external(id, parentId)) {
         return true
       }
     }
