@@ -1,6 +1,6 @@
 {
   "name": "bili",
-  "version": "4.0.0-alpha.3",
+  "version": "4.0.0",
   "description": "A zero configuration library bundler.",
   "main": "dist/index.js",
   "bin": "dist/cli.js",
