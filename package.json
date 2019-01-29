@@ -10,9 +10,6 @@
     "types",
     "babel.js"
   ],
-  "publishConfig": {
-    "tag": "next"
-  },
   "scripts": {
     "test": "yarn test:unit",
     "test:cov": "yarn test:unit --coverage",
@@ -131,6 +128,6 @@
     }
   },
   "release": {
-    "branch": "next"
+    "branch": "master"
   }
 }

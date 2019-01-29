@@ -1,6 +1,14 @@
 var API_LINK = location.protocol + '//' + location.host + '/api/'
 
 new Docute({
+  versions: {
+    'v4 (Latest)': {
+      link: '/'
+    },
+    v3: {
+      link: 'https://v3--bili.netlify.com'
+    }
+  },
   sidebar: [
     {
       title: 'Guide',
