@@ -1503,31 +1503,6 @@ big.js@^3.1.3:
   resolved "https://registry.npmjs.org/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
   integrity sha512-+hN/Zh2D08Mx65pZ/4g5bsmNiZUuChDiQfTUQ7qJr4/kuopCr88xZsAXv6mBoZEsUI4OuGHlX59qE94K2mMW8Q==
 
-bili@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/bili/-/bili-4.0.2.tgz#46acee4283c5c3749f9c4d9de1b271c405a52530"
-  integrity sha512-hgzGndEpVWsxQ13y5azpPIkZVAUquRac04P0m8NtHqj8OTjZDM7pdDH1OP7aRVjNgYX6dLWp0xkyoE6YJnDmow==
-  dependencies:
-    "@babel/core" "^7.2.2"
-    "@babel/plugin-proposal-object-rest-spread" "^7.3.1"
-    "@babel/plugin-syntax-dynamic-import" "^7.2.0"
-    "@babel/plugin-transform-react-jsx" "^7.3.0"
-    "@babel/preset-env" "^7.3.1"
-    "@babel/preset-typescript" "^7.1.0"
-    babel-plugin-transform-async-to-promises "^0.8.4"
-    chalk "^2.4.2"
-    gzip-size "^5.0.0"
-    ora "^3.0.0"
-    rollup "^1.1.2"
-    rollup-plugin-babel "^4.3.2"
-    rollup-plugin-buble "^0.19.6"
-    rollup-plugin-commonjs "^9.2.0"
-    rollup-plugin-hashbang "^2.2.1"
-    rollup-plugin-json "^3.1.0"
-    rollup-plugin-postcss "^2.0.1"
-    rollup-plugin-replace "^2.1.0"
-    rollup-plugin-terser "^4.0.2"
-
 bin-links@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmjs.org/bin-links/-/bin-links-1.1.2.tgz#fb74bd54bae6b7befc6c6221f25322ac830d9757"
