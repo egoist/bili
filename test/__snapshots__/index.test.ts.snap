@@ -133,12 +133,13 @@ exports[`bundle-node-modules: bundle-node-modules dist/index.js 1`] = `
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var all = _interopDefault(require('p-all'));
-var map = _interopDefault(require('p-map'));
+var all = _interopDefault(require('some-package-that-does-not-exists'));
+
+var pokemon = ['pikachu'];
 
 var index = {
   all,
-  map
+  pokemon
 };
 
 module.exports = index;

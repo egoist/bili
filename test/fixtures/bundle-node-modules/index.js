@@ -1,4 +1,4 @@
-import all from 'p-all'
-import map from 'p-map'
+import all from 'some-package-that-does-not-exists'
+import pokemon from 'pokemon'
 
-export default { all, map }
+export default { all, pokemon }
