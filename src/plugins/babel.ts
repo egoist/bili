@@ -49,6 +49,10 @@ export default babel.custom((core: any) => {
         process.env.BILI_OBJECT_ASSIGN = presetOptions.objectAssign
       }
 
+      if (presetOptions.minimal) {
+        process.env.BILI_MINIMAL = 'enabled'
+      }
+
       return {
         ...cfg.options,
         presets: [

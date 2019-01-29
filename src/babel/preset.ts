@@ -5,14 +5,16 @@ export default (
   {
     asyncToPromises = process.env.BILI_ASYNC_TO_PROMISES,
     jsx = process.env.BILI_JSX,
-    objectAssign = process.env.BILI_OBJECT_ASSIGN
+    objectAssign = process.env.BILI_OBJECT_ASSIGN,
+    minimal = process.env.BILI_MINIMAL
   } = {}
 ) => {
-  const presets: any[] = []
+  let presets: any[] = []
   let plugins: any[] = []
 
-  presets.push(
-    [
+  presets = [
+    ...presets,
+    !minimal && [
       require('@babel/preset-env').default,
       {
         modules: false,
@@ -20,7 +22,7 @@ export default (
       }
     ],
     require('@babel/preset-typescript')
-  )
+  ].filter(Boolean)
 
   plugins = [
     ...plugins,

@@ -253,6 +253,18 @@ export class Bundler {
       )
     }
 
+    if (config.babel.minimal) {
+      plugins.push(
+        require('rollup-plugin-buble')({
+          transforms: {
+            modules: false,
+            dangerousForOf: true,
+            dangerousTaggedTemplateString: true
+          }
+        })
+      )
+    }
+
     if (config.plugins.vue !== false && (source.hasVue || config.plugins.vue)) {
       plugins.push(
         this.localRequire('rollup-plugin-vue')(

@@ -30,6 +30,7 @@ cli
     type: []
   })
   .option('-c, --config <file>', 'Use a custom config file')
+  .option('--minimal', 'Generate minimal output whenever possible')
   .option('--banner', 'Add banner with pkg info to the bundle')
   .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
   .option('--verbose', 'Show verbose logs')
@@ -58,7 +59,8 @@ cli
         globals: options.global,
         banner: options.banner,
         babel: {
-          asyncToPromises: options.asyncToPromises
+          asyncToPromises: options.asyncToPromises,
+          minimal: options.minimal
         }
       },
       {

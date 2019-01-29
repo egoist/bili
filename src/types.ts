@@ -50,6 +50,11 @@ export interface BabelPresetOptions {
    * Disable babel.config.js
    */
   configFile?: boolean
+  /**
+   * Disable babel-preset-env but still use other babel plugins
+   * In addtional we use rollup-plugin-buble after rollup-plugin-babel
+   */
+  minimal?: boolean
 }
 
 interface ConfigOutput {
