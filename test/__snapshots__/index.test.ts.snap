@@ -6,12 +6,12 @@ exports[`Typescript: Typescript dist/index.js 1`] = `
 Object.defineProperty(exports, '__esModule', { value: true });
 
 function greeter(person) {
-  return \\"Hello, \\" + person.firstName + \\" \\" + person.lastName;
+  return 'Hello, ' + person.firstName + ' ' + person.lastName;
 }
 
 let user = {
-  firstName: \\"Jane\\",
-  lastName: \\"User\\"
+  firstName: 'Jane',
+  lastName: 'User'
 };
 let s = greeter(user);
 
@@ -262,15 +262,8 @@ exports[`uglify: uglify dist/index.cjs.min.js 1`] = `
 
 exports[`vue plugin: vue plugin dist/component.css 1`] = `
 "
-.main-content[data-v-653a9d1f] {
-  margin: 0 auto;
-  font-family: sans-serif;
-  background-color: #ccf7e2;
-  padding: 10px;
-  border-radius: 5px;
-  max-width: 500px;
-}
-"
+.main-content[data-v-5fccef39]{margin:0 auto;font-family:sans-serif;background-color:#ccf7e2;padding:10px;border-radius:5px;max-width:500px
+}"
 `;
 
 exports[`vue plugin: vue plugin dist/component.js 1`] = `
@@ -297,25 +290,15 @@ var script = {
 /* script */
 const __vue_script__ = script;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-script.__file = \\"/Users/egoist/dev/bili/test/fixtures/vue/component.vue\\";
+script.__file = \\"component.vue\\";
 /* template */
-var __vue_render__ = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(\\"div\\", { staticClass: \\"main-content\\" }, [
-    _c(\\"h1\\", [_vm._v(\\"This is your first component in Vue\\")]),
-    _vm._v(\\" \\"),
-    _c(\\"h3\\", [_vm._v(_vm._s(_vm.name))])
-  ])
-};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:\\"main-content\\"},[_c('h1',[_vm._v(\\"This is your first component in Vue\\")]),_vm._v(\\" \\"),_c('h3',[_vm._v(_vm._s(_vm.name))])])};
 var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
 
   /* style */
   const __vue_inject_styles__ = undefined;
   /* scoped */
-  const __vue_scope_id__ = \\"data-v-653a9d1f\\";
+  const __vue_scope_id__ = \\"data-v-5fccef39\\";
   /* module identifier */
   const __vue_module_identifier__ = undefined;
   /* functional template */

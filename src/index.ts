@@ -24,6 +24,10 @@ import isExternal from './utils/is-external'
 import getBanner, { Banner } from './utils/get-banner'
 import { BUILTIN_PLUGINS } from './constants'
 
+// Make rollup-plugin-vue use basename in component.__file instead of absolute path
+// TODO: PR to rollup-plugin-vue to allow this as an API option
+process.env.BUILD = 'production'
+
 type RollupFormat = 'cjs' | 'esm' | 'umd' | 'iife'
 type Format = RollupFormat | 'cjs-min' | 'esm-min' | 'umd-min' | 'iife-min'
 type Env = {
