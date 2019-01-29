@@ -51,13 +51,13 @@ export default (options: Options) => {
         if (!options.bundleNodeModules) {
           return false
         }
-        const bundleNodeModules =
-          Array.isArray(options.bundleNodeModules) &&
-          options.bundleNodeModules.some(name =>
+        if (Array.isArray(options.bundleNodeModules)) {
+          const shouldBundle = options.bundleNodeModules.some(name =>
             id.includes(`/node_modules/${name}/`)
           )
-        if (!bundleNodeModules) {
-          return false
+          if (!shouldBundle) {
+            return false
+          }
         }
       }
 
