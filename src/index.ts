@@ -217,14 +217,19 @@ export class Bundler {
 
     if (source.hasTs && config.plugins.typescript2 !== false) {
       plugins.push(
-        this.localRequire('rollup-plugin-typescript2')({
-          objectHashIgnoreUnknownHack: true,
-          tsconfigOverride: {
-            compilerOptions: {
-              module: 'esnext'
-            }
-          }
-        })
+        this.localRequire('rollup-plugin-typescript2')(
+          merge(
+            {
+              objectHashIgnoreUnknownHack: true,
+              tsconfigOverride: {
+                compilerOptions: {
+                  module: 'esnext'
+                }
+              }
+            },
+            config.plugins.typescript2
+          )
+        )
       )
     }
 
