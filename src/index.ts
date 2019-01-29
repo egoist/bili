@@ -450,8 +450,10 @@ export class Bundler {
       if (format.length === 0) {
         format = ['cjs']
       }
+    } else if (typeof format === 'string') {
+      format = format.split(',') as Format[]
     } else {
-      format = [format || 'cjs']
+      format = ['cjs']
     }
     const formats = format
 
