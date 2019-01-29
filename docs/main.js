@@ -43,6 +43,15 @@ new Docute({
           link: '/recipes/update-package-json'
         }
       ]
+    },
+    {
+      title: 'Migration',
+      links: [
+        {
+          title: 'v3 to v4',
+          link: '/migration/v3-to-v4.md'
+        }
+      ]
     }
   ],
   nav: [

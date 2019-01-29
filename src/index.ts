@@ -112,9 +112,11 @@ export class Bundler {
                     'bili.config.js',
                     'bili.config.ts',
                     '.bilirc.js',
-                    '.bilirc.ts'
+                    '.bilirc.ts',
+                    'package.json'
                   ],
-            cwd: this.rootDir
+            cwd: this.rootDir,
+            packageKey: 'bili'
           })
     if (userConfig.path) {
       logger.debug(`Using config file:`, userConfig.path)

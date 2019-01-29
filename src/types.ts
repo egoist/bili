@@ -159,6 +159,7 @@ export interface Config {
   }
   /**
    * Include node modules in the bundle. Note that this is always `true` for UMD bundle.
+   * @cli `--bundle-node-modules`
    */
   bundleNodeModules?: boolean | string[]
   /**
