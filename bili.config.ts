@@ -1,4 +1,4 @@
-import { Config } from './src'
+import { Config } from 'bili'
 
 const config: Config = {
   input: {

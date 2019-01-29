@@ -1503,10 +1503,10 @@ big.js@^3.1.3:
   resolved "https://registry.npmjs.org/big.js/-/big.js-3.2.0.tgz#a5fc298b81b9e0dca2e458824784b65c52ba588e"
   integrity sha512-+hN/Zh2D08Mx65pZ/4g5bsmNiZUuChDiQfTUQ7qJr4/kuopCr88xZsAXv6mBoZEsUI4OuGHlX59qE94K2mMW8Q==
 
-bili@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.npmjs.org/bili/-/bili-4.0.1.tgz#f4e73490447d116938c3248289cdd1be818a699e"
-  integrity sha512-XqE46SRS7PCQoETBnpxOclK0jHxvy35maVgfzHfxNLqfkQe1bCJIHeYVIY1PJTa4Xj8rXVfCsK6L1/oi9DjxLw==
+bili@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.npmjs.org/bili/-/bili-4.0.2.tgz#46acee4283c5c3749f9c4d9de1b271c405a52530"
+  integrity sha512-hgzGndEpVWsxQ13y5azpPIkZVAUquRac04P0m8NtHqj8OTjZDM7pdDH1OP7aRVjNgYX6dLWp0xkyoE6YJnDmow==
   dependencies:
     "@babel/core" "^7.2.2"
     "@babel/plugin-proposal-object-rest-spread" "^7.3.1"

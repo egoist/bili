@@ -74,7 +74,7 @@
     "@types/slash": "^2.0.0",
     "@types/string-width": "^2.0.0",
     "babel-plugin-alter-object-assign": "^1.0.2",
-    "bili": "^4.0.1",
+    "bili": "^4.0.2",
     "boxen": "^2.1.0",
     "builtin-modules": "^3.0.0",
     "cac": "^6.4.2",
