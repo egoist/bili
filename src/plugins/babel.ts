@@ -1,6 +1,6 @@
 import babel from 'rollup-plugin-babel'
 import preset from '../babel/preset'
-import { BabelPresetOptions } from '../'
+import { BabelPresetOptions } from '../types'
 
 export default babel.custom((core: any) => {
   const presetItem = core.createConfigItem(preset, {
