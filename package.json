@@ -20,7 +20,7 @@
     "types": "tsc --build tsconfig.types.json",
     "build": "rm -rf dist && node lib/cli",
     "prepublishOnly": "yarn build",
-    "docs": "typedoc --out docs/api --theme minimal --mode file --entryPoint Bundler",
+    "docs": "typedoc --out docs/api --theme minimal --mode file",
     "dev:docs": "nswatch",
     "commit": "git-cz"
   },
