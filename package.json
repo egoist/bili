@@ -19,7 +19,7 @@
     "test:unit": "cd test/fixtures && yarn && cd ../../ && yarn jest",
     "types": "tsc --build tsconfig.types.json",
     "build": "rm -rf dist && node lib/cli",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "yarn types && yarn build",
     "docs": "typedoc --out docs/api --theme minimal --mode file",
     "dev:docs": "nswatch",
     "commit": "git-cz"
