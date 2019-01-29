@@ -5,6 +5,7 @@ import { Banner } from './utils/get-banner'
 export type Format =
   | RollupFormat
   | 'cjs-min'
+  | 'es-min'
   | 'esm-min'
   | 'umd-min'
   | 'iife-min'
@@ -79,13 +80,13 @@ export interface ConfigOutput {
    * Output file name
    *
    * Default value:
-   * - `[name][min].js` in `cjs` format
-   * - `[name][min].mjs` in `esm` format
-   * - `[name][min].[format].js` in `umd` and `iife` formats.
+   * - `[name][min][ext]` in `cjs` and `esm` format.
+   * - `[name][min].[format].js` in other formats.
    *
    * Placeholders:
    * - `[name]`: The base name of input file. (without extension)
    * - `[format]`: The output format. (without `-min` suffix)
+   * - `[ext]`: The extension. It's `.mjs` for `esm` format, `.js` otherwise
    * - `[min]`: It will replaced by `.min` when the format ends with `-min`, otherwise it's an empty string.
    * @cli `--file-name <fileName>`
    */

@@ -365,12 +365,15 @@ export class Bundler {
       }
     })
 
+    const isESM = /^esm?$/.test(format)
+
     const fileName =
-      format === 'cjs'
-        ? `[name][min].js`
-        : format === 'esm'
-        ? `[name][min].mjs`
-        : `[name].[format][min].js`
+      config.output.fileName ||
+      (format === 'cjs' || isESM
+        ? `[name][min][ext]`
+        : `[name].[format][min][ext]`)
+
+    const extPlaceholder = isESM ? '.mjs' : '.js'
 
     return {
       inputConfig: {
@@ -402,7 +405,9 @@ export class Bundler {
         globals: config.globals,
         format: rollupFormat,
         dir: path.resolve(config.output.dir || 'dist'),
-        entryFileNames: fileName.replace(/\[min\]/, minPlaceholder),
+        entryFileNames: fileName
+          .replace(/\[min\]/, minPlaceholder)
+          .replace(/\[ext\]/, extPlaceholder),
         name: config.output.moduleName,
         banner
       }
