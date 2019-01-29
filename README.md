@@ -10,7 +10,7 @@
 - 💅 Built-in support for `CSS` `Sass` `Stylus` `Less` `CSS modules`.
 - 🎶 Ridiculously easy to use Rollup plugins if you want.
 - 🚨 Friendly error logging experience.
-- 💻 Written in TypeScript, automaticlly generate API docs.
+- 💻 Written in TypeScript, automatically generated API docs.
 
 ## Documentation
 
