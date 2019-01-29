@@ -409,7 +409,11 @@ export class Bundler {
           .replace(/\[min\]/, minPlaceholder)
           .replace(/\[ext\]/, extPlaceholder),
         name: config.output.moduleName,
-        banner
+        banner,
+        sourcemap:
+          typeof config.output.sourceMap === 'boolean'
+            ? config.output.sourceMap
+            : minify
       }
     }
   }

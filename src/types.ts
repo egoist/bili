@@ -104,6 +104,11 @@ export interface ConfigOutput {
    * @default `true`
    */
   extractCSS?: boolean
+  /**
+   * Generate source map
+   * @default `true` for minified bundle, `false` otherwise
+   */
+  sourceMap?: boolean
 }
 
 export interface Config {
