@@ -342,9 +342,14 @@ export class Bundler {
       name: 'record-bundle',
       generateBundle(outputOptions, _assets) {
         logger.success(title.replace('Bundle', 'Bundled'))
-        const VALID_EXT_RE = /\.(js|css)$/
+        const EXTS = [
+          outputOptions.entryFileNames
+            ? path.extname(outputOptions.entryFileNames)
+            : '.js',
+          '.css'
+        ]
         for (const fileName of Object.keys(_assets)) {
-          if (VALID_EXT_RE.test(fileName)) {
+          if (EXTS.some(ext => fileName.endsWith(ext))) {
             const file: any = _assets[fileName]
             const absolute =
               outputOptions.dir && path.resolve(outputOptions.dir, fileName)
