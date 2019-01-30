@@ -66,7 +66,6 @@ export interface ConfigOutput {
    * Output format(s). You can append `min` to the format to generate minified bundle.
    *
    * @default `cjs`
-   * @values `cjs` `esm` `umd` `iife` `$format-min`
    * @cli `--format <format>`
    */
   format?: Format | Format[]
