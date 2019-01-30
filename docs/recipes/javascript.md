@@ -24,7 +24,7 @@ module.exports = {
 }
 ```
 
-### Browserslit
+### Browserslist
 
 By default Babel transpiles code to ES5, however you can use [Browserslist](https://github.com/browserslist/browserslist) to specify target environments, e.g. if you only want to support Node.js 10, you can have following config in `package.json`:
 
