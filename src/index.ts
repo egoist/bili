@@ -2,7 +2,6 @@ import path from 'path'
 import colors from 'chalk'
 import prettyBytes from 'pretty-bytes'
 import textTable from 'text-table'
-import gzipSize from 'gzip-size'
 import resolveFrom from 'resolve-from'
 import boxen from 'boxen'
 import stringWidth from 'string-width'
@@ -609,6 +608,7 @@ interface Asset {
 type Assets = Map<string, Asset>
 
 async function printAssets(assets: Assets) {
+  const gzipSize = await import('gzip-size').then(res => res.default)
   const table = await Promise.all(
     [...assets.keys()].map(async relative => {
       const asset = assets.get(relative) as Asset

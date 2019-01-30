@@ -7,3 +7,4 @@
 /dist
 /types
 /docs/api
+require-trace.trace

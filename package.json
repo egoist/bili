@@ -39,7 +39,6 @@
     "@babel/preset-typescript": "^7.1.0",
     "babel-plugin-transform-async-to-promises": "^0.8.4",
     "chalk": "^2.4.2",
-    "gzip-size": "^5.0.0",
     "ora": "^3.0.0",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
@@ -86,9 +85,11 @@
     "lodash": "^4.17.11",
     "nswatch": "^0.2.0",
     "p-waterfall": "^1.0.0",
+    "gzip-size": "^5.0.0",
     "prettier": "^1.15.2",
     "pretty-bytes": "^5.1.0",
     "require-from-string": "^2.0.2",
+    "require-so-slow": "^1.2.0",
     "resolve": "^1.10.0",
     "resolve-from": "^4.0.0",
     "rollup-plugin-typescript2": "^0.19.2",
@@ -100,7 +101,8 @@
     "tinydate": "^1.0.1",
     "ts-jest": "^23.10.5",
     "typedoc": "^0.14.2",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "v8-compile-cache": "^2.0.2"
   },
   "husky": {
     "hooks": {
