@@ -42,6 +42,10 @@ export default (options: Options) => {
           cwd: importer ? path.dirname(importer) : options.rootDir
         })
       } catch (err) {
+        if (!importer) {
+          // An entry file should not be marked as external if it doesn't exist
+          return null
+        }
         return false
       }
 
