@@ -28,7 +28,7 @@
   "author": "egoist<0x142857@gmail.com>",
   "license": "MIT",
   "browserslist": [
-    "node 8"
+    "node 6"
   ],
   "dependencies": {
     "@babel/core": "^7.2.2",
@@ -118,7 +118,7 @@
     ]
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=6"
   },
   "watch": {
     "./src/**/*.ts": [

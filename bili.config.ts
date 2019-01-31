@@ -10,10 +10,7 @@ const config: Config = {
   externals: [
     ...Object.keys(require('./package').dependencies),
     'spawn-sync' // from cross-spawn which is from execa which is from term-size which is from boxen
-  ],
-  babel: {
-    asyncToPromises: false
-  }
+  ]
 }
 
 export default config
