@@ -1,6 +1,7 @@
 import path from 'path'
 import colors from 'chalk'
 import prettyBytes from 'pretty-bytes'
+import formatTime from 'pretty-ms'
 import textTable from 'text-table'
 import resolveFrom from 'resolve-from'
 import boxen from 'boxen'
@@ -338,6 +339,8 @@ export class Bundler {
     // Add bundle to out assets Map
     // So that we can log the stats when all builds completed
     // Make sure this is the last plugin!
+    let startTime: number
+    let endTime: number
     plugins.push({
       name: 'record-bundle',
       generateBundle(outputOptions, _assets) {
@@ -364,8 +367,19 @@ export class Bundler {
           }
         }
       },
+      buildStart() {
+        startTime = Date.now()
+      },
+      buildEnd() {
+        endTime = Date.now()
+      },
       async writeBundle() {
-        await printAssets(assets, title.replace('Bundle', 'Bundled'))
+        await printAssets(
+          assets,
+          `${title.replace('Bundle', 'Bundled')} ${colors.dim(
+            `(${formatTime(endTime - startTime)})`
+          )}`
+        )
       }
     })
 
@@ -629,7 +643,7 @@ async function printAssets(assets: Assets, title: string) {
     })
   )
   table.unshift(['File', 'Size', 'Gzipped'].map(v => colors.dim(v)))
-  logger.log(title)
+  logger.success(title)
   logger.log(
     boxen(
       textTable(table, {
