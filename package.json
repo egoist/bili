@@ -20,7 +20,8 @@
     "format": "prettier-eslint src/**/*.js --write",
     "build": "bili",
     "watch": "yarn build --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docs": "echo nothing"
   },
   "author": "EGOIST <0x142857@gmail.com>",
   "license": "MIT",
