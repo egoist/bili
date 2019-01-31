@@ -98,3 +98,8 @@ cli.version(version)
 cli.help()
 
 cli.parse()
+
+process.on('unhandledRejection', err => {
+  console.error(err)
+  process.exit(1)
+})
