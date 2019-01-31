@@ -40,6 +40,7 @@ process.env.BUILD = 'production'
 interface RunOptions {
   write?: boolean
   watch?: boolean
+  concurrent?: boolean
 }
 
 interface RunContext {
@@ -340,7 +341,6 @@ export class Bundler {
     plugins.push({
       name: 'record-bundle',
       generateBundle(outputOptions, _assets) {
-        logger.success(title.replace('Bundle', 'Bundled'))
         const EXTS = [
           outputOptions.entryFileNames
             ? path.extname(outputOptions.entryFileNames)
@@ -365,6 +365,7 @@ export class Bundler {
         }
       },
       async writeBundle() {
+        logger.success(title.replace('Bundle', 'Bundled'))
         await printAssets(assets)
       }
     })
@@ -538,12 +539,20 @@ export class Bundler {
       })
     } else {
       try {
-        await waterfall(
-          tasks.map(task => () => {
-            return this.build(task, context, options.write)
-          }),
-          context
-        )
+        if (options.concurrent) {
+          await Promise.all(
+            tasks.map(task => {
+              return this.build(task, context, options.write)
+            })
+          )
+        } else {
+          await waterfall(
+            tasks.map(task => () => {
+              return this.build(task, context, options.write)
+            }),
+            context
+          )
+        }
       } catch (err) {
         spinner.stop()
         throw err

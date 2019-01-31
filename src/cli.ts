@@ -41,6 +41,7 @@ cli
   .option('--minimal', 'Generate minimal output whenever possible')
   .option('--banner', 'Add banner with pkg info to the bundle')
   .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
+  .option('--concurrent', 'Build concurrently')
   .option('--verbose', 'Show verbose logs')
   .option('--quiet', 'Show minimal logs')
   .option('--stack-trace', 'Show stack trace for bundle errors')
@@ -82,7 +83,11 @@ cli
       }
     )
     await bundler
-      .run({ write: true, watch: options.watch })
+      .run({
+        write: true,
+        watch: options.watch,
+        concurrent: options.concurrent
+      })
       .catch((err: any) => {
         bundler.handleError(err)
         process.exit(1)
