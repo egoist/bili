@@ -365,8 +365,7 @@ export class Bundler {
         }
       },
       async writeBundle() {
-        logger.success(title.replace('Bundle', 'Bundled'))
-        await printAssets(assets)
+        await printAssets(assets, title.replace('Bundle', 'Bundled'))
       }
     })
 
@@ -616,7 +615,7 @@ interface Asset {
 }
 type Assets = Map<string, Asset>
 
-async function printAssets(assets: Assets) {
+async function printAssets(assets: Assets, title: string) {
   const gzipSize = await import('gzip-size').then(res => res.default)
   const table = await Promise.all(
     [...assets.keys()].map(async relative => {
@@ -630,6 +629,7 @@ async function printAssets(assets: Assets) {
     })
   )
   table.unshift(['File', 'Size', 'Gzipped'].map(v => colors.dim(v)))
+  logger.log(title)
   logger.log(
     boxen(
       textTable(table, {
