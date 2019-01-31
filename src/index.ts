@@ -1,3 +1,4 @@
+import './polyfills'
 import path from 'path'
 import colors from 'chalk'
 import prettyBytes from 'pretty-bytes'

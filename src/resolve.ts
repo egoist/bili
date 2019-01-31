@@ -1,11 +1,11 @@
-import { promisify } from 'util'
 import nodeResolve from 'resolve'
+import pify from 'pify'
 
 interface Options {
   cwd: string
 }
 
-const resolve = promisify(nodeResolve)
+const resolve = pify(nodeResolve)
 
 const cache = new Map()
 

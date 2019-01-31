@@ -1,5 +1,7 @@
 import alterObjectAssign from 'babel-plugin-alter-object-assign'
 
+const ENV = process.env.BABEL_ENV || process.env.NODE_ENV
+
 export default (
   context: any,
   {
@@ -17,7 +19,7 @@ export default (
     !minimal && [
       require('@babel/preset-env').default,
       {
-        modules: false,
+        modules: ENV === 'test' ? 'auto' : false,
         exclude: ['transform-regenerator', 'transform-async-to-generator']
       }
     ],

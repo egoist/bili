@@ -917,6 +917,11 @@
   resolved "https://registry.npmjs.org/@types/p-waterfall/-/p-waterfall-1.0.0.tgz#c34269404677ac15d6964978a06388ba82c8639a"
   integrity sha512-o0nNGt0QnLt78u4IAQGZjsatQZa8xWB5sq4QIbjGcz7sgZx4MNFhqDPrknoqnRocJQodAoKXSN2Zt5auXMkgRg==
 
+"@types/pify@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@types/pify/-/pify-3.0.2.tgz#1bc75dac43e31dba981c37e0a08edddc1b49cd39"
+  integrity sha512-a5AKF1/9pCU3HGMkesgY6LsBdXHUY3WU+I2qgpU0J+I8XuJA1aFr59eS84/HP0+dxsyBSNbt+4yGI2adUpHwSg==
+
 "@types/pretty-bytes@^5.1.0":
   version "5.1.0"
   resolved "https://registry.npmjs.org/@types/pretty-bytes/-/pretty-bytes-5.1.0.tgz#1df59db5c7def05dbbb0df2ad80b46863d9fafda"
@@ -4843,10 +4848,10 @@ jest@^23.0.0:
     import-local "^1.0.0"
     jest-cli "^23.6.0"
 
-joycon@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.npmjs.org/joycon/-/joycon-2.2.3.tgz#eeb1169850710c39ab60d8d4a00e50b0b61be581"
-  integrity sha512-4gHuFIQJPickKKT4sQ0B3IyQJ1uwIATwMPXWXiq/+NAUWSzhRotwV3bNocahOsqpzI6cTZErLtCvKzZFthZ6eQ==
+joycon@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.npmjs.org/joycon/-/joycon-2.2.4.tgz#ac4119d2673dfaa89b41efe5d6d670208e348bc6"
+  integrity sha512-Z4G7ZPovoSfAHCSEKznWV4IjyyUxzTY78Sgtr8inbnRxaZMAQGwqNJ46BDwcH3WgIwk0Xt1kpCsC/DFAioRtBA==
 
 js-levenshtein@^1.1.3:
   version "1.1.6"
@@ -7795,10 +7800,10 @@ rollup-plugin-commonjs@^9.2.0:
     resolve "^1.8.1"
     rollup-pluginutils "^2.3.3"
 
-rollup-plugin-hashbang@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.npmjs.org/rollup-plugin-hashbang/-/rollup-plugin-hashbang-2.2.1.tgz#e4a5ceaa864c65f7f4f1f6e90b909d41456a7294"
-  integrity sha512-xKOlwhPRsau7cBEf0Qq1f26DxcFUUUcHPBytfd+F3EvbbAFmyu40XCq3rozgH/Z0QN2BOE2DEGJp3QxLS+x8Xw==
+rollup-plugin-hashbang@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/rollup-plugin-hashbang/-/rollup-plugin-hashbang-2.2.2.tgz#971fc49b452e63f9dfdc75f79ae7256b3485e750"
+  integrity sha512-Yxw9ogeK3KncG1e4CvK0I0IKVBNeJP+DTZS3bExGTfGjw0WP1C7xxbY7LtRd8IKx4fFf53hz7XR1XG7UV6xqCw==
   dependencies:
     magic-string "^0.22.4"
 
@@ -7809,10 +7814,10 @@ rollup-plugin-json@^3.1.0:
   dependencies:
     rollup-pluginutils "^2.3.1"
 
-rollup-plugin-postcss@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/rollup-plugin-postcss/-/rollup-plugin-postcss-2.0.1.tgz#d3867b973a6810164730553eb6d9d06375ea4454"
-  integrity sha512-23SufVXOceUu0xiVB5CF1CIRkBbRVYVmTWViBsTNpBi/F5KhXY0Fc8W5GZViNzUI2e14Fhdlb3UmIQtCs3iUKg==
+rollup-plugin-postcss@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/rollup-plugin-postcss/-/rollup-plugin-postcss-2.0.3.tgz#1fd5b7e1fc7545cb0084d9c99d11b259e41a05e6"
+  integrity sha512-d12oKl6za/GGXmlytzVPzzTdPCKgti/Kq2kNhtfm5vv9hkNbyrTvizMBm6zZ5rRWX/sIWl3znjIJ8xy6Hofoeg==
   dependencies:
     chalk "^2.4.2"
     concat-with-sourcemaps "^1.0.5"
