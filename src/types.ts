@@ -2,6 +2,11 @@ import { ModuleFormat as RollupFormat } from 'rollup'
 
 import { Banner } from './utils/get-banner'
 
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+type Diff<T extends keyof any, U extends keyof any> = ({ [P in T]: P } &
+  { [P in U]: never } & { [x: string]: never })[T]
+type Overwrite<T, U> = Pick<T, Diff<keyof T, keyof U>> & U
+
 export type Format =
   | RollupFormat
   | 'cjs-min'
@@ -209,14 +214,16 @@ export interface Config {
   extendConfig?: ExtendConfig
 }
 
+interface ConfigOutputOverwrite {
+  /**
+   * Output directory, always a string
+   */
+  dir: string
+}
+
 export interface NormalizedConfig {
   input?: string | ConfigEntryObject | Array<ConfigEntryObject | string>
-  output: Overwrite<
-    ConfigOutput,
-    {
-      dir: string
-    }
-  >
+  output: Overwrite<ConfigOutput, ConfigOutputOverwrite>
   env?: Env
   bundleNodeModules?: boolean | string[]
   plugins: {
