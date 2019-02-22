@@ -223,6 +223,14 @@ export class Bundler {
       }
     }
 
+    plugins.push(
+      require('rollup-plugin-postcss')(
+        Object.assign({}, config.plugins.postcss, {
+          extract: config.output.extractCSS !== false
+        })
+      )
+    )
+
     if (source.hasTs && config.plugins.typescript2 !== false) {
       plugins.push(
         this.localRequire('rollup-plugin-typescript2')(
@@ -264,6 +272,8 @@ export class Bundler {
     if (config.babel.minimal) {
       plugins.push(
         require('rollup-plugin-buble')({
+          exclude: 'node_modules/**',
+          include: '**/*.{js,mjs,jsx}',
           transforms: {
             modules: false,
             dangerousForOf: true,
@@ -301,14 +311,6 @@ export class Bundler {
           return isExternal(config.externals, name)
         }
       })
-    )
-
-    plugins.push(
-      require('rollup-plugin-postcss')(
-        Object.assign({}, config.plugins.postcss, {
-          extract: config.output.extractCSS !== false
-        })
-      )
     )
 
     if (config.env) {
