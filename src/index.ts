@@ -387,10 +387,11 @@ export class Bundler {
       }
     })
 
-    const getFileName = config.output.fileName || defaultGetFileName
+    const defaultFileName = getDefaultFileName(rollupFormat)
+    const getFileName = config.output.fileName || defaultFileName
     const fileNameTemplate =
       typeof getFileName === 'function'
-        ? getFileName({ format: rollupFormat, minify })
+        ? getFileName({ format: rollupFormat, minify }, defaultFileName)
         : getFileName
     const fileName = fileNameTemplate
       .replace(/\[min\]/, minPlaceholder)
@@ -654,7 +655,7 @@ async function printAssets(assets: Assets, title: string) {
   )
 }
 
-function defaultGetFileName({ format }: FileNameContext) {
+function getDefaultFileName(format: RollupFormat) {
   const isESM = /^esm?$/.test(format)
   return format === 'cjs' || isESM
     ? `[name][min][ext]`

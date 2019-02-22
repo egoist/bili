@@ -40,7 +40,10 @@ export interface FileNameContext {
   minify: boolean
 }
 
-export type GetFileName = (context: FileNameContext) => string
+export type GetFileName = (
+  context: FileNameContext,
+  defaultFileName: string
+) => string
 
 export interface BabelPresetOptions {
   /**
