@@ -256,7 +256,7 @@ module.exports = index;
 "
 `;
 
-exports[`uglify: uglify dist/index.cjs.min.js 1`] = `
+exports[`uglify: uglify dist/index.min.js 1`] = `
 "\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});const a=1;exports.a=1;
 "
 `;

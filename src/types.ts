@@ -35,6 +35,13 @@ export type ExtendConfig = (
   { format, input }: { format: Format; input: string[] | ConfigEntryObject }
 ) => NormalizedConfig
 
+export interface FileNameContext {
+  format: RollupFormat
+  minify: boolean
+}
+
+export type GetFileName = (context: FileNameContext) => string
+
 export interface BabelPresetOptions {
   /**
    * Transform `async/await` to `Promise`.
@@ -92,9 +99,13 @@ export interface ConfigOutput {
    * - `[format]`: The output format. (without `-min` suffix)
    * - `[ext]`: The extension. It's `.mjs` for `esm` format, `.js` otherwise
    * - `[min]`: It will replaced by `.min` when the format ends with `-min`, otherwise it's an empty string.
+   *
+   * The value can also be a function which returns the fileName template,
+   * The placeholders are also available in the return value.
+   *
    * @cli `--file-name <fileName>`
    */
-  fileName?: string
+  fileName?: string | GetFileName
   /**
    * Module name for umd bundle
    */

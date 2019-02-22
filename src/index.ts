@@ -32,7 +32,8 @@ import {
   Format,
   ConfigEntryObject,
   Env,
-  ConfigOutput
+  ConfigOutput,
+  FileNameContext
 } from './types'
 
 // Make rollup-plugin-vue use basename in component.__file instead of absolute path
@@ -197,7 +198,9 @@ export class Bundler {
 
     // UMD format should always bundle node_modules
     const bundleNodeModules =
-      format === 'umd' || format === 'iife' || config.bundleNodeModules
+      rollupFormat === 'umd' ||
+      rollupFormat === 'iife' ||
+      config.bundleNodeModules
 
     plugins.push(
       nodeResolvePlugin({
@@ -384,15 +387,14 @@ export class Bundler {
       }
     })
 
-    const isESM = /^esm?$/.test(format)
-
-    const fileName =
-      config.output.fileName ||
-      (format === 'cjs' || isESM
-        ? `[name][min][ext]`
-        : `[name].[format][min][ext]`)
-
-    const extPlaceholder = isESM ? '.mjs' : '.js'
+    const getFileName = config.output.fileName || defaultGetFileName
+    const fileNameTemplate =
+      typeof getFileName === 'function'
+        ? getFileName({ format: rollupFormat, minify })
+        : getFileName
+    const fileName = fileNameTemplate
+      .replace(/\[min\]/, minPlaceholder)
+      .replace(/\[ext\]/, /^esm?$/.test(rollupFormat) ? '.mjs' : '.js')
 
     return {
       inputConfig: {
@@ -424,9 +426,7 @@ export class Bundler {
         globals: config.globals,
         format: rollupFormat,
         dir: path.resolve(config.output.dir || 'dist'),
-        entryFileNames: fileName
-          .replace(/\[min\]/, minPlaceholder)
-          .replace(/\[ext\]/, extPlaceholder),
+        entryFileNames: fileName,
         name: config.output.moduleName,
         banner,
         sourcemap:
@@ -652,6 +652,13 @@ async function printAssets(assets: Assets, title: string) {
       })
     )
   )
+}
+
+function defaultGetFileName({ format }: FileNameContext) {
+  const isESM = /^esm?$/.test(format)
+  return format === 'cjs' || isESM
+    ? `[name][min][ext]`
+    : `[name].[format][min][ext]`
 }
 
 export { Config, NormalizedConfig, Options, ConfigOutput }
