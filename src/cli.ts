@@ -40,6 +40,10 @@ cli
   .option('-c, --config <file>', 'Use a custom config file')
   .option('--minimal', 'Generate minimal output whenever possible')
   .option('--banner', 'Add banner with pkg info to the bundle')
+  .option(
+    '--no-map',
+    'Disable source maps, enabled by default for minified bundles'
+  )
   .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
   .option('--concurrent', 'Build concurrently')
   .option('--verbose', 'Show verbose logs')
@@ -59,7 +63,8 @@ cli
           moduleName: options.moduleName,
           fileName: options.fileName,
           minify: options.minify,
-          extractCSS: options.extractCss
+          extractCSS: options.extractCss,
+          sourceMap: options.map
         },
         bundleNodeModules: options.bundleNodeModules,
         env: options.env,

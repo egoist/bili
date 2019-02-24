@@ -186,7 +186,10 @@ export class Bundler {
 
     // Always minify if config.minify is truthy
     // Otherwise infer by format
-    const minify = config.output.minify || format.endsWith('-min')
+    const minify =
+      config.output.minify === undefined
+        ? format.endsWith('-min')
+        : config.output.minify
     let minPlaceholder = ''
     let rollupFormat: RollupFormat
     if (format.endsWith('-min')) {
