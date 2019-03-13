@@ -50,3 +50,7 @@ We automatically use [rollup-plugin-typescript2](https://github.com/ezolenko/rol
 ```bash
 yarn add typescript rollup-plugin-typescript2 --dev
 ```
+
+## Use Babel with TypeScript
+
+By default Babel is also used for `.ts` files, it will process the file after TypeScript. It's recommended to set `compilerOptions.target` to `es2017` or above in `tsconfig.json` and let Babel transform the code to ES5 instead. If you want to disable Babel, set `plugins: { babel: false }` in your Bili config file.
