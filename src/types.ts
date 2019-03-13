@@ -76,6 +76,8 @@ export interface BabelPresetOptions {
   minimal?: boolean
 }
 
+export type OutputTarget = 'node' | 'browser'
+
 export interface ConfigOutput {
   /**
    * Output format(s). You can append `min` to the format to generate minified bundle.
@@ -127,6 +129,12 @@ export interface ConfigOutput {
    * @default `true` for minified bundle, `false` otherwise
    */
   sourceMap?: boolean
+  /**
+   * Output target
+   * @default `node`
+   * @cli `--target <target>`
+   */
+  target?: OutputTarget
 }
 
 export interface Config {

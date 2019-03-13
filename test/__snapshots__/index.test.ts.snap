@@ -256,6 +256,15 @@ module.exports = index;
 "
 `;
 
+exports[`target:browser: target:browser dist/index.js 1`] = `
+"'use strict';
+
+var foo = 'browser';
+
+module.exports = foo;
+"
+`;
+
 exports[`uglify: uglify dist/index.min.js 1`] = `
 "\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});const a=1;exports.a=1;
 "

@@ -7,6 +7,7 @@ interface Options {
   rootDir: string
   bundleNodeModules?: boolean | string[]
   externals: NormalizedConfig['externals']
+  browser: boolean
 }
 
 export default (options: Options) => {
@@ -14,7 +15,8 @@ export default (options: Options) => {
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     preferBuiltins: true,
     jsnext: true,
-    module: true
+    module: true,
+    browser: options.browser
   })
 
   return {

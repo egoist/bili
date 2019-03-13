@@ -37,6 +37,7 @@ cli
   .option('--external <id>', 'Mark a module id as external', {
     type: []
   })
+  .option('-t, --target <target>', 'Output target', { default: 'node' })
   .option('-c, --config <file>', 'Use a custom config file')
   .option('--minimal', 'Generate minimal output whenever possible')
   .option('--banner', 'Add banner with pkg info to the bundle')
@@ -64,7 +65,8 @@ cli
           fileName: options.fileName,
           minify: options.minify,
           extractCSS: options.extractCss,
-          sourceMap: options.map
+          sourceMap: options.map,
+          target: options.target
         },
         bundleNodeModules: options.bundleNodeModules,
         env: options.env,

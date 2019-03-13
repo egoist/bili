@@ -209,7 +209,8 @@ export class Bundler {
       nodeResolvePlugin({
         rootDir: this.rootDir,
         bundleNodeModules,
-        externals: config.externals
+        externals: config.externals,
+        browser: config.output.target === 'browser'
       })
     )
 

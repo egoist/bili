@@ -230,3 +230,16 @@ snapshot(
     }
   }
 )
+
+snapshot(
+  {
+    title: 'target:browser',
+    input: 'index.js',
+    cwd: fixture('target/browser')
+  },
+  {
+    output: {
+      target: 'browser'
+    }
+  }
+)
