@@ -407,7 +407,8 @@ export class Bundler {
       inputConfig: {
         input: source.input,
         plugins,
-        external: Object.keys(config.globals || {}),
+        external: Object.keys(config.globals || {})
+          .filter(v => !/^[\.\/]/.test(v)),
         onwarn(warning) {
           if (typeof warning === 'string') {
             return logger.warn(warning)
