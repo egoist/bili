@@ -19,8 +19,8 @@ import merge from 'lodash/merge'
 import waterfall from 'p-waterfall'
 import spinner from './spinner'
 import logger from './logger'
-import nodeResolvePlugin from './plugins/node-resolve'
 import progressPlugin from './plugins/progress'
+import nodeResolvePlugin from './plugins/node-resolve'
 import configLoader from './config-loader'
 import isExternal from './utils/is-external'
 import getBanner from './utils/get-banner'
@@ -207,8 +207,8 @@ export class Bundler {
 
     plugins.push(
       nodeResolvePlugin({
-        bundleNodeModules,
         rootDir: this.rootDir,
+        bundleNodeModules,
         externals: config.externals
       })
     )

@@ -1,85 +1,65 @@
-import path from 'path'
-import slash from 'slash'
 import builtinModules from 'builtin-modules'
-import resolve from '../resolve'
 import { NormalizedConfig } from '../index'
 import isExternal from '../utils/is-external'
 import logger from '../logger'
 
 interface Options {
-  bundleNodeModules?: boolean | string[]
   rootDir: string
+  bundleNodeModules?: boolean | string[]
   externals: NormalizedConfig['externals']
 }
 
 export default (options: Options) => {
+  const plugin = require('rollup-plugin-node-resolve')({
+    extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+    preferBuiltins: true,
+    jsnext: true,
+    module: true
+  })
+
   return {
-    name: 'bili-node-resolve',
+    ...plugin,
 
-    resolveId: async (importee: string, importer?: string) => {
-      if (/\0/.test(importee)) {
-        return null
-      }
-      const isValidPath = !/[<>:"|?*]/.test(importee)
-      if (!isValidPath) {
-        return null
-      }
+    name: 'bili-custom-resolve',
 
-      // Exclude built-in modules
-      if (builtinModules.includes(importee)) {
-        return false
-      }
+    async resolveId(importee: string, importer?: string) {
+      const id = await plugin.resolveId(
+        importee,
+        importer || `${options.rootDir}/__no_importer__.js`
+      )
 
-      importee = slash(importee)
-      if (importer) {
-        importer = slash(importer)
-      }
-
-      let id: string
-
-      try {
-        id = await resolve(importee, {
-          cwd: importer ? path.dirname(importer) : options.rootDir
-        })
-      } catch (err) {
-        if (!importer) {
-          // An entry file should not be marked as external if it doesn't exist
-          return null
-        }
-        return false
-      }
-
-      // If we don't intend to bundle node_modules
-      // Mark it as external
-      if (/node_modules/.test(id)) {
-        if (!options.bundleNodeModules) {
+      if (typeof id === 'string') {
+        // Exclude built-in modules
+        if (builtinModules.includes(id)) {
           return false
         }
-        if (Array.isArray(options.bundleNodeModules)) {
-          const shouldBundle = options.bundleNodeModules.some(name =>
-            id.includes(`/node_modules/${name}/`)
-          )
-          if (!shouldBundle) {
+
+        // If we don't intend to bundle node_modules
+        // Mark it as external
+        if (/node_modules/.test(id)) {
+          if (!options.bundleNodeModules) {
             return false
           }
+          if (Array.isArray(options.bundleNodeModules)) {
+            const shouldBundle = options.bundleNodeModules.some(name =>
+              id.includes(`/node_modules/${name}/`)
+            )
+            if (!shouldBundle) {
+              return false
+            }
+          }
         }
-      }
 
-      if (isExternal(options.externals, id, importer)) {
-        return false
-      }
+        if (isExternal(options.externals, id, importer)) {
+          return false
+        }
 
-      if (/node_modules/.test(id) && !/^\.?\//.test(importee)) {
-        logger.debug(`Bundled ${importee} because ${importer} imported it.`)
+        if (/node_modules/.test(id) && !/^\.?\//.test(importee)) {
+          logger.debug(`Bundled ${importee} because ${importer} imported it.`)
+        }
       }
 
       return id
-    },
-
-    transform(code: string, id: string) {
-      // if (id.endsWith('.js')) {
-      //   return `// module: ${id}\n${code}`
-      // }
     }
   }
 }
