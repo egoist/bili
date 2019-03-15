@@ -13,3 +13,19 @@ module.exports = {
   }
 }
 ```
+
+## PostCSS Config
+
+You can populate a `postcss.config.js` to use custom PostCSS plugins.
+
+## CSS Preprocessors
+
+`rollup-plugin-postcss` also supports common CSS Preprocessors like Sass:
+
+```bash
+yarn add node-sass --dev
+```
+
+Then you can import `.scss` or `.sass` files in your code.
+
+For Stylus and Less, you also need to install `stylus` and `less` in your project.

@@ -51,6 +51,10 @@ new Docute({
           link: '/recipes/vue-component'
         },
         {
+          title: 'Environment Variables',
+          link: '/recipes/env-variables'
+        },
+        {
           title: 'Update package.json',
           link: '/recipes/update-package-json'
         }
