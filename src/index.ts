@@ -24,7 +24,6 @@ import nodeResolvePlugin from './plugins/node-resolve'
 import configLoader from './config-loader'
 import isExternal from './utils/is-external'
 import getBanner from './utils/get-banner'
-import { BUILTIN_PLUGINS } from './constants'
 import {
   Options,
   Config,
@@ -81,6 +80,9 @@ interface RollupConfigInput {
   assets: Assets
   config: NormalizedConfig
 }
+
+type PluginFactory = (opts: any) => RollupPlugin
+type GetPlugin = (name: string) => PluginFactory | Promise<PluginFactory>
 
 export class Bundler {
   rootDir: string
@@ -170,20 +172,6 @@ export class Bundler {
     assets,
     config
   }: RollupConfigInput): Promise<RollupConfigOutput> {
-    const plugins: RollupPlugin[] = []
-
-    plugins.push(
-      progressPlugin({
-        title
-      })
-    )
-
-    // Handle .json file
-    plugins.push(require('rollup-plugin-json')())
-
-    // Handle hashbang
-    plugins.push(require('rollup-plugin-hashbang')())
-
     // Always minify if config.minify is truthy
     // Otherwise infer by format
     const minify =
@@ -205,145 +193,189 @@ export class Bundler {
       rollupFormat === 'iife' ||
       config.bundleNodeModules
 
-    plugins.push(
-      nodeResolvePlugin({
-        rootDir: this.rootDir,
-        bundleNodeModules,
-        externals: config.externals,
-        browser: config.output.target === 'browser'
-      })
-    )
+    const pluginsOptions: { [key: string]: any } = {
+      progress:
+        config.plugins.progress !== false &&
+        merge(
+          {
+            title
+          },
+          config.plugins.progress
+        ),
 
-    // Add user-supplied plugins
-    // Excluded our builtin ones
-    for (const name of Object.keys(config.plugins)) {
-      if (!BUILTIN_PLUGINS.includes(name)) {
-        const options = config.plugins[name]
-        if (options) {
-          let plugin = this.localRequire(`rollup-plugin-${name}`)
-          plugin = plugin.default || plugin
-          plugins.push(plugin(typeof options === 'object' ? options : {}))
-        }
+      json: config.plugins.json !== false && merge({}, config.plugins.json),
+
+      hashbang:
+        config.plugins.hashbang !== false && merge({}, config.plugins.hashbang),
+
+      'node-resolve':
+        config.plugins['node-resolve'] !== false &&
+        merge(
+          {},
+          {
+            rootDir: this.rootDir,
+            bundleNodeModules,
+            externals: config.externals,
+            browser: config.output.target === 'browser'
+          },
+          config.plugins['node-resolve']
+        ),
+
+      postcss:
+        config.plugins.postcss !== false &&
+        merge(
+          {
+            extract: config.output.extractCSS !== false
+          },
+          config.plugins.postcss
+        ),
+
+      vue:
+        (source.hasVue || config.plugins.vue) &&
+        merge(
+          {
+            css: false
+          },
+          config.plugins.vue
+        ),
+
+      typescript2:
+        (source.hasTs || config.plugins.typescript2) &&
+        merge(
+          {
+            objectHashIgnoreUnknownHack: true,
+            tsconfigOverride: {
+              compilerOptions: {
+                module: 'esnext'
+              }
+            }
+          },
+          config.plugins.typescript2
+        ),
+
+      babel:
+        config.plugins.babel !== false &&
+        merge(
+          {
+            exclude: 'node_modules/**',
+            extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
+            babelrc: config.babel.babelrc,
+            configFile: config.babel.configFile,
+            presetOptions: config.babel
+          },
+          config.plugins.babel
+        ),
+
+      buble:
+        (config.plugins.buble || config.babel.minimal) &&
+        merge(
+          {
+            exclude: 'node_modules/**',
+            include: '**/*.{js,mjs,jsx,vue}',
+            transforms: {
+              modules: false,
+              dangerousForOf: true,
+              dangerousTaggedTemplateString: true
+            }
+          },
+          config.plugins.buble
+        ),
+
+      commonjs:
+        config.plugins.commonjs !== false &&
+        merge({}, config.plugins.commonjs, {
+          // `ignore` is required to allow dynamic require
+          // See: https://github.com/rollup/rollup-plugin-commonjs/blob/4a22147456b1092dd565074dc33a63121675102a/src/index.js#L32
+          ignore: (name: string) => {
+            const { commonjs } = config.plugins
+            if (commonjs && commonjs.ignore && commonjs.ignore(name)) {
+              return true
+            }
+            return isExternal(config.externals, name)
+          }
+        })
+    }
+
+    const env = Object.assign({}, config.env)
+
+    pluginsOptions.replace = {
+      ...config.plugins.replace,
+      values: {
+        ...Object.keys(env).reduce((res: Env, name) => {
+          res[name] = JSON.stringify(env[name])
+          return res
+        }, {}),
+        ...(config.plugins.replace && config.plugins.replace.values)
       }
     }
 
-    plugins.push(
-      require('rollup-plugin-postcss')(
-        Object.assign({}, config.plugins.postcss, {
-          extract: config.output.extractCSS !== false
-        })
-      )
-    )
-
-    if (source.hasTs && config.plugins.typescript2 !== false) {
-      plugins.push(
-        this.localRequire('rollup-plugin-typescript2')(
-          merge(
-            {
-              objectHashIgnoreUnknownHack: true,
-              tsconfigOverride: {
-                compilerOptions: {
-                  module: 'esnext'
-                }
-              }
-            },
-            config.plugins.typescript2
-          )
-        )
-      )
-    }
-
-    if (config.plugins.babel !== false) {
-      const pluginBabel = await import('./plugins/babel').then(
-        res => res.default
-      )
-      plugins.push(
-        pluginBabel(
-          Object.assign(
-            {
-              exclude: 'node_modules/**',
-              extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx'],
-              babelrc: config.babel.babelrc,
-              configFile: config.babel.configFile,
-              presetOptions: config.babel
-            },
-            config.plugins.babel
-          )
-        )
-      )
-    }
-
-    if (config.babel.minimal) {
-      plugins.push(
-        require('rollup-plugin-buble')({
-          exclude: 'node_modules/**',
-          include: '**/*.{js,mjs,jsx}',
-          transforms: {
-            modules: false,
-            dangerousForOf: true,
-            dangerousTaggedTemplateString: true
-          }
-        })
-      )
-    }
-
-    if (config.plugins.vue !== false && (source.hasVue || config.plugins.vue)) {
-      plugins.push(
-        this.localRequire('rollup-plugin-vue')(
-          Object.assign(
-            {
-              css: false
-            },
-            config.plugins.vue
-          )
-        )
-      )
-    }
-
-    // Add commonjs plugin after babel and typescript
-    // Since this plugin uses acorn to parse the source code
-    const { commonjs } = config.plugins
-    plugins.push(
-      require('rollup-plugin-commonjs')({
-        ...commonjs,
-        // `ignore` is required to allow dynamic require
-        // See: https://github.com/rollup/rollup-plugin-commonjs/blob/4a22147456b1092dd565074dc33a63121675102a/src/index.js#L32
-        ignore: (name: string) => {
-          if (commonjs && commonjs.ignore && commonjs.ignore(name)) {
-            return true
-          }
-          return isExternal(config.externals, name)
-        }
-      })
-    )
-
-    if (config.env) {
-      const env = Object.assign({}, config.env)
-      plugins.push(
-        require('rollup-plugin-replace')({
-          ...Object.keys(env).reduce((res: Env, name) => {
-            res[name] = JSON.stringify(env[name])
-            return res
-          }, {}),
-          ...config.plugins.replace
-        })
-      )
+    if (Object.keys(pluginsOptions.replace.values).length === 0) {
+      pluginsOptions.replace = false
     }
 
     const banner = getBanner(config.banner, this.pkg.data)
 
     if (minify) {
       const terserOptions = config.plugins.terser || {}
-      plugins.push(
-        require('rollup-plugin-terser').terser({
-          ...terserOptions,
-          output: {
-            ...terserOptions.output,
-            // Add banner (if there is)
-            preamble: banner
-          }
+      pluginsOptions.terser = {
+        ...terserOptions,
+        output: {
+          ...terserOptions.output,
+          // Add banner (if there is)
+          preamble: banner
+        }
+      }
+    }
+
+    for (const name of Object.keys(config.plugins)) {
+      if (pluginsOptions[name] === undefined) {
+        Object.assign(pluginsOptions, { [name]: config.plugins[name] })
+      }
+    }
+
+    const getPlugin: GetPlugin = (name: string) => {
+      if (config.resolvePlugins && config.resolvePlugins[name]) {
+        return config.resolvePlugins[name]
+      }
+
+      const isBuiltIn = require('../package').dependencies[
+        `rollup-plugin-${name}`
+      ]
+      const plugin =
+        name === 'babel'
+          ? import('./plugins/babel').then(res => res.default)
+          : name === 'node-resolve'
+          ? nodeResolvePlugin
+          : name === 'progress'
+          ? progressPlugin
+          : isBuiltIn
+          ? require(`rollup-plugin-${name}`)
+          : this.localRequire(`rollup-plugin-${name}`)
+
+      if (name === 'terser') {
+        return plugin.terser
+      }
+
+      return plugin.default || plugin
+    }
+
+    const plugins = await Promise.all(
+      Object.keys(pluginsOptions)
+        .filter(name => pluginsOptions[name])
+        .map(async name => {
+          const options =
+            pluginsOptions[name] === true ? {} : pluginsOptions[name]
+          const plugin = await getPlugin(name)
+          return plugin(options)
         })
-      )
+    )
+
+    if (logger.isDebug) {
+      for (const name of Object.keys(pluginsOptions)) {
+        if (pluginsOptions[name]) {
+          logger.debug(colors.dim(format), `Using plugin: ${name}`)
+        }
+      }
     }
 
     // Add bundle to out assets Map

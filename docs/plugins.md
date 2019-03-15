@@ -12,7 +12,7 @@ module.exports = {
 
 The name should be the package name of the plugin, without the `rollup-plugin-` prefix.
 
-The value will be used as its options, passing `true` is equivalent to an empty object, `false` is used to disable <a href="/api/globals.html#builtin_plugins">built-in plugins</a>.
+The value will be used as its options, passing `true` is equivalent to an empty object, `false` is used to disable built-in plugins.
 
 To add plugin via CLI flags, you can do this:
 

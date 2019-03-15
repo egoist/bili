@@ -193,6 +193,21 @@ export interface Config {
     [name: string]: any
   }
   /**
+   * Defines how to resolve a plugin by name
+   * This will override the default behavior
+   * e.g.
+   * ```js
+   * {
+   *   resolvePlugins: {
+   *     replace: require('./my-fork-of-rollup-plugin-replace')
+   *   }
+   * }
+   * ```
+   */
+  resolvePlugins?: {
+    [name: string]: any
+  }
+  /**
    * Include node modules in the bundle. Note that this is always `true` for UMD bundle.
    * @cli `--bundle-node-modules`
    */
@@ -249,6 +264,9 @@ export interface NormalizedConfig {
   env?: Env
   bundleNodeModules?: boolean | string[]
   plugins: {
+    [name: string]: any
+  }
+  resolvePlugins?: {
     [name: string]: any
   }
   externals: Externals

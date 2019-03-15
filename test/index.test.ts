@@ -51,20 +51,9 @@ snapshot({
 
 snapshot(
   {
-    title: 'banner:true with date',
+    title: 'banner:true default',
     input: 'index.js',
-    cwd: fixture('banner/with-date')
-  },
-  {
-    banner: true
-  }
-)
-
-snapshot(
-  {
-    title: 'banner:true without any date',
-    input: 'index.js',
-    cwd: fixture('banner/without-date')
+    cwd: fixture('banner/default')
   },
   {
     banner: true
@@ -197,18 +186,11 @@ snapshot(
   }
 )
 
-snapshot(
-  {
-    title: 'vue plugin',
-    input: 'component.vue',
-    cwd: fixture('vue')
-  },
-  {
-    plugins: {
-      vue: true
-    }
-  }
-)
+snapshot({
+  title: 'vue plugin',
+  input: 'component.vue',
+  cwd: fixture('vue')
+})
 
 snapshot({
   title: 'Typescript',

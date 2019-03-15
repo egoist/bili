@@ -44,7 +44,7 @@ class Logger {
 
   debug(...args: any[]) {
     if (!this.isDebug) return
-    this.log(...args)
+    this.log(colors.magenta('verbose'), ...args)
   }
 
   progress(text: string) {
