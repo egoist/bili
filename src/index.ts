@@ -10,8 +10,6 @@ import stringWidth from 'string-width'
 import {
   rollup,
   watch,
-  InputOptions,
-  OutputOptions,
   Plugin as RollupPlugin,
   ModuleFormat as RollupFormat
 } from 'rollup'
@@ -32,7 +30,9 @@ import {
   ConfigEntryObject,
   Env,
   ConfigOutput,
-  FileNameContext
+  RunContext,
+  RollupConfig,
+  Task
 } from './types'
 
 // Make rollup-plugin-vue use basename in component.__file instead of absolute path
@@ -43,28 +43,6 @@ interface RunOptions {
   write?: boolean
   watch?: boolean
   concurrent?: boolean
-}
-
-interface RunContext {
-  unresolved: Set<string>
-}
-
-interface Task {
-  title: string
-  getConfig(context: RunContext, task: Task): Promise<RollupConfigOutput>
-}
-
-interface RollupInputConfig extends InputOptions {
-  plugins: Array<RollupPlugin>
-}
-
-interface RollupOutputConfig extends OutputOptions {
-  dir: string
-}
-
-interface RollupConfigOutput {
-  inputConfig: RollupInputConfig
-  outputConfig: RollupOutputConfig
 }
 
 interface RollupConfigInput {
@@ -171,7 +149,7 @@ export class Bundler {
     context,
     assets,
     config
-  }: RollupConfigInput): Promise<RollupConfigOutput> {
+  }: RollupConfigInput): Promise<RollupConfig> {
     // Always minify if config.minify is truthy
     // Otherwise infer by format
     const minify =
@@ -560,7 +538,7 @@ export class Bundler {
                   format
                 })
               : this.config
-            return this.createRollupConfig({
+            const rollupConfig = await this.createRollupConfig({
               source,
               format,
               title: task.title,
@@ -568,6 +546,9 @@ export class Bundler {
               assets,
               config
             })
+            return this.config.extendRollupConfig
+              ? this.config.extendRollupConfig(rollupConfig)
+              : rollupConfig
           }
         })
       }

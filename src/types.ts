@@ -1,4 +1,9 @@
-import { ModuleFormat as RollupFormat } from 'rollup'
+import {
+  ModuleFormat as RollupFormat,
+  InputOptions,
+  OutputOptions,
+  Plugin as RollupPlugin
+} from 'rollup'
 
 import { Banner } from './utils/get-banner'
 
@@ -34,6 +39,30 @@ export type ExtendConfig = (
   config: NormalizedConfig,
   { format, input }: { format: Format; input: string[] | ConfigEntryObject }
 ) => NormalizedConfig
+
+export interface RunContext {
+  unresolved: Set<string>
+}
+
+export interface Task {
+  title: string
+  getConfig(context: RunContext, task: Task): Promise<RollupConfig>
+}
+
+export interface RollupInputConfig extends InputOptions {
+  plugins: Array<RollupPlugin>
+}
+
+export interface RollupOutputConfig extends OutputOptions {
+  dir: string
+}
+
+export interface RollupConfig {
+  inputConfig: RollupInputConfig
+  outputConfig: RollupOutputConfig
+}
+
+export type ExtendRollupConfig = (config: RollupConfig) => RollupConfig
 
 export interface FileNameContext {
   format: RollupFormat
@@ -252,7 +281,14 @@ export interface Config {
    * Configure the default babel preset
    */
   babel?: BabelPresetOptions
+  /**
+   * Extending Bili config
+   */
   extendConfig?: ExtendConfig
+  /**
+   * Extending generated rollup config
+   */
+  extendRollupConfig?: ExtendRollupConfig
 }
 
 interface ConfigOutputOverwrite {
@@ -280,6 +316,7 @@ export interface NormalizedConfig {
   banner?: Banner
   babel: BabelPresetOptions
   extendConfig?: ExtendConfig
+  extendRollupConfig?: ExtendRollupConfig
 }
 
 export interface Options {
