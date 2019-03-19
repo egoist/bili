@@ -302,7 +302,7 @@ export class Bundler {
       ...config.plugins.replace,
       values: {
         ...Object.keys(env).reduce((res: Env, name) => {
-          res[name] = JSON.stringify(env[name])
+          res[`process.env.${name}`] = JSON.stringify(env[name])
           return res
         }, {}),
         ...(config.plugins.replace && config.plugins.replace.values)
@@ -439,8 +439,9 @@ export class Bundler {
       inputConfig: {
         input: source.input,
         plugins,
-        external: Object.keys(config.globals || {})
-          .filter(v => !/^[\.\/]/.test(v)),
+        external: Object.keys(config.globals || {}).filter(
+          v => !/^[\.\/]/.test(v)
+        ),
         onwarn(warning) {
           if (typeof warning === 'string') {
             return logger.warn(warning)
