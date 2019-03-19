@@ -45,6 +45,7 @@ cli
     '--no-map',
     'Disable source maps, enabled by default for minified bundles'
   )
+  .option('--map-exclude-sources', 'Exclude source code in source maps')
   .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
   .option('--concurrent', 'Build concurrently')
   .option('--verbose', 'Show verbose logs')
@@ -66,6 +67,7 @@ cli
           minify: options.minify,
           extractCSS: options.extractCss,
           sourceMap: options.map,
+          sourceMapExcludeSources: options.mapExcludeSources,
           target: options.target
         },
         bundleNodeModules: options.bundleNodeModules,

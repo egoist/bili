@@ -473,7 +473,8 @@ export class Bundler {
         sourcemap:
           typeof config.output.sourceMap === 'boolean'
             ? config.output.sourceMap
-            : minify
+            : minify,
+        sourcemapExcludeSources: config.output.sourceMapExcludeSources
       }
     }
   }

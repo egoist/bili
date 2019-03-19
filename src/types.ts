@@ -125,10 +125,14 @@ export interface ConfigOutput {
    */
   extractCSS?: boolean
   /**
-   * Generate source map
+   * Generate source maps
    * @default `true` for minified bundle, `false` otherwise
    */
   sourceMap?: boolean
+  /**
+   * Exclude source code in source maps
+   */
+  sourceMapExcludeSources?: boolean
   /**
    * Output target
    * @default `node`
