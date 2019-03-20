@@ -249,7 +249,7 @@ export class Bundler {
         merge(
           {
             exclude: 'node_modules/**',
-            include: '**/*.{js,mjs,jsx,vue}',
+            include: '**/*.{js,mjs,jsx,ts,tsx,vue}',
             transforms: {
               modules: false,
               dangerousForOf: true,
