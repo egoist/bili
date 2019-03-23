@@ -8,6 +8,22 @@ Please check out the <a href="/api/interfaces/config.html">Configure References<
 
 Rollup has been updated to v1, this is a breaking change, so check your bundled file first before publishing it.
 
+### Input Files
+
+In v3 you can use glob patterns as input files like `bili src/*.js --format cjs` but in v4 you can __NOT__ do that, the input must be actual file path. 
+
+Besides using a string or array as input files, now an object is also accepted:
+
+```js
+// bili.config.js
+module.exports = {
+  input: {
+    index: 'src/index.js',
+    cli: 'src/cli.js'
+  }
+}
+```
+
 ### Plugin Usage
 
 Previously you can add addtional Rollup plugins by passing an array via `plugins` option, but now it should be:
