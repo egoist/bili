@@ -332,5 +332,12 @@ export interface Options {
    * Use a custom config file rather than auto-loading bili.config.js
    */
   configFile?: string | boolean
+  /**
+   * The root directory to resolve files from
+   * Useful for mono-repo
+   * e.g. You can install Bili in root directory and leaf packages can use their own Bili config file:
+   * - `bili --root-dir packages/foo`
+   * - `bili --root-dir packages/bar`
+   */
   rootDir?: string
 }

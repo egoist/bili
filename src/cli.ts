@@ -23,6 +23,7 @@ cli
   )
   .option('--input.* [file]', 'An object mapping names to entry points')
   .option('-d, --out-dir <outDir>', 'Output directory', { default: 'dist' })
+  .option('--root-dir <rootDir>', 'The root directory to resolve files from')
   .option('--file-name <name>', 'Set the file name for output files')
   .option('--module-name <name>', 'Set the module name for umd bundle')
   .option('--env.* [value]', 'Replace env variables')
