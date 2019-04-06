@@ -85,6 +85,12 @@ export class Bundler {
       this.pkg.data = {}
     }
 
+    if (/\.mjs$/.test(this.pkg.data.module || this.pkg.data.main)) {
+      logger.warn(
+        `Bili no longer use .mjs extension for esm bundle, you should use .js instead!`
+      )
+    }
+
     const userConfig =
       options.configFile === false
         ? {}
@@ -411,7 +417,10 @@ export class Bundler {
         : getFileName
     const fileName = fileNameTemplate
       .replace(/\[min\]/, minPlaceholder)
-      .replace(/\[ext\]/, /^esm?$/.test(rollupFormat) ? '.mjs' : '.js')
+      // The `[ext]` placeholder no longer makes sense
+      // Since we only output to `.js` now
+      // Probably remove it in the future
+      .replace(/\[ext\]/, '.js')
 
     return {
       inputConfig: {
@@ -678,10 +687,7 @@ async function printAssets(assets: Assets, title: string) {
 }
 
 function getDefaultFileName(format: RollupFormat) {
-  const isESM = /^esm?$/.test(format)
-  return format === 'cjs' || isESM
-    ? `[name][min][ext]`
-    : `[name].[format][min][ext]`
+  return format === 'cjs' ? `[name][min][ext]` : `[name].[format][min][ext]`
 }
 
 export { Config, NormalizedConfig, Options, ConfigOutput }

@@ -131,7 +131,6 @@ export interface ConfigOutput {
    * Placeholders:
    * - `[name]`: The base name of input file. (without extension)
    * - `[format]`: The output format. (without `-min` suffix)
-   * - `[ext]`: The extension. It's `.mjs` for `esm` format, `.js` otherwise
    * - `[min]`: It will replaced by `.min` when the format ends with `-min`, otherwise it's an empty string.
    *
    * The value can also be a function which returns the fileName template,
