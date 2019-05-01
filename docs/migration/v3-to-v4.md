@@ -26,7 +26,7 @@ module.exports = {
 
 ### Plugin Usage
 
-Previously you can add addtional Rollup plugins by passing an array via `plugins` option, but now it should be:
+Previously you can add additional Rollup plugins by passing an array via `plugins` option, but now it should be:
 
 ```js
 module.exports = {
