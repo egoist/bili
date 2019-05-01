@@ -1,6 +1,6 @@
 # Plugins
 
-Bili allows you to add addtional Rollup plugins like this:
+Bili allows you to add additional Rollup plugins like this:
 
 ```js
 module.exports = {
