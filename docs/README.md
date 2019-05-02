@@ -14,7 +14,7 @@ Delightful library bundler.
 
 ## Quick Start
 
-Bili is avaliable on npm, [install it](./installation.md) first if you haven't.
+Bili is available on npm, [install it](./installation.md) first if you haven't.
 
 Run `bili` in your project to bundle `src/index.js` in CommonJS format:
 
