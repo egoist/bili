@@ -14,7 +14,7 @@ export default (options: Options) => {
   const plugin = require('rollup-plugin-node-resolve')({
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     preferBuiltins: true,
-    mainFields: ['module', 'jsnext', 'main', 'browser'],
+    mainFields: ['module', 'jsnext:main', 'main', 'browser'],
     browser: options.browser
   })
 
