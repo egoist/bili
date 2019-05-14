@@ -41,6 +41,7 @@ cli
   .option('-t, --target <target>', 'Output target', { default: 'node' })
   .option('-c, --config <file>', 'Use a custom config file')
   .option('--minimal', 'Generate minimal output whenever possible')
+  .option('--no-babelrc', 'Disable .babelrc file')
   .option('--banner', 'Add banner with pkg info to the bundle')
   .option(
     '--no-map',
@@ -79,7 +80,8 @@ cli
         banner: options.banner,
         babel: {
           asyncToPromises: options.asyncToPromises,
-          minimal: options.minimal
+          minimal: options.minimal,
+          babelrc: options.babelrc
         }
       },
       {
