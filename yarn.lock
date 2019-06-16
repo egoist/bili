@@ -1046,10 +1046,12 @@
   resolved "https://registry.npmjs.org/@types/require-from-string/-/require-from-string-1.2.0.tgz#c18cfc8a2c1a0259e5841d1fef2b5e9d01c64242"
   integrity sha512-5vE9WoOOC9/DoD3Zj53UISpM+5tSvh8k0mL4fe2zFI6vO715/W4IQ3EdVUrWVMrFi1/NZhyMvm2iKsDFkEGddQ==
 
-"@types/resolve-from@^4.0.0":
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/@types/resolve-from/-/resolve-from-4.0.0.tgz#55538ffe8e35c3116a4cebf814ce1a1f1d663fcc"
-  integrity sha512-LjkxahYnTBr75YRCEI/FQnQVfP4fP69koNW+3bmSkZuiSCkXkTJpfl7SPcZ4biXfmZHduoVLElP4VWBhex+0zQ==
+"@types/resolve-from@^5.0.1":
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/@types/resolve-from/-/resolve-from-5.0.1.tgz#2714eaa840c0472dcfa96ec3fb9d170dbf0b677d"
+  integrity sha512-1G7n5Jtr5inoS1Ez2Y9Efedk9/wH6uGQslbfhGTOw9J42PCAwuyaDgQHW7fIq02+shwB02kM/w31W8gMxI8ORg==
+  dependencies:
+    resolve-from "*"
 
 "@types/resolve@0.0.8", "@types/resolve@^0.0.8":
   version "0.0.8"
@@ -7874,6 +7876,11 @@ resolve-dir@^0.1.0:
   dependencies:
     expand-tilde "^1.2.2"
     global-modules "^0.2.3"
+
+resolve-from@*:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-5.0.0.tgz#c35225843df8f776df21c57557bc087e9dfdfc69"
+  integrity sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
 
 resolve-from@^3.0.0:
   version "3.0.0"
