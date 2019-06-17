@@ -57,7 +57,7 @@
     "@types/babel__template": "^7.0.1",
     "@types/babel__traverse": "^7.0.4",
     "@types/boxen": "^2.1.0",
-    "@types/builtin-modules": "^2.0.0",
+    "@types/builtin-modules": "^3.1.1",
     "@types/elegant-spinner": "^2.0.1",
     "@types/figures": "^2.0.0",
     "@types/gzip-size": "^4.1.0",
