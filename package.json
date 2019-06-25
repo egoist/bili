@@ -81,7 +81,7 @@
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
     "gzip-size": "^5.0.0",
-    "husky": "^1.0.0-rc.13",
+    "husky": "^2.5.0",
     "jest": "^23.0.0",
     "joycon": "^2.2.4",
     "lint-staged": "^7.2.0",
