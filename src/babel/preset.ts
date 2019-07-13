@@ -11,6 +11,8 @@ export default (
     minimal = process.env.BILI_MINIMAL
   } = {}
 ) => {
+  const { DEBUG = '' } = process.env
+
   let presets: any[] = []
   let plugins: any[] = []
 
@@ -19,6 +21,7 @@ export default (
     !minimal && [
       require('@babel/preset-env').default,
       {
+        debug: String(DEBUG).length > 0,
         modules: ENV === 'test' ? 'auto' : false,
         exclude: ['transform-regenerator', 'transform-async-to-generator']
       }
