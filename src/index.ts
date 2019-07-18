@@ -579,7 +579,7 @@ export class Bundler {
       )
       const watcher = watch(configs)
       watcher.on('event', e => {
-        if (e.code === 'ERROR') {
+        if (e.code === 'ERROR' || e.code === 'FATAL') {
           logger.error(e.error.message)
         }
       })
