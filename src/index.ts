@@ -522,7 +522,7 @@ export class Bundler {
       }
     })
 
-    let { format, target = null } = this.config.output
+    let { format, target } = this.config.output
     if (Array.isArray(format)) {
       if (format.length === 0) {
         format = ['cjs']
@@ -537,7 +537,7 @@ export class Bundler {
     for (const source of sources) {
       for (const format of formats) {
         let title = `Bundle ${source.files.join(', ')} in ${format} format`
-        if (typeof target === 'string') {
+        if (target) {
           title += ` for target ${target}`
         }
         tasks.push({
