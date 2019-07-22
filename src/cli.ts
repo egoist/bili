@@ -58,6 +58,7 @@ cli
   .example(bin => `  ${bin} --input.index src/foo.ts`)
   .action(async (input, options) => {
     const { Bundler } = await import('./')
+    const rootDir = options.rootDir || '.'
     const bundler = new Bundler(
       {
         input: options.input || (input.length === 0 ? undefined : input),
@@ -91,7 +92,8 @@ cli
           ? 'quiet'
           : undefined,
         stackTrace: options.stackTrace,
-        configFile: options.config
+        configFile: options.config,
+        rootDir
       }
     )
     await bundler
