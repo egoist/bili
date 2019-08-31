@@ -26,6 +26,7 @@ cli
   .option('--root-dir <rootDir>', 'The root directory to resolve files from')
   .option('--file-name <name>', 'Set the file name for output files')
   .option('--module-name <name>', 'Set the module name for umd bundle')
+  .option('--update-pkg', 'Updates your package.json entry fields')
   .option('--env.* [value]', 'Replace env variables')
   .option('--plugin, --plugins.* [options]', 'Use a plugin')
   .option(
@@ -79,6 +80,7 @@ cli
         externals: options.external,
         globals: options.global,
         banner: options.banner,
+        updatePkg: options.updatePkg,
         babel: {
           asyncToPromises: options.asyncToPromises,
           minimal: options.minimal,
