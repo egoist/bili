@@ -3,7 +3,6 @@ import fs from 'fs'
 import JoyCon from 'joycon'
 import logger from './logger'
 
-// import addProp from './utils/add-prop'
 type fields = 'main' | 'module' | 'cdn' | 'unpkg' | 'jsdeliver'
 
 function addProp(obj: any, prop: fields, val: string, fields: fields[]) {
@@ -41,7 +40,6 @@ export const updatePackage = (
     }
   })
 
-  //maybe can use pachage.json from index
   const pkg = pkgLoader.loadSync({
     files: ['package.json'],
     cwd: rootDir
