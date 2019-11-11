@@ -22,6 +22,7 @@ import nodeResolvePlugin from './plugins/node-resolve'
 import configLoader from './config-loader'
 import isExternal from './utils/is-external'
 import getBanner from './utils/get-banner'
+import normalizePluginName from './utils/normalize-plugin-name'
 import {
   Options,
   Config,
@@ -322,21 +323,21 @@ export class Bundler {
         return config.resolvePlugins[name]
       }
 
-      const isBuiltIn = require('../package').dependencies[
-        `rollup-plugin-${name}`
-      ]
+      name = normalizePluginName(name)
+
+      const isBuiltIn = require('../package').dependencies[name]
       const plugin =
-        name === 'babel'
+        name === 'rollup-plugin-babel'
           ? import('./plugins/babel').then(res => res.default)
-          : name === 'node-resolve'
+          : name === 'rollup-plugin-node-resolve'
           ? nodeResolvePlugin
-          : name === 'progress'
+          : name === 'rollup-plugin-progress'
           ? progressPlugin
           : isBuiltIn
-          ? require(`rollup-plugin-${name}`)
-          : this.localRequire(`rollup-plugin-${name}`)
+          ? require(name)
+          : this.localRequire(name)
 
-      if (name === 'terser') {
+      if (name === 'rollup-plugin-terser') {
         return plugin.terser
       }
 
