@@ -10,7 +10,20 @@ We use a sane default preset for Babel, basically it:
 - Compiles `async/await` to Promise without regenerator using [babel-plugin-transform-async-to-promises](https://github.com/rpetrich/babel-plugin-transform-async-to-promises).
 - Compiles JSX.
 
-You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babelrc` flag.
+You can add a `.babelrc` file in your project to use your custom config instead.
+If you want to disable `.babelrc` in your project, pass `--no-babelrc` flag. If
+your project uses a `babel.config.js` file, you have to pass `configFile: false`
+to the `babel`-plugin via a bili config file:
+
+```js
+module.exports = {
+  plugins: {
+    babel: {
+      configFile: false
+    }
+  }
+}
+```
 
 You can also use our default preset in your Babel config file:
 
