@@ -1,3 +1,6 @@
-module.exports = () => ({
-  name: '@foo/bar'
-})
+const name = '@foo/bar'
+
+module.exports = ({ getConfig } = {}) => {
+  getConfig(name)
+  return { name }
+}

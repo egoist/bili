@@ -17,24 +17,6 @@ function generate(config: Config, options: Options) {
   return bundler.run()
 }
 
-function getRollupConfig(
-  config: Config,
-  options: Options
-): Promise<RollupConfig> {
-  return new Promise(resolve => {
-    generate(
-      {
-        ...config,
-        extendRollupConfig: config => {
-          resolve(config)
-          return config
-        }
-      },
-      options
-    )
-  })
-}
-
 function snapshot(
   {
     title,
@@ -63,31 +45,31 @@ function snapshot(
 }
 
 test('resolve scoped plugins', async () => {
-  const { inputConfig } = await getRollupConfig(
+  const getConfig = jest.fn()
+  await generate(
     {
       input: 'index.js',
       plugins: {
-        '@foo/bar': true
+        '@foo/bar': { getConfig }
       }
     },
     { rootDir: fixture('defaults') }
   )
-  expect(
-    inputConfig.plugins.find(plugin => plugin.name === '@foo/bar')
-  ).toBeTruthy()
+  expect(getConfig).toHaveBeenCalledWith('@foo/bar')
 })
 
 test('resolve @rollup plugins', async () => {
-  const { inputConfig } = await getRollupConfig(
+  const getConfig = jest.fn()
+  await generate(
     {
       input: 'index.js',
       plugins: {
-        '@rollup/baz': true
+        '@rollup/baz': { getConfig }
       }
     },
     { rootDir: fixture('defaults') }
   )
-  expect(inputConfig.plugins.find(plugin => plugin.name === 'baz')).toBeTruthy()
+  expect(getConfig).toHaveBeenCalledWith('baz')
 })
 
 snapshot({
