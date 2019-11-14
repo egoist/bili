@@ -1,6 +1,5 @@
 import path from 'path'
 import { Bundler, Config, Options } from '../src'
-import { RollupConfig } from '../src/types'
 
 process.env.BABEL_ENV = 'anything-not-test'
 
@@ -15,24 +14,6 @@ function generate(config: Config, options: Options) {
     ...options
   })
   return bundler.run()
-}
-
-function getRollupConfig(
-  config: Config,
-  options: Options
-): Promise<RollupConfig> {
-  return new Promise(resolve => {
-    generate(
-      {
-        ...config,
-        extendRollupConfig: config => {
-          resolve(config)
-          return config
-        }
-      },
-      options
-    )
-  })
 }
 
 function snapshot(
@@ -63,18 +44,17 @@ function snapshot(
 }
 
 test('resolve scoped plugins', async () => {
-  const { inputConfig } = await getRollupConfig(
+  const callback = jest.fn()
+  await generate(
     {
       input: 'index.js',
       plugins: {
-        '@foo/bar': true
+        '@foo/bar': { callback }
       }
     },
     { rootDir: fixture('defaults') }
   )
-  expect(
-    inputConfig.plugins.find(plugin => plugin.name === '@foo/bar')
-  ).toBeTruthy()
+  expect(callback).toHaveBeenCalledWith('@foo/bar')
 })
 
 snapshot({
