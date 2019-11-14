@@ -188,7 +188,8 @@ export class Bundler {
           config.plugins.progress
         ),
 
-      json: config.plugins.json !== false && merge({}, config.plugins.json),
+      '@rollup/json':
+        config.plugins.json !== false && merge({}, config.plugins.json),
 
       hashbang:
         config.plugins.hashbang !== false && merge({}, config.plugins.hashbang),
@@ -251,7 +252,7 @@ export class Bundler {
           config.plugins.babel
         ),
 
-      buble:
+      '@rollup/buble':
         (config.plugins.buble || config.babel.minimal) &&
         merge(
           {
