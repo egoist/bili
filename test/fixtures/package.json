@@ -1,6 +1,8 @@
 {
   "private": true,
   "dependencies": {
+    "@foo/rollup-plugin-bar": "../stubs/@foo/rollup-plugin-bar",
+    "@rollup/plugin-baz": "../stubs/@rollup/plugin-baz",
     "rollup-plugin-prettier": "^0.5.0",
     "rollup-plugin-strip": "^1.2.0",
     "rollup-plugin-typescript2": "^0.18.0",
