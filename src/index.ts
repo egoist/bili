@@ -241,7 +241,7 @@ export class Bundler {
         config.plugins.babel !== false &&
         merge(
           {
-            exclude: 'node_modules/**',
+            exclude: /node_modules/,
             extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
             babelrc: config.babel.babelrc,
             configFile: config.babel.configFile,
@@ -254,7 +254,7 @@ export class Bundler {
         (config.plugins.buble || config.babel.minimal) &&
         merge(
           {
-            exclude: 'node_modules/**',
+            exclude: /node_modules/,
             include: '**/*.{js,mjs,jsx,ts,tsx,vue}',
             transforms: {
               modules: false,
