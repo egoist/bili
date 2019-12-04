@@ -1,5 +1,5 @@
 {
-  "name": "@bung87/bili",
+  "name": "bili",
   "version": "4.8.1",
   "description": "A zero configuration library bundler.",
   "main": "lib/index.js",
