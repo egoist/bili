@@ -268,6 +268,16 @@ export class Bundler {
       commonjs:
         config.plugins.commonjs !== false &&
         merge({}, config.plugins.commonjs, {
+          namedExports: {
+            // left-hand side can be an absolute path, a path
+            // relative to the current directory, or the name
+            // of a module in node_modules
+            '@babel/core': [
+              'transformSync',
+              'buildExternalHelpers',
+              'loadPartialConfig'
+            ]
+          },
           // `ignore` is required to allow dynamic require
           // See: https://github.com/rollup/rollup-plugin-commonjs/blob/4a22147456b1092dd565074dc33a63121675102a/src/index.js#L32
           ignore: (name: string) => {
@@ -322,9 +332,13 @@ export class Bundler {
         return config.resolvePlugins[name]
       }
 
-      const isBuiltIn = require('../package').dependencies[
-        `rollup-plugin-${name}`
-      ]
+      const isBuiltIn = Object.keys(require('../package').dependencies).filter(
+        x => {
+          const reg = new RegExp(`rollup\\Wplugin\\W${name}`)
+          return reg.test(x)
+        }
+      )
+
       const plugin =
         name === 'babel'
           ? import('./plugins/babel').then(res => res.default)
@@ -332,8 +346,8 @@ export class Bundler {
           ? nodeResolvePlugin
           : name === 'progress'
           ? progressPlugin
-          : isBuiltIn
-          ? require(`rollup-plugin-${name}`)
+          : isBuiltIn.length
+          ? require(isBuiltIn[0])
           : this.localRequire(`rollup-plugin-${name}`)
 
       if (name === 'terser') {

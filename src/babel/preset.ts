@@ -28,6 +28,7 @@ export default (
 
   plugins = [
     ...plugins,
+    require('@babel/plugin-external-helpers'),
     require('@babel/plugin-syntax-dynamic-import'),
     [
       require('@babel/plugin-transform-react-jsx'),
