@@ -581,6 +581,7 @@ export class Bundler {
           }
         })
       )
+
       const watcher = watch(configs)
       watcher.on('event', e => {
         if (e.code === 'ERROR') {

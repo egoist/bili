@@ -11,6 +11,7 @@ export default function({ title }: { title: string }): Plugin {
       if (!process.env.CI && process.stdout.isTTY) {
         logger.progress(`Bundling ${id.replace(process.cwd(), '.')}`)
       }
+      return null
     }
   }
 }

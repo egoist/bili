@@ -11,7 +11,7 @@ interface Options {
 }
 
 export default (options: Options) => {
-  const plugin = require('rollup-plugin-node-resolve')({
+  const plugin = require('@rollup/plugin-node-resolve')({
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     preferBuiltins: true,
     mainFields: [
@@ -28,17 +28,15 @@ export default (options: Options) => {
     name: 'bili-custom-resolve',
 
     async resolveId(importee: string, importer?: string) {
+      // Exclude built-in modules
+      if (builtinModules.includes(importee)) {
+        return false
+      }
       const id = await plugin.resolveId(
         importee,
         importer || `${options.rootDir}/__no_importer__.js`
       )
-
-      if (typeof id === 'string') {
-        // Exclude built-in modules
-        if (builtinModules.includes(id)) {
-          return false
-        }
-
+      if (id && typeof id === 'string') {
         // If we don't intend to bundle node_modules
         // Mark it as external
         if (/node_modules/.test(id)) {
