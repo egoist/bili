@@ -8,6 +8,8 @@ yarn add rollup-plugin-vue vue-template-compiler vue --dev
 bili src/MyComponent.vue
 ```
 
+Due to [an issue with rollup-plugin-vue](https://github.com/vuejs/rollup-plugin-vue/issues/303), windows users should use rollup-plugin-vue 5.1.1.
+
 Otherwise you need to add `rollup-plugin-vue` manually using the CLI flag `--plugin.vue` or config file:
 
 ```js
