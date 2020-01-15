@@ -61,7 +61,7 @@
     "@types/elegant-spinner": "^2.0.1",
     "@types/figures": "^2.0.0",
     "@types/gzip-size": "^4.1.0",
-    "@types/jest": "^23.3.13",
+    "@types/jest": "^24.9.0",
     "@types/lodash": "^4.14.120",
     "@types/log-update": "^2.0.0",
     "@types/node": "^10.12.18",
