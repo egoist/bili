@@ -10,7 +10,7 @@ module.exports = {
 }
 ```
 
-The name should be the package name of the plugin, without the `rollup-plugin-` prefix.
+If the package name starts with `rollup-plugin-`, the key should without the `rollup-plugin-` prefix. However, if the package name starts with `@rollup/`, use the full package name.
 
 The value will be used as its options, passing `true` is equivalent to an empty object, `false` is used to disable built-in plugins.
 

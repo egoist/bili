@@ -332,6 +332,8 @@ export class Bundler {
           ? nodeResolvePlugin
           : name === 'progress'
           ? progressPlugin
+          : name.startsWith('@rollup/')
+          ? this.localRequire(name)
           : isBuiltIn
           ? require(`rollup-plugin-${name}`)
           : this.localRequire(`rollup-plugin-${name}`)
