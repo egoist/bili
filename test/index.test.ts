@@ -215,6 +215,21 @@ snapshot(
 
 snapshot(
   {
+    title: 'scoped rollup plugin',
+    input: 'index.js',
+    cwd: fixture('scoped-rollup-plugin')
+  },
+  {
+    plugins: {
+      '@rollup/plugin-strip': {
+        functions: ['console.log']
+      }
+    }
+  }
+)
+
+snapshot(
+  {
     title: 'target:browser',
     input: 'index.js',
     cwd: fixture('target/browser')
