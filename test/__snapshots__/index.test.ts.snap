@@ -194,7 +194,7 @@ exports[`extendOptions: extendOptions dist/bar.umd.js 1`] = `
 `;
 
 exports[`extendOptions: extendOptions dist/bar.umd.min.js 1`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,function(){\\"use strict\\";return\\"bar\\"});
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,(function(){\\"use strict\\";return\\"bar\\"}));
 "
 `;
 
@@ -223,7 +223,7 @@ exports[`extendOptions: extendOptions dist/foo.umd.js 1`] = `
 `;
 
 exports[`extendOptions: extendOptions dist/foo.umd.min.js 1`] = `
-"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,function(){\\"use strict\\";return\\"foo\\"});
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).min=n()}(this,(function(){\\"use strict\\";return\\"foo\\"}));
 "
 `;
 
@@ -271,7 +271,7 @@ module.exports = foo;
 `;
 
 exports[`uglify: uglify dist/index.min.js 1`] = `
-"\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});const a=1;exports.a=1;
+"\\"use strict\\";Object.defineProperty(exports,\\"__esModule\\",{value:!0});exports.a=1;
 "
 `;
 
