@@ -886,34 +886,37 @@
     lodash "^4.17.4"
 
 "@types/babel__core@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.0.4.tgz#14b30c11113bad353cabfaea73e327b48edb0f0e"
-  integrity sha512-2Y2RK1BN5BRFfhneGfQA8mmFmTANbzGgS5uQPluoRqGNWb6uAcefqxzNbqgxPpmPkLqKapQfmYcyyl5iAQV+fA==
+  version "7.1.7"
+  resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.7.tgz#1dacad8840364a57c98d0dd4855c6dd3752c6b89"
+  integrity sha512-RL62NqSFPCDK2FM1pSDH0scHpJvsXtZNiYlMB73DgPBaG1E38ZYVL+ei5EkWRbr+KC4YNiAUNBnRj+bgwpgjMw==
+  dependencies:
+    "@babel/parser" "^7.1.0"
+    "@babel/types" "^7.0.0"
+    "@types/babel__generator" "*"
+    "@types/babel__template" "*"
+    "@types/babel__traverse" "*"
+
+"@types/babel__generator@*", "@types/babel__generator@^7.0.1":
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/@types/babel__generator/-/babel__generator-7.6.1.tgz#4901767b397e8711aeb99df8d396d7ba7b7f0e04"
+  integrity sha512-bBKm+2VPJcMRVwNhxKu8W+5/zT7pwNEqeokFOmbvVSqGzFneNxYcEBro9Ac7/N9tlsaPYnZLK8J1LWKkMsLAew==
+  dependencies:
+    "@babel/types" "^7.0.0"
+
+"@types/babel__template@*", "@types/babel__template@^7.0.1":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@types/babel__template/-/babel__template-7.0.2.tgz#4ff63d6b52eddac1de7b975a5223ed32ecea9307"
+  integrity sha512-/K6zCpeW7Imzgab2bLkLEbz0+1JlFSrUMdw7KoIIu+IUdu51GWaBZpd3y1VXGVXzynvGa4DaIaxNZHiON3GXUg==
   dependencies:
     "@babel/parser" "^7.1.0"
     "@babel/types" "^7.0.0"
 
-"@types/babel__generator@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/@types/babel__generator/-/babel__generator-7.0.1.tgz#533bd37e7be8af27ebf8fcc0a053cfa4c03f4c5c"
-  integrity sha512-QZ+oM5v3lAh/4DqWDyCL0rVi/BJlKRANDEpShxt3Lg+rhbFA78Ec7N+8lcAIpziA/Mfp/1ShDJj2Ti3HJ/JPxA==
+"@types/babel__traverse@*", "@types/babel__traverse@^7.0.4":
+  version "7.0.10"
+  resolved "https://registry.yarnpkg.com/@types/babel__traverse/-/babel__traverse-7.0.10.tgz#d9a99f017317d9b3d1abc2ced45d3bca68df0daf"
+  integrity sha512-74fNdUGrWsgIB/V9kTO5FGHPWYY6Eqn+3Z7L6Hc4e/BxjYV7puvBqp5HwsVYYfLm6iURYBNCx4Ut37OF9yitCw==
   dependencies:
-    "@babel/types" "^7.0.0"
-
-"@types/babel__template@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.npmjs.org/@types/babel__template/-/babel__template-7.0.1.tgz#8de6effa729bf0b0f65eb72399b629a3998a7f10"
-  integrity sha512-LT1zwkpL0/2oBP+npLaOCYSWv47cxbdAvONutjalMdCIBfjtfzVNnT8rgllBmsr15QAdAZDOmYw1CPhLB2JCtA==
-  dependencies:
-    "@babel/parser" "^7.1.0"
-    "@babel/types" "^7.0.0"
-
-"@types/babel__traverse@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.0.4.tgz#de652399bd8493ab712e4d6b68031b7a2f72ad5f"
-  integrity sha512-2vARZYqR4Flf59WtqMfa9GgbOjK04xLZaN9+CMf7Cs+4cAhxZBP3K9LYRzsWxOQe402VvqX9+7DdXxB72ujEOg==
-  dependencies:
-    "@babel/types" "^7.0.0"
+    "@babel/types" "^7.3.0"
 
 "@types/boxen@^2.1.0":
   version "2.1.0"
