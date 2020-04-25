@@ -283,17 +283,14 @@ export class Bundler {
     const env = Object.assign({}, config.env)
 
     pluginsOptions.replace = {
-      ...config.plugins.replace,
-      values: {
-        ...Object.keys(env).reduce((res: Env, name) => {
-          res[`process.env.${name}`] = JSON.stringify(env[name])
-          return res
-        }, {}),
-        ...(config.plugins.replace && config.plugins.replace.values)
-      }
+      ...Object.keys(env).reduce((res: Env, name) => {
+        res[`process.env.${name}`] = JSON.stringify(env[name])
+        return res
+      }, {}),
+      ...config.plugins.replace
     }
 
-    if (Object.keys(pluginsOptions.replace.values).length === 0) {
+    if (Object.keys(pluginsOptions.replace).length === 0) {
       pluginsOptions.replace = false
     }
 
@@ -322,9 +319,15 @@ export class Bundler {
         return config.resolvePlugins[name]
       }
 
-      const isBuiltIn = require('../package').dependencies[
+      // TODO: upgrade all plugins to @rollup scope
+      const isLegacyBuiltIn = require('../package').dependencies[
         `rollup-plugin-${name}`
       ]
+
+      const isBuiltIn = require('../package').dependencies[
+        `@rollup/plugin-${name}`
+      ]
+
       const plugin =
         name === 'babel'
           ? import('./plugins/babel').then(res => res.default)
@@ -334,8 +337,10 @@ export class Bundler {
           ? progressPlugin
           : name.startsWith('@rollup/')
           ? this.localRequire(name)
-          : isBuiltIn
+          : isLegacyBuiltIn
           ? require(`rollup-plugin-${name}`)
+          : isBuiltIn
+          ? require(`@rollup/plugin-${name}`)
           : this.localRequire(`rollup-plugin-${name}`)
 
       if (name === 'terser') {

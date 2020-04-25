@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`\`@rollup/plugin-replace\` can accepts custom options: \`@rollup/plugin-replace\` can accepts custom options dist/index.js 1`] = `
+"'use strict';
+
+{
+  console.log('prod');
+}
+
+let a = 27;
+
+{
+  a--;
+}
+
+console.log(a);
+"
+`;
+
 exports[`Typescript: Typescript dist/index.js 1`] = `
 "'use strict';
 
@@ -151,6 +168,25 @@ exports.another = another;
 "
 `;
 
+exports[`custom scoped rollup plugin: custom scoped rollup plugin dist/index.js 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const tt = 'is there anything?';
+
+function afun() {
+  return tt;
+}
+
+function another() {
+  return afun();
+}
+
+exports.another = another;
+"
+`;
+
 exports[`defaults: defaults dist/index.js 1`] = `
 "'use strict';
 
@@ -239,25 +275,6 @@ var fakeModule = a => a;
 var index = fakeModule(1, another);
 
 module.exports = index;
-"
-`;
-
-exports[`scoped rollup plugin: scoped rollup plugin dist/index.js 1`] = `
-"'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-const tt = 'is there anything?';
-
-function afun() {
-  return tt;
-}
-
-function another() {
-  return afun();
-}
-
-exports.another = another;
 "
 `;
 
