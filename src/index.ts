@@ -282,6 +282,11 @@ export class Bundler {
 
     const env = Object.assign({}, config.env)
 
+    // drop precess.env.NODE_ENV from umd/iife
+    if (['umd', 'umd-min', 'iife', 'iife-min'].includes(format)) {
+      env.NODE_ENV = minify ? 'production' : 'development'
+    }
+
     pluginsOptions.replace = {
       ...Object.keys(env).reduce((res: Env, name) => {
         res[`process.env.${name}`] = JSON.stringify(env[name])

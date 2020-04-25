@@ -255,3 +255,17 @@ snapshot(
     }
   }
 )
+
+snapshot(
+  {
+    title: 'umd and iife should drop process.env.NODE_ENV',
+    input: 'index.js',
+    cwd: fixture('format')
+  },
+  {
+    output: {
+      format: ['umd', 'umd-min', 'iife', 'iife-min'],
+      moduleName: 'dropNodeEnv'
+    }
+  }
+)
