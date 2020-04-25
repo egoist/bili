@@ -215,14 +215,29 @@ snapshot(
 
 snapshot(
   {
-    title: 'scoped rollup plugin',
+    title: 'custom scoped rollup plugin',
     input: 'index.js',
-    cwd: fixture('scoped-rollup-plugin')
+    cwd: fixture('custom-scoped-rollup-plugin')
   },
   {
     plugins: {
       '@rollup/plugin-strip': {
         functions: ['console.log']
+      }
+    }
+  }
+)
+
+snapshot(
+  {
+    title: '`@rollup/plugin-replace` can accepts custom options',
+    input: 'index.js',
+    cwd: fixture('custom-scoped-rollup-plugin/replace')
+  },
+  {
+    plugins: {
+      replace: {
+        'process.env.NODE_ENV': JSON.stringify('production')
       }
     }
   }
