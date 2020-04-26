@@ -292,6 +292,116 @@ exports[`uglify: uglify dist/index.min.js 1`] = `
 "
 `;
 
+exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop process.env.NODE_ENV dist/index.iife.js 1`] = `
+"var dropNodeEnv = (function (exports) {
+  'use strict';
+
+  exports.a = '';
+  exports.b = '';
+
+  {
+    exports.a = 'live in dev';
+  }
+
+  {
+    exports.b = 'live in dev';
+  }
+
+  return exports;
+
+}({}));
+"
+`;
+
+exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop process.env.NODE_ENV dist/index.iife.min.js 1`] = `
+"var dropNodeEnv=function(r){\\"use strict\\";return r.a=\\"\\",r.b=\\"\\",r.a=\\"live in prod\\",r.b=\\"live in prod\\",r}({});
+"
+`;
+
+exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop process.env.NODE_ENV dist/index.umd.js 1`] = `
+"(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = global || self, factory(global.dropNodeEnv = {}));
+}(this, function (exports) { 'use strict';
+
+  exports.a = '';
+  exports.b = '';
+
+  {
+    exports.a = 'live in dev';
+  }
+
+  {
+    exports.b = 'live in dev';
+  }
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
+"
+`;
+
+exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop process.env.NODE_ENV dist/index.umd.min.js 1`] = `
+"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],o):o((e=e||self).dropNodeEnv={})}(this,(function(e){\\"use strict\\";e.a=\\"\\",e.b=\\"\\",e.a=\\"live in prod\\",e.b=\\"live in prod\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})}));
+"
+`;
+
+exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should preserve existing env.NODE_ENV dist/index.iife.js 1`] = `
+"var dropNodeEnv = (function (exports) {
+  'use strict';
+
+  exports.a = '';
+  exports.b = '';
+
+  {
+    exports.a = 'live in prod';
+  }
+
+  {
+    exports.b = 'live in prod';
+  }
+
+  return exports;
+
+}({}));
+"
+`;
+
+exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should preserve existing env.NODE_ENV dist/index.iife.min.js 1`] = `
+"var dropNodeEnv=function(r){\\"use strict\\";return r.a=\\"\\",r.b=\\"\\",r.a=\\"live in prod\\",r.b=\\"live in prod\\",r}({});
+"
+`;
+
+exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should preserve existing env.NODE_ENV dist/index.umd.js 1`] = `
+"(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = global || self, factory(global.dropNodeEnv = {}));
+}(this, function (exports) { 'use strict';
+
+  exports.a = '';
+  exports.b = '';
+
+  {
+    exports.a = 'live in prod';
+  }
+
+  {
+    exports.b = 'live in prod';
+  }
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+}));
+"
+`;
+
+exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should preserve existing env.NODE_ENV dist/index.umd.min.js 1`] = `
+"!function(e,o){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?o(exports):\\"function\\"==typeof define&&define.amd?define([\\"exports\\"],o):o((e=e||self).dropNodeEnv={})}(this,(function(e){\\"use strict\\";e.a=\\"\\",e.b=\\"\\",e.a=\\"live in prod\\",e.b=\\"live in prod\\",Object.defineProperty(e,\\"__esModule\\",{value:!0})}));
+"
+`;
+
 exports[`vue plugin: vue plugin dist/component.css 1`] = `
 "
 .main-content[data-v-5fccef39]{margin:0 auto;font-family:sans-serif;background-color:#ccf7e2;padding:10px;border-radius:5px;max-width:500px
