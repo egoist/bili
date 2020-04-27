@@ -177,6 +177,23 @@ export class Bundler {
       rollupFormat === 'iife' ||
       config.bundleNodeModules
 
+    // rollup-plugin-typescript2 < v0.26 needs the `objectHashIgnoreUnknownHack`
+    // option to be enabled to correctly handle async plugins, but it's no
+    // longer needed (and causes a warning) if the user has a more recent
+    // version installed. [1] if the plugin is installed, detect the version
+    // and enable/disable the option accordingly.
+    //
+    // [1] https://github.com/egoist/bili/issues/305
+    const getObjectHashIgnoreUnknownHack = (): boolean => {
+      try {
+        const { version } = this.localRequire('rollup-plugin-typescript2/package.json')
+        const semver = require('semver')
+        return semver.lt(version, '0.26.0')
+      } catch (e) {
+        return true
+      }
+    }
+
     const pluginsOptions: { [key: string]: any } = {
       progress:
         config.plugins.progress !== false &&
@@ -227,7 +244,7 @@ export class Bundler {
         (source.hasTs || config.plugins.typescript2) &&
         merge(
           {
-            objectHashIgnoreUnknownHack: true,
+            objectHashIgnoreUnknownHack: getObjectHashIgnoreUnknownHack(),
             tsconfigOverride: {
               compilerOptions: {
                 module: 'esnext'

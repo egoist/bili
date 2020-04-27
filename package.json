@@ -98,6 +98,7 @@
     "resolve-from": "^5.0.0",
     "rollup-plugin-typescript2": "^0.19.2",
     "semantic-release": "^15.13.3",
+    "semver": "^7.3.2",
     "slash": "^2.0.0",
     "string-width": "^3.0.0",
     "stringify-author": "^0.1.3",
