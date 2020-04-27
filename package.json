@@ -97,7 +97,7 @@
     "resolve": "^1.10.0",
     "resolve-from": "^5.0.0",
     "rollup-plugin-typescript2": "^0.19.2",
-    "semantic-release": "^15.13.3",
+    "semantic-release": "^17.0.7",
     "semver": "^7.3.2",
     "slash": "^2.0.0",
     "string-width": "^3.0.0",
@@ -132,8 +132,5 @@
     "commitizen": {
       "path": "cz-conventional-changelog"
     }
-  },
-  "release": {
-    "branch": "master"
   }
 }
