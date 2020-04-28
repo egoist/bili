@@ -1096,10 +1096,12 @@
   dependencies:
     "@types/node" "*"
 
-"@types/p-waterfall@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@types/p-waterfall/-/p-waterfall-1.0.0.tgz#c34269404677ac15d6964978a06388ba82c8639a"
-  integrity sha512-o0nNGt0QnLt78u4IAQGZjsatQZa8xWB5sq4QIbjGcz7sgZx4MNFhqDPrknoqnRocJQodAoKXSN2Zt5auXMkgRg==
+"@types/p-waterfall@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/p-waterfall/-/p-waterfall-2.0.1.tgz#e2a12c1bd735b01b9939afef041740babaab5bf4"
+  integrity sha512-dEssj8yu5A067x41qC28nw1V4QpGSzze0xvXuXJG+WE8npARUoAZgLJTrz/4XZdhg+XUwRFeduoiskssP/YUmg==
+  dependencies:
+    p-waterfall "*"
 
 "@types/pify@^3.0.2":
   version "3.0.2"
@@ -6877,7 +6879,7 @@ p-try@^2.0.0:
   resolved "https://registry.npmjs.org/p-try/-/p-try-2.0.0.tgz#85080bb87c64688fa47996fe8f7dfbe8211760b1"
   integrity sha512-hMp0onDKIajHfIkdRk3P4CdCmErkYAxxDtP3Wx/4nZ3aGlau2VKh3mZpcuFkH27WQkL/3WBCPOktzA9ZOAnMQQ==
 
-p-waterfall@^2.1.0:
+p-waterfall@*, p-waterfall@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/p-waterfall/-/p-waterfall-2.1.0.tgz#4d4bdd1729c7e790593797e79d0ab71d16ff9ec2"
   integrity sha512-Ou2oTMqAdu9CuYXr/RV1kTfovMfJncbmxr3MLe+vm8/RXtT/NciGaKtihLexy7p7JxC5wAy49ib233Yf5hwnPA==
