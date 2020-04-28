@@ -89,7 +89,7 @@
     "nswatch": "^0.2.0",
     "p-waterfall": "^2.1.0",
     "pify": "^4.0.1",
-    "prettier": "^1.15.2",
+    "prettier": "^2.0.5",
     "pretty-bytes": "^5.1.0",
     "pretty-ms": "^4.0.0",
     "require-from-string": "^2.0.2",
