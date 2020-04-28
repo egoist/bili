@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/repo
     docker:
-      - image: circleci/node:erbium
+      - image: circleci/node:12.16.2
     branches:
       ignore:
         - gh-pages # list of branches to ignore
