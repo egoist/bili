@@ -2,8 +2,8 @@ import babel from 'rollup-plugin-babel'
 import preset from '../babel/preset'
 import { BabelPresetOptions } from '../types'
 
-export default babel.custom((core: any) => {
-  const presetItem = core.createConfigItem(preset, {
+export default babel.custom(babelCore => {
+  const presetItem = babelCore.createConfigItem(preset, {
     type: 'preset'
   })
 
@@ -26,6 +26,7 @@ export default babel.custom((core: any) => {
       }
     },
 
+    // Passed Babel's 'PartialConfig' object.
     config(cfg: any, data: any) {
       if (cfg.hasFilesystemConfig()) {
         // Use the normal config

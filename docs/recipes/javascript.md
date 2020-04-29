@@ -9,6 +9,8 @@ We use a sane default preset for Babel, basically it:
 - Compiles `object-rest-spread` to `Object.assign`.
 - Compiles `async/await` to Promise without regenerator using [babel-plugin-transform-async-to-promises](https://github.com/rpetrich/babel-plugin-transform-async-to-promises).
 - Compiles JSX.
+- Support [optional chaining](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining) out of the box.
+- Support [nullish coalescing operator](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator) out of the box.
 
 You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babelrc` flag.
 

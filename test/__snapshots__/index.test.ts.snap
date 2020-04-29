@@ -39,24 +39,12 @@ exports.s = s;
 exports[`async: async dist/index.js 1`] = `
 "'use strict';
 
-function _async(f) {
-  return function () {
-    for (var args = [], i = 0; i < arguments.length; i++) {
-      args[i] = arguments[i];
-    }
-
-    try {
-      return Promise.resolve(f.apply(this, args));
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  };
-}
+var helpers = require('babel-plugin-transform-async-to-promises/helpers');
 
 const a = {
   a: 1
 };
-var index = _async(function () {
+var index = helpers._async(function () {
   return Object.assign({}, a, {
     b
   });
