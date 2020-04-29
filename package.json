@@ -79,7 +79,7 @@
     "builtin-modules": "^3.0.0",
     "cac": "^6.4.2",
     "commitizen": "^3.0.5",
-    "cz-conventional-changelog": "^2.1.0",
+    "cz-conventional-changelog": "^3.1.0",
     "gzip-size": "^5.0.0",
     "husky": "^2.5.0",
     "jest": "^23.0.0",
