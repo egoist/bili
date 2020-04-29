@@ -71,7 +71,7 @@
     "@types/pretty-bytes": "^5.1.0",
     "@types/pretty-ms": "^4.0.0",
     "@types/require-from-string": "^1.2.0",
-    "@types/resolve": "^0.0.8",
+    "@types/resolve": "^1.14.0",
     "@types/slash": "^2.0.0",
     "@types/string-width": "^2.0.0",
     "babel-plugin-alter-object-assign": "^1.0.2",
