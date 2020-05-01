@@ -48,14 +48,7 @@ export default (
         objectAssign
       }
     ],
-    asyncToPromises && [
-      // Not documented in README. But it helps to reduce helper function.
-      // https://github.com/rpetrich/babel-plugin-transform-async-to-promises/pull/57/files#diff-04c6e90faac2675aa89e2176d2eec7d8
-      require('babel-plugin-transform-async-to-promises'),
-      {
-        externalHelpers: true
-      }
-    ]
+    asyncToPromises && require('babel-plugin-transform-async-to-promises')
   ].filter(Boolean)
 
   return {
