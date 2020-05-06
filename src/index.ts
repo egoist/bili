@@ -186,7 +186,9 @@ export class Bundler {
     // [1] https://github.com/egoist/bili/issues/305
     const getObjectHashIgnoreUnknownHack = (): boolean => {
       try {
-        const { version } = this.localRequire('rollup-plugin-typescript2/package.json')
+        const { version } = this.localRequire(
+          'rollup-plugin-typescript2/package.json'
+        )
         const semver = require('semver')
         return semver.lt(version, '0.26.0')
       } catch (e) {
@@ -299,7 +301,7 @@ export class Bundler {
 
     const env = Object.assign({}, config.env)
 
-    // drop precess.env.NODE_ENV from umd/iife
+    // drop process.env.NODE_ENV from umd/iife
     if (
       ['umd', 'umd-min', 'iife', 'iife-min'].includes(format) &&
       env.NODE_ENV === undefined

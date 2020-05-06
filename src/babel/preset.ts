@@ -11,24 +11,22 @@ export default (
     minimal = process.env.BILI_MINIMAL
   } = {}
 ) => {
-  let presets: any[] = []
-  let plugins: any[] = []
-
-  presets = [
-    ...presets,
+  const presets = [
     !minimal && [
       require('@babel/preset-env').default,
       {
         modules: ENV === 'test' ? 'auto' : false,
-        exclude: ['transform-regenerator', 'transform-async-to-generator']
+        exclude: [
+          'transform-regenerator',
+          'transform-async-to-generator',
+          'proposal-object-rest-spread'
+        ]
       }
     ],
     require('@babel/preset-typescript')
   ].filter(Boolean)
 
-  plugins = [
-    ...plugins,
-    require('@babel/plugin-syntax-dynamic-import'),
+  const plugins = [
     [
       require('@babel/plugin-transform-react-jsx'),
       {
@@ -42,6 +40,8 @@ export default (
         loose: true
       }
     ],
+    [require('@babel/plugin-proposal-optional-chaining')],
+    [require('@babel/plugin-proposal-nullish-coalescing-operator')],
     [
       alterObjectAssign,
       {

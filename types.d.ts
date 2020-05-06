@@ -6,7 +6,18 @@ declare module 'tinydate' {
   export = tinydate
 }
 
-declare module 'rollup-plugin-babel'
+declare module 'rollup-plugin-babel' {
+  import { createConfigItem } from '@babel/core'
+  interface BabelPlugin {
+    custom: (
+      callback: (
+        babelCore: { createConfigItem: typeof createConfigItem }
+      ) => any
+    ) => any
+  }
+  const babelPlugin: BabelPlugin
+  export default babelPlugin
+}
 
 declare module 'babel-plugin-alter-object-assign'
 
