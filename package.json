@@ -106,7 +106,7 @@
     "text-table": "^0.2.0",
     "tinydate": "^1.0.1",
     "ts-jest": "^23.10.5",
-    "typedoc": "^0.14.2",
+    "typedoc": "^0.17.7",
     "typescript": "^3.2.4",
     "v8-compile-cache": "^2.0.2"
   },
