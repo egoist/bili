@@ -31,7 +31,7 @@ new Docute({
         },
         {
           title: 'Configuration',
-          link: API_LINK + 'interfaces/config'
+          link: API_LINK + 'interfaces/config.html'
         }
       ]
     },
