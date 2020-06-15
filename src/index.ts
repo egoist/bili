@@ -123,6 +123,7 @@ export class Bundler {
 
   normalizeConfig(config: Config, userConfig: Config) {
     const externals = new Set([
+      ...Object.keys(this.pkg.data.dependencies || {}),
       ...(Array.isArray(userConfig.externals)
         ? userConfig.externals
         : [userConfig.externals]),
