@@ -1,10 +1,12 @@
-import babel from 'rollup-plugin-babel'
+import { createBabelInputPluginFactory } from '@rollup/plugin-babel'
 import preset from '../babel/preset'
 import { BabelPresetOptions } from '../types'
 
-export default babel.custom(babelCore => {
+export const a = 1
+
+export default createBabelInputPluginFactory((babelCore) => {
   const presetItem = babelCore.createConfigItem(preset, {
-    type: 'preset'
+    type: 'preset',
   })
 
   return {
@@ -18,11 +20,11 @@ export default babel.custom(babelCore => {
       return {
         // Pull out any custom options that the plugin might have.
         customOptions: {
-          presetOptions
+          presetOptions,
         },
 
         // Pass the options back with the two custom options removed.
-        pluginOptions
+        pluginOptions,
       }
     },
 
@@ -60,9 +62,9 @@ export default babel.custom(babelCore => {
           ...(cfg.options.presets || []),
 
           // Include a custom preset in the options.
-          presetItem
-        ]
+          presetItem,
+        ],
       }
-    }
+    },
   }
 })

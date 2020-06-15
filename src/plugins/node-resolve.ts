@@ -11,15 +11,15 @@ interface Options {
 }
 
 export default (options: Options) => {
-  const plugin = require('rollup-plugin-node-resolve')({
+  const plugin = require('@rollup/plugin-node-resolve').default({
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     preferBuiltins: true,
     mainFields: [
       options.browser && 'browser',
       'module',
       'jsnext:main',
-      'main'
-    ].filter(Boolean)
+      'main',
+    ].filter(Boolean),
   })
 
   return {
@@ -28,17 +28,17 @@ export default (options: Options) => {
     name: 'bili-custom-resolve',
 
     async resolveId(importee: string, importer?: string) {
-      const id = await plugin.resolveId(
+      const resolved = await plugin.resolveId(
         importee,
         importer || `${options.rootDir}/__no_importer__.js`
       )
+      const id = resolved?.id || resolved
 
       if (typeof id === 'string') {
         // Exclude built-in modules
         if (builtinModules.includes(id)) {
           return false
         }
-
         // If we don't intend to bundle node_modules
         // Mark it as external
         if (/node_modules/.test(id)) {
@@ -46,7 +46,7 @@ export default (options: Options) => {
             return false
           }
           if (Array.isArray(options.bundleNodeModules)) {
-            const shouldBundle = options.bundleNodeModules.some(name =>
+            const shouldBundle = options.bundleNodeModules.some((name) =>
               id.includes(`/node_modules/${name}/`)
             )
             if (!shouldBundle) {
@@ -65,6 +65,6 @@ export default (options: Options) => {
       }
 
       return id
-    }
+    },
   }
 }

@@ -219,13 +219,13 @@ exports[`extendOptions: extendOptions dist/bar.umd.js 1`] = `
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global = global || self, global.umd = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 	var bar = 'bar';
 
 	return bar;
 
-}));
+})));
 "
 `;
 
@@ -248,13 +248,13 @@ exports[`extendOptions: extendOptions dist/foo.umd.js 1`] = `
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
 	(global = global || self, global.umd = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
 	var foo = 'foo';
 
 	return foo;
 
-}));
+})));
 "
 `;
 
@@ -266,13 +266,11 @@ exports[`extendOptions: extendOptions dist/foo.umd.min.js 1`] = `
 exports[`inline-certain-modules: inline-certain-modules dist/index.js 1`] = `
 "'use strict';
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var another = _interopDefault(require('another-module'));
+require('another-module');
 
 var fakeModule = a => a;
 
-var index = fakeModule(1, another);
+var index = fakeModule(1);
 
 module.exports = index;
 "
@@ -323,7 +321,7 @@ exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.dropNodeEnv = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
   exports.a = '';
   exports.b = '';
@@ -338,7 +336,7 @@ exports[`umd and iife should drop process.env.NODE_ENV: umd and iife should drop
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 "
 `;
 
@@ -378,7 +376,7 @@ exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.dropNodeEnv = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
   exports.a = '';
   exports.b = '';
@@ -393,7 +391,7 @@ exports[`umd and iife should preserve existing env.NODE_ENV: umd and iife should
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 "
 `;
 

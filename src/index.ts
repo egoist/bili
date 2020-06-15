@@ -11,7 +11,7 @@ import {
   rollup,
   watch,
   Plugin as RollupPlugin,
-  ModuleFormat as RollupFormat
+  ModuleFormat as RollupFormat,
 } from 'rollup'
 import merge from 'lodash/merge'
 import waterfall from 'p-waterfall'
@@ -32,7 +32,7 @@ import {
   ConfigOutput,
   RunContext,
   RollupConfig,
-  Task
+  Task,
 } from './types'
 
 // Make rollup-plugin-vue use basename in component.__file instead of absolute path
@@ -60,7 +60,7 @@ interface RollupConfigInput {
 }
 
 type PluginFactory = (opts: any) => RollupPlugin
-type GetPlugin = (name: string) => PluginFactory | Promise<PluginFactory>
+type GetPlugin = (name: string) => Promise<PluginFactory>
 
 export class Bundler {
   rootDir: string
@@ -79,7 +79,7 @@ export class Bundler {
 
     this.pkg = configLoader.loadSync({
       files: ['package.json'],
-      cwd: this.rootDir
+      cwd: this.rootDir,
     })
     if (!this.pkg.data) {
       this.pkg.data = {}
@@ -103,10 +103,10 @@ export class Bundler {
                     'bili.config.ts',
                     '.bilirc.js',
                     '.bilirc.ts',
-                    'package.json'
+                    'package.json',
                   ],
             cwd: this.rootDir,
-            packageKey: 'bili'
+            packageKey: 'bili',
           })
     if (userConfig.path) {
       logger.debug(`Using config file:`, userConfig.path)
@@ -122,25 +122,26 @@ export class Bundler {
   }
 
   normalizeConfig(config: Config, userConfig: Config) {
+    const externals = new Set([
+      ...(Array.isArray(userConfig.externals)
+        ? userConfig.externals
+        : [userConfig.externals]),
+      ...(Array.isArray(config.externals)
+        ? config.externals
+        : [config.externals]),
+    ])
     const result = merge({}, userConfig, config, {
       input: config.input || userConfig.input || 'src/index.js',
       output: merge({}, userConfig.output, config.output),
       plugins: merge({}, userConfig.plugins, config.plugins),
       babel: merge(
         {
-          asyncToPromises: true
+          asyncToPromises: true,
         },
         userConfig.babel,
         config.babel
       ),
-      externals: [
-        ...(Array.isArray(userConfig.externals)
-          ? userConfig.externals
-          : [userConfig.externals]),
-        ...(Array.isArray(config.externals)
-          ? config.externals
-          : [config.externals])
-      ]
+      externals: [...externals].filter(Boolean),
     })
 
     result.output.dir = path.resolve(result.output.dir || 'dist')
@@ -154,7 +155,7 @@ export class Bundler {
     title,
     context,
     assets,
-    config
+    config,
   }: RollupConfigInput): Promise<RollupConfig> {
     // Always minify if config.minify is truthy
     // Otherwise infer by format
@@ -201,7 +202,7 @@ export class Bundler {
         config.plugins.progress !== false &&
         merge(
           {
-            title
+            title,
           },
           config.plugins.progress
         ),
@@ -219,7 +220,7 @@ export class Bundler {
             rootDir: this.rootDir,
             bundleNodeModules,
             externals: config.externals,
-            browser: config.output.target === 'browser'
+            browser: config.output.target === 'browser',
           },
           config.plugins['node-resolve']
         ),
@@ -228,7 +229,7 @@ export class Bundler {
         config.plugins.postcss !== false &&
         merge(
           {
-            extract: config.output.extractCSS !== false
+            extract: config.output.extractCSS !== false,
           },
           config.plugins.postcss
         ),
@@ -237,7 +238,7 @@ export class Bundler {
         (source.hasVue || config.plugins.vue) &&
         merge(
           {
-            css: false
+            css: false,
           },
           config.plugins.vue
         ),
@@ -249,9 +250,9 @@ export class Bundler {
             objectHashIgnoreUnknownHack: getObjectHashIgnoreUnknownHack(),
             tsconfigOverride: {
               compilerOptions: {
-                module: 'esnext'
-              }
-            }
+                module: 'esnext',
+              },
+            },
           },
           config.plugins.typescript2
         ),
@@ -264,7 +265,8 @@ export class Bundler {
             extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
             babelrc: config.babel.babelrc,
             configFile: config.babel.configFile,
-            presetOptions: config.babel
+            presetOptions: config.babel,
+            babelHelpers: 'bundled',
           },
           config.plugins.babel
         ),
@@ -278,8 +280,8 @@ export class Bundler {
             transforms: {
               modules: false,
               dangerousForOf: true,
-              dangerousTaggedTemplateString: true
-            }
+              dangerousTaggedTemplateString: true,
+            },
           },
           config.plugins.buble
         ),
@@ -295,8 +297,8 @@ export class Bundler {
               return true
             }
             return isExternal(config.externals, name)
-          }
-        })
+          },
+        }),
     }
 
     const env = Object.assign({}, config.env)
@@ -314,7 +316,7 @@ export class Bundler {
         res[`process.env.${name}`] = JSON.stringify(env[name])
         return res
       }, {}),
-      ...config.plugins.replace
+      ...config.plugins.replace,
     }
 
     if (Object.keys(pluginsOptions.replace).length === 0) {
@@ -330,8 +332,8 @@ export class Bundler {
         output: {
           ...terserOptions.output,
           // Add banner (if there is)
-          preamble: banner
-        }
+          preamble: banner,
+        },
       }
     }
 
@@ -341,32 +343,29 @@ export class Bundler {
       }
     }
 
-    const getPlugin: GetPlugin = (name: string) => {
+    const getPlugin: GetPlugin = async (name: string) => {
       if (config.resolvePlugins && config.resolvePlugins[name]) {
         return config.resolvePlugins[name]
       }
 
-      // TODO: upgrade all plugins to @rollup scope
-      const isLegacyBuiltIn = require('../package').dependencies[
-        `rollup-plugin-${name}`
-      ]
+      const pkg = require('../package')
 
-      const isBuiltIn = require('../package').dependencies[
-        `@rollup/plugin-${name}`
-      ]
+      const isCommunityBuiltin = pkg.dependencies[`rollup-plugin-${name}`]
+
+      const isOfficialBuiltin = pkg.dependencies[`@rollup/plugin-${name}`]
 
       const plugin =
         name === 'babel'
-          ? import('./plugins/babel').then(res => res.default)
+          ? await import('./plugins/babel')
           : name === 'node-resolve'
           ? nodeResolvePlugin
           : name === 'progress'
           ? progressPlugin
           : name.startsWith('@rollup/')
           ? this.localRequire(name)
-          : isLegacyBuiltIn
+          : isCommunityBuiltin
           ? require(`rollup-plugin-${name}`)
-          : isBuiltIn
+          : isOfficialBuiltin
           ? require(`@rollup/plugin-${name}`)
           : this.localRequire(`rollup-plugin-${name}`)
 
@@ -379,11 +378,16 @@ export class Bundler {
 
     const plugins = await Promise.all(
       Object.keys(pluginsOptions)
-        .filter(name => pluginsOptions[name])
-        .map(async name => {
+        .filter((name) => pluginsOptions[name])
+        .map(async (name) => {
           const options =
             pluginsOptions[name] === true ? {} : pluginsOptions[name]
           const plugin = await getPlugin(name)
+          if (typeof plugin !== 'function') {
+            throw new Error(
+              `Plugin "${name}" doesn't export a function, got ${plugin}`
+            )
+          }
           return plugin(options)
         })
     )
@@ -408,10 +412,10 @@ export class Bundler {
           outputOptions.entryFileNames
             ? path.extname(outputOptions.entryFileNames)
             : '.js',
-          '.css'
+          '.css',
         ]
         for (const fileName of Object.keys(_assets)) {
-          if (EXTS.some(ext => fileName.endsWith(ext))) {
+          if (EXTS.some((ext) => fileName.endsWith(ext))) {
             const file: any = _assets[fileName]
             const absolute =
               outputOptions.dir && path.resolve(outputOptions.dir, fileName)
@@ -421,7 +425,7 @@ export class Bundler {
                 absolute,
                 get source() {
                   return file.isAsset ? file.source.toString() : file.code
-                }
+                },
               })
             }
           }
@@ -440,7 +444,7 @@ export class Bundler {
             `(${formatTime(endTime - startTime)})`
           )}`
         )
-      }
+      },
     })
 
     const defaultFileName = getDefaultFileName(rollupFormat)
@@ -461,7 +465,7 @@ export class Bundler {
         input: source.input,
         plugins,
         external: Object.keys(config.globals || {}).filter(
-          v => !/^[\.\/]/.test(v)
+          (v) => !/^[\.\/]/.test(v)
         ),
         onwarn(warning) {
           if (typeof warning === 'string') {
@@ -482,7 +486,7 @@ export class Bundler {
           logger.warn(
             `${colors.yellow(`${code}`)}${colors.dim(':')} ${message}`
           )
-        }
+        },
       },
       outputConfig: {
         globals: config.globals,
@@ -495,14 +499,14 @@ export class Bundler {
           typeof config.output.sourceMap === 'boolean'
             ? config.output.sourceMap
             : minify,
-        sourcemapExcludeSources: config.output.sourceMapExcludeSources
-      }
+        sourcemapExcludeSources: config.output.sourceMapExcludeSources,
+      },
     }
   }
 
   async run(options: RunOptions = {}) {
     const context: RunContext = {
-      unresolved: new Set()
+      unresolved: new Set(),
     }
     const tasks: Task[] = []
 
@@ -516,15 +520,15 @@ export class Bundler {
 
     const getMeta = (files: string[]) => {
       return {
-        hasVue: files.some(file => file.endsWith('.vue')),
-        hasTs: files.some(file => /\.tsx?$/.test(file))
+        hasVue: files.some((file) => file.endsWith('.vue')),
+        hasTs: files.some((file) => /\.tsx?$/.test(file)),
       }
     }
 
     const normalizeInputValue = (input: string[] | ConfigEntryObject) => {
       if (Array.isArray(input)) {
         return input.map(
-          v => `./${path.relative(this.rootDir, this.resolveRootDir(v))}`
+          (v) => `./${path.relative(this.rootDir, this.resolveRootDir(v))}`
         )
       }
       return Object.keys(input).reduce(
@@ -539,20 +543,20 @@ export class Bundler {
       )
     }
 
-    const sources = input.map(v => {
+    const sources = input.map((v) => {
       if (typeof v === 'string') {
         const files = v.split(',')
         return {
           files,
           input: normalizeInputValue(files),
-          ...getMeta(files)
+          ...getMeta(files),
         }
       }
       const files = Object.values(v)
       return {
         files,
         input: normalizeInputValue(v),
-        ...getMeta(files)
+        ...getMeta(files),
       }
     })
 
@@ -582,7 +586,7 @@ export class Bundler {
             const config = this.config.extendConfig
               ? this.config.extendConfig(merge({}, this.config), {
                   input: source.input,
-                  format
+                  format,
                 })
               : this.config
             const rollupConfig = await this.createRollupConfig({
@@ -591,19 +595,19 @@ export class Bundler {
               title: task.title,
               context,
               assets,
-              config
+              config,
             })
             return this.config.extendRollupConfig
               ? this.config.extendRollupConfig(rollupConfig)
               : rollupConfig
-          }
+          },
         })
       }
     }
 
     if (options.watch) {
       const configs = await Promise.all(
-        tasks.map(async task => {
+        tasks.map(async (task) => {
           const { inputConfig, outputConfig } = await task.getConfig(
             context,
             task
@@ -611,12 +615,12 @@ export class Bundler {
           return {
             ...inputConfig,
             output: outputConfig,
-            watch: {}
+            watch: {},
           }
         })
       )
       const watcher = watch(configs)
-      watcher.on('event', e => {
+      watcher.on('event', (e) => {
         if (e.code === 'ERROR') {
           logger.error(e.error.message)
         }
@@ -625,13 +629,13 @@ export class Bundler {
       try {
         if (options.concurrent) {
           await Promise.all(
-            tasks.map(task => {
+            tasks.map((task) => {
               return this.build(task, context, options.write)
             })
           )
         } else {
           await waterfall(
-            tasks.map(task => () => {
+            tasks.map((task) => () => {
               return this.build(task, context, options.write)
             }),
             context
@@ -701,24 +705,24 @@ interface Asset {
 type Assets = Map<string, Asset>
 
 async function printAssets(assets: Assets, title: string) {
-  const gzipSize = await import('gzip-size').then(res => res.default)
+  const gzipSize = await import('gzip-size').then((res) => res.default)
   const table = await Promise.all(
-    [...assets.keys()].map(async relative => {
+    [...assets.keys()].map(async (relative) => {
       const asset = assets.get(relative) as Asset
       const size = asset.source.length
       return [
         colors.green(relative),
         prettyBytes(size),
-        prettyBytes(await gzipSize(asset.source))
+        prettyBytes(await gzipSize(asset.source)),
       ]
     })
   )
-  table.unshift(['File', 'Size', 'Gzipped'].map(v => colors.dim(v)))
+  table.unshift(['File', 'Size', 'Gzipped'].map((v) => colors.dim(v)))
   logger.success(title)
   logger.log(
     boxen(
       textTable(table, {
-        stringLength: stringWidth
+        stringLength: stringWidth,
       })
     )
   )
