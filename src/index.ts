@@ -425,7 +425,9 @@ export class Bundler {
               assets.set(relative, {
                 absolute,
                 get source() {
-                  return file.isAsset ? file.source.toString() : file.code
+                  return file.type === 'asset'
+                    ? file.source.toString()
+                    : file.code
                 },
               })
             }

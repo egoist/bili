@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import 'v8-compile-cache'
-import cac from 'cac'
+import { cac } from 'cac'
 import { version } from '../package.json'
 
 if (process.env.BILI_LOCAL_PROFILE) {
@@ -14,7 +14,7 @@ const cli = cac('bili')
 
 cli
   .command('[...input]', 'Bundle input files', {
-    ignoreOptionDefaultValue: true
+    ignoreOptionDefaultValue: true,
   })
   .option('-w, --watch', 'Watch files')
   .option(
@@ -36,7 +36,7 @@ cli
   .option('--bundle-node-modules', 'Include node modules in your bundle')
   .option('--minify', 'Minify output files')
   .option('--external <id>', 'Mark a module id as external', {
-    type: []
+    type: [],
   })
   .option('-t, --target <target>', 'Output target', { default: 'node' })
   .option('-c, --config <file>', 'Use a custom config file')
@@ -53,9 +53,9 @@ cli
   .option('--verbose', 'Show verbose logs')
   .option('--quiet', 'Show minimal logs')
   .option('--stack-trace', 'Show stack trace for bundle errors')
-  .example(bin => `  ${bin} --format cjs --format esm`)
-  .example(bin => `  ${bin} src/index.js,src/cli.ts`)
-  .example(bin => `  ${bin} --input.index src/foo.ts`)
+  .example((bin) => `  ${bin} --format cjs --format esm`)
+  .example((bin) => `  ${bin} src/index.js,src/cli.ts`)
+  .example((bin) => `  ${bin} --input.index src/foo.ts`)
   .action(async (input, options) => {
     const { Bundler } = await import('./')
     const rootDir = options.rootDir || '.'
@@ -71,7 +71,7 @@ cli
           extractCSS: options.extractCss,
           sourceMap: options.map,
           sourceMapExcludeSources: options.mapExcludeSources,
-          target: options.target
+          target: options.target,
         },
         bundleNodeModules: options.bundleNodeModules,
         env: options.env,
@@ -82,8 +82,8 @@ cli
         babel: {
           asyncToPromises: options.asyncToPromises,
           minimal: options.minimal,
-          babelrc: options.babelrc
-        }
+          babelrc: options.babelrc,
+        },
       },
       {
         logLevel: options.verbose
@@ -93,14 +93,14 @@ cli
           : undefined,
         stackTrace: options.stackTrace,
         configFile: options.config,
-        rootDir
+        rootDir,
       }
     )
     await bundler
       .run({
         write: true,
         watch: options.watch,
-        concurrent: options.concurrent
+        concurrent: options.concurrent,
       })
       .catch((err: any) => {
         bundler.handleError(err)
@@ -113,7 +113,7 @@ cli.help()
 
 cli.parse()
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.error(err)
   process.exit(1)
 })
