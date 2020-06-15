@@ -51,7 +51,9 @@
     "rollup-plugin-hashbang": "^2.2.2",
     "rollup-plugin-postcss": "^3.1.2",
     "rollup-plugin-terser": "^6.1.0",
-    "v8-compile-cache": "^2.1.1"
+    "v8-compile-cache": "^2.1.1",
+    "cac": "^6.5.10",
+    "joycon": "^2.2.5"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.8",
@@ -68,13 +70,11 @@
     "babel-plugin-alter-object-assign": "^1.0.2",
     "boxen": "^4.2.0",
     "builtin-modules": "^3.1.0",
-    "cac": "^6.5.10",
     "commitizen": "^4.1.2",
     "cz-conventional-changelog": "^3.2.0",
     "gzip-size": "^5.1.1",
     "husky": "^4.2.5",
     "jest": "^26.0.1",
-    "joycon": "^2.2.5",
     "lint-staged": "^10.2.10",
     "lodash": "^4.17.15",
     "nswatch": "^0.2.0",
