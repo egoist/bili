@@ -11,15 +11,15 @@ interface Options {
 }
 
 export default (options: Options) => {
-  const plugin = require('rollup-plugin-node-resolve')({
+  const plugin = require('@rollup/plugin-node-resolve').default({
     extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
     preferBuiltins: true,
     mainFields: [
       options.browser && 'browser',
       'module',
       'jsnext:main',
-      'main'
-    ].filter(Boolean)
+      'main',
+    ].filter(Boolean),
   })
 
   return {
@@ -46,7 +46,7 @@ export default (options: Options) => {
             return false
           }
           if (Array.isArray(options.bundleNodeModules)) {
-            const shouldBundle = options.bundleNodeModules.some(name =>
+            const shouldBundle = options.bundleNodeModules.some((name) =>
               id.includes(`/node_modules/${name}/`)
             )
             if (!shouldBundle) {
@@ -65,6 +65,6 @@ export default (options: Options) => {
       }
 
       return id
-    }
+    },
   }
 }
