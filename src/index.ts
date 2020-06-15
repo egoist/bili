@@ -122,6 +122,14 @@ export class Bundler {
   }
 
   normalizeConfig(config: Config, userConfig: Config) {
+    const externals = new Set([
+      ...(Array.isArray(userConfig.externals)
+        ? userConfig.externals
+        : [userConfig.externals]),
+      ...(Array.isArray(config.externals)
+        ? config.externals
+        : [config.externals]),
+    ])
     const result = merge({}, userConfig, config, {
       input: config.input || userConfig.input || 'src/index.js',
       output: merge({}, userConfig.output, config.output),
@@ -133,14 +141,7 @@ export class Bundler {
         userConfig.babel,
         config.babel
       ),
-      externals: [
-        ...(Array.isArray(userConfig.externals)
-          ? userConfig.externals
-          : [userConfig.externals]),
-        ...(Array.isArray(config.externals)
-          ? config.externals
-          : [config.externals]),
-      ],
+      externals: [...externals].filter(Boolean),
     })
 
     result.output.dir = path.resolve(result.output.dir || 'dist')

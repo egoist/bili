@@ -28,17 +28,17 @@ export default (options: Options) => {
     name: 'bili-custom-resolve',
 
     async resolveId(importee: string, importer?: string) {
-      const id = await plugin.resolveId(
+      const resolved = await plugin.resolveId(
         importee,
         importer || `${options.rootDir}/__no_importer__.js`
       )
+      const id = resolved?.id || resolved
 
       if (typeof id === 'string') {
         // Exclude built-in modules
         if (builtinModules.includes(id)) {
           return false
         }
-
         // If we don't intend to bundle node_modules
         // Mark it as external
         if (/node_modules/.test(id)) {

@@ -50,7 +50,8 @@
     "rollup": "^2.16.1",
     "rollup-plugin-hashbang": "^2.2.2",
     "rollup-plugin-postcss": "^3.1.2",
-    "rollup-plugin-terser": "^6.1.0"
+    "rollup-plugin-terser": "^6.1.0",
+    "v8-compile-cache": "^2.1.1"
   },
   "devDependencies": {
     "@types/babel__core": "^7.1.8",
@@ -96,8 +97,7 @@
     "tinydate": "^1.2.0",
     "ts-jest": "^26.1.0",
     "typedoc": "^0.17.7",
-    "typescript": "^3.9.5",
-    "v8-compile-cache": "^2.1.1"
+    "typescript": "^3.9.5"
   },
   "husky": {
     "hooks": {
