@@ -7,7 +7,7 @@ In most cases CLI options would work just fine, however you can also use followi
 - `.bilirc.js`
 - `.bilirc.ts`
 
-Check out <a href="/api/interfaces/config">Configuration Reference</a> in the API documentation.
+Check out <a href="/api/interfaces/config.html">Configuration Reference</a> in the API documentation.
 
 ## Syntax
 
