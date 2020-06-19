@@ -331,6 +331,7 @@ export class Bundler {
       pluginsOptions.terser = {
         ...terserOptions,
         output: {
+          comments: false,
           ...terserOptions.output,
           // Add banner (if there is)
           preamble: banner,
