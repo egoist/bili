@@ -44,7 +44,7 @@ function loadConfig(
   fileConfig: Config
   configPath?: string
 } {
-  let configPath: string | undefined = undefined
+  let configPath: string | undefined
 
   const fileConfig =
     configFile === false

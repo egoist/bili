@@ -731,7 +731,7 @@ async function runBundler(
   const run = async (config: BundleConfig) => {
     const bundler = new Bundler(cliConfig, config, options)
 
-    return await bundler
+    return bundler
       .run({
         write: true,
         watch: runOptions.watch,
@@ -745,9 +745,9 @@ async function runBundler(
 
   if (Array.isArray(fileConfig)) {
     if (runOptions.concurrent) {
-      return await Promise.all(fileConfig.map((c) => run(c)))
+      return Promise.all(fileConfig.map((c) => run(c)))
     } else {
-      return await series(fileConfig.map((c) => () => run(c)))
+      return series(fileConfig.map((c) => () => run(c)))
     }
   } else {
     return run(fileConfig)
