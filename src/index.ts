@@ -457,12 +457,16 @@ export class Bundler {
       typeof getFileName === 'function'
         ? getFileName({ format: rollupFormat, minify }, defaultFileName)
         : getFileName
-    const fileName = fileNameTemplate
+    let fileName = fileNameTemplate
       .replace(/\[min\]/, minPlaceholder)
       // The `[ext]` placeholder no longer makes sense
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
+ 
+    if (rollupFormat === 'esm')  {
+      fileName = fileName.replace(/\[format\]/, 'esm')
+    }
 
     return {
       inputConfig: {
