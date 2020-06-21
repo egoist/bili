@@ -465,7 +465,7 @@ export class Bundler {
       .replace(/\[ext\]/, '.js')
  
     if (rollupFormat === 'esm')  {
-      fileName = fileName.replace(/\[format\]/, '.esm')
+      fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
     return {
