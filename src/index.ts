@@ -359,7 +359,9 @@ export class Bundler {
       const isScoped = (name: string) => /^@[^/]+\//.test(name)
 
       const normalizeName = (name: string) => {
-        return name.replace(/^@([^/]+)\//, (_, m1) => `@${m1}/rollup-plugin-`)
+        return name.replace(/^@([^/]+)\/(rollup-)?(plugin-)?/, (_, m1) => {
+          return m1 === 'rollup' ? `@rollup/plugin-` : `@${m1}/rollup-plugin-`
+        })
       }
 
       const plugin =
@@ -369,8 +371,6 @@ export class Bundler {
           ? nodeResolvePlugin
           : name === 'progress'
           ? progressPlugin
-          : name.startsWith('@rollup/')
-          ? this.localRequire(name)
           : isCommunityBuiltin
           ? require(`rollup-plugin-${name}`)
           : isOfficialBuiltin

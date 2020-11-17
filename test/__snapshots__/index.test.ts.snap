@@ -168,6 +168,25 @@ exports.another = another;
 "
 `;
 
+exports[`custom scoped rollup plugin (shorthand): custom scoped rollup plugin (shorthand) dist/index.js 1`] = `
+"'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+const tt = 'is there anything?';
+
+function afun() {
+  return tt;
+}
+
+function another() {
+  return afun();
+}
+
+exports.another = another;
+"
+`;
+
 exports[`custom scoped rollup plugin: custom scoped rollup plugin dist/index.js 1`] = `
 "'use strict';
 
