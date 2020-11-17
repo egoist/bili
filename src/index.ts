@@ -356,6 +356,12 @@ export class Bundler {
 
       const isOfficialBuiltin = pkg.dependencies[`@rollup/plugin-${name}`]
 
+      const isScoped = (name: string) => /^@[^/]+\//.test(name)
+
+      const normalizeName = (name: string) => {
+        return name.replace(/^@([^/]+)\//, (_, m1) => `@${m1}/rollup-plugin-`)
+      }
+
       const plugin =
         name === 'babel'
           ? await import('./plugins/babel')
@@ -369,6 +375,8 @@ export class Bundler {
           ? require(`rollup-plugin-${name}`)
           : isOfficialBuiltin
           ? require(`@rollup/plugin-${name}`)
+          : isScoped(name)
+          ? this.localRequire(normalizeName(name))
           : this.localRequire(`rollup-plugin-${name}`)
 
       if (name === 'terser') {
@@ -463,8 +471,8 @@ export class Bundler {
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
-    if (rollupFormat === 'esm')  {
+
+    if (rollupFormat === 'esm') {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
