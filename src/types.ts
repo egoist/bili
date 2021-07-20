@@ -125,8 +125,8 @@ export interface ConfigOutput {
    * Output file name
    *
    * Default value:
-   * - `[name][min][ext]` in `cjs` and `esm` format.
-   * - `[name][min].[format].js` in other formats.
+   * - `[name][min].js` in `cjs` format.
+   * - `[name].[format][min].js` in other formats.
    *
    * Placeholders:
    * - `[name]`: The base name of input file. (without extension)
