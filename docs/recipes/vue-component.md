@@ -4,6 +4,7 @@ If one of your input files ends with `.vue`, Bili will automatically use [rollup
 
 ```bash
 yarn add rollup-plugin-vue vue-template-compiler vue --dev
+yarn add vue-runtime-helpers
 
 bili src/MyComponent.vue
 ```
