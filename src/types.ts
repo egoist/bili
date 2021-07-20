@@ -2,12 +2,11 @@ import {
   ModuleFormat as RollupFormat,
   InputOptions,
   OutputOptions,
-  Plugin as RollupPlugin
+  Plugin as RollupPlugin,
 } from 'rollup'
 
 import { Banner } from './utils/get-banner'
 
-type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 type Diff<T extends keyof any, U extends keyof any> = ({ [P in T]: P } &
   { [P in U]: never } & { [x: string]: never })[T]
 type Overwrite<T, U> = Pick<T, Diff<keyof T, keyof U>> & U
@@ -169,7 +168,7 @@ export interface ConfigOutput {
   target?: OutputTarget
 }
 
-export interface Config {
+export interface BundleConfig {
   /**
    * Input files
    * @default `src/index.js`
@@ -290,6 +289,8 @@ export interface Config {
   extendRollupConfig?: ExtendRollupConfig
 }
 
+export type Config = BundleConfig | BundleConfig[]
+
 interface ConfigOutputOverwrite {
   /**
    * Output directory, always a string
@@ -330,7 +331,7 @@ export interface Options {
   /**
    * Use a custom config file rather than auto-loading bili.config.js
    */
-  configFile?: string | boolean
+  configPath?: string
   /**
    * The root directory to resolve files from
    * Useful for mono-repo

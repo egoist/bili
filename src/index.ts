@@ -15,6 +15,7 @@ import {
 } from 'rollup'
 import merge from 'lodash/merge'
 import waterfall from 'p-waterfall'
+import series from 'p-series'
 import spinner from './spinner'
 import logger from './logger'
 import progressPlugin from './plugins/progress'
@@ -25,6 +26,7 @@ import getBanner from './utils/get-banner'
 import {
   Options,
   Config,
+  BundleConfig,
   NormalizedConfig,
   Format,
   ConfigEntryObject,
@@ -39,7 +41,7 @@ import {
 // TODO: PR to rollup-plugin-vue to allow this as an API option
 process.env.BUILD = 'production'
 
-interface RunOptions {
+export interface RunOptions {
   write?: boolean
   watch?: boolean
   concurrent?: boolean
@@ -72,7 +74,11 @@ export class Bundler {
   }
   bundles: Set<Assets>
 
-  constructor(config: Config, public options: Options = {}) {
+  constructor(
+    cliConfig: BundleConfig,
+    fileConfig: BundleConfig,
+    public options: Options = {}
+  ) {
     logger.setOptions({ logLevel: options.logLevel })
 
     this.rootDir = path.resolve(options.rootDir || '.')
@@ -91,56 +97,36 @@ export class Bundler {
       )
     }
 
-    const userConfig =
-      options.configFile === false
-        ? {}
-        : configLoader.loadSync({
-            files:
-              typeof options.configFile === 'string'
-                ? [options.configFile]
-                : [
-                    'bili.config.js',
-                    'bili.config.ts',
-                    '.bilirc.js',
-                    '.bilirc.ts',
-                    'package.json',
-                  ],
-            cwd: this.rootDir,
-            packageKey: 'bili',
-          })
-    if (userConfig.path) {
-      logger.debug(`Using config file:`, userConfig.path)
-      this.configPath = userConfig.path
-    }
-
+    this.configPath = options.configPath
     this.config = this.normalizeConfig(
-      config,
-      userConfig.data || {}
+      cliConfig,
+      fileConfig
     ) as NormalizedConfig
 
     this.bundles = new Set()
   }
 
-  normalizeConfig(config: Config, userConfig: Config) {
+  normalizeConfig(cliConfig: BundleConfig, fileConfig: BundleConfig) {
     const externals = new Set([
       ...Object.keys(this.pkg.data.dependencies || {}),
-      ...(Array.isArray(userConfig.externals)
-        ? userConfig.externals
-        : [userConfig.externals]),
-      ...(Array.isArray(config.externals)
-        ? config.externals
-        : [config.externals]),
+      ...(Array.isArray(fileConfig.externals)
+        ? fileConfig.externals
+        : [fileConfig.externals]),
+      ...(Array.isArray(cliConfig.externals)
+        ? cliConfig.externals
+        : [cliConfig.externals]),
     ])
-    const result = merge({}, userConfig, config, {
-      input: config.input || userConfig.input || 'src/index.js',
-      output: merge({}, userConfig.output, config.output),
-      plugins: merge({}, userConfig.plugins, config.plugins),
+
+    const result = merge({}, fileConfig, cliConfig, {
+      input: cliConfig.input || fileConfig.input || 'src/index.js',
+      output: merge({}, fileConfig.output, cliConfig.output),
+      plugins: merge({}, fileConfig.plugins, cliConfig.plugins),
       babel: merge(
         {
           asyncToPromises: true,
         },
-        userConfig.babel,
-        config.babel
+        fileConfig.babel,
+        cliConfig.babel
       ),
       externals: [...externals].filter(Boolean),
     })
@@ -740,4 +726,43 @@ function getDefaultFileName(format: RollupFormat) {
   return format === 'cjs' ? `[name][min][ext]` : `[name].[format][min][ext]`
 }
 
-export { Config, NormalizedConfig, Options, ConfigOutput }
+async function runBundler(
+  cliConfig: BundleConfig,
+  fileConfig: Config,
+  options: Options,
+  runOptions: RunOptions
+) {
+  const run = async (config: BundleConfig) => {
+    const bundler = new Bundler(cliConfig, config, options)
+
+    return bundler
+      .run({
+        write: true,
+        watch: runOptions.watch,
+        concurrent: runOptions.concurrent,
+      })
+      .catch((err: any) => {
+        bundler.handleError(err)
+        process.exit(1)
+      })
+  }
+
+  if (Array.isArray(fileConfig)) {
+    if (runOptions.concurrent) {
+      return Promise.all(fileConfig.map((c) => run(c)))
+    } else {
+      return series(fileConfig.map((c) => () => run(c)))
+    }
+  } else {
+    return run(fileConfig)
+  }
+}
+
+export {
+  Config,
+  BundleConfig,
+  NormalizedConfig,
+  Options,
+  ConfigOutput,
+  runBundler,
+}

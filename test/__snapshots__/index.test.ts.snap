@@ -276,6 +276,26 @@ module.exports = index;
 "
 `;
 
+exports[`multiple bundle instance: multiple bundle instance dist/index.umd.js 1`] = `
+"(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global = global || self, global.ins1 = factory());
+}(this, (function () { 'use strict';
+
+	var index = 42;
+
+	return index;
+
+})));
+"
+`;
+
+exports[`multiple bundle instance: multiple bundle instance dist/index.umd.min.js 1`] = `
+"!function(e,n){\\"object\\"==typeof exports&&\\"undefined\\"!=typeof module?module.exports=n():\\"function\\"==typeof define&&define.amd?define(n):(e=e||self).ins2=n()}(this,(function(){\\"use strict\\";return 42}));
+"
+`;
+
 exports[`target:browser: target:browser dist/index.js 1`] = `
 "'use strict';
 
