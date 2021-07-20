@@ -281,6 +281,12 @@ export interface Config {
    */
   babel?: BabelPresetOptions
   /**
+   * Updates entry fields of your package.json file for you.
+   * Only updates if your file name is 'main' or 'index'.
+   * Fields which get updated based on your bundle format: main, module, cdn, unpkg, jsdeliver
+   */
+  updatePkg?: boolean
+  /**
    * Extending Bili config
    */
   extendConfig?: ExtendConfig
@@ -314,6 +320,7 @@ export interface NormalizedConfig {
   }
   banner?: Banner
   babel: BabelPresetOptions
+  updatePkg?: boolean
   extendConfig?: ExtendConfig
   extendRollupConfig?: ExtendRollupConfig
 }
