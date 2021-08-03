@@ -96,7 +96,7 @@
     "text-table": "^0.2.0",
     "tinydate": "^1.2.0",
     "ts-jest": "^26.1.0",
-    "typedoc": "^0.17.7",
+    "typedoc": "^0.20.37",
     "typescript": "^3.9.5"
   },
   "husky": {
