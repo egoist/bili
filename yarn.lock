@@ -1322,10 +1322,10 @@
     "@types/buble" "^0.19.2"
     buble "^0.20.0"
 
-"@rollup/plugin-commonjs@^13.0.0":
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-13.0.0.tgz#8a1d684ba6848afe8b9e3d85649d4b2f6f7217ec"
-  integrity sha512-Anxc3qgkAi7peAyesTqGYidG5GRim9jtg8xhmykNaZkImtvjA7Wsqep08D2mYsqw1IF7rA3lYfciLgzUSgRoqw==
+"@rollup/plugin-commonjs@^14.0.0":
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-14.0.0.tgz#4285f9ec2db686a31129e5a2b415c94aa1f836f0"
+  integrity sha512-+PSmD9ePwTAeU106i9FRdc+Zb3XUWyW26mo5Atr2mk82hor8+nPwkztEjFo8/B1fJKfaQDg9aM2bzQkjhi7zOw==
   dependencies:
     "@rollup/pluginutils" "^3.0.8"
     commondir "^1.0.1"
@@ -6551,17 +6551,10 @@ magic-string@^0.22.4:
   dependencies:
     vlq "^0.2.2"
 
-magic-string@^0.25.0, magic-string@^0.25.5, magic-string@^0.25.7:
+magic-string@^0.25.0, magic-string@^0.25.2, magic-string@^0.25.5, magic-string@^0.25.7:
   version "0.25.7"
   resolved "https://registry.npmjs.org/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
   integrity sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
-  dependencies:
-    sourcemap-codec "^1.4.4"
-
-magic-string@^0.25.2:
-  version "0.25.2"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.2.tgz#139c3a729515ec55e96e69e82a11fe890a293ad9"
-  integrity sha512-iLs9mPjh9IuTtRsqqhNGYcZXGei0Nh/A4xirrsqW7c+QhKVFL2vm7U09ru6cHRD22azaP/wMDgI+HCqbETMTtg==
   dependencies:
     sourcemap-codec "^1.4.4"
 
