@@ -463,7 +463,7 @@ export class Bundler {
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
+
     if (rollupFormat === 'esm')  {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
@@ -503,6 +503,7 @@ export class Bundler {
         entryFileNames: fileName,
         name: config.output.moduleName,
         banner,
+        exports: 'auto',
         sourcemap:
           typeof config.output.sourceMap === 'boolean'
             ? config.output.sourceMap
