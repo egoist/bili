@@ -1,5 +1,5 @@
 import path from 'path'
-import { Bundler, Config, Options } from '../src'
+import { Bundler, Config, BundleConfig, runBundler } from '../src'
 
 process.env.BABEL_ENV = 'anything-not-test'
 
@@ -7,33 +7,37 @@ function fixture(...args: string[]) {
   return path.join(__dirname, 'fixtures', ...args)
 }
 
-function generate(config: Config, options: Options) {
-  const bundler = new Bundler(config, {
-    logLevel: 'quiet',
-    configFile: false,
-    ...options
-  })
-  return bundler.run()
-}
-
 function snapshot(
   {
     title,
     input,
-    cwd
+    cwd,
   }: { title: string; input: string | string[]; cwd?: string },
-  config?: Config
+  cliConfig?: BundleConfig,
+  fileConfig: Config = {}
 ) {
   test(title, async () => {
-    const { bundles } = await generate(
+    const bundler = await runBundler(
       {
         input,
-        ...config
+        ...cliConfig,
       },
+      fileConfig,
       {
-        rootDir: cwd
-      }
+        logLevel: 'quiet',
+        rootDir: cwd,
+      },
+      {}
     )
+
+    const bundles = Array.isArray(fileConfig)
+      ? (bundler as Bundler[])
+          .map((b) => b.bundles)
+          .reduce((b, acc) => {
+            return new Set([...acc, ...b])
+          }, new Set<any>())
+      : (bundler as Bundler).bundles
+
     for (const bundle of bundles) {
       for (const relative of bundle.keys()) {
         const asset = bundle.get(relative)
@@ -46,17 +50,17 @@ function snapshot(
 snapshot({
   title: 'defaults',
   input: 'index.js',
-  cwd: fixture('defaults')
+  cwd: fixture('defaults'),
 })
 
 snapshot(
   {
     title: 'banner:true default',
     input: 'index.js',
-    cwd: fixture('banner/default')
+    cwd: fixture('banner/default'),
   },
   {
-    banner: true
+    banner: true,
   }
 )
 
@@ -64,15 +68,15 @@ snapshot(
   {
     title: 'banner:object',
     input: 'default.js',
-    cwd: fixture()
+    cwd: fixture(),
   },
   {
     banner: {
       author: 'author',
       license: 'GPL',
       name: 'name',
-      version: '1.2.3'
-    }
+      version: '1.2.3',
+    },
   }
 )
 
@@ -80,10 +84,10 @@ snapshot(
   {
     title: 'banner:string',
     input: 'default.js',
-    cwd: fixture()
+    cwd: fixture(),
   },
   {
-    banner: 'woot'
+    banner: 'woot',
   }
 )
 
@@ -91,10 +95,10 @@ snapshot(
   {
     title: 'exclude file',
     input: 'index.js',
-    cwd: fixture('exclude-file')
+    cwd: fixture('exclude-file'),
   },
   {
-    externals: ['./foo.js']
+    externals: ['./foo.js'],
   }
 )
 
@@ -102,11 +106,11 @@ snapshot(
   {
     title: 'extendOptions',
     input: ['foo.js', 'bar.js'],
-    cwd: fixture('extend-options')
+    cwd: fixture('extend-options'),
   },
   {
     output: {
-      format: ['umd', 'umd-min', 'cjs']
+      format: ['umd', 'umd-min', 'cjs'],
     },
     extendConfig(config, { format }) {
       if (format === 'umd') {
@@ -116,7 +120,7 @@ snapshot(
         config.output.moduleName = 'min'
       }
       return config
-    }
+    },
   }
 )
 
@@ -124,54 +128,54 @@ snapshot(
   {
     title: 'bundle-node-modules',
     input: 'index.js',
-    cwd: fixture('bundle-node-modules')
+    cwd: fixture('bundle-node-modules'),
   },
   {
-    bundleNodeModules: true
+    bundleNodeModules: true,
   }
 )
 
 snapshot({
   title: 'async',
   input: 'index.js',
-  cwd: fixture('async')
+  cwd: fixture('async'),
 })
 
 snapshot({
   title: 'babel:with-config',
   input: 'index.js',
-  cwd: fixture('babel/with-config')
+  cwd: fixture('babel/with-config'),
 })
 
 snapshot(
   {
     title: 'babel:disable-config',
     input: 'index.js',
-    cwd: fixture('babel/with-config')
+    cwd: fixture('babel/with-config'),
   },
   {
     babel: {
-      babelrc: false
-    }
+      babelrc: false,
+    },
   }
 )
 
 snapshot({
   title: 'babel:object-rest-spread',
   input: 'index.js',
-  cwd: fixture('babel/object-rest-spread')
+  cwd: fixture('babel/object-rest-spread'),
 })
 
 snapshot(
   {
     title: 'uglify',
     input: 'index.js',
-    cwd: fixture('uglify')
+    cwd: fixture('uglify'),
   },
   {
     output: {
-      format: 'cjs-min'
-    }
+      format: 'cjs-min',
+    },
   }
 )
 
@@ -179,37 +183,37 @@ snapshot(
   {
     title: 'inline-certain-modules',
     input: 'index.js',
-    cwd: fixture('inline-certain-modules')
+    cwd: fixture('inline-certain-modules'),
   },
   {
-    bundleNodeModules: ['fake-module']
+    bundleNodeModules: ['fake-module'],
   }
 )
 
 snapshot({
   title: 'vue plugin',
   input: 'component.vue',
-  cwd: fixture('vue')
+  cwd: fixture('vue'),
 })
 
 snapshot({
   title: 'Typescript',
   input: 'index.ts',
-  cwd: fixture('typescript')
+  cwd: fixture('typescript'),
 })
 
 snapshot(
   {
     title: 'custom rollup plugin',
     input: 'index.js',
-    cwd: fixture('custom-rollup-plugin')
+    cwd: fixture('custom-rollup-plugin'),
   },
   {
     plugins: {
       strip: {
-        functions: ['console.log']
-      }
-    }
+        functions: ['console.log'],
+      },
+    },
   }
 )
 
@@ -217,14 +221,14 @@ snapshot(
   {
     title: 'custom scoped rollup plugin',
     input: 'index.js',
-    cwd: fixture('custom-scoped-rollup-plugin')
+    cwd: fixture('custom-scoped-rollup-plugin'),
   },
   {
     plugins: {
       '@rollup/plugin-strip': {
-        functions: ['console.log']
-      }
-    }
+        functions: ['console.log'],
+      },
+    },
   }
 )
 
@@ -232,14 +236,14 @@ snapshot(
   {
     title: '`@rollup/plugin-replace` can accepts custom options',
     input: 'index.js',
-    cwd: fixture('custom-scoped-rollup-plugin/replace')
+    cwd: fixture('custom-scoped-rollup-plugin/replace'),
   },
   {
     plugins: {
       replace: {
-        'process.env.NODE_ENV': JSON.stringify('production')
-      }
-    }
+        'process.env.NODE_ENV': JSON.stringify('production'),
+      },
+    },
   }
 )
 
@@ -247,12 +251,12 @@ snapshot(
   {
     title: 'target:browser',
     input: 'index.js',
-    cwd: fixture('target/browser')
+    cwd: fixture('target/browser'),
   },
   {
     output: {
-      target: 'browser'
-    }
+      target: 'browser',
+    },
   }
 )
 
@@ -260,13 +264,13 @@ snapshot(
   {
     title: 'umd and iife should drop process.env.NODE_ENV',
     input: 'index.js',
-    cwd: fixture('format')
+    cwd: fixture('format'),
   },
   {
     output: {
       format: ['umd', 'umd-min', 'iife', 'iife-min'],
-      moduleName: 'dropNodeEnv'
-    }
+      moduleName: 'dropNodeEnv',
+    },
   }
 )
 
@@ -274,13 +278,36 @@ snapshot(
   {
     title: 'umd and iife should preserve existing env.NODE_ENV',
     input: 'index.js',
-    cwd: fixture('format')
+    cwd: fixture('format'),
   },
   {
     output: {
       format: ['umd', 'umd-min', 'iife', 'iife-min'],
-      moduleName: 'dropNodeEnv'
+      moduleName: 'dropNodeEnv',
     },
-    env: { NODE_ENV: 'production' }
+    env: { NODE_ENV: 'production' },
   }
+)
+
+snapshot(
+  {
+    title: 'multiple bundle instance',
+    input: 'index.js',
+    cwd: fixture('defaults'),
+  },
+  {},
+  [
+    {
+      output: {
+        format: ['umd'],
+        moduleName: 'ins1',
+      },
+    },
+    {
+      output: {
+        format: ['umd-min'],
+        moduleName: 'ins2',
+      },
+    },
+  ]
 )
