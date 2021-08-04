@@ -20,6 +20,7 @@ import logger from './logger'
 import progressPlugin from './plugins/progress'
 import nodeResolvePlugin from './plugins/node-resolve'
 import configLoader from './config-loader'
+import { updatePackage } from './cli-commands'
 import isExternal from './utils/is-external'
 import getBanner from './utils/get-banner'
 import {
@@ -663,7 +664,9 @@ export class Bundler {
       const { inputConfig, outputConfig } = await task.getConfig(context, task)
       const bundle = await rollup(inputConfig)
       if (write) {
-        await bundle.write(outputConfig)
+        const result = await bundle.write(outputConfig)
+        this.config.updatePkg &&
+          updatePackage(outputConfig, result, this.rootDir)
       } else {
         await bundle.generate(outputConfig)
       }
