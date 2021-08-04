@@ -12,7 +12,20 @@ We use a sane default preset for Babel, basically it:
 - Support [optional chaining](https://babeljs.io/docs/en/babel-plugin-proposal-optional-chaining) out of the box.
 - Support [nullish coalescing operator](https://babeljs.io/docs/en/babel-plugin-proposal-nullish-coalescing-operator) out of the box.
 
-You can add a `.babelrc` file in your project to use your custom config instead. If you want to disable `.babelrc` in your project, pass `--no-babelrc` flag.
+You can add a `.babelrc` file in your project to use your custom config instead.
+If you want to disable `.babelrc` in your project, pass `--no-babelrc` flag. If
+your project uses a `babel.config.js` file, you have to pass `configFile: false`
+to the `babel`-plugin via a bili config file:
+
+```js
+module.exports = {
+  plugins: {
+    babel: {
+      configFile: false
+    }
+  }
+}
+```
 
 You can also use our default preset in your Babel config file:
 
