@@ -109,7 +109,7 @@ export type OutputTarget = 'node' | 'browser'
 
 export interface ConfigOutput {
   /**
-   * Output format(s). You can append `min` to the format to generate minified bundle.
+   * Output format(s). You can append `-min` to the format to generate minified bundle.
    *
    * @default `cjs`
    * @cli `--format <format>`
