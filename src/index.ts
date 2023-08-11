@@ -680,7 +680,7 @@ export class Bundler {
 
   handleError(err: any) {
     if (err.stack) {
-      console.error()
+      console.error(colors.bold(err.message))
       console.error(colors.bold(colors.red('Stack Trace:')))
       console.error(colors.dim(err.stack))
     }
