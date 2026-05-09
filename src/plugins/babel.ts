@@ -5,10 +5,6 @@ import { BabelPresetOptions } from '../types'
 export const a = 1
 
 export default createBabelInputPluginFactory((babelCore) => {
-  const presetItem = babelCore.createConfigItem(preset, {
-    type: 'preset',
-  })
-
   return {
     // Passed the plugin options.
     options({
@@ -42,6 +38,8 @@ export default createBabelInputPluginFactory((babelCore) => {
       // And our options will still work
       if (presetOptions.asyncToPromises) {
         process.env.BILI_ASYNC_TO_PROMISES = 'enabled'
+      } else {
+        delete process.env.BILI_ASYNC_TO_PROMISES
       }
 
       if (presetOptions.jsx) {
@@ -55,6 +53,16 @@ export default createBabelInputPluginFactory((babelCore) => {
       if (presetOptions.minimal) {
         process.env.BILI_MINIMAL = 'enabled'
       }
+
+      if (presetOptions.modern) {
+        process.env.BILI_MODERN = 'enabled'
+      } else {
+        delete process.env.BILI_MODERN
+      }
+
+      const presetItem = babelCore.createConfigItem([preset, presetOptions], {
+        type: 'preset',
+      })
 
       return {
         ...cfg.options,

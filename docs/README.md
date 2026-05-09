@@ -30,6 +30,12 @@ bili --format esm
 bili --format cjs --format esm
 ```
 
+To also generate modern bundles for browsers with native ES module support:
+
+```bash
+bili --format esm --modern
+```
+
 And you want minified bundles?
 
 ```bash

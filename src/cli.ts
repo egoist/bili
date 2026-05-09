@@ -41,6 +41,10 @@ cli
   .option('-t, --target <target>', 'Output target', { default: 'node' })
   .option('-c, --config <file>', 'Use a custom config file')
   .option('--minimal', 'Generate minimal output whenever possible')
+  .option(
+    '--modern',
+    'Generate an additional modern bundle for browsers with native ES module support'
+  )
   .option('--no-babelrc', 'Disable .babelrc file')
   .option('--banner', 'Add banner with pkg info to the bundle')
   .option(
@@ -72,6 +76,7 @@ cli
           sourceMap: options.map,
           sourceMapExcludeSources: options.mapExcludeSources,
           target: options.target,
+          modern: options.modern,
         },
         bundleNodeModules: options.bundleNodeModules,
         env: options.env,

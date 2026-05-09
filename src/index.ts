@@ -54,6 +54,7 @@ interface RollupConfigInput {
   }
   title: string
   format: Format
+  modern: boolean
   context: RunContext
   assets: Assets
   config: NormalizedConfig
@@ -153,11 +154,21 @@ export class Bundler {
   async createRollupConfig({
     source,
     format,
+    modern,
     title,
     context,
     assets,
     config,
   }: RollupConfigInput): Promise<RollupConfig> {
+    if (modern) {
+      config = merge({}, config, {
+        babel: {
+          asyncToPromises: false,
+          modern: true,
+        },
+      })
+    }
+
     // Always minify if config.minify is truthy
     // Otherwise infer by format
     const minify =
@@ -455,16 +466,22 @@ export class Bundler {
     const getFileName = config.output.fileName || defaultFileName
     const fileNameTemplate =
       typeof getFileName === 'function'
-        ? getFileName({ format: rollupFormat, minify }, defaultFileName)
+        ? getFileName({ format: rollupFormat, minify, modern }, defaultFileName)
         : getFileName
+    const hasModernPlaceholder = fileNameTemplate.includes('[modern]')
     let fileName = fileNameTemplate
+      .replace(/\[modern\]/, modern ? '.modern' : '')
       .replace(/\[min\]/, minPlaceholder)
       // The `[ext]` placeholder no longer makes sense
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
-    if (rollupFormat === 'esm')  {
+
+    if (modern && !hasModernPlaceholder) {
+      fileName = fileName.replace(/(\.[^./]+)$/, '.modern$1')
+    }
+
+    if (rollupFormat === 'esm') {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
@@ -582,34 +599,43 @@ export class Bundler {
 
     for (const source of sources) {
       for (const format of formats) {
-        let title = `Bundle ${source.files.join(', ')} in ${format} format`
-        if (target) {
-          title += ` for target ${target}`
+        for (const modern of this.config.output.modern
+          ? [false, true]
+          : [false]) {
+          let title = `Bundle ${source.files.join(', ')} in ${format} format`
+          if (target) {
+            title += ` for target ${target}`
+          }
+          if (modern) {
+            title += ' as modern bundle'
+          }
+          tasks.push({
+            title,
+            modern,
+            getConfig: async (context, task) => {
+              const assets: Assets = new Map()
+              this.bundles.add(assets)
+              const config = this.config.extendConfig
+                ? this.config.extendConfig(merge({}, this.config), {
+                    input: source.input,
+                    format,
+                  })
+                : this.config
+              const rollupConfig = await this.createRollupConfig({
+                source,
+                format,
+                modern: task.modern,
+                title: task.title,
+                context,
+                assets,
+                config,
+              })
+              return this.config.extendRollupConfig
+                ? this.config.extendRollupConfig(rollupConfig)
+                : rollupConfig
+            },
+          })
         }
-        tasks.push({
-          title,
-          getConfig: async (context, task) => {
-            const assets: Assets = new Map()
-            this.bundles.add(assets)
-            const config = this.config.extendConfig
-              ? this.config.extendConfig(merge({}, this.config), {
-                  input: source.input,
-                  format,
-                })
-              : this.config
-            const rollupConfig = await this.createRollupConfig({
-              source,
-              format,
-              title: task.title,
-              context,
-              assets,
-              config,
-            })
-            return this.config.extendRollupConfig
-              ? this.config.extendRollupConfig(rollupConfig)
-              : rollupConfig
-          },
-        })
       }
     }
 

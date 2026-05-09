@@ -8,51 +8,57 @@ export default (
     asyncToPromises = process.env.BILI_ASYNC_TO_PROMISES,
     jsx = process.env.BILI_JSX,
     objectAssign = process.env.BILI_OBJECT_ASSIGN,
-    minimal = process.env.BILI_MINIMAL
+    minimal = process.env.BILI_MINIMAL,
+    modern = process.env.BILI_MODERN,
   } = {}
 ) => {
-  const presets = [
-    !minimal && [
-      require('@babel/preset-env').default,
-      {
-        modules: ENV === 'test' ? 'auto' : false,
-        exclude: [
-          'transform-regenerator',
-          'transform-async-to-generator',
-          'proposal-object-rest-spread'
-        ]
-      }
+  const presetEnvOptions: any = {
+    modules: ENV === 'test' ? 'auto' : false,
+    exclude: [
+      'transform-regenerator',
+      'transform-async-to-generator',
+      'proposal-object-rest-spread',
     ],
-    require('@babel/preset-typescript')
+  }
+
+  if (modern) {
+    presetEnvOptions.targets = {
+      esmodules: true,
+    }
+  }
+
+  const presets = [
+    !minimal && [require('@babel/preset-env').default, presetEnvOptions],
+    require('@babel/preset-typescript'),
   ].filter(Boolean)
 
   const plugins = [
     [
       require('@babel/plugin-transform-react-jsx'),
       {
-        pragma: jsx === 'react' ? 'React.createElement' : jsx
-      }
+        pragma: jsx === 'react' ? 'React.createElement' : jsx,
+      },
     ],
     [
       require('@babel/plugin-proposal-object-rest-spread'),
       {
         useBuiltIns: true,
-        loose: true
-      }
+        loose: true,
+      },
     ],
     [require('@babel/plugin-proposal-optional-chaining')],
     [require('@babel/plugin-proposal-nullish-coalescing-operator')],
     [
       alterObjectAssign,
       {
-        objectAssign
-      }
+        objectAssign,
+      },
     ],
-    asyncToPromises && require('babel-plugin-transform-async-to-promises')
+    asyncToPromises && require('babel-plugin-transform-async-to-promises'),
   ].filter(Boolean)
 
   return {
     presets,
-    plugins
+    plugins,
   }
 }

@@ -276,6 +276,34 @@ module.exports = index;
 "
 `;
 
+exports[`modern: modern dist/index.esm.js 1`] = `
+"function _await(value, then, direct) {
+  if (direct) {
+    return then ? then(value) : value;
+  }
+
+  if (!value || !value.then) {
+    value = Promise.resolve(value);
+  }
+
+  return then ? value.then(then) : value;
+}
+
+var index = (function (value) {
+  return _await(value);
+});
+
+export default index;
+"
+`;
+
+exports[`modern: modern dist/index.esm.modern.js 1`] = `
+"var index = (async value => await value);
+
+export default index;
+"
+`;
+
 exports[`target:browser: target:browser dist/index.js 1`] = `
 "'use strict';
 

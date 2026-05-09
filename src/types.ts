@@ -2,7 +2,7 @@ import {
   ModuleFormat as RollupFormat,
   InputOptions,
   OutputOptions,
-  Plugin as RollupPlugin
+  Plugin as RollupPlugin,
 } from 'rollup'
 
 import { Banner } from './utils/get-banner'
@@ -46,6 +46,7 @@ export interface RunContext {
 
 export interface Task {
   title: string
+  modern: boolean
   getConfig(context: RunContext, task: Task): Promise<RollupConfig>
 }
 
@@ -67,6 +68,7 @@ export type ExtendRollupConfig = (config: RollupConfig) => RollupConfig
 export interface FileNameContext {
   format: RollupFormat
   minify: boolean
+  modern: boolean
 }
 
 export type GetFileName = (
@@ -103,6 +105,10 @@ export interface BabelPresetOptions {
    * In addtional we use rollup-plugin-buble after rollup-plugin-babel
    */
   minimal?: boolean
+  /**
+   * Target browsers with native ES module support.
+   */
+  modern?: boolean
 }
 
 export type OutputTarget = 'node' | 'browser'
@@ -167,6 +173,12 @@ export interface ConfigOutput {
    * @cli `--target <target>`
    */
   target?: OutputTarget
+  /**
+   * Generate an additional modern bundle for browsers with native ES module support.
+   * Modern bundles use Babel's `esmodules` target and append `.modern` to output file names.
+   * @cli `--modern`
+   */
+  modern?: boolean
 }
 
 export interface Config {
