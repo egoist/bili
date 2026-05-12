@@ -463,8 +463,8 @@ export class Bundler {
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
-    if (rollupFormat === 'esm')  {
+
+    if (rollupFormat === 'esm') {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
@@ -629,8 +629,9 @@ export class Bundler {
       )
       const watcher = watch(configs)
       watcher.on('event', (e) => {
-        if (e.code === 'ERROR') {
-          logger.error(e.error.message)
+        const code = e.code as string
+        if (code === 'ERROR' || code === 'FATAL') {
+          logger.error((e as { error: Error }).error.message)
         }
       })
     } else {
