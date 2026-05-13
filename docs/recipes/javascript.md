@@ -22,7 +22,7 @@ module.exports = {
   presets: ['bili/babel'],
   plugins: [
     // Add your babel plugins...
-  ]
+  ],
 }
 ```
 
@@ -51,6 +51,23 @@ We automatically use [rollup-plugin-typescript2](https://github.com/ezolenko/rol
 
 ```bash
 yarn add typescript rollup-plugin-typescript2 --dev
+```
+
+Bili can also bundle emitted declarations into one `.d.ts` entry file:
+
+```bash
+bili src/index.ts --dts
+```
+
+Or choose the declaration bundle file name:
+
+```js
+// bili.config.js
+module.exports = {
+  output: {
+    dts: 'index.d.ts',
+  },
+}
 ```
 
 ## Use Babel with TypeScript

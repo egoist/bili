@@ -1,5 +1,6 @@
 import './polyfills'
 import path from 'path'
+import fs from 'fs'
 import colors from 'chalk'
 import prettyBytes from 'pretty-bytes'
 import formatTime from 'pretty-ms'
@@ -7,6 +8,7 @@ import textTable from 'text-table'
 import resolveFrom from 'resolve-from'
 import boxen from 'boxen'
 import stringWidth from 'string-width'
+import dts from 'rollup-plugin-dts'
 import {
   rollup,
   watch,
@@ -61,6 +63,7 @@ interface RollupConfigInput {
 
 type PluginFactory = (opts: any) => RollupPlugin
 type GetPlugin = (name: string) => Promise<PluginFactory>
+type SourceMeta = RollupConfigInput['source']
 
 export class Bundler {
   rootDir: string
@@ -198,6 +201,17 @@ export class Bundler {
       }
     }
 
+    const typescriptCompilerOptions: { [key: string]: any } = {
+      module: 'esnext',
+    }
+    const tsconfig = path.join(this.rootDir, 'tsconfig.json')
+    if (config.output.dts) {
+      Object.assign(typescriptCompilerOptions, {
+        declaration: true,
+        declarationMap: false,
+      })
+    }
+
     const pluginsOptions: { [key: string]: any } = {
       progress:
         config.plugins.progress !== false &&
@@ -248,11 +262,11 @@ export class Bundler {
         (source.hasTs || config.plugins.typescript2) &&
         merge(
           {
+            cwd: this.rootDir,
+            ...(fs.existsSync(tsconfig) && { tsconfig }),
             objectHashIgnoreUnknownHack: getObjectHashIgnoreUnknownHack(),
             tsconfigOverride: {
-              compilerOptions: {
-                module: 'esnext',
-              },
+              compilerOptions: typescriptCompilerOptions,
             },
           },
           config.plugins.typescript2
@@ -463,8 +477,8 @@ export class Bundler {
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
-    if (rollupFormat === 'esm')  {
+
+    if (rollupFormat === 'esm') {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
@@ -567,6 +581,14 @@ export class Bundler {
         ...getMeta(files),
       }
     })
+    const declarationSources = sources.filter(
+      (source) => source.hasTs && this.config.output.dts
+    )
+    const existingDeclarationFiles = new Set(
+      declarationSources.length > 0
+        ? findDeclarationFiles(path.resolve(this.config.output.dir || 'dist'))
+        : []
+    )
 
     let { format, target } = this.config.output
     if (Array.isArray(format)) {
@@ -649,6 +671,14 @@ export class Bundler {
             context
           )
         }
+        if (options.write && declarationSources.length > 0) {
+          await waterfall(
+            declarationSources.map((source) => () => {
+              return this.buildDtsBundle(source, existingDeclarationFiles)
+            }),
+            context
+          )
+        }
       } catch (err) {
         spinner.stop()
         throw err
@@ -675,6 +705,141 @@ export class Bundler {
         err.message = `You must supply output.moduleName option or use --module-name <name> flag for UMD bundles`
       }
       throw err
+    }
+  }
+
+  async buildDtsBundle(
+    source: SourceMeta,
+    existingDeclarationFiles = new Set<string>()
+  ) {
+    const outputDir = path.resolve(this.config.output.dir || 'dist')
+    this.emitDtsFiles(source, outputDir)
+    const sourceFile = getSingleDeclarationSource(source)
+    const inputFile = findDeclarationFile(outputDir, sourceFile)
+    if (!inputFile) {
+      throw new Error(`Declaration file for "${sourceFile}" was not emitted`)
+    }
+
+    const outputFile = path.resolve(
+      outputDir,
+      getDtsFileName(this.config.output.dts, sourceFile)
+    )
+    const tempFile = `${outputFile}.tmp`
+    const declarationFiles = findDeclarationFiles(outputDir).filter(
+      (file) =>
+        !existingDeclarationFiles.has(file) &&
+        file !== outputFile &&
+        file !== tempFile
+    )
+    const bundle = await rollup({
+      input: inputFile,
+      plugins: [dts()],
+    })
+    await bundle.write({
+      file: tempFile,
+      format: 'es',
+    })
+    fs.renameSync(tempFile, outputFile)
+    for (const file of declarationFiles) {
+      fs.unlinkSync(file)
+    }
+
+    const relative = path.relative(process.cwd(), outputFile)
+    const assets: Assets = new Map()
+    assets.set(relative, {
+      absolute: outputFile,
+      get source() {
+        return fs.readFileSync(outputFile, 'utf8')
+      },
+    })
+    this.bundles.add(assets)
+    await printAssets(assets, 'Bundled declaration')
+  }
+
+  emitDtsFiles(source: SourceMeta, outputDir: string) {
+    const ts = this.localRequire('typescript')
+    const tsconfig = path.join(this.rootDir, 'tsconfig.json')
+    let compilerOptions: { [key: string]: any } = {}
+    if (fs.existsSync(tsconfig)) {
+      const tsconfigJson = ts.readConfigFile(tsconfig, ts.sys.readFile)
+      if (tsconfigJson.error) {
+        throw new Error(
+          formatTsDiagnostics(ts, [tsconfigJson.error], this.rootDir)
+        )
+      }
+      const parsedTsconfig = ts.parseJsonConfigFileContent(
+        tsconfigJson.config,
+        ts.sys,
+        this.rootDir
+      )
+      if (parsedTsconfig.errors.length > 0) {
+        throw new Error(
+          formatTsDiagnostics(ts, parsedTsconfig.errors, this.rootDir)
+        )
+      }
+      compilerOptions = parsedTsconfig.options
+    }
+
+    compilerOptions = {
+      ...compilerOptions,
+      declaration: true,
+      declarationDir: outputDir,
+      declarationMap: false,
+      module:
+        compilerOptions.module === undefined
+          ? ts.ModuleKind.ESNext
+          : compilerOptions.module,
+      moduleResolution:
+        compilerOptions.moduleResolution === undefined
+          ? ts.ModuleResolutionKind.NodeJs
+          : compilerOptions.moduleResolution,
+      noEmit: false,
+      noEmitOnError: false,
+      outDir: outputDir,
+      skipLibCheck:
+        compilerOptions.skipLibCheck === undefined
+          ? true
+          : compilerOptions.skipLibCheck,
+      target:
+        compilerOptions.target === undefined
+          ? ts.ScriptTarget.ES2017
+          : compilerOptions.target,
+      types: compilerOptions.types === undefined ? [] : compilerOptions.types,
+    }
+
+    const program = ts.createProgram(
+      [
+        this.resolveRootDir(
+          stripRelativePrefix(getSingleDeclarationSource(source))
+        ),
+      ],
+      compilerOptions
+    )
+    const diagnostics = ts
+      .getPreEmitDiagnostics(program)
+      .filter((diagnostic: any) => {
+        return diagnostic.category === ts.DiagnosticCategory.Error
+      })
+    if (diagnostics.length > 0) {
+      throw new Error(formatTsDiagnostics(ts, diagnostics, this.rootDir))
+    }
+
+    const result = program.emit(
+      undefined,
+      (fileName: string, content: string) => {
+        if (!fileName.endsWith('.d.ts')) {
+          return
+        }
+        ensureDir(path.dirname(fileName))
+        fs.writeFileSync(fileName, content)
+      },
+      undefined,
+      false
+    )
+    if (result.emitSkipped) {
+      throw new Error(
+        formatTsDiagnostics(ts, result.diagnostics || [], this.rootDir)
+      )
     }
   }
 
@@ -738,6 +903,86 @@ async function printAssets(assets: Assets, title: string) {
 
 function getDefaultFileName(format: RollupFormat) {
   return format === 'cjs' ? `[name][min][ext]` : `[name].[format][min][ext]`
+}
+
+function getSingleDeclarationSource(source: SourceMeta) {
+  if (Array.isArray(source.input)) {
+    if (source.input.length !== 1) {
+      throw new Error('output.dts requires a single TypeScript entry')
+    }
+    return source.input[0]
+  }
+
+  const values = Object.values(source.input)
+  if (values.length !== 1) {
+    throw new Error('output.dts requires a single TypeScript entry')
+  }
+  return values[0]
+}
+
+function getDtsFileName(
+  dtsOption: boolean | string | undefined,
+  sourceFile: string
+) {
+  if (typeof dtsOption === 'string') {
+    return dtsOption.endsWith('.d.ts') ? dtsOption : `${dtsOption}.d.ts`
+  }
+  return `${path.basename(sourceFile).replace(/\.[cm]?[jt]sx?$/, '')}.d.ts`
+}
+
+function stripRelativePrefix(file: string) {
+  return file.replace(/^\.\//, '')
+}
+
+function findDeclarationFile(outputDir: string, sourceFile: string) {
+  const fileName = getDtsFileName(true, sourceFile)
+  const direct = path.resolve(outputDir, fileName)
+  if (fs.existsSync(direct)) {
+    return direct
+  }
+
+  return findDeclarationFiles(outputDir).find(
+    (file) => path.basename(file) === fileName
+  )
+}
+
+function findDeclarationFiles(dir: string): string[] {
+  if (!fs.existsSync(dir)) {
+    return []
+  }
+
+  return fs.readdirSync(dir).reduce((files: string[], name) => {
+    const file = path.join(dir, name)
+    if (fs.statSync(file).isDirectory()) {
+      return files.concat(findDeclarationFiles(file))
+    }
+    if (file.endsWith('.d.ts')) {
+      files.push(file)
+    }
+    return files
+  }, [])
+}
+
+function ensureDir(dir: string) {
+  if (fs.existsSync(dir)) {
+    return
+  }
+  const parent = path.dirname(dir)
+  if (parent !== dir) {
+    ensureDir(parent)
+  }
+  fs.mkdirSync(dir)
+}
+
+function formatTsDiagnostics(ts: any, diagnostics: any[], rootDir: string) {
+  if (diagnostics.length === 0) {
+    return 'TypeScript declaration emit failed'
+  }
+  return ts.formatDiagnosticsWithColorAndContext(diagnostics, {
+    getCanonicalFileName: (fileName: string) => fileName,
+    getCurrentDirectory: () => rootDir,
+    getNewLine: () => '\n',
+  })
 }
 
 export { Config, NormalizedConfig, Options, ConfigOutput }

@@ -47,6 +47,10 @@ cli
     '--no-map',
     'Disable source maps, enabled by default for minified bundles'
   )
+  .option(
+    '--dts [fileName]',
+    'Bundle TypeScript declarations into a single .d.ts file'
+  )
   .option('--map-exclude-sources', 'Exclude source code in source maps')
   .option('--no-async-pro, --no-async-to-promises', 'Leave async/await as is')
   .option('--concurrent', 'Build concurrently')
@@ -70,6 +74,7 @@ cli
           minify: options.minify,
           extractCSS: options.extractCss,
           sourceMap: options.map,
+          dts: options.dts,
           sourceMapExcludeSources: options.mapExcludeSources,
           target: options.target,
         },

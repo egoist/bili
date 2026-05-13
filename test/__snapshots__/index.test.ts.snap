@@ -196,6 +196,16 @@ module.exports = index;
 "
 `;
 
+exports[`dts bundle 1`] = `
+"interface Message {
+    value: string;
+}
+declare function createMessage(value: string): Message;
+
+export { Message, createMessage };
+"
+`;
+
 exports[`exclude file: exclude file dist/index.js 1`] = `
 "'use strict';
 

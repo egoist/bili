@@ -2,7 +2,7 @@ import {
   ModuleFormat as RollupFormat,
   InputOptions,
   OutputOptions,
-  Plugin as RollupPlugin
+  Plugin as RollupPlugin,
 } from 'rollup'
 
 import { Banner } from './utils/get-banner'
@@ -157,6 +157,14 @@ export interface ConfigOutput {
    * @default `true` for minified bundle, `false` otherwise
    */
   sourceMap?: boolean
+  /**
+   * Bundle TypeScript declaration output into a single `.d.ts` file.
+   *
+   * Set to `true` to use the input basename, or pass a file name.
+   *
+   * @cli `--dts [fileName]`
+   */
+  dts?: boolean | string
   /**
    * Exclude source code in source maps
    */

@@ -7,6 +7,7 @@ Delightful library bundler.
 - 🚀 Fast, zero-config by default.
 - 📦 Using Rollup under the hood.
 - 🚗 Automatically transforms JS files using Buble, Babel or TypeScript.
+- 🧩 Bundles TypeScript declarations into a single `.d.ts` file.
 - 💅 Built-in support for CSS, Sass, Stylus, Less and CSS modules.
 - 🎶 Ridiculously easy to use Rollup plugins if you want.
 - 🚨 Friendly error logging experience.
@@ -34,4 +35,10 @@ And you want minified bundles?
 
 ```bash
 bili --format esm-min --format cjs-min
+```
+
+Bundle TypeScript declarations too:
+
+```bash
+bili src/index.ts --dts
 ```
