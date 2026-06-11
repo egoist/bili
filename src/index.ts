@@ -62,6 +62,10 @@ interface RollupConfigInput {
 type PluginFactory = (opts: any) => RollupPlugin
 type GetPlugin = (name: string) => Promise<PluginFactory>
 
+export function isRollupErrorEvent(e: { code?: string }) {
+  return e.code === 'ERROR' || e.code === 'FATAL'
+}
+
 export class Bundler {
   rootDir: string
   config: NormalizedConfig
@@ -629,7 +633,7 @@ export class Bundler {
       )
       const watcher = watch(configs)
       watcher.on('event', (e) => {
-        if (e.code === 'ERROR') {
+        if (isRollupErrorEvent(e)) {
           logger.error(e.error.message)
         }
       })
