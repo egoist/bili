@@ -1,7 +1,13 @@
 import path from 'path'
-import { Bundler, Config, Options } from '../src'
+import { Bundler, Config, Options, isRollupErrorEvent } from '../src'
 
 process.env.BABEL_ENV = 'anything-not-test'
+
+test('detects rollup watch error events', () => {
+  expect(isRollupErrorEvent({ code: 'ERROR' })).toBe(true)
+  expect(isRollupErrorEvent({ code: 'FATAL' })).toBe(true)
+  expect(isRollupErrorEvent({ code: 'BUNDLE_END' })).toBe(false)
+})
 
 function fixture(...args: string[]) {
   return path.join(__dirname, 'fixtures', ...args)
