@@ -198,6 +198,49 @@ snapshot({
   cwd: fixture('typescript')
 })
 
+test('watch mode rejects and closes the watcher on Rollup fatal events', async () => {
+  jest.resetModules()
+
+  const close = jest.fn()
+  let onEvent: ((event: { code: string; error: Error }) => void) | undefined
+
+  jest.doMock('rollup', () => ({
+    ...jest.requireActual('rollup'),
+    watch: jest.fn(() => ({
+      close,
+      on(event: string, handler: typeof onEvent) {
+        if (event === 'event') {
+          onEvent = handler
+        }
+      }
+    }))
+  }))
+
+  const { Bundler: MockedBundler } = require('../src')
+  const error = new Error('watch failed fatally')
+  const bundler = new MockedBundler(
+    { input: 'index.js' },
+    {
+      rootDir: fixture('defaults'),
+      configFile: false,
+      logLevel: 'quiet'
+    }
+  )
+
+  const run = bundler.run({ watch: true })
+
+  await new Promise((resolve) => setImmediate(resolve))
+
+  expect(onEvent).toBeDefined()
+  onEvent!({ code: 'FATAL', error })
+
+  await expect(run).rejects.toBe(error)
+  expect(close).toHaveBeenCalledTimes(1)
+
+  jest.dontMock('rollup')
+  jest.resetModules()
+})
+
 snapshot(
   {
     title: 'custom rollup plugin',

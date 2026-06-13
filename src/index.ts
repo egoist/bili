@@ -628,10 +628,16 @@ export class Bundler {
         })
       )
       const watcher = watch(configs)
-      watcher.on('event', (e) => {
-        if (e.code === 'ERROR') {
-          logger.error(e.error.message)
-        }
+      return new Promise<this>((_resolve, reject) => {
+        watcher.on('event', (e) => {
+          if (e.code === 'ERROR') {
+            logger.error(e.error.message)
+          }
+          if (e.code === 'FATAL') {
+            watcher.close()
+            reject(e.error)
+          }
+        })
       })
     } else {
       try {
