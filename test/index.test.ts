@@ -202,13 +202,14 @@ test('watch mode rejects and closes the watcher on Rollup fatal events', async (
   jest.resetModules()
 
   const close = jest.fn()
-  let onEvent: ((event: { code: string; error: Error }) => void) | undefined
+  type WatchEventHandler = (event: { code: string; error: Error }) => void
+  let onEvent: WatchEventHandler | undefined
 
   jest.doMock('rollup', () => ({
     ...jest.requireActual('rollup'),
     watch: jest.fn(() => ({
       close,
-      on(event: string, handler: typeof onEvent) {
+      on(event: string, handler: WatchEventHandler) {
         if (event === 'event') {
           onEvent = handler
         }
