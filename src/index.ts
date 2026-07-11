@@ -12,6 +12,7 @@ import {
   watch,
   Plugin as RollupPlugin,
   ModuleFormat as RollupFormat,
+  RollupError,
 } from 'rollup'
 import merge from 'lodash/merge'
 import waterfall from 'p-waterfall'
@@ -61,6 +62,28 @@ interface RollupConfigInput {
 
 type PluginFactory = (opts: any) => RollupPlugin
 type GetPlugin = (name: string) => Promise<PluginFactory>
+
+// Rollup's watch mode may emit an `ERROR` event for recoverable bundle errors
+// and a `FATAL` event for unrecoverable watcher errors. Both carry an `error`
+// and must be surfaced to the user; otherwise a `FATAL` event makes watch mode
+// appear to hang with no feedback. See https://github.com/egoist/bili/issues/184
+// Note: rollup's `RollupWatcherEvent` type only declares `ERROR`, but the
+// watcher can emit `FATAL` at runtime, so we keep the check runtime-safe.
+export type RollupWatcherErrorEvent = {
+  code: 'ERROR' | 'FATAL'
+  error: RollupError
+}
+
+export function isRollupErrorEvent(
+  event: unknown
+): event is RollupWatcherErrorEvent {
+  return (
+    typeof event === 'object' &&
+    event !== null &&
+    ((event as { code?: string }).code === 'ERROR' ||
+      (event as { code?: string }).code === 'FATAL')
+  )
+}
 
 export class Bundler {
   rootDir: string
@@ -463,8 +486,8 @@ export class Bundler {
       // Since we only output to `.js` now
       // Probably remove it in the future
       .replace(/\[ext\]/, '.js')
- 
-    if (rollupFormat === 'esm')  {
+
+    if (rollupFormat === 'esm') {
       fileName = fileName.replace(/\[format\]/, 'esm')
     }
 
@@ -629,7 +652,7 @@ export class Bundler {
       )
       const watcher = watch(configs)
       watcher.on('event', (e) => {
-        if (e.code === 'ERROR') {
+        if (isRollupErrorEvent(e)) {
           logger.error(e.error.message)
         }
       })
